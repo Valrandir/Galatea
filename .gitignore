@@ -1,0 +1,19 @@
+###################
+## Visual Studio ##
+###################
+[Dd]ebug/
+[Rr]elease/
+*.lib
+*.exe
+*.ilk
+*.pdb
+*.opensdf
+*.sdf
+*.suo
+*.user
+
+#############
+## Windows ##
+#############
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{b9178ee1-ca45-46a8-a327-ca61044afbd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Time">
+      <UniqueIdentifier>{614a9b84-8779-4643-99da-3b3faae8bb2c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Time\Time.hpp">
+      <Filter>System\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
+      <Filter>System\Time</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

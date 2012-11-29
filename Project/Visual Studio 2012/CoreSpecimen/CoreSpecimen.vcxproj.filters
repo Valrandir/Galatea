@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{17b5d303-298a-4bb7-ba80-06fa32d5908e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Time">
+      <UniqueIdentifier>{5e834a45-466e-4185-8471-3bc3a3b0570f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp">
+      <Filter>System\Time</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
