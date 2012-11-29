@@ -2,7 +2,8 @@ extern void TimeTest();
 
 void CoreSpecimen()
 {
-	if(false)
+	bool skip = true;
+	if(!skip)
 	{
 		TimeTest();
 	}

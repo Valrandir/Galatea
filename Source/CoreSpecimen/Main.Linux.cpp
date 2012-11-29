@@ -1,12 +1,7 @@
-/*
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-
 extern void CoreSpecimen();
-
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+	
+int main(int argc, char **argv)
 {
 	CoreSpecimen();
 	return 0;
 }
-*/

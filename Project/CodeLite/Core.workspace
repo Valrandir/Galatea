@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Workspace Name="Core" Database="./Core.tags">
+  <Project Name="CoreLib" Path="CoreLib/CoreLib.project" Active="No"/>
+  <Project Name="CoreSpecimen" Path="CoreSpecimen/CoreSpecimen.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Project Name="CoreLib" ConfigName="Debug"/>
+      <Project Name="CoreSpecimen" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Project Name="CoreLib" ConfigName="Release"/>
+      <Project Name="CoreSpecimen" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
