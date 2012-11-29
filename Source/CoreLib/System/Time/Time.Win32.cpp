@@ -4,7 +4,7 @@
 
 namespace Core
 {
-	namespace Time
+	namespace System
 	{
 		void Time::Sleep(UInt32 milliseconds)
 		{

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreLib", "CoreLib\CoreLib.vcxproj", "{8D3A6DB6-7DDB-458F-8F59-2380B442BEC0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CoreSpecimen", "CoreSpecimen\CoreSpecimen.vcxproj", "{EFD9463A-D7DA-406F-BA78-14C463AEC7DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8D3A6DB6-7DDB-458F-8F59-2380B442BEC0} = {8D3A6DB6-7DDB-458F-8F59-2380B442BEC0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

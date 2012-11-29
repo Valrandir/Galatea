@@ -2,6 +2,6 @@
 
 void TimeTest()
 {
-	Core::Time::Time::Sleep(750);
-	Core::Time::Time::Sleep(2250);
+	Core::System::Time::Sleep(750);
+	Core::System::Time::Sleep(2250);
 }

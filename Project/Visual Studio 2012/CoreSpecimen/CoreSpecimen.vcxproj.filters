@@ -7,12 +7,18 @@
     <Filter Include="System\Time">
       <UniqueIdentifier>{5e834a45-466e-4185-8471-3bc3a3b0570f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Memory">
+      <UniqueIdentifier>{82de4646-3178-47fd-a5ca-cceb59087988}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp">
       <Filter>System\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp">
+      <Filter>System\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

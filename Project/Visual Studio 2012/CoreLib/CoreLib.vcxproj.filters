@@ -7,6 +7,9 @@
     <Filter Include="System\Time">
       <UniqueIdentifier>{614a9b84-8779-4643-99da-3b3faae8bb2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Memory">
+      <UniqueIdentifier>{28242e1e-4a58-4ea3-92b4-6c4504b9336f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -14,10 +17,16 @@
       <Filter>System\Time</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp">
+      <Filter>System\Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
       <Filter>System\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp">
+      <Filter>System\Memory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

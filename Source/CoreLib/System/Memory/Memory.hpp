@@ -5,10 +5,11 @@ namespace Core
 {
 	namespace System
 	{
-		class Time
+		class Memory
 		{
 			public:
-			static void Sleep(UInt32 milliseconds);
+			static void* Alloc(UInt32 bytes);
+			static void Free(void* pMemory);
 		};
 	}
 }

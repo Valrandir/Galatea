@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreSpecimen
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
-ProjectPath            := "/home/valrandir/Desktop/Link to Core/Project/CodeLite/CoreSpecimen"
+WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Valrandir
+User                   :=dlaplante
 Date                   :=12-11-29
-CodeLitePath           :="/home/valrandir/.codelite"
+CodeLitePath           :="/home/dlaplante/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -28,11 +28,11 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)CoreTargetLinux 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E 
-ObjectsFileList        :="/home/valrandir/Desktop/Link to Core/Project/CodeLite/CoreSpecimen/CoreSpecimen.txt"
+ObjectsFileList        :="/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen/CoreSpecimen.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            := -l:CoreLib.lib 
@@ -58,7 +58,7 @@ CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -105,6 +105,14 @@ $(IntermediateDirectory)/Time_Time$(DependSuffix): ../../../Source/CoreSpecimen/
 $(IntermediateDirectory)/Time_Time$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/Time/Time.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Time_Time$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Time/Time.cpp"
 
+$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix): ../../../Source/CoreSpecimen/System/Memory/Memory.cpp $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Memory/Memory.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Memory_Memory$(DependSuffix): ../../../Source/CoreSpecimen/System/Memory/Memory.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) -MF$(IntermediateDirectory)/Memory_Memory$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreSpecimen/System/Memory/Memory.cpp"
+
+$(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/Memory/Memory.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Memory/Memory.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
@@ -120,7 +128,10 @@ clean:
 	$(RM) $(IntermediateDirectory)/Time_Time$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
 
 

@@ -2,8 +2,9 @@
 rd /s /q .build-debug
 rd /s /q .clang
 del Core.tags
-del Core.workspace.session
-del Core.workspace.valrandir
+rename Core.workspace cw.void
+del Core.workspace*
+rename cw.void Core.workspace
 
 rd /s /q CoreLib\Debug
 del CoreLib\CoreLib.txt

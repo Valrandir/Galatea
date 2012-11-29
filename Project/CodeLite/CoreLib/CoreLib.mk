@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreLib
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
-ProjectPath            := "/home/valrandir/Desktop/Link to Core/Project/CodeLite/CoreLib"
+WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreLib"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Valrandir
+User                   :=dlaplante
 Date                   :=12-11-29
-CodeLitePath           :="/home/valrandir/.codelite"
+CodeLitePath           :="/home/dlaplante/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -28,11 +28,11 @@ LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
 OutputFile             :=../../../Build/Linux/$(ProjectName).lib
-Preprocessors          :=
+Preprocessors          :=$(PreprocessorSwitch)CoreTargetLinux 
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E 
-ObjectsFileList        :="/home/valrandir/Desktop/Link to Core/Project/CodeLite/CoreLib/CoreLib.txt"
+ObjectsFileList        :="/mnt/hgfs/Core/Project/CodeLite/CoreLib/CoreLib.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
 LinkOptions            :=  
@@ -58,7 +58,7 @@ CFLAGS   :=  -g $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -71,8 +71,8 @@ $(OutputFile): $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(AR) $(ArchiveOutputSwitch)$(OutputFile) @$(ObjectsFileList) $(ArLibs)
-	@$(MakeDirCommand) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug"
-	@echo rebuilt > "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
+	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug"
+	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
 
 ./Debug:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -91,6 +91,14 @@ $(IntermediateDirectory)/Time_Time.Linux$(DependSuffix): ../../../Source/CoreLib
 $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix): ../../../Source/CoreLib/System/Time/Time.Linux.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/Time/Time.Linux.cpp"
 
+$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreLib/System/Memory/Memory.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Memory_Memory$(DependSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) -MF$(IntermediateDirectory)/Memory_Memory$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreLib/System/Memory/Memory.cpp"
+
+$(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/Memory/Memory.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
@@ -100,7 +108,10 @@ clean:
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
 
 
