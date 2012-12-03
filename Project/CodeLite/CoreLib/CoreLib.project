@@ -16,7 +16,7 @@
       </VirtualDirectory>
       <File Name="../../../Source/CoreLib/Types.hpp"/>
       <File Name="../../../Source/CoreLib/System/System.hpp"/>
-      <File Name="../../../Source/CoreLib/System/System.Unix.cpp"/>
+      <File Name="../../../Source/CoreLib/System/System.Linux.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Memory">
       <File Name="../../../Source/CoreLib/System/Memory/Memory.cpp"/>
@@ -43,6 +43,8 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -82,6 +84,8 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">

@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreSpecimen
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
+WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Valrandir
-Date                   :=12-12-02
-CodeLitePath           :="/home/valrandir/.codelite"
+User                   :=dlaplante
+Date                   :=12-12-03
+CodeLitePath           :="/home/dlaplante/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -143,6 +143,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/System_System$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/System_System$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
 
 
