@@ -20,5 +20,8 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp">
       <Filter>System\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

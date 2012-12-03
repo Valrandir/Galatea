@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreSpecimen
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-11-29
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-02
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -58,7 +58,7 @@ CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IntermediateDirectory)/System_System$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -113,6 +113,14 @@ $(IntermediateDirectory)/Memory_Memory$(DependSuffix): ../../../Source/CoreSpeci
 $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/Memory/Memory.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Memory/Memory.cpp"
 
+$(IntermediateDirectory)/System_System$(ObjectSuffix): ../../../Source/CoreSpecimen/System/System.cpp $(IntermediateDirectory)/System_System$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreSpecimen/System/System.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/System_System$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/System_System$(DependSuffix): ../../../Source/CoreSpecimen/System/System.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/System_System$(ObjectSuffix) -MF$(IntermediateDirectory)/System_System$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreSpecimen/System/System.cpp"
+
+$(IntermediateDirectory)/System_System$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/System.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/System_System$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/System.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
@@ -131,7 +139,10 @@ clean:
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/System_System$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/System_System$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/System_System$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreSpecimen"
 
 

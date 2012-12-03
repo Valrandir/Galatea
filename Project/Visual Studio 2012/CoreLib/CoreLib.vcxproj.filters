@@ -20,6 +20,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp">
       <Filter>System\Memory</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -27,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp">
       <Filter>System\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp">
+      <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

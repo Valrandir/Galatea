@@ -13,11 +13,13 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Time\Time.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

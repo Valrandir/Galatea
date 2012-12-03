@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreLib
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreLib"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-11-29
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-02
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -58,7 +58,7 @@ CFLAGS   :=  -g $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) $(IntermediateDirectory)/System_System.Unix$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -71,8 +71,8 @@ $(OutputFile): $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(AR) $(ArchiveOutputSwitch)$(OutputFile) @$(ObjectsFileList) $(ArLibs)
-	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug"
-	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	@$(MakeDirCommand) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug"
+	@echo rebuilt > "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
 
 ./Debug:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -91,6 +91,14 @@ $(IntermediateDirectory)/Time_Time.Linux$(DependSuffix): ../../../Source/CoreLib
 $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix): ../../../Source/CoreLib/System/Time/Time.Linux.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/Time/Time.Linux.cpp"
 
+$(IntermediateDirectory)/System_System.Unix$(ObjectSuffix): ../../../Source/CoreLib/System/System.Unix.cpp $(IntermediateDirectory)/System_System.Unix$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreLib/System/System.Unix.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/System_System.Unix$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/System_System.Unix$(DependSuffix): ../../../Source/CoreLib/System/System.Unix.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/System_System.Unix$(ObjectSuffix) -MF$(IntermediateDirectory)/System_System.Unix$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreLib/System/System.Unix.cpp"
+
+$(IntermediateDirectory)/System_System.Unix$(PreprocessSuffix): ../../../Source/CoreLib/System/System.Unix.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/System_System.Unix$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/System.Unix.cpp"
+
 $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreLib/System/Memory/Memory.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/Memory_Memory$(DependSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp
@@ -108,10 +116,13 @@ clean:
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Time_Time.Linux$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/System_System.Unix$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/System_System.Unix$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/System_System.Unix$(PreprocessSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
 
 

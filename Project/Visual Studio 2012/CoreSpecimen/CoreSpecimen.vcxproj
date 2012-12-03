@@ -14,6 +14,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
