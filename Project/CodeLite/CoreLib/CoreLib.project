@@ -14,14 +14,14 @@
         <File Name="../../../Source/CoreLib/System/Time/Time.hpp"/>
         <File Name="../../../Source/CoreLib/System/Time/Time.Linux.cpp"/>
       </VirtualDirectory>
-      <File Name="../../../Source/CoreLib/Types.hpp"/>
       <File Name="../../../Source/CoreLib/System/System.hpp"/>
       <File Name="../../../Source/CoreLib/System/System.Linux.cpp"/>
+      <VirtualDirectory Name="Memory">
+        <File Name="../../../Source/CoreLib/System/Memory/Memory.cpp"/>
+        <File Name="../../../Source/CoreLib/System/Memory/Memory.hpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
-    <VirtualDirectory Name="Memory">
-      <File Name="../../../Source/CoreLib/System/Memory/Memory.cpp"/>
-      <File Name="../../../Source/CoreLib/System/Memory/Memory.hpp"/>
-    </VirtualDirectory>
+    <File Name="../../../Source/CoreLib/Types.hpp"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>
@@ -43,6 +43,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       ]]>
@@ -84,6 +85,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       ]]>

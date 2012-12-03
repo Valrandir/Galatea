@@ -13,27 +13,17 @@ namespace Core
 	typedef unsigned int UInt32;
 	typedef unsigned long long UInt64;
 
-	#ifdef CoreTargetWin32
-		#ifdef UNICODE
-			#define Text(quote)L##quote
-			typedef wchar_t Char;
-			typedef wchar_t* String;
-			typedef wchar_t const CChar;
-			typedef wchar_t const * CString;
-		#else
-			#define Text(quote)quote
-			typedef char Char;
-			typedef char* String;
-			typedef char const CChar;
-			typedef char const * CString;
-		#endif
-	#elif CoreTargetLinux
+	#if defined(CoreTargetWin32) && defined(UNICODE)
+		#define Text(quote)L##quote
+		typedef wchar_t Char;
+		typedef wchar_t* String;
+		typedef wchar_t const CChar;
+		typedef wchar_t const * CString;
+	#else
 		#define Text(quote)quote
 		typedef char Char;
 		typedef char* String;
 		typedef char const CChar;
 		typedef char const * CString;
-	#else
-		#error Define either CoreTargetWin32 or CoreTargetLinux
 	#endif
 }
