@@ -29,7 +29,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.hpp">
       <Filter>System\Threading</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\IThread.hpp">
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp">
       <Filter>System\Threading</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,7 +26,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\IThread.cpp">
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp">
       <Filter>System\Threading</Filter>
     </ClCompile>
   </ItemGroup>

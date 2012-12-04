@@ -14,7 +14,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\IThread.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Time\Time.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
