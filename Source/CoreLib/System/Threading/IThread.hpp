@@ -11,16 +11,7 @@ namespace Core
 
 			class IThread
 			{
-				ThreadFonc ThreadEntry;
-				VoidPtr ThreadParam;
-				VoidPtr ReturnValue;
-
-				protected:
-				IThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
-
 				public:
-				void Execute();
-				VoidPtr GetReturnValue();
 				virtual VoidPtr Join() = 0;
 				virtual ~IThread(){}
 			};

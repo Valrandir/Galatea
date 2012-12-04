@@ -6,19 +6,14 @@ namespace Core
 	{
 		namespace Threading
 		{
-			Thread::Thread(ThreadFonc ThreadEntry, VoidPtr ThreadParam) : IThread(ThreadEntry, ThreadParam)
+			Thread::Thread(ThreadFonc ThreadEntry, VoidPtr ThreadParam) : ThreadEntry(ThreadEntry), ThreadParam(ThreadParam)
 			{
-			}
-
-			VoidPtr Thread::Join()
-			{
-				WaitForSingleObject(hThread, INFINITE);
-				return GetReturnValue();
 			}
 
 			DWORD WINAPI Thread::NativeThreadEntry(VoidPtr ThreadParam)
 			{
-				((IThread*)ThreadParam)->Execute();
+				Thread& ThreadRef = *(Thread*)ThreadParam;
+				ThreadRef.ReturnValue = ThreadRef.ThreadEntry(ThreadRef.ThreadParam);
 				return 0U;
 			}
 
@@ -39,6 +34,12 @@ namespace Core
 				}
 
 				return 0;
+			}
+
+			VoidPtr Thread::Join()
+			{
+				WaitForSingleObject(hThread, INFINITE);
+				return ReturnValue;
 			}
 		}
 	}

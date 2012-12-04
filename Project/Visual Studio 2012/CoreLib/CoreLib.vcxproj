@@ -22,7 +22,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\IThread.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp" />
   </ItemGroup>
