@@ -1,6 +1,7 @@
 extern void ErrTest();
 extern void MemoryTest();
 extern void IThreadTest();
+extern void ThreadedErrTest();
 extern void TimeTest();
 
 void CoreSpecimen()
@@ -13,6 +14,7 @@ void CoreSpecimen()
 		ErrTest();
 		MemoryTest();
 		IThreadTest();
+		ThreadedErrTest();
 		TimeTest();
 	}
 }
