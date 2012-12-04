@@ -20,9 +20,15 @@
         <File Name="../../../Source/CoreLib/System/Memory/Memory.cpp"/>
         <File Name="../../../Source/CoreLib/System/Memory/Memory.hpp"/>
       </VirtualDirectory>
+      <VirtualDirectory Name="Threading">
+        <File Name="../../../Source/CoreLib/System/Threading/IThread.hpp"/>
+        <File Name="../../../Source/CoreLib/System/Threading/Thread.Linux.cpp"/>
+        <File Name="../../../Source/CoreLib/System/Threading/Thread.Linux.hpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <File Name="../../../Source/CoreLib/Types.hpp"/>
   </VirtualDirectory>
+  <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
@@ -42,11 +48,7 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      
-      
-      
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -85,6 +87,8 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
+      
       
       
       

@@ -1,15 +1,14 @@
 #include <Core.hpp>
-
 using namespace Core;
 
 void ErrTest()
 {
 	UInt32 ErrCode;
-	Char buffer[512];
-	CString ret;
+	Char Buffer[512];
+	CString ErrText;
 
 	System::SetErrCode(10U);
 	ErrCode = System::GetErrCode();
-	ret = System::GetErrText(ErrCode, buffer, 512U);
-	ErrCode = *ret; //To avoid a warning with GPP
+	ErrText = System::GetErrText(ErrCode, Buffer, 512U);
+	ErrCode = *ErrText; //To avoid a warning with GPP
 }

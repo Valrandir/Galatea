@@ -5,10 +5,9 @@ namespace Core
 {
 	namespace System
 	{
-		class Time
+		namespace Time
 		{
-			public:
-			static void Sleep(UInt32 milliseconds);
+			void Sleep(UInt32 milliseconds);
 		};
 	}
 }

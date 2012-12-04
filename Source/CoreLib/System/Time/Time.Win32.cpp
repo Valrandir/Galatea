@@ -6,9 +6,12 @@ namespace Core
 {
 	namespace System
 	{
-		void Time::Sleep(UInt32 milliseconds)
+		namespace Time
 		{
-			::Sleep(milliseconds);
+			void Sleep(UInt32 milliseconds)
+			{
+				::Sleep(milliseconds);
+			}
 		}
 	}
 }

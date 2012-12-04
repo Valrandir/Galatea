@@ -10,6 +10,9 @@
     <Filter Include="System\Memory">
       <UniqueIdentifier>{28242e1e-4a58-4ea3-92b4-6c4504b9336f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Threading">
+      <UniqueIdentifier>{c6b65025-e122-447f-a878-9cab15fec0e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -23,6 +26,12 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.hpp">
+      <Filter>System\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\IThread.hpp">
+      <Filter>System\Threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -33,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp">
+      <Filter>System\Threading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

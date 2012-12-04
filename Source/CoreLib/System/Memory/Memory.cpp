@@ -5,14 +5,17 @@ namespace Core
 {
 	namespace System
 	{
-		void* Memory::Alloc(UInt32 bytes)
+		namespace Memory
 		{
-			return malloc(bytes);
-		}
+			void* Alloc(UInt32 bytes)
+			{
+				return malloc(bytes);
+			}
 
-		void Memory::Free(void* pMemory)
-		{
-			free(pMemory);
+			void Free(void* pMemory)
+			{
+				free(pMemory);
+			}
 		}
 	}
 }

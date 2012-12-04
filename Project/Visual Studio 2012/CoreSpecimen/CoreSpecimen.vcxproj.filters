@@ -10,6 +10,9 @@
     <Filter Include="System\Memory">
       <UniqueIdentifier>{82de4646-3178-47fd-a5ca-cceb59087988}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\Threading">
+      <UniqueIdentifier>{4fc752a1-ee31-43d5-84fc-01171d976d87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -22,6 +25,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\IThread.cpp">
+      <Filter>System\Threading</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

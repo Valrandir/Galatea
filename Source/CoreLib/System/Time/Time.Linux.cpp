@@ -5,10 +5,13 @@ namespace Core
 {
 	namespace System
 	{
-		void Time::Sleep(UInt32 milliseconds)
+		namespace Time
 		{
-			timespec req = {milliseconds / 1000, milliseconds % 1000 * 1000000};
-			nanosleep(&req, NULL);
+			void Sleep(UInt32 Milliseconds)
+			{
+				timespec req = {Milliseconds / 1000, Milliseconds % 1000 * 1000000};
+				nanosleep(&req, NULL);
+			}
 		}
 	}
 }

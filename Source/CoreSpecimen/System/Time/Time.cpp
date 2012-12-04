@@ -1,7 +1,8 @@
 #include <Core.hpp>
+using namespace Core;
 
 void TimeTest()
 {
-	Core::System::Time::Sleep(750);
-	Core::System::Time::Sleep(2250);
+	System::Time::Sleep(750);
+	System::Time::Sleep(2250);
 }

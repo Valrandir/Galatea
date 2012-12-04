@@ -58,7 +58,7 @@ CFLAGS   :=  -g $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) $(IntermediateDirectory)/System_System.Linux$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/Time_Time.Linux$(ObjectSuffix) $(IntermediateDirectory)/System_System.Linux$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IntermediateDirectory)/Threading_Thread.Linux$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -107,6 +107,14 @@ $(IntermediateDirectory)/Memory_Memory$(DependSuffix): ../../../Source/CoreLib/S
 $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix): ../../../Source/CoreLib/System/Memory/Memory.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/Memory/Memory.cpp"
 
+$(IntermediateDirectory)/Threading_Thread.Linux$(ObjectSuffix): ../../../Source/CoreLib/System/Threading/Thread.Linux.cpp $(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreLib/System/Threading/Thread.Linux.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Threading_Thread.Linux$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix): ../../../Source/CoreLib/System/Threading/Thread.Linux.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Threading_Thread.Linux$(ObjectSuffix) -MF$(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreLib/System/Threading/Thread.Linux.cpp"
+
+$(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix): ../../../Source/CoreLib/System/Threading/Thread.Linux.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreLib/System/Threading/Thread.Linux.cpp"
+
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
 ##
@@ -122,6 +130,9 @@ clean:
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Memory_Memory$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix)
 	$(RM) $(OutputFile)
 	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
 
