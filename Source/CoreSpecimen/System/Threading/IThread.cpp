@@ -5,7 +5,7 @@ ThreadFoncDef(ThreadEntry)
 {
 	UInt32 value = *((UInt32*)ThreadParam);
 	value *= value;
-	return value;
+	return (void*)value;
 }
 
 void IThreadTest()
@@ -15,7 +15,9 @@ void IThreadTest()
 	UInt32 ExitCode;
 
 	thread = System::Threading::CreateThread(ThreadEntry, Param);
-	ExitCode = thread->Join();
-
-	delete thread;
+	if(thread)
+	{
+		ExitCode = thread->Join();
+		delete thread;
+	}
 }

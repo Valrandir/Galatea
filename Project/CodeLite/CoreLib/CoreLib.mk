@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreLib
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreLib"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-12-03
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-04
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -71,8 +71,8 @@ $(OutputFile): $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(AR) $(ArchiveOutputSwitch)$(OutputFile) @$(ObjectsFileList) $(ArLibs)
-	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug"
-	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	@$(MakeDirCommand) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug"
+	@echo rebuilt > "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
 
 ./Debug:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -134,6 +134,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
 
 
