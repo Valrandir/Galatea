@@ -24,13 +24,13 @@ namespace Core
 				pthread_attr_t Attributes;
 				pthread_t ThreadID;
 
-				if(pthread_attr_init(&Attributes))
+				if(!pthread_attr_init(&Attributes))
 				{
 					ErrCode = pthread_create(&ThreadID, &Attributes, ThreadEntry, &ThreadParam);
 					pthread_attr_destroy(&Attributes);
 				}
 
-				return ErrCode ? new Thread(ThreadID) : NULL;
+				return ErrCode == 0 ? new Thread(ThreadID) : NULL;
 			}
 		}
 	}

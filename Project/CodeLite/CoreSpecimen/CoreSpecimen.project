@@ -31,10 +31,8 @@
       <Compiler Options="" C_Options="">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="-l:CoreLib.lib">
-        <LibraryPath Value="."/>
+      <Linker Options="-l:CoreLib.lib -pthread">
         <LibraryPath Value="../../../Build/Linux"/>
-        <Library Value="pthread"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -88,6 +86,8 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
+      
       
       ]]>
       </Environment>

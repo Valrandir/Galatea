@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreSpecimen
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-12-03
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-04
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -35,13 +35,13 @@ PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen/CoreSpecimen.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
-LinkOptions            := -l:CoreLib.lib 
+LinkOptions            := -l:CoreLib.lib -pthread 
 IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)../../../Include/ 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := $(LibrarySwitch)pthread 
-ArLibs                 :=  "pthread" 
-LibPath                := $(LibraryPathSwitch). $(LibraryPathSwitch)../../../Build/Linux 
+Libs                   := 
+ArLibs                 :=  
+LibPath                := $(LibraryPathSwitch)../../../Build/Linux 
 
 ##
 ## Common variables
@@ -66,14 +66,14 @@ Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(Inte
 .PHONY: all clean PreBuild PrePreBuild PostBuild
 all: $(OutputFile)
 
-$(OutputFile): $(IntermediateDirectory)/.d ../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib $(Objects) 
+$(OutputFile): $(IntermediateDirectory)/.d ../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib $(Objects) 
 	@$(MakeDirCommand) $(@D)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
-../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib:
-	@echo stam > "../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib:
+	@echo stam > "../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
 
 
 
@@ -160,6 +160,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_IThread$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_IThread$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreSpecimen"
 
 
