@@ -8,12 +8,12 @@ VoidPtr ThreadEntry(VoidPtr ThreadParam)
 	return (VoidPtr)value;
 }
 
-void IThreadTest()
+void ThreadTest()
 {
 	VoidPtr Param = (VoidPtr)55U;
 	VoidPtr ReturnValue;
 
-	System::Threading::IThread* thread;
+	System::Threading::Thread* thread;
 
 	thread = System::Threading::CreateThread(ThreadEntry, Param);
 	if(thread)

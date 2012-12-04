@@ -38,8 +38,8 @@ void ThreadedErrTest()
 {
 	//Pass if code_a = 10U and code_b = 15U
 	//Fail if code_a == code_b
-	IThread* a = CreateThread(ThreadA, (VoidPtr)10U);
-	IThread* b = CreateThread(ThreadA, (VoidPtr)15U);
+	Thread* a = CreateThread(ThreadA, (VoidPtr)10U);
+	Thread* b = CreateThread(ThreadA, (VoidPtr)15U);
 	UInt32 code_a = (UInt32)a->Join();
 	UInt32 code_b = (UInt32)b->Join();
 }

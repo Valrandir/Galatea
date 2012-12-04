@@ -9,7 +9,7 @@ namespace Core
 	{
 		namespace Threading
 		{
-			class Thread : public IThread
+			class ThreadImpl : public Thread
 			{
 				ThreadFonc ThreadEntry;
 				VoidPtr ThreadParam;
@@ -17,9 +17,9 @@ namespace Core
 				HANDLE hThread;
 				DWORD ThreadID;
 
-				Thread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 				static DWORD WINAPI NativeThreadEntry(VoidPtr ThreadParam);
-				friend IThread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				friend Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:
 				VoidPtr Join();

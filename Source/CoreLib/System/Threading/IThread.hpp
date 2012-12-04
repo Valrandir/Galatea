@@ -9,14 +9,14 @@ namespace Core
 		{
 			typedef VoidPtr (*ThreadFonc)(VoidPtr ThreadParam);
 
-			class IThread
+			class Thread
 			{
 				public:
 				virtual VoidPtr Join() = 0;
-				virtual ~IThread(){}
+				virtual ~Thread(){}
 			};
 
-			IThread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 		}
 	}
 }
