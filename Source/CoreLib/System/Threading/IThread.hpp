@@ -11,23 +11,17 @@ namespace Core
 
 			class IThread
 			{
-				public:
-				struct ThreadLink
-				{
-					ThreadFonc ThreadEntry;
-					VoidPtr ThreadParam;
-					VoidPtr ReturnValue;
-				};
-
-				private:
-				ThreadLink Link;
+				ThreadFonc ThreadEntry;
+				VoidPtr ThreadParam;
+				VoidPtr ReturnValue;
 
 				protected:
-				IThread(ThreadLink Link);
+				IThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:
-				ThreadLink* GetLink();
-				virtual void Join(VoidPtr* ReturnValue = 0) = 0;
+				void Execute();
+				VoidPtr GetReturnValue();
+				virtual VoidPtr Join() = 0;
 				virtual ~IThread(){}
 			};
 

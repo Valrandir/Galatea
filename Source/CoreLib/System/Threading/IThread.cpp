@@ -6,14 +6,18 @@ namespace Core
 	{
 		namespace Threading
 		{
-			IThread::IThread(ThreadLink Link)
+			IThread::IThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam) : ThreadEntry(ThreadEntry), ThreadParam(ThreadParam)
 			{
-				this->Link = Link;
 			}
 
-			IThread::ThreadLink* IThread::GetLink()
+			void IThread::Execute()
 			{
-				return &Link;
+				ReturnValue = ThreadEntry(ThreadParam);
+			}
+
+			VoidPtr IThread::GetReturnValue()
+			{
+				return ReturnValue;
 			}
 		}
 	}

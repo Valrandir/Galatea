@@ -18,7 +18,7 @@ void IThreadTest()
 	thread = System::Threading::CreateThread(ThreadEntry, Param);
 	if(thread)
 	{
-		thread->Join(&ReturnValue);
+		ReturnValue = thread->Join();
 		delete thread;
 	}
 }

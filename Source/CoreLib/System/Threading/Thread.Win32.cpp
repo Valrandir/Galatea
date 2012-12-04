@@ -6,22 +6,19 @@ namespace Core
 	{
 		namespace Threading
 		{
-			Thread::Thread(IThread::ThreadLink Link) : IThread(Link)
+			Thread::Thread(ThreadFonc ThreadEntry, VoidPtr ThreadParam) : IThread(ThreadEntry, ThreadParam)
 			{
 			}
 
-			void Thread::Join(VoidPtr* ReturnValue)
+			VoidPtr Thread::Join()
 			{
 				WaitForSingleObject(hThread, INFINITE);
-				if(ReturnValue)
-					*ReturnValue = GetLink()->ReturnValue;
+				return GetReturnValue();
 			}
 
 			DWORD WINAPI Thread::NativeThreadEntry(VoidPtr ThreadParam)
 			{
-				IThread* th = (IThread*)ThreadParam;
-				ThreadLink * link = th->GetLink();
-				link->ReturnValue = link->ThreadEntry(link->ThreadParam);
+				((IThread*)ThreadParam)->Execute();
 				return 0U;
 			}
 
@@ -29,8 +26,7 @@ namespace Core
 			{
 				HANDLE hThread;
 				DWORD ThreadID;
-				IThread::ThreadLink link = {ThreadEntry, ThreadParam, 0};
-				Thread* thread = new Thread(link);
+				Thread* thread = new Thread(ThreadEntry, ThreadParam);
 
 				hThread = ::CreateThread(0, 0, Thread::NativeThreadEntry, (LPVOID)thread, CREATE_SUSPENDED, &ThreadID);
 
