@@ -17,11 +17,11 @@ namespace Core
 				Thread(Thread const &);
 				Thread(IThread::ThreadLink Link);
 
-				static DWORD WINAPI NativeThreadEntry(void* ThreadParam);
-				friend IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam);
+				static DWORD WINAPI NativeThreadEntry(VoidPtr ThreadParam);
+				friend IThread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:
-				void Join(void** ReturnValue);
+				void Join(VoidPtr* ReturnValue);
 			};
 		}
 	}

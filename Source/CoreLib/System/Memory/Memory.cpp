@@ -7,12 +7,12 @@ namespace Core
 	{
 		namespace Memory
 		{
-			void* Alloc(UInt32 bytes)
+			VoidPtr Alloc(UInt32 bytes)
 			{
 				return malloc(bytes);
 			}
 
-			void Free(void* pMemory)
+			void Free(VoidPtr pMemory)
 			{
 				free(pMemory);
 			}

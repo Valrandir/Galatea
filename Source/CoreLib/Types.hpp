@@ -6,6 +6,8 @@
 
 namespace Core
 {
+	typedef void* VoidPtr;
+
 	#ifdef CoreTargetWin32
 		typedef signed __int16 Int16;
 		typedef signed __int32 Int32;

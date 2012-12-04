@@ -7,8 +7,8 @@ namespace Core
 	{
 		namespace Memory
 		{
-			void* Alloc(UInt32 bytes);
-			void Free(void* pMemory);
+			VoidPtr Alloc(UInt32 bytes);
+			void Free(VoidPtr pMemory);
 		};
 	}
 }

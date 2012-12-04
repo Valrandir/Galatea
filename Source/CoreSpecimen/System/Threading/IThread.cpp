@@ -1,17 +1,17 @@
 #include <Core.hpp>
 using namespace Core;
 
-void* ThreadEntry(void* ThreadParam)
+VoidPtr ThreadEntry(VoidPtr ThreadParam)
 {
 	UInt32 value = (UInt32)ThreadParam;
 	value *= value;
-	return (void*)value;
+	return (VoidPtr)value;
 }
 
 void IThreadTest()
 {
-	void* Param = (void*)55U;
-	void* ReturnValue;
+	VoidPtr Param = (VoidPtr)55U;
+	VoidPtr ReturnValue;
 
 	System::Threading::IThread* thread;
 

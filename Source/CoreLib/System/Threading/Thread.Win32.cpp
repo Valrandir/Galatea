@@ -10,14 +10,14 @@ namespace Core
 			{
 			}
 
-			void Thread::Join(void** ReturnValue)
+			void Thread::Join(VoidPtr* ReturnValue)
 			{
 				WaitForSingleObject(hThread, INFINITE);
 				if(ReturnValue)
 					*ReturnValue = GetLink()->ReturnValue;
 			}
 
-			DWORD WINAPI Thread::NativeThreadEntry(void* ThreadParam)
+			DWORD WINAPI Thread::NativeThreadEntry(VoidPtr ThreadParam)
 			{
 				IThread* th = (IThread*)ThreadParam;
 				ThreadLink * link = th->GetLink();
@@ -25,7 +25,7 @@ namespace Core
 				return 0U;
 			}
 
-			IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam)
+			IThread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
 			{
 				HANDLE hThread;
 				DWORD ThreadID;

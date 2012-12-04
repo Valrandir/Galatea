@@ -7,7 +7,7 @@ namespace Core
 	{
 		namespace Threading
 		{
-			typedef void* (*ThreadFonc)(void* ThreadParam);
+			typedef VoidPtr (*ThreadFonc)(VoidPtr ThreadParam);
 
 			class IThread
 			{
@@ -15,8 +15,8 @@ namespace Core
 				struct ThreadLink
 				{
 					ThreadFonc ThreadEntry;
-					void* ThreadParam;
-					void* ReturnValue;
+					VoidPtr ThreadParam;
+					VoidPtr ReturnValue;
 				};
 
 				private:
@@ -27,11 +27,11 @@ namespace Core
 
 				public:
 				ThreadLink* GetLink();
-				virtual void Join(void** ReturnValue = 0) = 0;
+				virtual void Join(VoidPtr* ReturnValue = 0) = 0;
 				virtual ~IThread(){}
 			};
 
-			IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam);
+			IThread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 		}
 	}
 }
