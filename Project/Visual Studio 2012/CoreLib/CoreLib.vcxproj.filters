@@ -46,5 +46,8 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp">
       <Filter>System\Threading</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\IThread.cpp">
+      <Filter>System\Threading</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,26 +6,43 @@ namespace Core
 	{
 		namespace Threading
 		{
-			Thread::Thread(HANDLE hThread, DWORD ThreadID) : hThread(hThread), ThreadID(ThreadID)
+			Thread::Thread(IThread::ThreadLink Link) : IThread(Link)
 			{
 			}
 
-			UInt32 Thread::Join()
+			void Thread::Join(void** ReturnValue)
 			{
-				DWORD ExitCode;
 				WaitForSingleObject(hThread, INFINITE);
-				GetExitCodeThread(hThread, &ExitCode);
-				return ExitCode;
+				if(ReturnValue)
+					*ReturnValue = GetLink()->ReturnValue;
+			}
+
+			DWORD WINAPI Thread::NativeThreadEntry(void* ThreadParam)
+			{
+				IThread* th = (IThread*)ThreadParam;
+				ThreadLink * link = th->GetLink();
+				link->ReturnValue = link->ThreadEntry(link->ThreadParam);
+				return 0U;
 			}
 
 			IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam)
 			{
 				HANDLE hThread;
 				DWORD ThreadID;
+				IThread::ThreadLink link = {ThreadEntry, ThreadParam, 0};
+				Thread* thread = new Thread(link);
 
-				hThread = ::CreateThread(0, 0, ThreadEntry, ThreadParam, 0, &ThreadID);
+				hThread = ::CreateThread(0, 0, Thread::NativeThreadEntry, (LPVOID)thread, CREATE_SUSPENDED, &ThreadID);
 
-				return hThread ? new Thread(hThread, ThreadID) : 0;
+				if(hThread)
+				{
+					thread->hThread = hThread;
+					thread->ThreadID = ThreadID;
+					ResumeThread(hThread);
+					return thread;
+				}
+
+				return 0;
 			}
 		}
 	}

@@ -1,21 +1,24 @@
 #include <Core.hpp>
 using namespace Core;
 
-ThreadFoncDef(ThreadEntry)
+void* ThreadEntry(void* ThreadParam)
 {
-	UInt32 value = *((UInt32*)ThreadParam);
+	UInt32 value = (UInt32)ThreadParam;
 	value *= value;
-	return value;
+	return (void*)value;
 }
 
 void IThreadTest()
 {
 	void* Param = (void*)55U;
+	void* ReturnValue;
+
 	System::Threading::IThread* thread;
-	UInt32 ExitCode;
 
 	thread = System::Threading::CreateThread(ThreadEntry, Param);
-	ExitCode = thread->Join();
-
-	delete thread;
+	if(thread)
+	{
+		thread->Join(&ReturnValue);
+		delete thread;
+	}
 }

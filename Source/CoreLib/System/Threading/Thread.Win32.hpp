@@ -14,13 +14,14 @@ namespace Core
 				HANDLE hThread;
 				DWORD ThreadID;
 
-				Thread(HANDLE hThread, DWORD ThreadID);
 				Thread(Thread const &);
+				Thread(IThread::ThreadLink Link);
 
+				static DWORD WINAPI NativeThreadEntry(void* ThreadParam);
 				friend IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam);
 
 				public:
-				UInt32 Join();
+				void Join(void** ReturnValue);
 			};
 		}
 	}

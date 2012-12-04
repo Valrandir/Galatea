@@ -1,30 +1,35 @@
 #pragma once
 #include "../../Types.hpp"
 
-#ifdef CoreTargetWin32
-	#define ThreadFoncDef(FoncName) unsigned long __stdcall FoncName(void* ThreadParam)
-#elif CoreTargetLinux
-	#define ThreadFoncDef(FoncName) void*FoncName(void* ThreadParam)
-#endif
-
 namespace Core
 {
 	namespace System
 	{
 		namespace Threading
 		{
+			typedef void* (*ThreadFonc)(void* ThreadParam);
+
 			class IThread
 			{
 				public:
-				virtual UInt32 Join() = 0;
+				struct ThreadLink
+				{
+					ThreadFonc ThreadEntry;
+					void* ThreadParam;
+					void* ReturnValue;
+				};
+
+				private:
+				ThreadLink Link;
+
+				protected:
+				IThread(ThreadLink Link);
+
+				public:
+				ThreadLink* GetLink();
+				virtual void Join(void** ReturnValue = 0) = 0;
 				virtual ~IThread(){}
 			};
-
-			#ifdef CoreTargetWin32
-				typedef unsigned long (__stdcall *ThreadFonc)(void* ThreadParam);
-			#elif CoreTargetLinux
-				typedef void* (*ThreadFonc)(void* ThreadParam);
-			#endif
 
 			IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam);
 		}
