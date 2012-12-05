@@ -18,7 +18,7 @@ namespace Core
 
 		CString GetErrText(UInt32 ErrCode, String Buffer, UInt32 BufferSize)
 		{
-			if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, 0, ErrCode, 0, Buffer, BufferSize, 0))
+			if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, ErrCode, 0, Buffer, BufferSize, NULL))
 				*Buffer = 0;
 			return Buffer;
 		}

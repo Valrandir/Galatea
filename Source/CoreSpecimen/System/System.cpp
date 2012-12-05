@@ -42,4 +42,6 @@ void ThreadedErrTest()
 	Thread* b = CreateThread(ThreadA, (VoidPtr)15U);
 	UInt32 code_a = (UInt32)a->Join();
 	UInt32 code_b = (UInt32)b->Join();
+	Delete(a);
+	Delete(b);
 }

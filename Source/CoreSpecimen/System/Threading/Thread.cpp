@@ -19,6 +19,6 @@ void ThreadTest()
 	if(thread)
 	{
 		ReturnValue = thread->Join();
-		delete thread;
+		Delete(thread);
 	}
 }

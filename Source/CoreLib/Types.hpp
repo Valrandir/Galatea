@@ -1,8 +1,7 @@
 #pragma once
 
-#ifndef NULL
-	#define NULL ((void*)0)
-#endif
+#define NULL 0
+#define Delete(ptr) delete(ptr); (ptr) = NULL
 
 namespace Core
 {

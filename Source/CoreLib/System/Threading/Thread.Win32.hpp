@@ -14,8 +14,7 @@ namespace Core
 				ThreadFonc ThreadEntry;
 				VoidPtr ThreadParam;
 				VoidPtr ReturnValue;
-				HANDLE hThread;
-				DWORD ThreadID;
+				HANDLE ThreadHandle;
 
 				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 				static DWORD WINAPI NativeThreadEntry(VoidPtr ThreadParam);
