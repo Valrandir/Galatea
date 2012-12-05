@@ -6,13 +6,6 @@ namespace Core
 	{
 		namespace Threading
 		{
-			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
-				ThreadEntry(ThreadEntry),
-				ThreadParam(ThreadParam),
-				ReturnValue(0),
-				ThreadHandle(0)
-			{}
-
 			DWORD WINAPI ThreadImpl::NativeThreadEntry(VoidPtr ThreadParam)
 			{
 				ThreadImpl& ThreadRef = *(ThreadImpl*)ThreadParam;
@@ -20,12 +13,19 @@ namespace Core
 				return 0U;
 			}
 
-			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
+				ThreadEntry(ThreadEntry),
+				ThreadParam(ThreadParam),
+				ReturnValue(0),
+				ThreadHandle(0)
+			{}
+
+			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
 			{
 				HANDLE ThreadHandle;
 				ThreadImpl* Thread = new ThreadImpl(ThreadEntry, ThreadParam);
 
-				ThreadHandle = ::CreateThread(NULL, 0, ThreadImpl::NativeThreadEntry, (LPVOID)Thread, 0, NULL);
+				ThreadHandle = ::CreateThread(NULL, 0, NativeThreadEntry, (LPVOID)Thread, 0, NULL);
 
 				if(ThreadHandle)
 				{
@@ -37,6 +37,11 @@ namespace Core
 					Delete(Thread);
 					return NULL;
 				}
+			}
+
+			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			{
+				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
 			}
 
 			VoidPtr ThreadImpl::Join()

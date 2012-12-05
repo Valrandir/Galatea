@@ -16,11 +16,11 @@ namespace Core
 				VoidPtr ReturnValue;
 				HANDLE ThreadHandle;
 
-				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 				static DWORD WINAPI NativeThreadEntry(VoidPtr ThreadParam);
-				friend Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:
+				static ThreadImpl* CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 				VoidPtr Join();
 			};
 		}
