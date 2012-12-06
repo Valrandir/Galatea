@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=dlaplante
-Date                   :=12-12-05
+Date                   :=12-12-06
 CodeLitePath           :="/home/dlaplante/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
@@ -66,11 +66,17 @@ Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(Inte
 .PHONY: all clean PreBuild PrePreBuild PostBuild
 all: $(OutputFile)
 
-$(OutputFile): $(IntermediateDirectory)/.d $(Objects) 
+$(OutputFile): $(IntermediateDirectory)/.d ../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib $(Objects) 
 	@$(MakeDirCommand) $(@D)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
+
+../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib:
+	@echo stam > "../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+
+
+
 
 $(IntermediateDirectory)/.d:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug

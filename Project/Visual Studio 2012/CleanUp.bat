@@ -1,7 +1,6 @@
 @echo off
-rd /s /q Debug
-rd /s /q CoreLib\Debug
-rd /s /q CoreSpecimen\Debug
+rd /s /q CoreLib\Build
+rd /s /q CoreSpecimen\Build
 
 del *.sdf
 del /ah *.suo

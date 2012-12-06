@@ -1,7 +1,7 @@
 #pragma once
 
-#if !defined(CoreTargetWin32) && !defined(CoreTargetLinux)
-	#error Define either CoreTargetWin32 or CoreTargetLinux
+#if !CoreTargetWin32 && !CoreTargetWin64 && !CoreTargetLinux
+	#error No target defined.
 #endif
 
 #include "Types.hpp"
