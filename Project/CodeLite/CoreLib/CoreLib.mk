@@ -2,9 +2,9 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug
+## Debug-64
 ProjectName            :=CoreLib
-ConfigurationName      :=Debug
+ConfigurationName      :=Debug-64
 WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreLib"
 IntermediateDirectory  :=./Debug
@@ -50,7 +50,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := ar rcus
 CXX      := g++
 CC       := gcc
-CXXFLAGS :=  -g $(Preprocessors)
+CXXFLAGS :=  -g -m64 $(Preprocessors)
 CFLAGS   :=  -g $(Preprocessors)
 
 
@@ -71,8 +71,8 @@ $(OutputFile): $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(AR) $(ArchiveOutputSwitch)$(OutputFile) @$(ObjectsFileList) $(ArLibs)
-	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug"
-	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64"
+	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreLib"
 
 ./Debug:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -134,6 +134,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreLib"
 
 

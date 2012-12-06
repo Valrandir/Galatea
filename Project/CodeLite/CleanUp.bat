@@ -1,5 +1,8 @@
 @echo off
-rd /s /q .build-debug
+rd /s /q .build-debug-32
+rd /s /q .build-debug-64
+rd /s /q .build-release-32
+rd /s /q .build-release-64
 rd /s /q .clang
 del Core.tags
 rename Core.workspace cw.void

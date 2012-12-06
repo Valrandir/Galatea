@@ -2,9 +2,9 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug
+## Debug-64
 ProjectName            :=CoreSpecimen
-ConfigurationName      :=Debug
+ConfigurationName      :=Debug-64
 WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
@@ -50,8 +50,8 @@ LibPath                := $(LibraryPathSwitch)../../../Build/Linux
 AR       := ar rcus
 CXX      := g++
 CC       := gcc
-CXXFLAGS :=  -g -O0 -Wall $(Preprocessors)
-CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
+CXXFLAGS :=  -g -O0 -Wall -m64 $(Preprocessors)
+CFLAGS   :=  -g -O0 -Wall -m64 $(Preprocessors)
 
 
 ##
@@ -66,17 +66,11 @@ Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(Inte
 .PHONY: all clean PreBuild PrePreBuild PostBuild
 all: $(OutputFile)
 
-$(OutputFile): $(IntermediateDirectory)/.d ../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib $(Objects) 
+$(OutputFile): $(IntermediateDirectory)/.d $(Objects) 
 	@$(MakeDirCommand) $(@D)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
-
-../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib:
-	@echo stam > "../../../../../../home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreLib"
-
-
-
 
 $(IntermediateDirectory)/.d:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -160,6 +154,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_Thread$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_Thread$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreSpecimen"
 
 

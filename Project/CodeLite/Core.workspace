@@ -3,13 +3,21 @@
   <Project Name="CoreLib" Path="CoreLib/CoreLib.project" Active="No"/>
   <Project Name="CoreSpecimen" Path="CoreSpecimen/CoreSpecimen.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
-      <Project Name="CoreLib" ConfigName="Debug"/>
-      <Project Name="CoreSpecimen" ConfigName="Debug"/>
+    <WorkspaceConfiguration Name="Debug-32" Selected="no">
+      <Project Name="CoreSpecimen" ConfigName="Debug-32"/>
+      <Project Name="CoreLib" ConfigName="Debug-32"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
-      <Project Name="CoreLib" ConfigName="Release"/>
-      <Project Name="CoreSpecimen" ConfigName="Release"/>
+    <WorkspaceConfiguration Name="Release-32" Selected="no">
+      <Project Name="CoreSpecimen" ConfigName="Release-32"/>
+      <Project Name="CoreLib" ConfigName="Release-32"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Debug-64" Selected="yes">
+      <Project Name="CoreSpecimen" ConfigName="Debug-64"/>
+      <Project Name="CoreLib" ConfigName="Debug-64"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release-64" Selected="no">
+      <Project Name="CoreSpecimen" ConfigName="Release-64"/>
+      <Project Name="CoreLib" ConfigName="Release-64"/>
     </WorkspaceConfiguration>
   </BuildMatrix>
 </CodeLite_Workspace>
