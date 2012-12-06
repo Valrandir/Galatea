@@ -30,4 +30,7 @@
       <Filter>System\Threading</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />
+  </ItemGroup>
 </Project>

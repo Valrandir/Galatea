@@ -1,24 +1,25 @@
-#include <Core.hpp>
+#include "../../Core.hpp"
 using namespace Core;
 
 VoidPtr ThreadEntry(VoidPtr ThreadParam)
 {
-	UInt32 value = (UInt32)ThreadParam;
+	UInt32& value = *(UInt32*)ThreadParam;
 	value *= value;
-	return (VoidPtr)value;
+	return ThreadParam;
 }
 
 void ThreadTest()
 {
-	VoidPtr Param = (VoidPtr)55U;
+	UInt32 Param = 55U;
+	VoidPtr ThreadParam = (VoidPtr)&Param;
 	VoidPtr ReturnValue;
+	System::Threading::Thread* Thread;
 
-	System::Threading::Thread* thread;
+	Thread = System::Threading::CreateThread(ThreadEntry, ThreadParam);
 
-	thread = System::Threading::CreateThread(ThreadEntry, Param);
-	if(thread)
+	if(Thread)
 	{
-		ReturnValue = thread->Join();
-		Delete(thread);
+		ReturnValue = Thread->Join();
+		Delete(Thread);
 	}
 }

@@ -1,5 +1,4 @@
 #include "Thread.Linux.hpp"
-#include <pthread.h>
 
 namespace Core
 {
@@ -7,30 +6,54 @@ namespace Core
 	{
 		namespace Threading
 		{
-			Thread::Thread(pthread_t ThreadID) : ThreadID(ThreadID)
+			void* ThreadImpl::NativeThreadEntry(void* ThreadParam)
 			{
+				ThreadImpl& ThreadRef = *(ThreadImpl*)ThreadParam;
+				ThreadRef.ReturnValue = ThreadRef.ThreadEntry(ThreadRef.ThreadParam);
+				return (void*)0U;
 			}
 
-			UInt32 Thread::Join()
-			{
-				void* ExitCode;
-				pthread_join(ThreadID, &ExitCode);
-				return *((UInt32*)ExitCode);
-			}
+			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
+				ThreadEntry(ThreadEntry),
+				ThreadParam(ThreadParam),
+				ReturnValue(0),
+				ThreadID(0)
+			{}
 
-			IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam)
+			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
 			{
-				int ErrCode;
-				pthread_attr_t Attributes;
+				Int32 ErrCode;
 				pthread_t ThreadID;
+				ThreadImpl* Thread = new ThreadImpl(ThreadEntry, ThreadParam);
 
-				if(!pthread_attr_init(&Attributes))
+				ErrCode = pthread_create(&ThreadID, NULL, NativeThreadEntry, (void*)Thread);
+
+				if(!ErrCode)
 				{
-					ErrCode = pthread_create(&ThreadID, &Attributes, ThreadEntry, &ThreadParam);
-					pthread_attr_destroy(&Attributes);
+					Thread->ThreadID = ThreadID;
+					return Thread;
 				}
+				else
+				{
+					System::SetErrCode((UInt32)ErrCode);
+					Delete(Thread);
+					return NULL;
+				}
+			}
 
-				return ErrCode == 0 ? new Thread(ThreadID) : NULL;
+			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			{
+				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
+			}
+
+			VoidPtr ThreadImpl::Join()
+			{
+				if(ThreadID)
+				{
+					pthread_join(ThreadID, NULL);
+					ThreadID = 0;
+				}
+				return ReturnValue;
 			}
 		}
 	}

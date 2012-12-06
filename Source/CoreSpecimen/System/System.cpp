@@ -1,4 +1,4 @@
-#include <Core.hpp>
+#include "../Core.hpp"
 using namespace Core;
 
 void ErrTest()
@@ -10,7 +10,6 @@ void ErrTest()
 	System::SetErrCode(10U);
 	ErrCode = System::GetErrCode();
 	ErrText = System::GetErrText(ErrCode, Buffer, 512U);
-	ErrCode = *ErrText; //To avoid a warning with GPP
 }
 
 
@@ -20,28 +19,34 @@ using namespace Threading;
 
 VoidPtr ThreadA(VoidPtr Param)
 {
-	UInt32 ErrCode = (UInt32)Param;
-	SetErrCode(ErrCode);
+	UInt32* ErrCode = (UInt32*)Param;
+	SetErrCode(*ErrCode);
 	Time::Sleep(2500);
-	return (VoidPtr)GetErrCode();
+	*ErrCode = GetErrCode() + 100;
+	return (VoidPtr)ErrCode;
 }
 
 VoidPtr ThreadB(VoidPtr Param)
 {
-	UInt32 ErrCode = (UInt32)Param;
-	SetErrCode(ErrCode);
+	UInt32* ErrCode = (UInt32*)Param;
+	SetErrCode(*ErrCode);
 	Time::Sleep(5000);
-	return (VoidPtr)GetErrCode();
+	*ErrCode = GetErrCode() + 1;
+	return (VoidPtr)ErrCode;
 }
 
+//Pass if aOut = 10U and bOut = 15U
+//Fail if aOut == bOut
 void ThreadedErrTest()
 {
-	//Pass if code_a = 10U and code_b = 15U
-	//Fail if code_a == code_b
-	Thread* a = CreateThread(ThreadA, (VoidPtr)10U);
-	Thread* b = CreateThread(ThreadA, (VoidPtr)15U);
-	UInt32 code_a = (UInt32)a->Join();
-	UInt32 code_b = (UInt32)b->Join();
-	Delete(a);
-	Delete(b);
+	UInt32 aIn = 10U;
+	UInt32 bIn = 15U;
+	Thread* aThread = CreateThread(ThreadA, (VoidPtr)&aIn);
+	Thread* bThread = CreateThread(ThreadB, (VoidPtr)&bIn);
+	//UInt32 aOut = *(UInt32*)aThread->Join();
+	//UInt32 bOut = *(UInt32*)bThread->Join();
+	UInt32* aOut = (UInt32*)aThread->Join();
+	UInt32* bOut = (UInt32*)bThread->Join();
+	Delete(aThread);
+	Delete(bThread);
 }

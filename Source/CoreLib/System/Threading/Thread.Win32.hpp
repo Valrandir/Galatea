@@ -16,7 +16,7 @@ namespace Core
 				VoidPtr ReturnValue;
 				HANDLE ThreadHandle;
 
-				static DWORD WINAPI NativeThreadEntry(VoidPtr ThreadParam);
+				static DWORD WINAPI NativeThreadEntry(LPVOID ThreadParam);
 				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:

@@ -5,16 +5,16 @@
 ## Debug
 ProjectName            :=CoreSpecimen
 ConfigurationName      :=Debug
-WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
+WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=Valrandir
-Date                   :=12-12-04
-CodeLitePath           :="/home/valrandir/.codelite"
+User                   :=dlaplante
+Date                   :=12-12-05
+CodeLitePath           :="/home/dlaplante/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -58,7 +58,7 @@ CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IntermediateDirectory)/System_System$(ObjectSuffix) $(IntermediateDirectory)/Threading_IThread$(ObjectSuffix) 
+Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(IntermediateDirectory)/CoreSpecimen_Main.Linux$(ObjectSuffix) $(IntermediateDirectory)/Time_Time$(ObjectSuffix) $(IntermediateDirectory)/Memory_Memory$(ObjectSuffix) $(IntermediateDirectory)/System_System$(ObjectSuffix) $(IntermediateDirectory)/Threading_Thread$(ObjectSuffix) 
 
 ##
 ## Main Build Targets 
@@ -66,17 +66,11 @@ Objects=$(IntermediateDirectory)/CoreSpecimen_CoreSpecimen$(ObjectSuffix) $(Inte
 .PHONY: all clean PreBuild PrePreBuild PostBuild
 all: $(OutputFile)
 
-$(OutputFile): $(IntermediateDirectory)/.d ../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib $(Objects) 
+$(OutputFile): $(IntermediateDirectory)/.d $(Objects) 
 	@$(MakeDirCommand) $(@D)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
-
-../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib:
-	@echo stam > "../../../../../../home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreLib"
-
-
-
 
 $(IntermediateDirectory)/.d:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -127,13 +121,13 @@ $(IntermediateDirectory)/System_System$(DependSuffix): ../../../Source/CoreSpeci
 $(IntermediateDirectory)/System_System$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/System.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/System_System$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/System.cpp"
 
-$(IntermediateDirectory)/Threading_IThread$(ObjectSuffix): ../../../Source/CoreSpecimen/System/Threading/IThread.cpp $(IntermediateDirectory)/Threading_IThread$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/IThread.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Threading_IThread$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/Threading_IThread$(DependSuffix): ../../../Source/CoreSpecimen/System/Threading/IThread.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Threading_IThread$(ObjectSuffix) -MF$(IntermediateDirectory)/Threading_IThread$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/IThread.cpp"
+$(IntermediateDirectory)/Threading_Thread$(ObjectSuffix): ../../../Source/CoreSpecimen/System/Threading/Thread.cpp $(IntermediateDirectory)/Threading_Thread$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/Thread.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/Threading_Thread$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/Threading_Thread$(DependSuffix): ../../../Source/CoreSpecimen/System/Threading/Thread.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/Threading_Thread$(ObjectSuffix) -MF$(IntermediateDirectory)/Threading_Thread$(DependSuffix) -MM "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/Thread.cpp"
 
-$(IntermediateDirectory)/Threading_IThread$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/Threading/IThread.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Threading_IThread$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/IThread.cpp"
+$(IntermediateDirectory)/Threading_Thread$(PreprocessSuffix): ../../../Source/CoreSpecimen/System/Threading/Thread.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/Threading_Thread$(PreprocessSuffix) "/mnt/hgfs/Core/Source/CoreSpecimen/System/Threading/Thread.cpp"
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
@@ -156,10 +150,10 @@ clean:
 	$(RM) $(IntermediateDirectory)/System_System$(ObjectSuffix)
 	$(RM) $(IntermediateDirectory)/System_System$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/System_System$(PreprocessSuffix)
-	$(RM) $(IntermediateDirectory)/Threading_IThread$(ObjectSuffix)
-	$(RM) $(IntermediateDirectory)/Threading_IThread$(DependSuffix)
-	$(RM) $(IntermediateDirectory)/Threading_IThread$(PreprocessSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread$(ObjectSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread$(DependSuffix)
+	$(RM) $(IntermediateDirectory)/Threading_Thread$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug/CoreSpecimen"
+	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug/CoreSpecimen"
 
 

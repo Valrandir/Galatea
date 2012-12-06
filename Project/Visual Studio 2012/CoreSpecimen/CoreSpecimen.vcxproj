@@ -18,6 +18,9 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFD9463A-D7DA-406F-BA78-14C463AEC7DB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

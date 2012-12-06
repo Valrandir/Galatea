@@ -1,6 +1,7 @@
 #pragma once
 #include <pthread.h>
-#include "IThread.hpp"
+#include "../System.hpp"
+#include "Thread.hpp"
 
 namespace Core
 {
@@ -8,17 +9,19 @@ namespace Core
 	{
 		namespace Threading
 		{
-			class Thread : public IThread
+			class ThreadImpl : public Thread
 			{
+				ThreadFonc ThreadEntry;
+				VoidPtr ThreadParam;
+				VoidPtr ReturnValue;
 				pthread_t ThreadID;
 
-				Thread(pthread_t ThreadID);
-				Thread(Thread const &);
-
-				friend IThread* CreateThread(ThreadFonc ThreadEntry, void* ThreadParam);
+				static void* NativeThreadEntry(void* ThreadParam);
+				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
 
 				public:
-				UInt32 Join();
+				static ThreadImpl* CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				VoidPtr Join();
 			};
 		}
 	}

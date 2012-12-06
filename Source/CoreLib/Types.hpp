@@ -1,6 +1,9 @@
 #pragma once
 
-#define NULL 0
+#ifndef NULL
+	#define NULL 0
+#endif
+
 #define Delete(ptr) delete(ptr); (ptr) = NULL
 
 namespace Core

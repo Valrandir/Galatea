@@ -6,11 +6,11 @@ namespace Core
 	{
 		namespace Threading
 		{
-			DWORD WINAPI ThreadImpl::NativeThreadEntry(VoidPtr ThreadParam)
+			DWORD WINAPI ThreadImpl::NativeThreadEntry(LPVOID ThreadParam)
 			{
 				ThreadImpl& ThreadRef = *(ThreadImpl*)ThreadParam;
 				ThreadRef.ReturnValue = ThreadRef.ThreadEntry(ThreadRef.ThreadParam);
-				return 0U;
+				return (DWORD)0U;
 			}
 
 			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
