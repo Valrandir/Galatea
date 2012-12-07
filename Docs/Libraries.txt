@@ -1,0 +1,5 @@
+http://www.vorbis.com/
+http://freeimage.sourceforge.net/
+http://www.openal.org/
+http://www.opengl.org/
+http://www.libsdl.org/
