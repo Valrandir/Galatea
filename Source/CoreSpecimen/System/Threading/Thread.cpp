@@ -3,14 +3,15 @@ using namespace Core;
 
 VoidPtr ThreadEntryByValue(VoidPtr ThreadParam)
 {
-	UInt32 value = (UInt32)ThreadParam;
+	UInt value = (Int)ThreadParam;
 	value *= value;
 	return (VoidPtr)value;
 }
 
 void ThreadTestByValue()
 {
-	UInt32 Param = 55U;
+	Int Param = 55U;
+	Int Out;
 	VoidPtr ThreadParam = (VoidPtr)Param;
 	VoidPtr ReturnValue;
 	System::Threading::Thread* Thread;
@@ -20,6 +21,7 @@ void ThreadTestByValue()
 	if(Thread)
 	{
 		ReturnValue = Thread->Join();
+		Out = (Int)ReturnValue;
 		Delete(Thread);
 	}
 }

@@ -2,19 +2,19 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug-64
+## Debug-32
 ProjectName            :=CoreSpecimen
-ConfigurationName      :=Debug-64
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+ConfigurationName      :=Debug-32
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreSpecimen"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-12-06
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-07
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -50,8 +50,8 @@ LibPath                := $(LibraryPathSwitch)../../../Build/Linux
 AR       := ar rcus
 CXX      := g++
 CC       := gcc
-CXXFLAGS :=  -g -O0 -Wall -m64 $(Preprocessors)
-CFLAGS   :=  -g -O0 -Wall -m64 $(Preprocessors)
+CXXFLAGS :=  -g -O0 -Wall -m32 $(Preprocessors)
+CFLAGS   :=  -g -O0 -Wall -m32 $(Preprocessors)
 
 
 ##
@@ -154,6 +154,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_Thread$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_Thread$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreSpecimen"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug-32/CoreSpecimen"
 
 

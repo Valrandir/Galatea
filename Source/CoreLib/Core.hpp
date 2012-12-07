@@ -1,6 +1,6 @@
 #pragma once
 
-#if !CoreTargetWin32 && !CoreTargetWin64 && !CoreTargetLinux
+#if !CoreTargetWin32 && !CoreTargetLinux
 	#error No target defined.
 #endif
 

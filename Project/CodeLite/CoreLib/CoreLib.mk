@@ -2,19 +2,19 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Debug-64
+## Debug-32
 ProjectName            :=CoreLib
-ConfigurationName      :=Debug-64
-WorkspacePath          := "/home/dlaplante/Desktop/Core/Project/CodeLite"
+ConfigurationName      :=Debug-32
+WorkspacePath          := "/home/valrandir/Desktop/Link to Core/Project/CodeLite"
 ProjectPath            := "/mnt/hgfs/Core/Project/CodeLite/CoreLib"
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
-User                   :=dlaplante
-Date                   :=12-12-06
-CodeLitePath           :="/home/dlaplante/.codelite"
+User                   :=Valrandir
+Date                   :=12-12-07
+CodeLitePath           :="/home/valrandir/.codelite"
 LinkerName             :=g++
 SharedObjectLinkerName :=g++ -shared -fPIC
 ObjectSuffix           :=.o
@@ -50,7 +50,7 @@ LibPath                := $(LibraryPathSwitch).
 AR       := ar rcus
 CXX      := g++
 CC       := gcc
-CXXFLAGS :=  -g -m64 $(Preprocessors)
+CXXFLAGS :=  -g -m32 $(Preprocessors)
 CFLAGS   :=  -g $(Preprocessors)
 
 
@@ -71,8 +71,8 @@ $(OutputFile): $(Objects)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects) > $(ObjectsFileList)
 	$(AR) $(ArchiveOutputSwitch)$(OutputFile) @$(ObjectsFileList) $(ArLibs)
-	@$(MakeDirCommand) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64"
-	@echo rebuilt > "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreLib"
+	@$(MakeDirCommand) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug-32"
+	@echo rebuilt > "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug-32/CoreLib"
 
 ./Debug:
 	@test -d ./Debug || $(MakeDirCommand) ./Debug
@@ -134,6 +134,6 @@ clean:
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(DependSuffix)
 	$(RM) $(IntermediateDirectory)/Threading_Thread.Linux$(PreprocessSuffix)
 	$(RM) $(OutputFile)
-	$(RM) "/home/dlaplante/Desktop/Core/Project/CodeLite/.build-debug-64/CoreLib"
+	$(RM) "/home/valrandir/Desktop/Link to Core/Project/CodeLite/.build-debug-32/CoreLib"
 
 
