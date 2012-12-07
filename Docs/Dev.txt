@@ -1,0 +1,8 @@
+Win32 Equivalents for C Run-Time Functions
+http://support.microsoft.com/default.aspx?scid=kb;EN-US;q99456
+
+Optimize for size
+http://www.catch22.net/tuts/reducing-executable-size
+
+C++ FQA Lite: Main page
+http://yosefk.com/c++fqa/index.html
