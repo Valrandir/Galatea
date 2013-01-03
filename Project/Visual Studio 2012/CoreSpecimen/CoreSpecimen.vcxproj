@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp" />

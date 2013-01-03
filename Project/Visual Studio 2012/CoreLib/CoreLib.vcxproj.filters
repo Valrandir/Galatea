@@ -13,6 +13,9 @@
     <Filter Include="System\Threading">
       <UniqueIdentifier>{c6b65025-e122-447f-a878-9cab15fec0e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataStruct">
+      <UniqueIdentifier>{e1c68bf5-273c-48c6-b182-038b177b3c50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -32,6 +35,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp">
       <Filter>System\Threading</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -45,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp">
       <Filter>System\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
+      <Filter>DataStruct</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

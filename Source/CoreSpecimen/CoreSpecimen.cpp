@@ -4,6 +4,7 @@ extern void ThreadTestByValue();
 extern void ThreadTestByRef();
 extern void ThreadedErrTest();
 extern void TimeTest();
+extern void VectorTest();
 
 void CoreSpecimen()
 {
@@ -18,5 +19,6 @@ void CoreSpecimen()
 		ThreadTestByRef();
 		ThreadedErrTest();
 		TimeTest();
+		VectorTest();
 	}
 }

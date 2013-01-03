@@ -13,6 +13,9 @@
     <Filter Include="System\Threading">
       <UniqueIdentifier>{4fc752a1-ee31-43d5-84fc-01171d976d87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataStruct">
+      <UniqueIdentifier>{650c866e-fdb4-4f22-8d88-4f42cfb92892}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -28,6 +31,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp">
       <Filter>System\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp">
+      <Filter>DataStruct</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

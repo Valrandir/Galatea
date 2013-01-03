@@ -7,8 +7,10 @@ namespace Core
 	{
 		namespace Memory
 		{
-			VoidPtr Alloc(UInt32 bytes);
-			void Free(VoidPtr pMemory);
+			VoidPtr Alloc(UInt Bytes);
+			void Free(VoidPtr MemoryPtr);
+			void Copy(VoidPtr Source, VoidPtr Target, UInt Size);
+			void Move(VoidPtr Source, VoidPtr Target, UInt Size);
 		};
 	}
 }
