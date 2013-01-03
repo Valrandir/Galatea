@@ -8,7 +8,7 @@ namespace Core
 	{
 		template<class ItemType> class Vector
 		{
-			ItemType* Ptr;
+			ItemType* VecPtr;
 			UInt Capacity;
 			UInt Length;
 

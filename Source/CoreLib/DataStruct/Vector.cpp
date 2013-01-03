@@ -6,7 +6,7 @@ template <class ItemType> void Vector<ItemType>::AssumeFreeSpace()
 		Reserve(Capacity << 1U);
 }
 
-template<class ItemType> Vector<ItemType>::Vector() : Ptr(NULL), Capacity(0U), Length(0U) {}
+template<class ItemType> Vector<ItemType>::Vector() : VecPtr(NULL), Capacity(0U), Length(0U) {}
 
 template<class ItemType> Vector<ItemType>::~Vector()
 {
@@ -15,17 +15,17 @@ template<class ItemType> Vector<ItemType>::~Vector()
 
 template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
 {
-	ItemType* NewPtr;
+	ItemType* ptr;
 
 	if(Capacity > this->Capacity)
 	{
-		NewPtr = (ItemType*)System::Memory::Alloc(sizeof(ItemType) * Capacity);
-		if(Ptr)
+		ptr = (ItemType*)System::Memory::Alloc(sizeof(ItemType) * Capacity);
+		if(VecPtr)
 		{
-			System::Memory::Copy(Ptr, NewPtr, sizeof(ItemType) * this->Capacity);
-			System::Memory::Free(Ptr);
+			System::Memory::Copy(VecPtr, ptr, sizeof(ItemType) * this->Capacity);
+			System::Memory::Free(VecPtr);
 		}
-		Ptr = NewPtr;
+		VecPtr = ptr;
 		this->Capacity = Capacity;
 	}
 }
@@ -33,40 +33,40 @@ template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
 template<class ItemType> void Vector<ItemType>::Add(ItemType Value)
 {
 	AssumeFreeSpace();
-	*(Ptr + Length) = Value;
+	*(VecPtr + Length) = Value;
 	++Length;
 }
 
 template<class ItemType> void Vector<ItemType>::Insert(UInt Position, ItemType Value)
 {
-	ItemType* Ptr;
+	ItemType* ptr;
 
 	AssumeFreeSpace();
 
 	if(Position >= Length)
 	{
-		*(this->Ptr + Length) = Value;
+		*(VecPtr + Length) = Value;
 		++Length;
 	}
 	else
 	{
-		Ptr = this->Ptr + Position;
-		System::Memory::Move(Ptr, Ptr + 1, sizeof(ItemType) * (Length - Position));
-		*Ptr = Value;
+		ptr = VecPtr + Position;
+		System::Memory::Move(ptr, ptr + 1, sizeof(ItemType) * (Length - Position));
+		*ptr = Value;
 		++Length;
 	}
 }
 
 template<class ItemType> void Vector<ItemType>::Remove(UInt Position)
 {
-	ItemType* Ptr;
+	ItemType* ptr;
 
 	if(Position < Length)
 	{
 		--Length;
-		Ptr = this->Ptr + Position;
-		Ptr->~ItemType();
-		System::Memory::Move(Ptr + 1, Ptr, sizeof(ItemType) * (Length - Position));
+		ptr = VecPtr + Position;
+		ptr->~ItemType();
+		System::Memory::Move(ptr + 1, ptr, sizeof(ItemType) * (Length - Position));
 	}
 }
 
@@ -87,13 +87,13 @@ template<class ItemType> void Vector<ItemType>::Reset()
 {
 	Iterator it, end;
 
-	if(Ptr)
+	if(VecPtr)
 	{
 		for(it = Begin(), end = End(); it < end; ++it)
 			it->~ItemType();
 
-		System::Memory::Free(Ptr);
-		Ptr = NULL;
+		System::Memory::Free(VecPtr);
+		VecPtr = NULL;
 		Capacity = 0U;
 		Length = 0U;
 	}
@@ -116,30 +116,30 @@ template<class ItemType> ItemType Vector<ItemType>::operator[](UInt Position) co
 
 template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::Begin()
 {
-	return Ptr;
+	return VecPtr;
 }
 
 template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::End()
 {
-	return Ptr + Length + 1;
+	return VecPtr + Length + 1;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::Begin() const
 {
-	return Ptr;
+	return VecPtr;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::End() const
 {
-	return Ptr + Length + 1;
+	return VecPtr + Length + 1;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CBegin() const
 {
-	return Ptr;
+	return VecPtr;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CEnd() const
 {
-	return Ptr + Length + 1;
+	return VecPtr + Length + 1;
 }
