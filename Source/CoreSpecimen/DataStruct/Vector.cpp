@@ -119,6 +119,7 @@ void ClearTest()
 
 	Vector<LoL> VectorInt;
 	VectorInt.Insert(0, a);
+	VectorInt.Insert(0, a);
 
 	LoL Item = VectorInt[0];
 

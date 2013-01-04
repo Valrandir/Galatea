@@ -12,7 +12,8 @@ namespace Core
 			UInt Capacity;
 			UInt Length;
 
-			void AssumeFreeSpace();
+			void AllocSpace();
+			void DestroyAll();
 
 			public:
 			typedef ItemType* Iterator;

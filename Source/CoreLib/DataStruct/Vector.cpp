@@ -1,9 +1,17 @@
-template <class ItemType> void Vector<ItemType>::AssumeFreeSpace()
+template <class ItemType> void Vector<ItemType>::AllocSpace()
 {
 	if(Capacity == 0U)
 		Reserve(2U);
 	else if(Capacity == Length)
 		Reserve(Capacity << 1U);
+}
+
+template <class ItemType> void Vector<ItemType>::DestroyAll()
+{
+	Iterator it = Begin();
+	Iterator end = End();
+	while(it < end)
+		it++->~ItemType();
 }
 
 template<class ItemType> Vector<ItemType>::Vector() : VecPtr(NULL), Capacity(0U), Length(0U) {}
@@ -32,30 +40,25 @@ template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
 
 template<class ItemType> void Vector<ItemType>::Add(ItemType const & Value)
 {
-	AssumeFreeSpace();
-	new((VoidPtr)(VecPtr + Length)) ItemType(Value);
-	++Length;
+	Insert(Length, Value);
 }
 
 template<class ItemType> void Vector<ItemType>::Insert(UInt Position, ItemType const & Value)
 {
 	ItemType* ptr;
+	Bool insert;
 
-	AssumeFreeSpace();
+	AllocSpace();
 
-	//If Position is past the end, just insert at end.
-	if(Position >= Length)
-	{
-		new((VoidPtr)(VecPtr + Length)) ItemType(Value);
-		++Length;
-	}
-	else
-	{
-		ptr = VecPtr + Position;
+	//If Position is beyond the end then insert at end.
+	insert = Position < Length;
+	ptr = insert ? VecPtr + Position : VecPtr + Length;
+
+	if(insert)
 		System::Memory::Move(ptr, ptr + 1, sizeof(ItemType) * (Length - Position));
-		new((VoidPtr)ptr) ItemType(Value);
-		++Length;
-	}
+
+	new((VoidPtr)ptr) ItemType(Value);
+	++Length;
 }
 
 template<class ItemType> void Vector<ItemType>::Remove(UInt Position)
@@ -73,26 +76,15 @@ template<class ItemType> void Vector<ItemType>::Remove(UInt Position)
 
 template<class ItemType> void Vector<ItemType>::Clear()
 {
-	Iterator it, end;
-
-	if(VecPtr)
-	{
-		for(it = Begin(), end = End(); it < end; ++it)
-			it->~ItemType();
-
-		Length = 0U;
-	}
+	DestroyAll();
+	Length = 0U;
 }
 
 template<class ItemType> void Vector<ItemType>::Reset()
 {
-	Iterator it, end;
-
 	if(VecPtr)
 	{
-		for(it = Begin(), end = End(); it < end; ++it)
-			it->~ItemType();
-
+		DestroyAll();
 		System::Memory::Free(VecPtr);
 		VecPtr = NULL;
 		Capacity = 0U;
