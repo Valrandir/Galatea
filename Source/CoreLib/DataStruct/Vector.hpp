@@ -23,8 +23,8 @@ namespace Core
 
 			void Reserve(UInt Capacity);
 
-			void Add(ItemType Value);
-			void Insert(UInt Position, ItemType Value);
+			void Add(ItemType const & Value);
+			void Insert(UInt Position, ItemType const & Value);
 			void Remove(UInt Position);
 
 			void Clear();

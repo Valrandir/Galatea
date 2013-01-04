@@ -80,26 +80,51 @@ void IteratorTest()
 
 class LoL
 {
+	Int id;
+
 	public:
-	LoL()
+	LoL(Int id) : id(id)
 	{
-		int x = 0;
-		int y = 0;
-		int z = x + y;
+		int x = id;
+	}
+
+	LoL(LoL const & Source)
+	{
+		id = Source.id;
+	}
+
+	LoL& operator=(LoL const & Source)
+	{
+		id = Source.id;
+		return *this;
 	}
 
 	~LoL()
 	{
-		int x = 0;
-		int y = 0;
-		int z = x + y;
+		int x = id;
 	}
 };
 
+#define _HAS_EXCEPTIONS 0
+#include <vector>
+
 void ClearTest()
 {
+	LoL a(1);
+
+	//LoL* l = new(std::nothrow) LoL(10);
+	//delete l;
+
+	//::new ((void *)_Ptr) _Ty(_Val);
+
 	Vector<LoL> VectorInt;
-	VectorInt.Add(LoL());
+	VectorInt.Insert(0, a);
+
+	LoL Item = VectorInt[0];
+
+	std::vector<LoL> v;
+	v.push_back(a);
+	auto vv = v[0];
 }
 
 void InsertTest()

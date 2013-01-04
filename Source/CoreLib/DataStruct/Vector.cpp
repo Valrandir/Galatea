@@ -30,29 +30,30 @@ template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
 	}
 }
 
-template<class ItemType> void Vector<ItemType>::Add(ItemType Value)
+template<class ItemType> void Vector<ItemType>::Add(ItemType const & Value)
 {
 	AssumeFreeSpace();
-	*(VecPtr + Length) = Value;
+	new((VoidPtr)(VecPtr + Length)) ItemType(Value);
 	++Length;
 }
 
-template<class ItemType> void Vector<ItemType>::Insert(UInt Position, ItemType Value)
+template<class ItemType> void Vector<ItemType>::Insert(UInt Position, ItemType const & Value)
 {
 	ItemType* ptr;
 
 	AssumeFreeSpace();
 
+	//If Position is past the end, just insert at end.
 	if(Position >= Length)
 	{
-		*(VecPtr + Length) = Value;
+		new((VoidPtr)(VecPtr + Length)) ItemType(Value);
 		++Length;
 	}
 	else
 	{
 		ptr = VecPtr + Position;
 		System::Memory::Move(ptr, ptr + 1, sizeof(ItemType) * (Length - Position));
-		*ptr = Value;
+		new((VoidPtr)ptr) ItemType(Value);
 		++Length;
 	}
 }
@@ -121,7 +122,7 @@ template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::B
 
 template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::End()
 {
-	return VecPtr + Length + 1;
+	return VecPtr + Length;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::Begin() const
@@ -131,7 +132,7 @@ template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemTyp
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::End() const
 {
-	return VecPtr + Length + 1;
+	return VecPtr + Length;
 }
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CBegin() const
@@ -141,5 +142,5 @@ template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemTyp
 
 template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CEnd() const
 {
-	return VecPtr + Length + 1;
+	return VecPtr + Length;
 }
