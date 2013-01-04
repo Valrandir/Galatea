@@ -29,7 +29,7 @@ namespace Core
 			void Remove(UInt Position);
 
 			void Clear();
-			void Reset();
+			void Free();
 
 			UInt GetCapacity() const;
 			UInt GetLength() const;

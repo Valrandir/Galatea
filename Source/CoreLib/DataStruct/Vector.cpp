@@ -18,7 +18,7 @@ template<class ItemType> Vector<ItemType>::Vector() : VecPtr(NULL), Capacity(0U)
 
 template<class ItemType> Vector<ItemType>::~Vector()
 {
-	Reset();
+	Free();
 }
 
 template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
@@ -70,7 +70,8 @@ template<class ItemType> void Vector<ItemType>::Remove(UInt Position)
 		--Length;
 		ptr = VecPtr + Position;
 		ptr->~ItemType();
-		System::Memory::Move(ptr + 1, ptr, sizeof(ItemType) * (Length - Position));
+		if(Position < Length)
+			System::Memory::Move(ptr + 1, ptr, sizeof(ItemType) * (Length - Position));
 	}
 }
 
@@ -80,7 +81,7 @@ template<class ItemType> void Vector<ItemType>::Clear()
 	Length = 0U;
 }
 
-template<class ItemType> void Vector<ItemType>::Reset()
+template<class ItemType> void Vector<ItemType>::Free()
 {
 	if(VecPtr)
 	{
