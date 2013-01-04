@@ -74,7 +74,7 @@ template<class ItemType> void Vector<ItemType>::Clear()
 {
 	Iterator it, end;
 
-	if(Ptr)
+	if(VecPtr)
 	{
 		for(it = Begin(), end = End(); it < end; ++it)
 			it->~ItemType();
@@ -111,7 +111,7 @@ template<class ItemType> UInt Vector<ItemType>::GetLength() const
 
 template<class ItemType> ItemType Vector<ItemType>::operator[](UInt Position) const
 {
-	return *(Ptr + Position);
+	return *(VecPtr + Position);
 }
 
 template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::Begin()

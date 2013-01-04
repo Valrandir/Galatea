@@ -10,7 +10,13 @@ del Core.workspace*
 rename cw.void Core.workspace
 
 rd /s /q CoreLib\Debug
+rd /s /q CoreLib\Release
 del CoreLib\CoreLib.txt
 
 rd /s /q CoreSpecimen\Debug
+rd /s /q CoreSpecimen\Release
 del CoreSpecimen\CoreSpecimen.txt
+
+del CoreLib\*.mk
+del CoreSpecimen\*.mk
+del *.mk

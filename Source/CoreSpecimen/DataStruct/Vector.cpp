@@ -59,50 +59,45 @@ void IteratorTest()
 {
 	Vector<Int> VectorInt;
 	Int Value;
+	Vector<Int>::Iterator it;
+	Vector<Int>::ConstIterator cit;
 
 	VectorInt.Add(5);
 	VectorInt.Add(35);
 
-	for(auto it = VectorInt.Begin(); it < VectorInt.End(); ++it)
+	for(it = VectorInt.Begin(); it < VectorInt.End(); ++it)
 	{
 		*it = *it;
 		Value = *it;
 	}
 
-	for(auto it = VectorInt.CBegin(); it < VectorInt.CEnd(); ++it)
+	for(cit = VectorInt.CBegin(); cit < VectorInt.CEnd(); ++cit)
 	{
-		//*it = *it;
-		Value = *it;
+		//*cit = *cit;
+		Value = *cit;
 	}
 }
 
+class LoL
+{
+	public:
+	LoL()
+	{
+		int x = 0;
+		int y = 0;
+		int z = x + y;
+	}
+
+	~LoL()
+	{
+		int x = 0;
+		int y = 0;
+		int z = x + y;
+	}
+};
+
 void ClearTest()
 {
-	class LoL
-	{
-		public:
-		LoL()
-		{
-			int x = 0;
-			int y = 0;
-			int z = x + y;
-		}
-
-		LoL(LoL const &)
-		{
-			int x = 0;
-			int y = 0;
-			int z = x + y;
-		}
-
-		~LoL()
-		{
-			int x = 0;
-			int y = 0;
-			int z = x + y;
-		}
-	};
-
 	Vector<LoL> VectorInt;
 	VectorInt.Add(LoL());
 }
