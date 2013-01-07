@@ -117,11 +117,11 @@ void ClearTest()
 
 	//::new ((void *)_Ptr) _Ty(_Val);
 
-	Vector<LoL> VectorInt;
-	VectorInt.Insert(0, a);
-	VectorInt.Insert(0, a);
+	Vector<LoL> VectorLoL;
+	VectorLoL.Insert(0, a);
+	VectorLoL.Insert(0, a);
 
-	LoL Item = VectorInt[0];
+	LoL Item = VectorLoL[0];
 
 	std::vector<LoL> v;
 	v.push_back(a);
@@ -141,6 +141,30 @@ void InsertTest()
 	VectorInt.Insert(2, 300);
 }
 
+void CopyTest()
+{
+	Vector<Int> VectorInt;
+
+	VectorInt.Add(35);
+	VectorInt.Add(68);
+
+	Vector<Int> v2(VectorInt);
+	Vector<Int> v3;
+	v3 = v2;
+}
+
+void CopyClassTest()
+{
+	Vector<LoL> VectorLoL;
+
+	VectorLoL.Add(LoL(1));
+	VectorLoL.Add(LoL(2));
+
+	Vector<LoL> v2(VectorLoL);
+	Vector<LoL> v3;
+	v3 = v2;
+}
+
 void VectorTest()
 {
 	AddTest();
@@ -149,4 +173,6 @@ void VectorTest()
 	IteratorTest();
 	ClearTest();
 	InsertTest();
+	CopyTest();
+	CopyClassTest();
 }

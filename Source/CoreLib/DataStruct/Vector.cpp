@@ -6,6 +6,24 @@ template <class ItemType> void Vector<ItemType>::AllocSpace()
 		Reserve(Capacity << 1U);
 }
 
+template <class ItemType> void Vector<ItemType>::CreateFromVector(Vector<ItemType> const & Source)
+{
+	ItemType* ptr;
+	Vector<ItemType>::ConstIterator it, end;
+
+	VecPtr = NULL;
+	Capacity = 0U;
+	Length = Source.Length;
+	Reserve(Length);
+
+	ptr = VecPtr;
+	it = Source.Begin();
+	end = Source.End();
+
+	for(; it < end; ++it, ++ptr)
+		new((VoidPtr)ptr) ItemType(*it);
+}
+
 template <class ItemType> void Vector<ItemType>::DestroyAll()
 {
 	Iterator it = Begin();
@@ -15,6 +33,19 @@ template <class ItemType> void Vector<ItemType>::DestroyAll()
 }
 
 template<class ItemType> Vector<ItemType>::Vector() : VecPtr(NULL), Capacity(0U), Length(0U) {}
+
+template<class ItemType> Vector<ItemType>::Vector(Vector const & Source)
+{
+	CreateFromVector(Source);
+}
+
+template<class ItemType> Vector<ItemType>& Vector<ItemType>::operator=(Vector const & Source)
+{
+	if(this != &Source)
+		CreateFromVector(Source);
+
+	return *this;
+}
 
 template<class ItemType> Vector<ItemType>::~Vector()
 {

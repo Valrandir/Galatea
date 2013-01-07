@@ -13,6 +13,7 @@ namespace Core
 			UInt Length;
 
 			void AllocSpace();
+			void CreateFromVector(Vector<ItemType> const & Source);
 			void DestroyAll();
 
 			public:
@@ -20,6 +21,8 @@ namespace Core
 			typedef ItemType const * ConstIterator;
 
 			Vector();
+			Vector(Vector const & Source);
+			Vector& operator=(Vector const & Source);
 			~Vector();
 
 			void Reserve(UInt Capacity);
