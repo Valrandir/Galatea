@@ -34,7 +34,8 @@ namespace Core
 			UInt GetCapacity() const;
 			UInt GetLength() const;
 
-			ItemType operator[](UInt Position) const;
+			ItemType& operator[](UInt Position);
+			ItemType const & operator[](UInt Position) const;
 
 			Iterator Begin();
 			Iterator End();

@@ -103,7 +103,12 @@ template<class ItemType> UInt Vector<ItemType>::GetLength() const
 	return Length;
 }
 
-template<class ItemType> ItemType Vector<ItemType>::operator[](UInt Position) const
+template<class ItemType> ItemType& Vector<ItemType>::operator[](UInt Position)
+{
+	return *(VecPtr + Position);
+}
+
+template<class ItemType> ItemType const & Vector<ItemType>::operator[](UInt Position) const
 {
 	return *(VecPtr + Position);
 }
