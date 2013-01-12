@@ -95,7 +95,7 @@ template<class T> void Vector<T>::Shrink()
 
 template<class T> void Vector<T>::Clear()
 {
-	Destroy(First(), Last());
+	Destroy(Begin(), End());
 	Length = 0U;
 }
 

@@ -31,22 +31,6 @@ Bool ConstructCapacityTest()
 	return Result;
 }
 
-Bool AddTwoTest()
-{
-	Bool Result;
-	Vector<Counter> Vec;
-	Counter c1, c2;
-
-	Counter::Clear();
-	Vec.Add(c1);
-	Vec.Add(c2);
-
-	Result = Vec.GetCapacity() == 2U && Vec.GetLength() == 2U;
-	Result = Result && Counter::Assert(0U, 2U, 0U, 0U);
-
-	return Result;
-}
-
 Bool AddTest()
 {
 	Bool Result = true;
@@ -212,36 +196,94 @@ Bool ConstructEqualTest()
 
 Bool ReserveTest()
 {
-	Bool Result = true;
-	Result = false;
+	Bool Result;
+	UInt Capacity = 10U;
+	Vector<Counter> Vec;
+
+	Counter::Clear();
+	Vec.Reserve(Capacity);
+	Result = Vec.GetCapacity() == Capacity && Vec.GetLength() == 0;
+	Result = Result && Counter::Assert(0U, 0U, 0U, 0U);
+
 	return Result;
 }
 
 Bool ShrinkTest()
 {
 	Bool Result = true;
-	Result = false;
+	Vector<Counter> Vec;
+	Counter c1, c2, c3;
+
+	Vec.Add(c1);
+	Vec.Add(c2);
+	Vec.Add(c3);
+
+	Counter::Clear();
+	Vec.Shrink();
+	Result = Vec.GetCapacity() == 3U && Vec.GetLength() == 3U;
+	Result = Result && Counter::Assert(0U, 3U, 0U, 3U);
+	Result = Result && Vec[0U].ID == 1U;
+	Result = Result && Vec[1U].ID == 2U;
+	Result = Result && Vec[2U].ID == 3U;
+
 	return Result;
 }
 
 Bool ClearTest()
 {
 	Bool Result = true;
-	Result = false;
+	Vector<Counter> Vec;
+	Counter c1, c2, c3;
+
+	Vec.Add(c1);
+	Vec.Add(c2);
+	Vec.Add(c3);
+
+	Counter::Clear();
+	Vec.Clear();
+	Result = Vec.GetCapacity() == 4U && Vec.GetLength() == 0U;
+	Result = Result && Counter::Assert(0U, 0U, 0U, 3U);
+
 	return Result;
 }
 
 Bool FreeTest()
 {
 	Bool Result = true;
-	Result = false;
+	Vector<Counter> Vec;
+	Counter c1, c2, c3;
+
+	Vec.Add(c1);
+	Vec.Add(c2);
+	Vec.Add(c3);
+
+	Counter::Clear();
+	Vec.Free();
+	Result = Vec.GetCapacity() == 0U && Vec.GetLength() == 0U;
+	Result = Result && Counter::Assert(0U, 0U, 0U, 3U);
+
 	return Result;
 }
 
 Bool BeginEndTest()
 {
 	Bool Result = true;
-	Result = false;
+	Vector<Counter> Vec;
+	Counter c[3] = {Counter(), Counter(), Counter()};
+	UInt i = 0;
+
+	Vec.Add(c[0]);
+	Vec.Add(c[1]);
+	Vec.Add(c[2]);
+
+	Counter::Clear();
+
+	for(auto it = Vec.Begin(); it < Vec.End(); ++i, ++it)
+		Result = Result && it->ID == c[i].ID;
+
+	Result = Vec.GetCapacity() == 4U && Vec.GetLength() == 3U;
+	Result = Result && Counter::Assert(0U, 0U, 0U, 0U);
+
 	return Result;
 }
 
