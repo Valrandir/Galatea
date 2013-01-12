@@ -4,13 +4,16 @@ extern void ThreadTestByValue();
 extern void ThreadTestByRef();
 extern void ThreadedErrTest();
 extern void TimeTest();
-extern void VectorTest();
+extern bool VectorTest();
 
 void CoreSpecimen()
 {
 	bool Skip = true;
 
-	//Force linking of all tests, select which test to run in debug mode.
+	VectorTest();
+
+	//Force linking of all tests
+	//Select which test to run in debug mode.
 	if(!Skip)
 	{
 		ErrTest();

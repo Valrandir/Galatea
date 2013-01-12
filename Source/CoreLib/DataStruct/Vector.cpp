@@ -1,122 +1,109 @@
-template <class ItemType> void Vector<ItemType>::AllocSpace()
+
+template<class T> void Vector<T>::Allocate(UInt Capacity)
+{
+	T* VecPtr;
+	UInt Length;
+
+	VecPtr = (T*)System::Memory::Alloc(sizeof(T) * Capacity);
+	if(this->VecPtr)
+		Copy(VecPtr, Begin(), End());
+	Length = this->Length;
+	Free();
+
+	this->VecPtr = VecPtr ;
+	this->Capacity = Capacity;
+	this->Length = Length;
+}
+
+template <class T> void Vector<T>::AutoAllocate()
 {
 	if(Capacity == 0U)
-		Reserve(2U);
+		Allocate(2U);
 	else if(Capacity == Length)
-		Reserve(Capacity << 1U);
+		Allocate(Capacity << 1U);
 }
 
-template <class ItemType> void Vector<ItemType>::CreateFromVector(Vector<ItemType> const & Source)
+template <class T> void Vector<T>::Construct(T const * Element, T const & Source) const
 {
-	ItemType* ptr;
-	Vector<ItemType>::ConstIterator it, end;
+	new((VoidPtr)Element) T(Source);
+}
 
-	VecPtr = NULL;
-	Capacity = 0U;
+template <class T> void Vector<T>::Destroy(ConstIterator Element) const
+{
+	Element->~T();
+}
+
+template <class T> void Vector<T>::Destroy(ConstIterator Begin, ConstIterator End) const
+{
+	for(ConstIterator Iterator = Begin; Iterator < End; ++Iterator)
+		Destroy(Iterator);
+}
+
+template <class T> void Vector<T>::Copy(T* Target, T const * Begin, T const * End) const
+{
+	if(Target)
+		for(ConstIterator Iterator = Begin; Iterator < End; ++Target, ++Iterator)
+			Construct(Target, *Iterator);
+}
+
+template <class T> void Vector<T>::InitializeFromVector(Vector const & Source)
+{
 	Length = Source.Length;
-	Reserve(Length);
-
-	ptr = VecPtr;
-	it = Source.Begin();
-	end = Source.End();
-
-	for(; it < end; ++it, ++ptr)
-		new((VoidPtr)ptr) ItemType(*it);
+	Allocate(Length);
+	Copy(VecPtr, Source.Begin(), Source.End());
 }
 
-template <class ItemType> void Vector<ItemType>::DestroyAll()
+template<class T> Vector<T>::Vector() : VecPtr(NULL), Capacity(0U), Length(0U) {}
+
+template<class T> Vector<T>::Vector(UInt Capacity) : VecPtr(NULL), Capacity(0U), Length(0U)
 {
-	Iterator it = Begin();
-	Iterator end = End();
-	while(it < end)
-		it++->~ItemType();
+	Allocate(Capacity);
 }
 
-template<class ItemType> Vector<ItemType>::Vector() : VecPtr(NULL), Capacity(0U), Length(0U) {}
-
-template<class ItemType> Vector<ItemType>::Vector(Vector const & Source)
+template<class T> Vector<T>::Vector(Vector const & Source) : VecPtr(NULL), Capacity(0U), Length(0U)
 {
-	CreateFromVector(Source);
+	InitializeFromVector(Source);
 }
 
-template<class ItemType> Vector<ItemType>& Vector<ItemType>::operator=(Vector const & Source)
+template<class T> Vector<T>& Vector<T>::operator=(Vector const & Source)
 {
 	if(this != &Source)
-		CreateFromVector(Source);
+	{
+		Free();
+		InitializeFromVector(Source);
+	}
 
 	return *this;
 }
 
-template<class ItemType> Vector<ItemType>::~Vector()
+template<class T> Vector<T>::~Vector()
 {
 	Free();
 }
 
-template<class ItemType> void Vector<ItemType>::Reserve(UInt Capacity)
+template<class T> void Vector<T>::Reserve(UInt Capacity)
 {
-	ItemType* ptr;
-
 	if(Capacity > this->Capacity)
-	{
-		ptr = (ItemType*)System::Memory::Alloc(sizeof(ItemType) * Capacity);
-		if(VecPtr)
-		{
-			System::Memory::Copy(VecPtr, ptr, sizeof(ItemType) * this->Capacity);
-			System::Memory::Free(VecPtr);
-		}
-		VecPtr = ptr;
-		this->Capacity = Capacity;
-	}
+		Allocate(Capacity);
 }
 
-template<class ItemType> void Vector<ItemType>::Add(ItemType const & Value)
+template<class T> void Vector<T>::Shrink()
 {
-	Insert(Length, Value);
+	if(Capacity > Length)
+		Allocate(Length);
 }
 
-template<class ItemType> void Vector<ItemType>::Insert(UInt Position, ItemType const & Value)
+template<class T> void Vector<T>::Clear()
 {
-	ItemType* ptr;
-	Bool insert;
-
-	AllocSpace();
-
-	//If Position is beyond the end then insert at end.
-	insert = Position < Length;
-	ptr = insert ? VecPtr + Position : VecPtr + Length;
-
-	if(insert)
-		System::Memory::Move(ptr, ptr + 1, sizeof(ItemType) * (Length - Position));
-
-	new((VoidPtr)ptr) ItemType(Value);
-	++Length;
-}
-
-template<class ItemType> void Vector<ItemType>::Remove(UInt Position)
-{
-	ItemType* ptr;
-
-	if(Position < Length)
-	{
-		--Length;
-		ptr = VecPtr + Position;
-		ptr->~ItemType();
-		if(Position < Length)
-			System::Memory::Move(ptr + 1, ptr, sizeof(ItemType) * (Length - Position));
-	}
-}
-
-template<class ItemType> void Vector<ItemType>::Clear()
-{
-	DestroyAll();
+	Destroy(First(), Last());
 	Length = 0U;
 }
 
-template<class ItemType> void Vector<ItemType>::Free()
+template<class T> void Vector<T>::Free()
 {
 	if(VecPtr)
 	{
-		DestroyAll();
+		Destroy(Begin(), End());
 		System::Memory::Free(VecPtr);
 		VecPtr = NULL;
 		Capacity = 0U;
@@ -124,52 +111,87 @@ template<class ItemType> void Vector<ItemType>::Free()
 	}
 }
 
-template<class ItemType> UInt Vector<ItemType>::GetCapacity() const
+template<class T> void Vector<T>::Add(T const & Value)
+{
+	Insert(Length, Value);
+}
+
+template<class T> void Vector<T>::Insert(UInt Position, T const & Value)
+{
+	T* Element;
+	Bool LastElement;
+
+	AutoAllocate();
+
+	LastElement = Position >= Length;
+	Element = VecPtr + (LastElement ? Length : Position);
+
+	if(!LastElement)
+	{
+		ConstIterator Iterator = End();
+		for(; Iterator > Element; --Iterator)
+			Construct(Iterator, *(Iterator - 1));
+
+		Destroy(Element);
+	}
+
+	Construct(Element, Value);
+	++Length;
+}
+
+template<class T> void Vector<T>::Remove(UInt Position)
+{
+	ConstIterator Iterator, Last;
+
+	if(Position >= Length)
+		Position = Length - 1;
+
+	Iterator = VecPtr + Position;
+	Destroy(Iterator);
+	Last = End() - 1;
+
+	for(; Iterator < Last; ++Iterator)
+		Construct(Iterator, *(Iterator + 1));
+
+	--Length;
+}
+
+template<class T> T& Vector<T>::operator[](UInt Position)
+{
+	return *(VecPtr + Position);
+}
+
+template<class T> T const & Vector<T>::operator[](UInt Position) const
+{
+	return *(VecPtr + Position);
+}
+
+template<class T> UInt Vector<T>::GetCapacity() const
 {
 	return Capacity;
 }
 
-template<class ItemType> UInt Vector<ItemType>::GetLength() const
+template<class T> UInt Vector<T>::GetLength() const
 {
 	return Length;
 }
 
-template<class ItemType> ItemType& Vector<ItemType>::operator[](UInt Position)
-{
-	return *(VecPtr + Position);
-}
-
-template<class ItemType> ItemType const & Vector<ItemType>::operator[](UInt Position) const
-{
-	return *(VecPtr + Position);
-}
-
-template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::Begin()
+template<class T> typename Vector<T>::Iterator Vector<T>::Begin()
 {
 	return VecPtr;
 }
 
-template<class ItemType> typename Vector<ItemType>::Iterator Vector<ItemType>::End()
+template<class T> typename Vector<T>::Iterator Vector<T>::End()
 {
 	return VecPtr + Length;
 }
 
-template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::Begin() const
+template<class T> typename  Vector<T>::ConstIterator Vector<T>::Begin() const
 {
 	return VecPtr;
 }
 
-template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::End() const
-{
-	return VecPtr + Length;
-}
-
-template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CBegin() const
-{
-	return VecPtr;
-}
-
-template<class ItemType> typename Vector<ItemType>::ConstIterator Vector<ItemType>::CEnd() const
+template<class T> typename  Vector<T>::ConstIterator Vector<T>::End() const
 {
 	return VecPtr + Length;
 }

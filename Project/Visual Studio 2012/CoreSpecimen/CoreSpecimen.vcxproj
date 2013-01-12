@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp" />
@@ -29,6 +30,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EFD9463A-D7DA-406F-BA78-14C463AEC7DB}</ProjectGuid>

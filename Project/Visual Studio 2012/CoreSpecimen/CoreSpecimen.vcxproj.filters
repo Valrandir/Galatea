@@ -35,8 +35,14 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.cpp">
+      <Filter>DataStruct</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.hpp">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

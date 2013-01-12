@@ -2,50 +2,60 @@
 #include "../Types.hpp"
 #include "../System/Memory/Memory.hpp"
 
+//Placement New
+inline Core::VoidPtr operator new(Core::UInt, Core::VoidPtr Address)
+{
+	return Address;
+}
+
 namespace Core
 {
 	namespace DataStruct
 	{
-		template<class ItemType> class Vector
+		template<class T> class Vector
 		{
-			ItemType* VecPtr;
+			T* VecPtr;
 			UInt Capacity;
 			UInt Length;
 
-			void AllocSpace();
-			void CreateFromVector(Vector<ItemType> const & Source);
-			void DestroyAll();
+			private:
+			void Allocate(UInt Capacity);
+			void AutoAllocate();
+			void Construct(T const * Element, T const & Source) const;
+			void Destroy(T const * Element) const;
+			void Destroy(T const * Begin, T const * End) const;
+			void Copy(T* Target, T const * Begin, T const * End) const;
+			void InitializeFromVector(Vector const & Source);
 
 			public:
-			typedef ItemType* Iterator;
-			typedef ItemType const * ConstIterator;
+			typedef T* Iterator;
+			typedef T const * ConstIterator;
 
 			Vector();
+			Vector(UInt Capacity);
 			Vector(Vector const & Source);
 			Vector& operator=(Vector const & Source);
 			~Vector();
 
 			void Reserve(UInt Capacity);
-
-			void Add(ItemType const & Value);
-			void Insert(UInt Position, ItemType const & Value);
-			void Remove(UInt Position);
-
+			void Shrink();
 			void Clear();
 			void Free();
 
+			void Add(T const & Value);
+			void Insert(UInt Position, T const & Value);
+			void Remove(UInt Position);
+
+			T& operator[](UInt Position);
+			T const & operator[](UInt Position) const;
+
 			UInt GetCapacity() const;
 			UInt GetLength() const;
-
-			ItemType& operator[](UInt Position);
-			ItemType const & operator[](UInt Position) const;
 
 			Iterator Begin();
 			Iterator End();
 			ConstIterator Begin() const;
 			ConstIterator End() const;
-			ConstIterator CBegin() const;
-			ConstIterator CEnd() const;
 		};
 
 		#include "Vector.cpp"

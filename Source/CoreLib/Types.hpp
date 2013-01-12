@@ -34,7 +34,7 @@ namespace Core
 		typedef UInt64 UInt;
 	#endif
 
-	typedef UInt Bool;
+	typedef bool Bool;
 
 	#if CoreTargetWin32 && UNICODE
 		#define Text(quote)L##quote
