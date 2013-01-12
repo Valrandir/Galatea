@@ -3,10 +3,17 @@
 #include "../System/Memory/Memory.hpp"
 
 //Placement New
-inline Core::VoidPtr operator new(Core::UInt, Core::VoidPtr Address)
-{
-	return Address;
-}
+#ifdef CoreTargetWin32
+	inline void* operator new(size_t, void* Address)
+	{
+		return Address;
+	}
+#elif CoreTargetLinux
+	inline void* operator new(long unsigned int, void* Address)
+	{
+		return Address;
+	}
+#endif
 
 namespace Core
 {
