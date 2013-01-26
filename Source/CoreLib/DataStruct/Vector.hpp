@@ -20,11 +20,11 @@ namespace Core
 		template<class Element> class Vector
 		{
 			public:
-			enum ElementTypeEnum{CTOR, POD};
+			enum RawCopyEnum{RawCopyDisabled, RawCopyEnabled};
 			typedef Element const ConstElement;
 
 			private:
-			ElementTypeEnum _elementType;
+			RawCopyEnum _rawCopyMode;
 			Element* _origin; //Array Start
 			Element* _last; //Sequence End
 			Element* _end; //Array End
@@ -43,8 +43,8 @@ namespace Core
 
 			public:
 			/* Constructors && Destructor */
-			Vector(ElementTypeEnum elementType = CTOR);
-			Vector(UInt capacity, ElementTypeEnum elementType = CTOR);
+			Vector(RawCopyEnum elementType = RawCopyDisabled);
+			Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
 			~Vector();
@@ -57,6 +57,7 @@ namespace Core
 			ConstElement& operator[](UInt offset) const;
 
 			/* Accesors */
+			RawCopyEnum GetElementType() const;
 			Bool IsEmpty() const;
 			UInt GetCapacity() const;
 			UInt GetLength() const;

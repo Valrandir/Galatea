@@ -7,7 +7,7 @@ template<class Element> void Vector<Element>::Deallocate()
 {
 	if(_origin)
 	{
-		if(_elementType == CTOR)
+		if(_rawCopyMode == RawCopyDisabled)
 			Destroy(_origin, _last);
 
 		System::Memory::Free(_origin);
@@ -26,7 +26,7 @@ template<class Element> void Vector<Element>::Allocate(UInt capacity)
 
 	if(!IsEmpty())
 	{
-		if(_elementType == POD)
+		if(_rawCopyMode == RawCopyEnabled)
 			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * GetLength());
 		else
 		{
@@ -72,7 +72,7 @@ template <class Element> void Vector<Element>::Destroy(ConstElement* begin, Cons
 
 template <class Element> void Vector<Element>::Move(Element* target, Element* begin, Element* end) const
 {
-	if(_elementType == POD)
+	if(_rawCopyMode == RawCopyEnabled)
 		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
 	else
 	{
@@ -96,7 +96,7 @@ template <class Element> void Vector<Element>::CopyToSelf(Vector const & source)
 
 	if(!source.IsEmpty())
 	{
-		_elementType = source._elementType;
+		_rawCopyMode = source._rawCopyMode;
 		Allocate(source.GetLength());
 
 		self = _origin;
@@ -130,15 +130,15 @@ template <class Element> void Vector<Element>::MoveToSelf(Vector & source)
 /* Constructors && Destructor *************************************************/
 /******************************************************************************/
 
-template<class Element> Vector<Element>::Vector(ElementTypeEnum elementType = CTOR) :
-	_elementType(elementType),
+template<class Element> Vector<Element>::Vector(RawCopyEnum elementType = RawCopyDisabled) :
+	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
 {}
 
-template<class Element> Vector<Element>::Vector(UInt capacity, ElementTypeEnum elementType = CTOR) :
-	_elementType(elementType),
+template<class Element> Vector<Element>::Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled) :
+	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
@@ -213,6 +213,11 @@ template<class Element> typename Vector<Element>::ConstElement& Vector<Element>:
 /******************************************************************************/
 /* Accesors *******************************************************************/
 /******************************************************************************/
+
+template<class Element> typename Vector<Element>::RawCopyEnum Vector<Element>::GetElementType() const
+{
+	return _rawCopyMode;
+}
 
 template<class Element> Bool Vector<Element>::IsEmpty() const
 {
