@@ -16,12 +16,6 @@ void AddFiveElements(VCntr &vector)
 		vector.Add(c[i]);
 }
 
-VCntr GetRValue(VCntr& vector)
-{
-	//Call copy constructor and return an r-value
-	return vector;
-}
-
 Bool AssertCapLen(VCntr& vector, UInt capacity, UInt length)
 {
 	return vector.GetCapacity() == capacity && vector.GetLength() == length;
@@ -32,8 +26,10 @@ Bool AssertBeginEndNull(VCntr& v)
 	Bool result = true;
 	VCntr const & cv = v;
 
-	ASSERT v.Begin() == NULL && v.End() == v.Begin() + 1;
-	ASSERT cv.Begin() == NULL && cv.End() == cv.Begin() + 1;
+	ASSERT v.Begin() == NULL && v.End() == NULL;
+	ASSERT cv.Begin() == NULL && cv.End() == NULL;
+	ASSERT v.RBegin() == v.End() - 1 && v.REnd() == v.Begin() - 1;
+	ASSERT cv.RBegin() == cv.End() - 1 && cv.REnd() == cv.Begin() - 1;
 
 	return result;
 }
@@ -43,8 +39,10 @@ Bool AssertBeginEndNotNull(VCntr& v)
 	Bool result = true;
 	VCntr const & cv = v;
 
-	ASSERT v.Begin() && v.End() == v.Begin() + 1;
-	ASSERT cv.Begin() && cv.End() == cv.Begin() + 1;
+	ASSERT v.Begin() && v.End() == v.Begin() + v.GetLength();
+	ASSERT cv.Begin() && cv.End() == cv.Begin() + cv.GetLength();
+	ASSERT v.RBegin() && v.REnd() == v.RBegin() - v.GetLength();
+	ASSERT cv.RBegin() && cv.REnd() == cv.RBegin() - cv.GetLength();
 
 	return result;
 }
@@ -98,14 +96,16 @@ Bool CTorCopyTest()
 	Counter::Clear();
 	VCntr vc1(vcEmpty);
 	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCapLen(vc1, 10U, 0U);
+	ASSERT AssertCapLen(vc1, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc1);
 
 	//Copy Vector with capacity 5 and no elements
 	VCntr vcCap5(5U);
 	Counter::Clear();
 	VCntr vc2(vcCap5);
 	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCapLen(vc2, 5U, 0U);
+	ASSERT AssertCapLen(vc2, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc2);
 
 	//Copy Vector with 5 elements
 	VCntr vcWith5(5U);
@@ -114,6 +114,7 @@ Bool CTorCopyTest()
 	VCntr vc3(vcWith5);
 	ASSERT Counter::Assert(0U, 5U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCapLen(vc3, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(vc3);
 
 	//Copy RawCopyEnabled vector
 	VCntr vcRaw(VCntr::RawCopyEnabled);
@@ -130,25 +131,25 @@ Bool CTorMoveTest()
 	//Move empty vector
 	VCntr vcEmpty;
 	Counter::Clear();
-	VCntr vc1(GetRValue(vcEmpty));
-	ASSERT Counter::Assert(0U, 1U, 0U, 0U, 0U, 1U);
+	VCntr vc1((VCntr&&)vcEmpty);
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCapLen(vc1, 0U, 0U);
 	ASSERT AssertBeginEndNull(vc1);
 
 	//Move Vector with capacity 5 and no elements
 	VCntr vcCap5(5U);
 	Counter::Clear();
-	VCntr vc2(GetRValue(vcCap5));
-	ASSERT Counter::Assert(0U, 1U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCapLen(vc2, 5U, 0U);
-	ASSERT AssertBeginEndNotNull(vc2);
+	VCntr vc2((VCntr&&)vcCap5);
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc2, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc2);
 
 	//Move Vector with 5 elements
 	VCntr vcWith5(5U);
 	AddFiveElements(vcWith5);
 	Counter::Clear();
-	VCntr vc3(vcWith5);
-	ASSERT Counter::Assert(0U, 5U, 0U, 0U, 0U, 0U);
+	VCntr vc3((VCntr&&)vcWith5);
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCapLen(vc3, 5U, 5U);
 	ASSERT AssertBeginEndNotNull(vc3);
 	ASSERT AssertCapLen(vcWith5, 0U, 0U);
@@ -156,7 +157,7 @@ Bool CTorMoveTest()
 
 	//Move RawCopyEnabled vector
 	VCntr vcRaw(VCntr::RawCopyEnabled);
-	VCntr vc4(vcRaw);
+	VCntr vc4((VCntr&&)vcRaw);
 	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
 
 	return result;

@@ -43,7 +43,7 @@ template<class Element> void Vector<Element>::Allocate(UInt capacity)
 
 template <class Element> void Vector<Element>::AutoAllocate()
 {
-	if(IsEmpty())
+	if(_origin == NULL)
 		Allocate(2U);
 	else if(_last == _end)
 		Allocate(GetCapacity() << 1U);
@@ -90,41 +90,42 @@ template <class Element> void Vector<Element>::Move(Element* target, Element* be
 
 template <class Element> void Vector<Element>::CopyToSelf(Vector const & source)
 {
-	ConstElement *self, *it, *end;
+	ConstElement *it, *source_it, *source_end;
 
 	Deallocate();
+	_rawCopyMode = source._rawCopyMode;
 
 	if(!source.IsEmpty())
 	{
-		_rawCopyMode = source._rawCopyMode;
 		Allocate(source.GetLength());
 
-		self = _origin;
-		it = source.Begin();
-		end = source.End();
-		while(it != end)
+		it = _origin;
+		source_it = source.Begin();
+		source_end = source.End();
+		while(source_it != source_end)
 		{
-			Construct(self++, it++);
+			Construct(it++, source_it++);
 			++_last;
 		}
 	}
 }
 
-/*
 template <class Element> void Vector<Element>::MoveToSelf(Vector & source)
 {
+	_rawCopyMode = source._rawCopyMode;
+
 	if(source.IsEmpty())
-		Free()
+		Deallocate();
 	else
 	{
-		_EnablePod = source._EnablePod;
 		_origin = source._origin;
 		_last = source._last;
 		_end = source._end;
 		source._origin = NULL;
+		source._last = NULL;
+		source._end = NULL;
 	}
 }
-*/
 
 /******************************************************************************/
 /* Constructors && Destructor *************************************************/
@@ -154,7 +155,6 @@ template<class Element> Vector<Element>::Vector(Vector const & source) :
 	CopyToSelf(source);
 }
 
-/*
 template<class Element> Vector<Element>::Vector(Vector&& source) :
 	_origin(NULL),
 	_last(NULL),
@@ -162,7 +162,6 @@ template<class Element> Vector<Element>::Vector(Vector&& source) :
 {
 	MoveToSelf(source);
 }
-*/
 
 template<class Element> Vector<Element>::~Vector()
 {
@@ -221,7 +220,7 @@ template<class Element> typename Vector<Element>::RawCopyEnum Vector<Element>::G
 
 template<class Element> Bool Vector<Element>::IsEmpty() const
 {
-	return _origin == 0;
+	return _last == _origin;
 }
 
 template<class Element> UInt Vector<Element>::GetCapacity() const
@@ -250,7 +249,7 @@ template<class Element> Element* Vector<Element>::End()
 
 template<class Element> Element* Vector<Element>::RBegin()
 {
-	return _last;
+	return _last - 1;
 }
 
 template<class Element> Element* Vector<Element>::REnd()
@@ -270,7 +269,7 @@ template<class Element> typename Vector<Element>::ConstElement* Vector<Element>:
 
 template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::RBegin() const
 {
-	return _last;
+	return _last - 1;
 }
 
 template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::REnd() const
