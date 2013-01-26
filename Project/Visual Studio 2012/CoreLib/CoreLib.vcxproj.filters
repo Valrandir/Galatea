@@ -38,6 +38,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\String.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -55,5 +56,6 @@
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\String.cpp" />
   </ItemGroup>
 </Project>

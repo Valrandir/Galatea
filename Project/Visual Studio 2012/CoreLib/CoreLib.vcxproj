@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\String.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp" />
@@ -35,6 +36,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp" />

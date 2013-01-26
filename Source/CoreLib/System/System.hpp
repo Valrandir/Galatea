@@ -7,6 +7,6 @@ namespace Core
 	{
 		UInt32 GetErrCode();
 		void SetErrCode(UInt32 ErrCode);
-		CString GetErrText(UInt32 ErrCode, String Buffer, UInt32 BufferSize);
+		TChar const * GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize);
 	}
 }

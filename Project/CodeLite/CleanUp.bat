@@ -1,4 +1,8 @@
 @echo off
+echo.
+echo CodeLite CleanUp
+echo.
+
 rd /s /q .build-debug-32
 rd /s /q .build-debug-64
 rd /s /q .build-release-32

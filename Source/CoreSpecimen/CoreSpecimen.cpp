@@ -5,12 +5,14 @@ extern void ThreadTestByRef();
 extern void ThreadedErrTest();
 extern void TimeTest();
 extern bool VectorTest();
+extern bool StdVectorTest();
 
 void CoreSpecimen()
 {
 	bool Skip = true;
 
 	VectorTest();
+	StdVectorTest();
 
 	//Force linking of all tests
 	//Select which test to run in debug mode.

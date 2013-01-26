@@ -17,6 +17,7 @@ namespace Core
 			};
 
 			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+			//Thread* GetCurrentThread();
 		}
 	}
 }

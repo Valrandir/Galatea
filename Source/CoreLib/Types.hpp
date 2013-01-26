@@ -38,15 +38,9 @@ namespace Core
 
 	#if CoreTargetWin32 && UNICODE
 		#define Text(quote)L##quote
-		typedef wchar_t Char;
-		typedef wchar_t* String;
-		typedef wchar_t const CChar;
-		typedef wchar_t const * CString;
-	#elif CoreTargetLinux
+		typedef wchar_t TChar;
+	#else
 		#define Text(quote)quote
-		typedef char Char;
-		typedef char* String;
-		typedef char const CChar;
-		typedef char const * CString;
+		typedef char TChar;
 	#endif
 }

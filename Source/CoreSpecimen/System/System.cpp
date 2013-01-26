@@ -4,8 +4,8 @@ using namespace Core;
 void ErrTest()
 {
 	UInt32 ErrCode;
-	Char Buffer[512];
-	CString ErrText;
+	TChar Buffer[512];
+	TChar const * ErrText;
 
 	System::SetErrCode(10U);
 	ErrCode = System::GetErrCode();

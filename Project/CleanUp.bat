@@ -1,3 +1,9 @@
 @echo off
-CodeLite\CleanUp.bat
-"Visual Studio 2012\CleanUp.bat"
+
+cd CodeLite
+call CleanUp.bat
+cd ..
+
+cd "Visual Studio 2012"
+call CleanUp.bat
+cd ..

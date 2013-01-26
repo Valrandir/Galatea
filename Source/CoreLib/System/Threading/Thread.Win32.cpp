@@ -39,11 +39,6 @@ namespace Core
 				}
 			}
 
-			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
-			{
-				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
-			}
-
 			VoidPtr ThreadImpl::Join()
 			{
 				if(ThreadHandle)
@@ -53,6 +48,15 @@ namespace Core
 				}
 				return ReturnValue;
 			}
+
+			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			{
+				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
+			}
+
+			//Thread* GetCurrentThread()
+			//{
+			//}
 		}
 	}
 }

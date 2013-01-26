@@ -1,68 +1,86 @@
+/* Vector.hpp */
+
 #pragma once
 #include "../Types.hpp"
 #include "../System/Memory/Memory.hpp"
 
 //Placement New
 #ifdef CoreTargetWin32
-	inline void* operator new(size_t, void* Address)
-	{
-		return Address;
-	}
+	inline void* operator new(size_t, void* address){return address;}
+	inline void operator delete(void*, void*){}
 #elif CoreTargetLinux
-	inline void* operator new(long unsigned int, void* Address)
-	{
-		return Address;
-	}
+	inline void* operator new(long unsigned int, void* address){return address;}
+	inline void operator delete(void*, void*){}
 #endif
 
 namespace Core
 {
 	namespace DataStruct
 	{
-		template<class T> class Vector
+		template<class Element> class Vector
 		{
-			T* VecPtr;
-			UInt Capacity;
-			UInt Length;
+			public:
+			enum ElementTypeEnum{CTOR, POD};
+			typedef Element const ConstElement;
 
 			private:
-			void Allocate(UInt Capacity);
+			ElementTypeEnum _elementType;
+			Element* _origin; //Array Start
+			Element* _last; //Sequence End
+			Element* _end; //Array End
+
+			/* Private Functions */
+			void Deallocate();
+			void Allocate(UInt capacity);
 			void AutoAllocate();
-			void Construct(T const * Element, T const & Source) const;
-			void Destroy(T const * Element) const;
-			void Destroy(T const * Begin, T const * End) const;
-			void Copy(T* Target, T const * Begin, T const * End) const;
-			void InitializeFromVector(Vector const & Source);
+			void Assign(ConstElement* target, Element *source) const;
+			void Construct(ConstElement* target, ConstElement* source) const;
+			void Destroy(ConstElement* target) const;
+			void Destroy(ConstElement* begin, ConstElement* end) const;
+			void Move(Element* target, Element* begin, Element* end) const;
+			void CopyToSelf(Vector const & source);
+			void MoveToSelf(Vector & source);
 
 			public:
-			typedef T* Iterator;
-			typedef T const * ConstIterator;
-
-			Vector();
-			Vector(UInt Capacity);
-			Vector(Vector const & Source);
-			Vector& operator=(Vector const & Source);
+			/* Constructors && Destructor */
+			Vector(ElementTypeEnum elementType = CTOR);
+			Vector(UInt capacity, ElementTypeEnum elementType = CTOR);
+			Vector(Vector const & source);
+			Vector(Vector&& Source);
 			~Vector();
 
-			void Reserve(UInt Capacity);
-			void Shrink();
-			void Clear();
-			void Free();
+			/* Operators */
+			Vector& operator=(Vector const & source);
+			Vector& operator=(Vector&& source);
+			Vector& operator+=(Vector const & source);
+			Element& operator[](UInt offset);
+			ConstElement& operator[](UInt offset) const;
 
-			void Add(T const & Value);
-			void Insert(UInt Position, T const & Value);
-			void Remove(UInt Position);
-
-			T& operator[](UInt Position);
-			T const & operator[](UInt Position) const;
-
+			/* Accesors */
+			Bool IsEmpty() const;
 			UInt GetCapacity() const;
 			UInt GetLength() const;
 
-			Iterator Begin();
-			Iterator End();
-			ConstIterator Begin() const;
-			ConstIterator End() const;
+			/* Iterators */
+			Element* Begin();
+			Element* End();
+			Element* RBegin();
+			Element* REnd();
+			ConstElement* Begin() const;
+			ConstElement* End() const;
+			ConstElement* RBegin() const;
+			ConstElement* REnd() const;
+
+			/* Public Functions */
+			void Reserve(UInt capacity);
+			void Shrink();
+			void Clear();
+			void Free();
+			void Add(ConstElement& value);
+			void Insert(Element& at, ConstElement& value);
+			void Insert(UInt offset, ConstElement& value);
+			void Remove(Element* item);
+			void Remove(UInt position);
 		};
 
 		#include "Vector.cpp"
