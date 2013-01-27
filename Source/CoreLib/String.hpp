@@ -1,34 +1,34 @@
-/*
 #pragma once
 #include "Types.hpp"
 #include "DataStruct/Vector.hpp"
 
 namespace Core
 {
-	class String
+	class String : private DataStruct::Vector<TChar>
 	{
-		DataStruct::Vector<TChar> Vector;
+		static UInt GetTCharLength(TChar const * val);
 
 		public:
 		String();
-		String(UInt Capacity);
-		String(TChar const * Source);
-		String(String const & Source);
+		String(UInt capacity);
+		String(TChar const * val);
+		String(String const & val);
+		String(String const && val);
 		~String();
 
-		String& operator=(String const & Source);
-		Bool operator==(String const & Source);
-		String& operator+(String const & Source);
+		String& operator=(String const & val);
+		Bool operator==(TChar const * val);
+		Bool operator==(String const & val);
+		String& operator+(TChar const * val);
+		String& operator+(String const & val);
+		String& operator+=(TChar const * val);
+		String& operator+=(String const & val);
 
 		UInt GetCapacity() const;
 		UInt GetLength() const;
 		TChar const * GetTChar() const;
 
-		Int Compare(TChar const * Target) const;
-		Int Compare(String const & Target) const;
-
-		private:
-		static UInt GetTCharLength(TChar const * Source);
+		Int Compare(TChar const * val) const;
+		Int Compare(String const & val) const;
 	};
 }
-*/
