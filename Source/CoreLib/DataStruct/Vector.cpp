@@ -1,9 +1,16 @@
 /* Vector.cpp */
 
 /******************************************************************************/
+/* Static *********************************************************************/
+/******************************************************************************/
+
+template<class T> typename Vector<T>::RawCopyEnum Vector<T>::DefaultMode = Vector<T>::RawCopyDisabled;
+
+/******************************************************************************/
 /* Private Functions **********************************************************/
 /******************************************************************************/
-template<class Element> void Vector<Element>::Deallocate()
+
+template<class T> void Vector<T>::Deallocate()
 {
 	if(_origin)
 	{
@@ -18,7 +25,7 @@ template<class Element> void Vector<Element>::Deallocate()
 	}
 }
 
-template<class Element> void Vector<Element>::Allocate(UInt capacity)
+template<class T> void Vector<T>::Allocate(UInt capacity)
 {
 	Element* newOrigin;
 
@@ -41,7 +48,7 @@ template<class Element> void Vector<Element>::Allocate(UInt capacity)
 	_origin = newOrigin;
 }
 
-template <class Element> void Vector<Element>::AutoAllocate()
+template <class T> void Vector<T>::AutoAllocate()
 {
 	if(_origin == NULL)
 		Allocate(2U);
@@ -49,28 +56,28 @@ template <class Element> void Vector<Element>::AutoAllocate()
 		Allocate(GetCapacity() << 1U);
 }
 
-template <class Element> void Vector<Element>::Assign(ConstElement* target, Element *source) const
+template <class T> void Vector<T>::Assign(ConstElement* target, Element *source) const
 {
 	new((VoidPtr)target) Element((Element&&)(*source));
 }
 
-template <class Element> void Vector<Element>::Construct(ConstElement* target, ConstElement *source) const
+template <class T> void Vector<T>::Construct(ConstElement* target, ConstElement *source) const
 {
 	new((VoidPtr)target) Element(*source);
 }
 
-template <class Element> void Vector<Element>::Destroy(ConstElement* target) const
+template <class T> void Vector<T>::Destroy(ConstElement* target) const
 {
 	target->~Element();
 }
 
-template <class Element> void Vector<Element>::Destroy(ConstElement* begin, ConstElement* end) const
+template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* end) const
 {
 	while(begin != end)
 		Destroy(begin++);
 }
 
-template <class Element> void Vector<Element>::Move(Element* target, Element* begin, Element* end) const
+template <class T> void Vector<T>::Move(Element* target, Element* begin, Element* end) const
 {
 	if(_rawCopyMode == RawCopyEnabled)
 		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
@@ -88,7 +95,7 @@ template <class Element> void Vector<Element>::Move(Element* target, Element* be
 	}
 }
 
-template <class Element> void Vector<Element>::CopyToSelf(Vector const & source)
+template <class T> void Vector<T>::CopyToSelf(Vector const & source)
 {
 	ConstElement *it, *source_it, *source_end;
 
@@ -110,7 +117,7 @@ template <class Element> void Vector<Element>::CopyToSelf(Vector const & source)
 	}
 }
 
-template <class Element> void Vector<Element>::MoveToSelf(Vector & source)
+template <class T> void Vector<T>::MoveToSelf(Vector & source)
 {
 	_rawCopyMode = source._rawCopyMode;
 
@@ -131,14 +138,21 @@ template <class Element> void Vector<Element>::MoveToSelf(Vector & source)
 /* Constructors && Destructor *************************************************/
 /******************************************************************************/
 
-template<class Element> Vector<Element>::Vector(RawCopyEnum elementType = RawCopyDisabled) :
+template<class T> Vector<T>::Vector() :
+	_rawCopyMode(DefaultMode),
+	_origin(NULL),
+	_last(NULL),
+	_end(NULL)
+{}
+
+template<class T> Vector<T>::Vector(RawCopyEnum elementType = RawCopyDisabled) :
 	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
 {}
 
-template<class Element> Vector<Element>::Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled) :
+template<class T> Vector<T>::Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled) :
 	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),
@@ -147,7 +161,7 @@ template<class Element> Vector<Element>::Vector(UInt capacity, RawCopyEnum eleme
 	Allocate(capacity);
 }
 
-template<class Element> Vector<Element>::Vector(Vector const & source) :
+template<class T> Vector<T>::Vector(Vector const & source) :
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
@@ -155,7 +169,7 @@ template<class Element> Vector<Element>::Vector(Vector const & source) :
 	CopyToSelf(source);
 }
 
-template<class Element> Vector<Element>::Vector(Vector&& source) :
+template<class T> Vector<T>::Vector(Vector&& source) :
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
@@ -163,7 +177,7 @@ template<class Element> Vector<Element>::Vector(Vector&& source) :
 	MoveToSelf(source);
 }
 
-template<class Element> Vector<Element>::~Vector()
+template<class T> Vector<T>::~Vector()
 {
 	Deallocate();
 }
@@ -172,7 +186,7 @@ template<class Element> Vector<Element>::~Vector()
 /* Operators ******************************************************************/
 /******************************************************************************/
 
-template<class Element> Vector<Element>& Vector<Element>::operator=(Vector const & source)
+template<class T> Vector<T>& Vector<T>::operator=(Vector const & source)
 {
 	if(this != &source)
 		CopyToSelf(source);
@@ -180,7 +194,7 @@ template<class Element> Vector<Element>& Vector<Element>::operator=(Vector const
 	return *this;
 }
 
-template<class Element> Vector<Element>& Vector<Element>::operator=(Vector&& source)
+template<class T> Vector<T>& Vector<T>::operator=(Vector&& source)
 {
 	if(this != &source)
 		MoveToSelf(source);
@@ -188,7 +202,7 @@ template<class Element> Vector<Element>& Vector<Element>::operator=(Vector&& sou
 	return *this;
 }
 
-template<class Element> Vector<Element>& Vector<Element>::operator+=(Vector const & source)
+template<class T> Vector<T>& Vector<T>::operator+=(Vector const & source)
 {
 	int i, n;
 
@@ -204,12 +218,12 @@ template<class Element> Vector<Element>& Vector<Element>::operator+=(Vector cons
 	return *this;
 }
 
-template<class Element> Element& Vector<Element>::operator[](UInt offset)
+template<class T> typename Vector<T>::Element& Vector<T>::operator[](UInt offset)
 {
 	return *(_origin + offset);
 }
 
-template<class Element> typename Vector<Element>::ConstElement& Vector<Element>::operator[](UInt offset) const
+template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt offset) const
 {
 	return *(_origin + offset);
 }
@@ -218,22 +232,22 @@ template<class Element> typename Vector<Element>::ConstElement& Vector<Element>:
 /* Accesors *******************************************************************/
 /******************************************************************************/
 
-template<class Element> typename Vector<Element>::RawCopyEnum Vector<Element>::GetElementType() const
+template<class T> typename Vector<T>::RawCopyEnum Vector<T>::GetElementType() const
 {
 	return _rawCopyMode;
 }
 
-template<class Element> Bool Vector<Element>::IsEmpty() const
+template<class T> Bool Vector<T>::IsEmpty() const
 {
 	return _last == _origin;
 }
 
-template<class Element> UInt Vector<Element>::GetCapacity() const
+template<class T> UInt Vector<T>::GetCapacity() const
 {
 	return _end - _origin;
 }
 
-template<class Element> UInt Vector<Element>::GetLength() const
+template<class T> UInt Vector<T>::GetLength() const
 {
 	return _last - _origin;
 }
@@ -242,42 +256,42 @@ template<class Element> UInt Vector<Element>::GetLength() const
 /* Iterators ******************************************************************/
 /******************************************************************************/
 
-template<class Element> Element* Vector<Element>::Begin()
+template<class T> typename Vector<T>::Element* Vector<T>::Begin()
 {
 	return _origin;
 }
 
-template<class Element> Element* Vector<Element>::End()
+template<class T> typename Vector<T>::Element* Vector<T>::End()
 {
 	return _last;
 }
 
-template<class Element> Element* Vector<Element>::RBegin()
+template<class T> typename Vector<T>::Element* Vector<T>::RBegin()
 {
 	return _last - 1;
 }
 
-template<class Element> Element* Vector<Element>::REnd()
+template<class T> typename Vector<T>::Element* Vector<T>::REnd()
 {
 	return _origin - 1;
 }
 
-template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::Begin() const
+template<class T> typename Vector<T>::ConstElement* Vector<T>::Begin() const
 {
 	return _origin;
 }
 
-template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::End() const
+template<class T> typename Vector<T>::ConstElement* Vector<T>::End() const
 {
 	return _last;
 }
 
-template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::RBegin() const
+template<class T> typename Vector<T>::ConstElement* Vector<T>::RBegin() const
 {
 	return _last - 1;
 }
 
-template<class Element> typename Vector<Element>::ConstElement* Vector<Element>::REnd() const
+template<class T> typename Vector<T>::ConstElement* Vector<T>::REnd() const
 {
 	return _origin - 1;
 }
@@ -286,37 +300,37 @@ template<class Element> typename Vector<Element>::ConstElement* Vector<Element>:
 /* Public Functions ***********************************************************/
 /******************************************************************************/
 
-template<class Element> void Vector<Element>::Reserve(UInt capacity)
+template<class T> void Vector<T>::Reserve(UInt capacity)
 {
 	if(capacity > GetCapacity())
 		Allocate(capacity);
 }
 
-template<class Element> void Vector<Element>::Shrink()
+template<class T> void Vector<T>::Shrink()
 {
 	if(_end > _last)
 		Allocate(GetLength());
 }
 
-template<class Element> void Vector<Element>::Clear()
+template<class T> void Vector<T>::Clear()
 {
 	Destroy(_origin, _last);
 	_last = _origin;
 }
 
-template<class Element> void Vector<Element>::Free()
+template<class T> void Vector<T>::Free()
 {
 	Deallocate();
 }
 
-template<class Element> void Vector<Element>::Add(ConstElement& value)
+template<class T> void Vector<T>::Add(ConstElement& value)
 {
 	AutoAllocate();
 	Construct(_last, &value);
 	++_last;
 }
 
-template<class Element> void Vector<Element>::Insert(Element& at, ConstElement& value)
+template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 {
 	AutoAllocate();
 
@@ -326,7 +340,7 @@ template<class Element> void Vector<Element>::Insert(Element& at, ConstElement& 
 	Construct(&at, &value);
 }
 
-template<class Element> void Vector<Element>::Insert(UInt offset, ConstElement& value)
+template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 {
 	UInt length = GetLength();
 	Element* at;
@@ -345,7 +359,7 @@ template<class Element> void Vector<Element>::Insert(UInt offset, ConstElement& 
 	Construct(at, &value);
 }
 
-template<class Element> void Vector<Element>::Remove(Element* element)
+template<class T> void Vector<T>::Remove(Element* element)
 {
 	if(!IsEmpty() && element)
 	{
@@ -361,7 +375,7 @@ template<class Element> void Vector<Element>::Remove(Element* element)
 	}
 }
 
-template<class Element> void Vector<Element>::Remove(UInt offset)
+template<class T> void Vector<T>::Remove(UInt offset)
 {
 	UInt length;
 	Element* element;

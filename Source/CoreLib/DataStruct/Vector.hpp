@@ -17,11 +17,18 @@ namespace Core
 {
 	namespace DataStruct
 	{
-		template<class Element> class Vector
+		template<class T> class Vector
 		{
 			public:
 			enum RawCopyEnum{RawCopyDisabled, RawCopyEnabled};
-			typedef Element const ConstElement;
+			typedef T Element;
+			typedef T const ConstElement;
+
+			//DefaultMode is private except for UnitTest
+			#ifndef VectorUnitTest
+				private:
+			#endif
+			static RawCopyEnum DefaultMode;
 
 			private:
 			RawCopyEnum _rawCopyMode;
@@ -43,7 +50,8 @@ namespace Core
 
 			public:
 			/* Constructors && Destructor */
-			Vector(RawCopyEnum elementType = RawCopyDisabled);
+			Vector();
+			Vector(RawCopyEnum elementType);
 			Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
