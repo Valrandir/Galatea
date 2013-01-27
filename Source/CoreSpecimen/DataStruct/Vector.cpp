@@ -12,6 +12,9 @@ void AddFiveElements(VCntr &vector)
 	Counter::Clear();
 	int const n = 5;
 	Counter c[5];
+
+	vector.Reserve(5U);
+
 	for(int i = 0; i < n; ++i)
 		vector.Add(c[i]);
 }
@@ -163,6 +166,123 @@ Bool CTorMoveTest()
 	return result;
 }
 
+Bool OperatorEqualTest()
+{
+	Bool result = true;
+
+	//Assign empty vector
+	VCntr vcEmpty;
+	Counter::Clear();
+	VCntr vc1 = vcEmpty;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc1, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc1);
+
+	//Assign Vector with capacity 5 and no elements
+	VCntr vcCap5(5U);
+	Counter::Clear();
+	VCntr vc2 = vcCap5;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc2, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc2);
+
+	//Assign Vector with 5 elements
+	VCntr vcWith5(5U);
+	AddFiveElements(vcWith5);
+	Counter::Clear();
+	VCntr vc3 = vcWith5;
+	ASSERT Counter::Assert(0U, 5U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc3, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(vc3);
+
+	//Assign RawCopyEnabled vector
+	VCntr vcRaw(VCntr::RawCopyEnabled);
+	VCntr vc4 = vcRaw;
+	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+
+	return result;
+}
+
+Bool OperatorMoveTest()
+{
+	Bool result = true;
+
+	//Assign empty vector
+	VCntr vcEmpty;
+	Counter::Clear();
+	VCntr vc1 = (VCntr&&)vcEmpty;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc1, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc1);
+
+	//Assign Vector with capacity 5 and no elements
+	VCntr vcCap5(5U);
+	Counter::Clear();
+	VCntr vc2 = (VCntr&&)vcCap5;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc2, 0U, 0U);
+	ASSERT AssertBeginEndNull(vc2);
+
+	//Assign Vector with 5 elements
+	VCntr vcWith5(5U);
+	AddFiveElements(vcWith5);
+	Counter::Clear();
+	VCntr vc3 = (VCntr&&)vcWith5;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(vc3, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(vc3);
+
+	//Assign RawCopyEnabled vector
+	VCntr vcRaw(VCntr::RawCopyEnabled);
+	VCntr vc4 = (VCntr&&)vcRaw;
+	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+
+	return result;
+}
+
+Bool OperatorPlusEqualTest()
+{
+	Bool result = true;
+
+	//Append empty to empty
+	VCntr l1, r1;
+	Counter::Clear();
+	l1 += r1;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l1, 0U, 0U);
+	ASSERT AssertBeginEndNull(l1);
+
+	//Append empty to not empty
+	VCntr l2, r2;
+	AddFiveElements(l2);
+	Counter::Clear();
+	l2 += r2;
+	ASSERT Counter::Assert(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l2, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(l2);
+
+	//Append not empty to empty
+	VCntr l3, r3;
+	AddFiveElements(r3);
+	Counter::Clear();
+	l3 += r3;
+	ASSERT Counter::Assert(0U, 5U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l3, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(l3);
+
+	//Append not empty to not empty
+	VCntr l4, r4;
+	AddFiveElements(l4);
+	AddFiveElements(r4);
+	Counter::Clear();
+	l4 += r4;
+	ASSERT Counter::Assert(0U, 5U, 5U, 0U, 0U, 5U);
+	ASSERT AssertCapLen(l4, 10U, 10U);
+	ASSERT AssertBeginEndNotNull(l4);
+
+	return result;
+}
+
 Bool VectorTest()
 {
 	Bool result = true;
@@ -173,9 +293,12 @@ Bool VectorTest()
 	ASSERT CTorCopyTest();
 	ASSERT CTorMoveTest();
 
+	ASSERT OperatorEqualTest();
+	ASSERT OperatorMoveTest();
+	ASSERT OperatorPlusEqualTest();
+
 	return result;
 }
-
 
 /*
 #include "../Core.hpp"

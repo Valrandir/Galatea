@@ -193,8 +193,13 @@ template<class Element> Vector<Element>& Vector<Element>::operator+=(Vector cons
 	int i, n;
 
 	if(!source.IsEmpty())
-		for(i = 0, n = source.GetLength(); i < n; ++i)
+	{
+		n = source.GetLength();
+		Reserve(GetLength() + n);
+
+		for(i = 0; i < n; ++i)
 			Add(source[i]);
+	}
 
 	return *this;
 }
