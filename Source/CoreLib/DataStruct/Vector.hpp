@@ -88,7 +88,7 @@ namespace Core
 			void Add(ConstElement& value);
 			void Insert(Element& at, ConstElement& value);
 			void Insert(UInt offset, ConstElement& value);
-			void Remove(Element* item);
+			void Remove(Element& item);
 			void Remove(UInt position);
 		};
 

@@ -332,18 +332,24 @@ template<class T> void Vector<T>::Add(ConstElement& value)
 
 template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 {
+	Int offset;
+	Element* element;
+
+	offset = &at - _origin;
 	AutoAllocate();
 
-	Move(&at + 1, &at, _last);
+	element = &operator[](offset);
+
+	Move(element + 1, element, _last);
 	++_last;
 
-	Construct(&at, &value);
+	Construct(element, &value);
 }
 
 template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 {
 	UInt length = GetLength();
-	Element* at;
+	Element* element;
 
 	//If the offset is past the end, insert at end
 	if(offset > length)
@@ -351,23 +357,23 @@ template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 
 	AutoAllocate();
 
-	at = &operator[](offset);
+	element = &operator[](offset);
 
-	Move(at + 1, at, _last);
+	Move(element + 1, element, _last);
 	++_last;
 
-	Construct(at, &value);
+	Construct(element, &value);
 }
 
-template<class T> void Vector<T>::Remove(Element* element)
+template<class T> void Vector<T>::Remove(Element& element)
 {
-	if(!IsEmpty() && element)
+	if(!IsEmpty() && &element)
 	{
-		Destroy(element);
+		Destroy(&element);
 
-		if(element != _last - 1)
+		if(&element != _last - 1)
 		{
-			Move(element, element + 1, _last);
+			Move(&element, &element + 1, _last);
 			Destroy(_last - 1);
 		}
 

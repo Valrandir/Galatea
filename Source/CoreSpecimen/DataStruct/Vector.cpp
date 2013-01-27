@@ -9,17 +9,22 @@ using namespace DataStruct;
 #define ASSERT result = result && 
 typedef Vector<Counter> VCntr;
 
-void AddFiveElements(VCntr &vector)
+void AddFiveElementsNoReserve(VCntr &v)
 {
 	Counter::Clear();
-	vector.Reserve(5U);
 	for(UInt i = 0; i < 5U; ++i)
-		vector.Add(Counter());
+		v.Add(Counter());
 }
 
-Bool AssertCapLen(VCntr& vector, UInt capacity, UInt length)
+void AddFiveElements(VCntr &v)
 {
-	return vector.GetCapacity() == capacity && vector.GetLength() == length;
+	v.Reserve(5U);
+	AddFiveElementsNoReserve(v);
+}
+
+Bool AssertCapLen(VCntr& v, UInt capacity, UInt length)
+{
+	return v.GetCapacity() == capacity && v.GetLength() == length;
 }
 
 Bool AssertCounter(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
@@ -520,7 +525,7 @@ Bool AddTest()
 	return result;
 }
 
-Bool InsertTest()
+Bool InsertByIndexTest()
 {
 	Bool result = true;
 	VCntr v;
@@ -560,7 +565,69 @@ Bool InsertTest()
 	return result;
 }
 
-Bool RemoveTest()
+Bool InsertByRefTest()
+{
+	Bool result = true;
+	VCntr v;
+
+	Counter::Clear();
+	AddFiveElementsNoReserve(v);
+	Counter c1, c2, c3, c4;
+
+	Counter::Clear();
+	v.Insert(v[4], c1);
+	ASSERT AssertCapLen(v, 8U, 6U);
+	ASSERT AssertCounter(0U, 1U, 1U, 0U, 0U, 0U);
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 2U;
+	ASSERT v[2U].ID == 3U;
+	ASSERT v[3U].ID == 4U;
+	ASSERT v[4U].ID == 6U;
+	ASSERT v[5U].ID == 5U;
+
+	Counter::Clear();
+	v.Insert(v[0], c2);
+	ASSERT AssertCapLen(v, 8U, 7U);
+	ASSERT AssertCounter(0U, 1U, 6U, 0U, 0U, 0U);
+	ASSERT v[0U].ID == 7U;
+	ASSERT v[1U].ID == 1U;
+	ASSERT v[2U].ID == 2U;
+	ASSERT v[3U].ID == 3U;
+	ASSERT v[4U].ID == 4U;
+	ASSERT v[5U].ID == 6U;
+	ASSERT v[6U].ID == 5U;
+
+	Counter::Clear();
+	v.Insert(v[3], c3);
+	ASSERT AssertCapLen(v, 8U, 8U);
+	ASSERT AssertCounter(0U, 1U, 4U, 0U, 0U, 0U);
+	ASSERT v[0U].ID == 7U;
+	ASSERT v[1U].ID == 1U;
+	ASSERT v[2U].ID == 2U;
+	ASSERT v[3U].ID == 8U;
+	ASSERT v[4U].ID == 3U;
+	ASSERT v[5U].ID == 4U;
+	ASSERT v[6U].ID == 6U;
+	ASSERT v[7U].ID == 5U;
+
+	Counter::Clear();
+	v.Insert(v[6], c4);
+	ASSERT AssertCapLen(v, 16U, 9U);
+	ASSERT AssertCounter(0U, 1U, 10U, 0U, 0U, 8U);
+	ASSERT v[0U].ID == 7U;
+	ASSERT v[1U].ID == 1U;
+	ASSERT v[2U].ID == 2U;
+	ASSERT v[3U].ID == 8U;
+	ASSERT v[4U].ID == 3U;
+	ASSERT v[5U].ID == 4U;
+	ASSERT v[6U].ID == 9U;
+	ASSERT v[7U].ID == 6U;
+	ASSERT v[8U].ID == 5U;
+
+	return result;
+}
+
+Bool RemoveByIndexTest()
 {
 	Bool result = true;
 	VCntr v;
@@ -605,6 +672,51 @@ Bool RemoveTest()
 	return result;
 }
 
+Bool RemoveByRefTest()
+{
+	Bool result = true;
+	VCntr v;
+
+	AddFiveElements(v);
+
+	Counter::Clear();
+	v.Remove(v[4]);
+	ASSERT AssertCapLen(v, 5U, 4U);
+	ASSERT AssertCounter(0U, 0U, 0U, 0U, 0U, 1U);
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 2U;
+	ASSERT v[2U].ID == 3U;
+	ASSERT v[3U].ID == 4U;
+
+	Counter::Clear();
+	v.Remove(v[1]);
+	ASSERT AssertCapLen(v, 5U, 3U);
+	ASSERT AssertCounter(0U, 0U, 2U, 0U, 0U, 2U);
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 3U;
+	ASSERT v[2U].ID == 4U;
+
+	Counter::Clear();
+	v.Remove(v[1]);
+	ASSERT AssertCapLen(v, 5U, 2U);
+	ASSERT AssertCounter(0U, 0U, 1U, 0U, 0U, 2U);
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 4U;
+
+	Counter::Clear();
+	v.Remove(v[0]);
+	ASSERT AssertCapLen(v, 5U, 1U);
+	ASSERT AssertCounter(0U, 0U, 1U, 0U, 0U, 2U);
+	ASSERT v[0U].ID == 4U;
+
+	Counter::Clear();
+	v.Remove(v[0]);
+	ASSERT AssertCapLen(v, 5U, 0U);
+	ASSERT AssertCounter(0U, 0U, 0U, 0U, 0U, 1U);
+
+	return result;
+}
+
 Bool VectorTest(VCntr::RawCopyEnum defaultMode)
 {
 	Bool result = true;
@@ -634,8 +746,10 @@ Bool VectorTest(VCntr::RawCopyEnum defaultMode)
 	ASSERT FreeTest();
 
 	ASSERT AddTest();
-	ASSERT InsertTest();
-	ASSERT RemoveTest();
+	ASSERT InsertByIndexTest();
+	ASSERT InsertByRefTest();
+	ASSERT RemoveByIndexTest();
+	ASSERT RemoveByRefTest();
 
 	return result;
 }

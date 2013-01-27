@@ -8,17 +8,18 @@
 using namespace Core;
 using std::vector;
 
+#define ASSERT result = result &&  
+
 Bool StdConstructEmptyTest()
 {
+	Bool result = true;
+
 	Counter::Clear();
+	vector<Counter> v;
 
-	Bool Result;
-	vector<Counter> Vec;
+	result = v.capacity() == 0 && v.size() == 0;
 
-	Result = Vec.capacity() == 0 && Vec.size() == 0;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-
-	return Result;
+	return result;
 }
 
 Bool StdConstructCapacityTest()
@@ -28,111 +29,100 @@ Bool StdConstructCapacityTest()
 
 Bool StdAddTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c1, c2, c3;
 
 	Counter::Clear();
 
-	Vec.push_back(c1);
-	Result = Result && Vec.capacity() == 1U && Vec.size() == 1U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 1U;
+	v.push_back(c1);
+	ASSERT v.capacity() == 1U && v.size() == 1U;
+	ASSERT v[0U].ID == 1U;
 
-	Vec.push_back(c2);
-	Result = Result && Vec.capacity() == 2U && Vec.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[1U].ID == 2U;
+	v.push_back(c2);
+	ASSERT v.capacity() == 2U && v.size() == 2U;
+	ASSERT v[1U].ID == 2U;
 
-	Vec.push_back(c3);
-	Result = Result && Vec.capacity() == 3U && Vec.size() == 3U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[2U].ID == 3U;
+	v.push_back(c3);
+	ASSERT v.capacity() == 3U && v.size() == 3U;
+	ASSERT v[2U].ID == 3U;
 
-	return Result;
+	return result;
 }
 
 Bool StdInsertTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c1, c2, c3, c4;
 
 	Counter::Clear();
-	Vec.insert(Vec.end(), c1);
-	Result = Result && Vec.capacity() == 1U && Vec.size() == 1U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 1U;
+	v.insert(v.end(), c1);
+	ASSERT v.capacity() == 1U && v.size() == 1U;
+	ASSERT v[0U].ID == 1U;
 
 	Counter::Clear();
-	Vec.insert(Vec.end(), c2);
-	Result = Result && Vec.capacity() == 2U && Vec.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[1U].ID == 2U;
+	v.insert(v.end(), c2);
+	ASSERT v.capacity() == 2U && v.size() == 2U;
+	ASSERT v[1U].ID == 2U;
 
 	Counter::Clear();
-	Vec.insert(Vec.begin(), c3);
-	Result = Result && Vec.capacity() == 3U && Vec.size() == 3U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 3U;
-	Result = Result && Vec[1U].ID == 1U;
-	Result = Result && Vec[2U].ID == 2U;
+	v.insert(v.begin(), c3);
+	ASSERT v.capacity() == 3U && v.size() == 3U;
+	ASSERT v[0U].ID == 3U;
+	ASSERT v[1U].ID == 1U;
+	ASSERT v[2U].ID == 2U;
 
 	Counter::Clear();
-	Vec.insert(Vec.begin() + 1, c4);
-	Result = Result && Vec.capacity() == 4U && Vec.size() == 4U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 3U;
-	Result = Result && Vec[1U].ID == 4U;
-	Result = Result && Vec[2U].ID == 1U;
-	Result = Result && Vec[3U].ID == 2U;
+	v.insert(v.begin() + 1, c4);
+	ASSERT v.capacity() == 4U && v.size() == 4U;
+	ASSERT v[0U].ID == 3U;
+	ASSERT v[1U].ID == 4U;
+	ASSERT v[2U].ID == 1U;
+	ASSERT v[3U].ID == 2U;
 
-	return Result;
+	return result;
 }
 
-Bool StdDeleteTest()
+Bool StdRemoveTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c1, c2, c3, c4;
 
-	Vec.push_back(c1);
-	Vec.push_back(c2);
-	Vec.push_back(c3);
-	Vec.push_back(c4);
+	v.push_back(c1);
+	v.push_back(c2);
+	v.push_back(c3);
+	v.push_back(c4);
 
 	Counter::Clear();
-	Vec.erase(Vec.end() - 1);
-	Result = Result && Vec.capacity() == 4U && Vec.size() == 3U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 1U;
-	Result = Result && Vec[1U].ID == 2U;
-	Result = Result && Vec[2U].ID == 3U;
+	v.erase(v.end() - 1);
+	ASSERT v.capacity() == 4U && v.size() == 3U;
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 2U;
+	ASSERT v[2U].ID == 3U;
 
 	Counter::Clear();
-	Vec.erase(Vec.begin() + 1);
-	Result = Result && Vec.capacity() == 4U && Vec.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 1U;
-	Result = Result && Vec[1U].ID == 3U;
+	v.erase(v.begin() + 1);
+	ASSERT v.capacity() == 4U && v.size() == 2U;
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 3U;
 
 	Counter::Clear();
-	Vec.erase(Vec.begin());
-	Result = Result && Vec.capacity() == 4U && Vec.size() == 1U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 3U;
+	v.erase(v.begin());
+	ASSERT v.capacity() == 4U && v.size() == 1U;
+	ASSERT v[0U].ID == 3U;
 
 	Counter::Clear();
-	Vec.erase(Vec.begin());
-	Result = Result && Vec.capacity() == 4U && Vec.size() == 0U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	v.erase(v.begin());
+	ASSERT v.capacity() == 4U && v.size() == 0U;
 
-	return Result;
+	return result;
 }
 
 Bool StdConstructCopyTest()
 {
-	Bool Result = true;
+	Bool result = true;
 	vector<Counter> v1;
 	Counter c1, c2, c3, c4;
 
@@ -141,23 +131,21 @@ Bool StdConstructCopyTest()
 
 	Counter::Clear();
 	vector<Counter> v2(v1);
-	Result = Result && v2.capacity() == 2U && v2.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && v2[0U].ID == 1U;
-	Result = Result && v2[1U].ID == 2U;
+	ASSERT v2.capacity() == 2U && v2.size() == 2U;
+	ASSERT v2[0U].ID == 1U;
+	ASSERT v2[1U].ID == 2U;
 
 	vector<Counter> v3;
 	Counter::Clear();
 	vector<Counter> v4(v3);
-	Result = Result && v4.capacity() == 0U && v4.size() == 0U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	ASSERT v4.capacity() == 0U && v4.size() == 0U;
 
-	return Result;
+	return result;
 }
 
 Bool StdConstructEqualTest()
 {
-	Bool Result = true;
+	Bool result = true;
 	vector<Counter> v1;
 	Counter c1, c2, c3, c4;
 
@@ -166,84 +154,78 @@ Bool StdConstructEqualTest()
 
 	Counter::Clear();
 	vector<Counter> v2 = v1;
-	Result = Result && v2.capacity() == 2U && v2.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && v2[0U].ID == 1U;
-	Result = Result && v2[1U].ID == 2U;
+	ASSERT v2.capacity() == 2U && v2.size() == 2U;
+	ASSERT v2[0U].ID == 1U;
+	ASSERT v2[1U].ID == 2U;
 
 	Counter::Clear();
 	v2 = v2;
-	Result = Result && v2.capacity() == 2U && v2.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	ASSERT v2.capacity() == 2U && v2.size() == 2U;
 
 	vector<Counter> v3;
 	v3.push_back(c3);
 	v3.push_back(c4);
 	Counter::Clear();
 	v2 = v3;
-	Result = Result && v2.capacity() == 2U && v2.size() == 2U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && v2[0U].ID == 3U;
-	Result = Result && v2[1U].ID == 4U;
+	ASSERT v2.capacity() == 2U && v2.size() == 2U;
+	ASSERT v2[0U].ID == 3U;
+	ASSERT v2[1U].ID == 4U;
 
-	return Result;
+	return result;
 }
 
 Bool StdReserveTest()
 {
-	Bool Result;
+	Bool result;
 	UInt Capacity = 10U;
-	vector<Counter> Vec;
+	vector<Counter> v;
 
 	Counter::Clear();
-	Vec.reserve(Capacity);
-	Result = Vec.capacity() == Capacity && Vec.size() == 0;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	v.reserve(Capacity);
+	result = v.capacity() == Capacity && v.size() == 0;
 
-	return Result;
+	return result;
 }
 
 Bool StdShrinkTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c1, c2, c3, c4, c5, c6, c7;
 
-	Vec.push_back(c1);
-	Vec.push_back(c2);
-	Vec.push_back(c3);
-	Vec.push_back(c4);
-	Vec.push_back(c5);
-	Vec.push_back(c6);
-	Vec.push_back(c7);
+	v.push_back(c1);
+	v.push_back(c2);
+	v.push_back(c3);
+	v.push_back(c4);
+	v.push_back(c5);
+	v.push_back(c6);
+	v.push_back(c7);
 
 	Counter::Clear();
-	Vec.shrink_to_fit();
-	Result = Vec.capacity() == 7U && Vec.size() == 7U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
-	Result = Result && Vec[0U].ID == 1U;
-	Result = Result && Vec[1U].ID == 2U;
-	Result = Result && Vec[2U].ID == 3U;
+	v.shrink_to_fit();
+	result = v.capacity() == 7U && v.size() == 7U;
+	ASSERT v[0U].ID == 1U;
+	ASSERT v[1U].ID == 2U;
+	ASSERT v[2U].ID == 3U;
 
-	return Result;
+	return result;
 }
 
 Bool StdClearTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c1, c2, c3;
 
-	Vec.push_back(c1);
-	Vec.push_back(c2);
-	Vec.push_back(c3);
+	v.push_back(c1);
+	v.push_back(c2);
+	v.push_back(c3);
 
 	Counter::Clear();
-	Vec.clear();
-	Result = Vec.capacity() == 3U && Vec.size() == 0U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	v.clear();
+	result = v.capacity() == 3U && v.size() == 0U;
 
-	return Result;
+	return result;
 }
 
 Bool StdFreeTest()
@@ -253,48 +235,45 @@ Bool StdFreeTest()
 
 Bool StdBeginEndTest()
 {
-	Bool Result = true;
-	vector<Counter> Vec;
+	Bool result = true;
+	vector<Counter> v;
 	Counter c[3] = {Counter(), Counter(), Counter()};
 	UInt i = 0;
 
-	Vec.push_back(c[0]);
-	Vec.push_back(c[1]);
-	Vec.push_back(c[2]);
+	v.push_back(c[0]);
+	v.push_back(c[1]);
+	v.push_back(c[2]);
 
 	Counter::Clear();
 
-	for(auto it = Vec.begin(); it < Vec.end(); ++i, ++it)
-		Result = Result && it->ID == c[i].ID;
+	for(auto it = v.begin(); it < v.end(); ++i, ++it)
+		ASSERT it->ID == c[i].ID;
 
-	Result = Vec.capacity() == 3U && Vec.size() == 3U;
-	Result = Result && Counter::Assert(0U, 1U, 0U, 0U, 0U, 0U);
+	result = v.capacity() == 3U && v.size() == 3U;
 
-	return Result;
+	return result;
 }
-
-#include <stdlib.h>
 
 Bool StdVectorTest()
 {
-	Bool Result = true;
+	Bool result = true;
 
-	Result = Result && StdConstructEmptyTest();
-	Result = Result && StdConstructCapacityTest();
+	ASSERT StdConstructEmptyTest();
+	ASSERT StdConstructCapacityTest();
 
-	Result = Result && StdAddTest();
-	Result = Result && StdInsertTest();
-	Result = Result && StdDeleteTest();
+	ASSERT StdAddTest();
+	ASSERT StdInsertTest();
+	ASSERT StdRemoveTest();
 
-	Result = Result && StdConstructCopyTest();
-	Result = Result && StdConstructEqualTest();
+	ASSERT StdConstructCopyTest();
+	ASSERT StdConstructEqualTest();
 
-	Result = Result && StdReserveTest();
-	Result = Result && StdShrinkTest();
-	Result = Result && StdClearTest();
-	Result = Result && StdFreeTest();
+	ASSERT StdReserveTest();
+	ASSERT StdShrinkTest();
+	ASSERT StdClearTest();
+	ASSERT StdFreeTest();
 
-	Result = Result && StdBeginEndTest();
+	ASSERT StdBeginEndTest();
 
-	return Result;
+	return result;
 }

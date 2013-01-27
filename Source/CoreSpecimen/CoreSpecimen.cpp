@@ -12,7 +12,7 @@ void CoreSpecimen()
 	bool Skip = true;
 
 	VectorTest();
-	StdVectorTest();
+	//StdVectorTest();
 
 	//Force linking of all tests
 	//Select which test to run in debug mode.
