@@ -13,9 +13,10 @@ namespace Core
 		String(UInt capacity);
 		String(TChar const * val);
 		String(String const & val);
-		String(String const && val);
+		String(String && val);
 		~String();
 
+/*
 		String& operator=(String const & val);
 		Bool operator==(TChar const * val);
 		Bool operator==(String const & val);
@@ -23,12 +24,16 @@ namespace Core
 		String& operator+(String const & val);
 		String& operator+=(TChar const * val);
 		String& operator+=(String const & val);
+*/
 
+		Bool IsEmpty() const;
 		UInt GetCapacity() const;
 		UInt GetLength() const;
+/*
 		TChar const * GetTChar() const;
 
 		Int Compare(TChar const * val) const;
 		Int Compare(String const & val) const;
+*/
 	};
 }

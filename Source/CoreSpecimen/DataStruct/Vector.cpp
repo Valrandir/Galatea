@@ -9,6 +9,8 @@ using namespace DataStruct;
 #define ASSERT result = result && 
 typedef Vector<Counter> VCntr;
 
+namespace VectorTestNamespace {
+
 void AddFiveElementsNoReserve(VCntr &v)
 {
 	Counter::Clear();
@@ -83,7 +85,7 @@ Bool AssertIteratageLength(VCntr& v, UInt length)
 	return result;
 }
 
-Bool CTorEmptyTest()
+Bool CtorEmptyTest()
 {
 	Counter::Clear();
 
@@ -98,7 +100,7 @@ Bool CTorEmptyTest()
 	return result;
 }
 
-Bool CTorRawCopyTest()
+Bool CtorRawCopyTest()
 {
 	Bool result = true;
 	VCntr vc(VCntr::RawCopyEnabled);
@@ -108,7 +110,7 @@ Bool CTorRawCopyTest()
 	return result;
 }
 
-Bool CTorCapacityTest()
+Bool CtorCapacityTest()
 {
 	Counter::Clear();
 
@@ -123,7 +125,7 @@ Bool CTorCapacityTest()
 	return result;
 }
 
-Bool CTorCopyTest()
+Bool CtorCopyTest()
 {
 	Bool result = true;
 
@@ -160,7 +162,7 @@ Bool CTorCopyTest()
 	return result;
 }
 
-Bool CTorMoveTest()
+Bool CtorMoveTest()
 {
 	Bool result = true;
 
@@ -717,17 +719,21 @@ Bool RemoveByRefTest()
 	return result;
 }
 
+} //namespace
+
+using namespace VectorTestNamespace;
+
 Bool VectorTest(VCntr::RawCopyEnum defaultMode)
 {
 	Bool result = true;
 
 	VCntr::DefaultMode = defaultMode;
 
-	ASSERT CTorEmptyTest();
-	ASSERT CTorRawCopyTest();
-	ASSERT CTorCapacityTest();
-	ASSERT CTorCopyTest();
-	ASSERT CTorMoveTest();
+	ASSERT CtorEmptyTest();
+	ASSERT CtorRawCopyTest();
+	ASSERT CtorCapacityTest();
+	ASSERT CtorCopyTest();
+	ASSERT CtorMoveTest();
 
 	ASSERT OperatorEqualTest();
 	ASSERT OperatorMoveTest();

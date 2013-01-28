@@ -12,35 +12,43 @@ namespace Core
 			++length;
 		}
 
-		return length;
+		return length + 1;
 	}
 
-	String::String()
+	String::String() : Vector(Vector::RawCopyEnabled)
 	{
 	}
 
-	String::String(UInt capacity)
+	String::String(UInt capacity) : Vector(Vector::RawCopyEnabled)
 	{
 		Reserve(capacity);
+	}
+
+	String::String(TChar const * val)
+	{
+		UInt i, n = GetTCharLength(val);
+		Reserve(n);
+		for(i = 0; i < n; ++i)
+			Add(val[i]);
 	}
 
 	String::String(String const & val) : Vector(val)
 	{
 	}
 
-	String::String(TChar const * val)
+	String::String(String && val) : Vector((Vector&&)val)
 	{
-		Reserve(GetTCharLength(val));
-	}
-
-	String& String::operator=(String const & val)
-	{
-		Vector::operator=(val);
-		return *this;
 	}
 
 	String::~String()
 	{
+	}
+
+/*
+	String& String::operator=(String const & val)
+	{
+		Vector::operator=(val);
+		return *this;
 	}
 
 	Bool String::operator==(String const & val)
@@ -51,6 +59,12 @@ namespace Core
 	String& String::operator+(String const & val)
 	{
 		return *this;
+	}
+*/
+
+	Bool String::IsEmpty() const
+	{
+		return Vector::IsEmpty();
 	}
 
 	UInt String::GetCapacity() const
@@ -63,6 +77,7 @@ namespace Core
 		return Vector::GetLength();
 	}
 
+/*
 	TChar const * String::GetTChar() const
 	{
 		return Vector::Begin();
@@ -88,4 +103,5 @@ namespace Core
 	{
 		return Compare(target.GetTChar());
 	}
+*/
 }

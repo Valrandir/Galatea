@@ -55,7 +55,7 @@ namespace Core
 			Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
-			~Vector();
+			virtual ~Vector();
 
 			/* Operators */
 			Vector& operator=(Vector const & source);

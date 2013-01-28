@@ -6,13 +6,13 @@ extern void ThreadedErrTest();
 extern void TimeTest();
 extern bool VectorTest();
 extern bool StdVectorTest();
+extern bool StringTest();
 
 void CoreSpecimen()
 {
 	bool Skip = true;
 
-	VectorTest();
-	//StdVectorTest();
+	StringTest();
 
 	//Force linking of all tests
 	//Select which test to run in debug mode.
@@ -25,5 +25,6 @@ void CoreSpecimen()
 		ThreadedErrTest();
 		TimeTest();
 		VectorTest();
+		StringTest();
 	}
 }
