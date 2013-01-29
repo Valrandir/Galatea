@@ -86,6 +86,7 @@ namespace Core
 			void Clear();
 			void Free();
 			void Add(ConstElement& value);
+			void AddRange(ConstElement* begin, ConstElement* end);
 			void Insert(Element& at, ConstElement& value);
 			void Insert(UInt offset, ConstElement& value);
 			void Remove(Element& item);

@@ -204,16 +204,8 @@ template<class T> Vector<T>& Vector<T>::operator=(Vector&& source)
 
 template<class T> Vector<T>& Vector<T>::operator+=(Vector const & source)
 {
-	int i, n;
-
 	if(!source.IsEmpty())
-	{
-		n = source.GetLength();
-		Reserve(GetLength() + n);
-
-		for(i = 0; i < n; ++i)
-			Add(source[i]);
-	}
+		AddRange(source.Begin(), source.End());
 
 	return *this;
 }
@@ -328,6 +320,16 @@ template<class T> void Vector<T>::Add(ConstElement& value)
 	AutoAllocate();
 	Construct(_last, &value);
 	++_last;
+}
+
+template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* end)
+{
+	if(begin && end && begin <= end)
+	{
+		Reserve(GetLength() + end - begin);
+		while(begin != end)
+			Construct(_last++, begin++);
+	}
 }
 
 template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)

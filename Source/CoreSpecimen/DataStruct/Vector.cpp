@@ -527,6 +527,49 @@ Bool AddTest()
 	return result;
 }
 
+Bool AddRangeTest()
+{
+	Bool result = true;
+
+	//Append empty to empty
+	VCntr l1, r1;
+	Counter::Clear();
+	l1.AddRange(r1.Begin(), r1.End());
+	ASSERT AssertCounter(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l1, 0U, 0U);
+	ASSERT AssertBeginEndNull(l1);
+
+	//Append empty to not empty
+	VCntr l2, r2;
+	AddFiveElements(l2);
+	Counter::Clear();
+	l2.AddRange(r2.Begin(), r2.End());
+	ASSERT AssertCounter(0U, 0U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l2, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(l2);
+
+	//Append not empty to empty
+	VCntr l3, r3;
+	AddFiveElements(r3);
+	Counter::Clear();
+	l3.AddRange(r3.Begin(), r3.End());
+	ASSERT AssertCounter(0U, 5U, 0U, 0U, 0U, 0U);
+	ASSERT AssertCapLen(l3, 5U, 5U);
+	ASSERT AssertBeginEndNotNull(l3);
+
+	//Append not empty to not empty
+	VCntr l4, r4;
+	AddFiveElements(l4);
+	AddFiveElements(r4);
+	Counter::Clear();
+	l4.AddRange(r4.Begin(), r4.End());
+	ASSERT AssertCounter(0U, 5U, 5U, 0U, 0U, 5U);
+	ASSERT AssertCapLen(l4, 10U, 10U);
+	ASSERT AssertBeginEndNotNull(l4);
+
+	return result;
+}
+
 Bool InsertByIndexTest()
 {
 	Bool result = true;
@@ -752,6 +795,7 @@ Bool VectorTest(VCntr::RawCopyEnum defaultMode)
 	ASSERT FreeTest();
 
 	ASSERT AddTest();
+	ASSERT AddRangeTest();
 	ASSERT InsertByIndexTest();
 	ASSERT InsertByRefTest();
 	ASSERT RemoveByIndexTest();

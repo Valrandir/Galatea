@@ -26,10 +26,8 @@ namespace Core
 
 	String::String(TChar const * val)
 	{
-		UInt i, n = GetTCharLength(val);
-		Reserve(n);
-		for(i = 0; i < n; ++i)
-			Add(val[i]);
+		UInt n = GetTCharLength(val);
+		AddRange(val, val + n);
 	}
 
 	String::String(String const & val) : Vector(val)
@@ -77,31 +75,36 @@ namespace Core
 		return Vector::GetLength();
 	}
 
-/*
 	TChar const * String::GetTChar() const
 	{
 		return Vector::Begin();
 	}
 
+	//Return 0 when self == target, 1 when self > target, -1 when self < target
 	Int String::Compare(TChar const * target) const
 	{
 		TChar const * val = GetTChar();
+		TChar const * empty = Text("");
+
+		if(val == NULL) val = empty;
+		if(target == NULL) target = empty;
 
 		while(true)
 		{
 			if(*val == '\0' && *target == '\0') return 0;
-			if(*val == '\0') return 1;
-			if(*target == '\0') return -1;
-			if(*val > *target) return 1;
+			if(*val == '\0') return -1;
+			if(*target == '\0') return 1;
 			if(*val < *target) return -1;
+			if(*val > *target) return 1;
 			++val;
 			++target;
 		}
+
+		return 0;
 	}
 
 	Int String::Compare(String const & target) const
 	{
 		return Compare(target.GetTChar());
 	}
-*/
 }

@@ -6,6 +6,8 @@ using namespace Core;
 
 #define ASSERT result = result && 
 TChar const * _text = Text("This is CoreLib");
+TChar const * _textSmaller = Text("A is smaller than T");
+TChar const * _textGreater = Text("V is Greater than T");
 UInt const _len = 16U;
 
 namespace StringTestNamespace {
@@ -145,6 +147,80 @@ Bool GetLengthTest()
 	return result;
 }
 
+Bool GetTCharTest()
+{
+	Bool result = true;
+
+	String s(_text);
+	TChar const * tc = s.GetTChar();
+
+	ASSERT *_text == *tc;
+
+	return result;
+}
+
+Bool CompareTCharTest()
+{
+	Bool result = true;
+
+	//Empty to empty
+	String s1;
+	ASSERT 0 == s1.Compare(Text(""));
+
+	//Empty to not empty
+	String s2;
+	ASSERT -1 == s2.Compare(Text("Not Empty"));
+
+	//Not Empty to empty
+	String s3(_text);
+	ASSERT 1 == s3.Compare(Text(""));
+
+	//Not Empty to smaller
+	String s4(_text);
+	ASSERT 1 == s3.Compare(_textSmaller);
+
+	//Not Empty to greater
+	String s5(_text);
+	ASSERT -1 == s5.Compare(_textGreater);
+
+	//Not Empty to same
+	String s6(_text);
+	ASSERT 0 == s6.Compare(_text);
+
+	return result;
+}
+
+Bool CompareStringTest()
+{
+	Bool result = true;
+
+	//Empty to empty
+	String s1;
+	ASSERT 0 == s1.Compare(String(Text("")));
+
+	//Empty to not empty
+	String s2;
+	ASSERT -1 == s2.Compare(String(Text("Not Empty")));
+
+	//Not Empty to empty
+	String s3(_text);
+	ASSERT 1 == s3.Compare(String(Text("")));
+
+	//Not Empty to smaller
+	String s4(_text);
+	ASSERT 1 == s3.Compare(String(_textSmaller));
+
+	//Not Empty to greater
+	String s5(_text);
+	ASSERT -1 == s5.Compare(String(_textGreater));
+
+	//Not Empty to same
+	String s6(_text);
+	ASSERT 0 == s6.Compare(String(_text));
+
+	return result;
+}
+
 } //namespace
 
 using namespace StringTestNamespace;
@@ -162,6 +238,10 @@ Bool StringTest()
 	ASSERT IsEmptyTest();
 	ASSERT GetCapacityTest();
 	ASSERT GetLengthTest();
+	ASSERT GetTCharTest();
+
+	ASSERT CompareTCharTest();
+	ASSERT CompareStringTest();
 
 	return result;
 }

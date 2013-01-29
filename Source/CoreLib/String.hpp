@@ -29,11 +29,10 @@ namespace Core
 		Bool IsEmpty() const;
 		UInt GetCapacity() const;
 		UInt GetLength() const;
-/*
 		TChar const * GetTChar() const;
 
 		Int Compare(TChar const * val) const;
 		Int Compare(String const & val) const;
-*/
+
 	};
 }
