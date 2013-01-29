@@ -2,19 +2,6 @@
 
 namespace Core
 {
-	UInt String::GetTCharLength(TChar const * val)
-	{
-		UInt length = 0U;
-
-		while(*val != '\0')
-		{
-			++val;
-			++length;
-		}
-
-		return length + 1;
-	}
-
 	String::String() : Vector(Vector::RawCopyEnabled)
 	{
 	}
@@ -42,23 +29,82 @@ namespace Core
 	{
 	}
 
-/*
+	String& String::operator=(TChar const * val)
+	{
+		UInt n = GetTCharLength(val);
+		Vector::Clear();
+		AddRange(val, val + n);
+		return *this;
+	}
+
 	String& String::operator=(String const & val)
 	{
-		Vector::operator=(val);
+		if(this != &val)
+			if(val.IsEmpty())
+				Clear();
+			else
+				*this = val.GetTChar();
+
 		return *this;
 	}
 
-	Bool String::operator==(String const & val)
+	String& String::operator=(String && val)
 	{
-		return true;
-	}
-
-	String& String::operator+(String const & val)
-	{
+		Vector::operator=((Vector&&)val);
 		return *this;
 	}
-*/
+
+	String& String::operator+=(TChar const * val)
+	{
+		UInt n = GetTCharLength(val);
+		AddRange(val, val + n);
+		return *this;
+	}
+
+	String& String::operator+=(String const & val)
+	{
+		Vector::operator+=(val);
+		return *this;
+	}
+
+	String String::operator+(TChar const * val) const
+	{
+		return String(*this) += val;
+	}
+
+	String String::operator+(String const & val) const
+	{
+		return String(*this) += val;
+	}
+
+	Bool String::operator==(TChar  const * val) const { return Compare(val) ==  0; }
+	Bool String::operator==(String const & val) const { return Compare(val) ==  0; }
+	Bool String::operator!=(TChar  const * val) const { return Compare(val) !=  0; }
+	Bool String::operator!=(String const & val) const { return Compare(val) !=  0; }
+	Int  String::operator> (TChar  const * val) const { return Compare(val) ==  1; }
+	Int  String::operator> (String const & val) const { return Compare(val) ==  1; }
+	Int  String::operator< (TChar  const * val) const { return Compare(val) == -1; }
+	Int  String::operator< (String const & val) const { return Compare(val) == -1; }
+	Int  String::operator>=(TChar  const * val) const { return Compare(val) >=  1; }
+	Int  String::operator>=(String const & val) const { return Compare(val) >=  1; }
+	Int  String::operator<=(TChar  const * val) const { return Compare(val) <= -1; }
+	Int  String::operator<=(String const & val) const { return Compare(val) <= -1; }
+
+	UInt String::GetTCharLength(TChar const * val)
+	{
+		UInt length = 0U;
+
+		if(val == NULL)
+			return 0U;
+
+		while(*val != '\0')
+		{
+			++val;
+			++length;
+		}
+
+		return length + 1;
+	}
 
 	Bool String::IsEmpty() const
 	{
@@ -106,5 +152,15 @@ namespace Core
 	Int String::Compare(String const & target) const
 	{
 		return Compare(target.GetTChar());
+	}
+
+	void String::Append(TChar const * val)
+	{
+		*this += val;
+	}
+
+	void String::Append(String const & val)
+	{
+		*this += val;
 	}
 }

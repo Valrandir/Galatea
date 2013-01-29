@@ -8,7 +8,9 @@ using namespace Core;
 TChar const * _text = Text("This is CoreLib");
 TChar const * _textSmaller = Text("A is smaller than T");
 TChar const * _textGreater = Text("V is Greater than T");
-UInt const _len = 16U;
+TChar const * _textShorter = Text("Shorter");
+TChar const * _textBigger = Text("Very much larger than _text");
+UInt const _textlen = 16U;
 
 namespace StringTestNamespace {
 
@@ -49,7 +51,7 @@ Bool CtorTCharTest()
 
 	String s(_text);
 	ASSERT s.IsEmpty() == false;
-	ASSERT AssertCapLen(s, _len, _len);
+	ASSERT AssertCapLen(s, _textlen, _textlen);
 
 	return result;
 }
@@ -61,14 +63,14 @@ Bool CtorCopyTest()
 	//Copy Empty
 	String s1;
 	String t1(s1);
-	ASSERT s1.IsEmpty() == true;
-	ASSERT AssertCapLen(s1, 0U, 0U);
+	ASSERT t1.IsEmpty() == true;
+	ASSERT AssertCapLen(t1, 0U, 0U);
 
 	//Copy not Empty
 	String s2(_text);
 	String t2(s2);
 	ASSERT t2.IsEmpty() == false;
-	ASSERT AssertCapLen(t2, _len, _len);
+	ASSERT AssertCapLen(t2, _textlen, _textlen);
 
 	return result;
 }
@@ -89,7 +91,23 @@ Bool CtorMoveTest()
 	ASSERT s2.IsEmpty() == true;
 	ASSERT AssertCapLen(s2, 0U, 0U);
 	ASSERT t2.IsEmpty() == false;
-	ASSERT AssertCapLen(t2, _len, _len);
+	ASSERT AssertCapLen(t2, _textlen, _textlen);
+
+	return result;
+}
+
+Bool GetTCharLenTest()
+{
+	Bool result = true;
+
+	//Null
+	ASSERT String::GetTCharLength(NULL) == 0U;
+
+	//Empty string Len == 1 for terminating character
+	ASSERT String::GetTCharLength(Text("")) == 1U;
+
+	//Len == _textlen
+	ASSERT String::GetTCharLength(_text) == _textlen;
 
 	return result;
 }
@@ -142,7 +160,7 @@ Bool GetLengthTest()
 
 	//Not Empty
 	String s3(_text);
-	ASSERT s3.GetLength() == _len;
+	ASSERT s3.GetLength() == _textlen;
 
 	return result;
 }
@@ -221,6 +239,89 @@ Bool CompareStringTest()
 	return result;
 }
 
+Bool OperatorEqualTest()
+{
+	Bool result = true;
+	UInt capacity;
+
+	//Assign Empty to Empty
+	String s1;
+	String t1 = s1;
+	ASSERT t1.IsEmpty() == true;
+	ASSERT AssertCapLen(t1, 0U, 0U);
+
+	//Assign Empty to not Empty
+	String s2;
+	String t2(_text);
+	capacity = t2.GetCapacity();
+	t2 = s2;
+	ASSERT t2.IsEmpty() == true;
+	ASSERT AssertCapLen(t2, capacity, 0U);
+
+	//Assign not Empty to Empty
+	String s3(_text);
+	String t3 = s3;
+	ASSERT t3.IsEmpty() == false;
+	ASSERT AssertCapLen(t3, _textlen, _textlen);
+
+	//Assign bigger string to shorter string
+	String s4(_textBigger);
+	String t4(_text);
+	t4 = s4;
+	ASSERT t4.IsEmpty() == false;
+	ASSERT AssertCapLen(t4, s4.GetCapacity(), s4.GetLength());
+
+	//Assign shorter string to bigger string
+	//Target capacity is same as before
+	String s5(_textShorter);
+	String t5(_text);
+	capacity = t5.GetCapacity();
+	t5 = s5;
+	ASSERT t5.IsEmpty() == false;
+	ASSERT AssertCapLen(t5, capacity, s5.GetLength());
+
+	return result;
+}
+
+Bool OperatorMoveTest()
+{
+	Bool result = true;
+
+	//Move Empty to Empty
+	String s1;
+	String t1((String&&)s1);
+	ASSERT s1.IsEmpty() == true;
+	ASSERT AssertCapLen(s1, 0U, 0U);
+
+	//Move not Empty to Empty
+	String s2(_text);
+	String t2((String&&)s2);
+	ASSERT s2.IsEmpty() == true;
+	ASSERT AssertCapLen(s2, 0U, 0U);
+	ASSERT t2.IsEmpty() == false;
+	ASSERT AssertCapLen(t2, _textlen, _textlen);
+
+	//Move Empty to not Empty
+	String s3;
+	String t3(_text);
+	t3 = (String&&)s3;
+	ASSERT s3.IsEmpty() == true;
+	ASSERT AssertCapLen(s3, 0U, 0U);
+	ASSERT t3.IsEmpty() == true;
+	ASSERT AssertCapLen(t3, 0U, 0U);
+
+	//Move not Empty to not Empty
+	String s4(_text);
+	String t4(_text);
+	t4 = (String&&)s4;
+	ASSERT s4.IsEmpty() == true;
+	ASSERT AssertCapLen(s4, 0U, 0U);
+	ASSERT t4.IsEmpty() == false;
+	ASSERT AssertCapLen(t4, _textlen, _textlen);
+
+	return result;
+}
+
 } //namespace
 
 using namespace StringTestNamespace;
@@ -235,6 +336,7 @@ Bool StringTest()
 	ASSERT CtorCopyTest();
 	ASSERT CtorMoveTest();
 
+	ASSERT GetTCharLenTest();
 	ASSERT IsEmptyTest();
 	ASSERT GetCapacityTest();
 	ASSERT GetLengthTest();
@@ -242,6 +344,9 @@ Bool StringTest()
 
 	ASSERT CompareTCharTest();
 	ASSERT CompareStringTest();
+
+	ASSERT OperatorEqualTest();
+	ASSERT OperatorMoveTest();
 
 	return result;
 }

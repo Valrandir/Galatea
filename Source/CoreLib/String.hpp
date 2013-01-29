@@ -6,8 +6,6 @@ namespace Core
 {
 	class String : private DataStruct::Vector<TChar>
 	{
-		static UInt GetTCharLength(TChar const * val);
-
 		public:
 		String();
 		String(UInt capacity);
@@ -16,23 +14,45 @@ namespace Core
 		String(String && val);
 		~String();
 
-/*
+		String& operator=(TChar const * val);
 		String& operator=(String const & val);
-		Bool operator==(TChar const * val);
-		Bool operator==(String const & val);
-		String& operator+(TChar const * val);
-		String& operator+(String const & val);
+		String& operator=(String && val);
 		String& operator+=(TChar const * val);
 		String& operator+=(String const & val);
-*/
+		String operator+(TChar const * val) const;
+		String operator+(String const & val) const;
+		Bool operator==(TChar const * val) const;
+		Bool operator==(String const & val) const;
+		Bool operator!=(TChar const * val) const;
+		Bool operator!=(String const & val) const;
+		Int operator>(TChar const * val) const;
+		Int operator>(String const & val) const;
+		Int operator<(TChar const * val) const;
+		Int operator<(String const & val) const;
+		Int operator>=(TChar const * val) const;
+		Int operator>=(String const & val) const;
+		Int operator<=(TChar const * val) const;
+		Int operator<=(String const & val) const;
+
+		static UInt GetTCharLength(TChar const * val);
 
 		Bool IsEmpty() const;
 		UInt GetCapacity() const;
 		UInt GetLength() const;
 		TChar const * GetTChar() const;
 
-		Int Compare(TChar const * val) const;
-		Int Compare(String const & val) const;
+		Int Compare(TChar const * target) const;
+		Int Compare(String const & target) const;
+		void Append(TChar const * val);
+		void Append(String const & val);
 
+		//String& Substring(UInt start);
+		//String& Substring(UInt start, UInt length);
+		//String& Format(TChar const * format, ...);
+		//String& Format(String const & format, ...);
+		//Bool StartsWith(TChar const * val);
+		//Bool StartsWith(String const & val);
+		//Bool EndsWith(TChar const * val);
+		//Bool EndsWith(String const & val);
 	};
 }
