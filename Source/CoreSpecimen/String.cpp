@@ -1,4 +1,5 @@
 //TODO Consider using blocks {} to isolate variables and avoid doing s1,s2,s3,sx
+//TODO Reduce the number of lines of codes by putting short asserts on one line
 
 #include "Core.hpp"
 
