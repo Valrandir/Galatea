@@ -89,14 +89,14 @@ namespace Core
 	Bool String::operator==(String const & val) const { return Compare(val) ==  0; }
 	Bool String::operator!=(TChar  const * val) const { return Compare(val) !=  0; }
 	Bool String::operator!=(String const & val) const { return Compare(val) !=  0; }
-	Int  String::operator> (TChar  const * val) const { return Compare(val) ==  1; }
-	Int  String::operator> (String const & val) const { return Compare(val) ==  1; }
-	Int  String::operator< (TChar  const * val) const { return Compare(val) == -1; }
-	Int  String::operator< (String const & val) const { return Compare(val) == -1; }
-	Int  String::operator>=(TChar  const * val) const { return Compare(val) >=  1; }
-	Int  String::operator>=(String const & val) const { return Compare(val) >=  1; }
-	Int  String::operator<=(TChar  const * val) const { return Compare(val) <= -1; }
-	Int  String::operator<=(String const & val) const { return Compare(val) <= -1; }
+	Bool String::operator> (TChar  const * val) const { return Compare(val) ==  1; }
+	Bool String::operator> (String const & val) const { return Compare(val) ==  1; }
+	Bool String::operator< (TChar  const * val) const { return Compare(val) == -1; }
+	Bool String::operator< (String const & val) const { return Compare(val) == -1; }
+	Bool String::operator>=(TChar  const * val) const { return Compare(val) >=  0; }
+	Bool String::operator>=(String const & val) const { return Compare(val) >=  0; }
+	Bool String::operator<=(TChar  const * val) const { return Compare(val) <=  0; }
+	Bool String::operator<=(String const & val) const { return Compare(val) <=  0; }
 
 	UInt String::GetTCharLength(TChar const * val)
 	{

@@ -29,14 +29,14 @@ namespace Core
 		Bool operator==(String const & val) const;
 		Bool operator!=(TChar const * val) const;
 		Bool operator!=(String const & val) const;
-		Int operator>(TChar const * val) const;
-		Int operator>(String const & val) const;
-		Int operator<(TChar const * val) const;
-		Int operator<(String const & val) const;
-		Int operator>=(TChar const * val) const;
-		Int operator>=(String const & val) const;
-		Int operator<=(TChar const * val) const;
-		Int operator<=(String const & val) const;
+		Bool operator>(TChar const * val) const;
+		Bool operator>(String const & val) const;
+		Bool operator<(TChar const * val) const;
+		Bool operator<(String const & val) const;
+		Bool operator>=(TChar const * val) const;
+		Bool operator>=(String const & val) const;
+		Bool operator<=(TChar const * val) const;
+		Bool operator<=(String const & val) const;
 
 		static UInt GetTCharLength(TChar const * val);
 

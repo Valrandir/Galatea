@@ -529,13 +529,13 @@ Bool OperatorEqualTCharTest()
 		ASSERT !(l == _empty);
 	}
 
-	//Not Empty == Not Empty Same
+	//Not Empty == Same
 	{
 		String l(_text);
 		ASSERT l == _text;
 	}
 
-	//Not Empty == Not Empty Different
+	//Not Empty == Different
 	{
 		String l(_text);
 		ASSERT !(l == _textSmaller);
@@ -569,14 +569,14 @@ Bool OperatorEqualStringTest()
 		ASSERT !(l == r);
 	}
 
-	//Not Empty == Not Empty Same
+	//Not Empty == Same
 	{
 		String l(_text);
 		String r(_text);
 		ASSERT l == r;
 	}
 
-	//Not Empty == Not Empty Different
+	//Not Empty == Different
 	{
 		String l(_text);
 		String r(_textSmaller);
@@ -608,13 +608,13 @@ Bool OperatorNotEqualTCharTest()
 		ASSERT l != _empty;
 	}
 
-	//Not Empty != Not Empty Same
+	//Not Empty != Same
 	{
 		String l(_text);
 		ASSERT !(l != _text);
 	}
 
-	//Not Empty != Not Empty Different
+	//Not Empty != Different
 	{
 		String l(_text);
 		ASSERT l != _textSmaller;
@@ -648,18 +648,386 @@ Bool OperatorNotEqualStringTest()
 		ASSERT l != r;
 	}
 
-	//Not Empty != Not Empty Same
+	//Not Empty != Same
 	{
 		String l(_text);
 		String r(_text);
 		ASSERT !(l != r);
 	}
 
-	//Not Empty != Not Empty Different
+	//Not Empty != Different
 	{
 		String l(_text);
 		String r(_textSmaller);
 		ASSERT l != r;
+	}
+
+	return result;
+}
+
+Bool OperatorGreaterTCharTest()
+{
+	Bool result = true;
+
+	//Empty > Empty
+	{
+		String s;
+		ASSERT !(s > _empty);
+	}
+
+	//Empty > Not Empty
+	{
+		String s;
+		ASSERT !(s > _text);
+	}
+
+	//Not Empty > Empty
+	{
+		String s(_text);
+		ASSERT s > _empty;
+	}
+
+	//Not Empty > Same
+	{
+		String s(_text);
+		ASSERT !(s > _text);
+	}
+
+	//Not Empty > Greater
+	{
+		String s(_text);
+		ASSERT !(s > _textGreater);
+	}
+
+	//Not Empty > Smaller
+	{
+		String s(_text);
+		ASSERT s > _textSmaller;
+	}
+
+	return result;
+}
+
+Bool OperatorGreaterStringTest()
+{
+	Bool result = true;
+
+	//Empty > Empty
+	{
+		String s;
+		String t;
+		ASSERT !(s > t);
+	}
+
+	//Empty > Not Empty
+	{
+		String s;
+		String t(_text);
+		ASSERT !(s > t);
+	}
+
+	//Not Empty > Empty
+	{
+		String s(_text);
+		String t;
+		ASSERT s > t;
+	}
+
+	//Not Empty > Same
+	{
+		String s(_text);
+		String t(_text);
+		ASSERT !(s > t);
+	}
+
+	//Not Empty > Greater
+	{
+		String s(_text);
+		String t(_textGreater);
+		ASSERT !(s > t);
+	}
+
+	//Not Empty > Smaller
+	{
+		String s(_text);
+		String t(_textSmaller);
+		ASSERT s > t;
+	}
+
+	return result;
+}
+
+Bool OperatorSmallerTCharTest()
+{
+	Bool result = true;
+
+	//Empty < Empty
+	{
+		String s;
+		ASSERT !(s < _empty);
+	}
+
+	//Empty < Not Empty
+	{
+		String s;
+		ASSERT s < _text;
+	}
+
+	//Not Empty < Empty
+	{
+		String s(_text);
+		ASSERT !(s < _empty);
+	}
+
+	//Not Empty < Same
+	{
+		String s(_text);
+		ASSERT !(s < _text);
+	}
+
+	//Not Empty < Greater
+	{
+		String s(_text);
+		ASSERT s < _textGreater;
+	}
+
+	//Not Empty < Smaller
+	{
+		String s(_text);
+		ASSERT !(s < _textSmaller);
+	}
+
+	return result;
+}
+
+Bool OperatorSmallerStringTest()
+{
+	Bool result = true;
+
+	//Empty < Empty
+	{
+		String s;
+		String t;
+		ASSERT !(s < t);
+	}
+
+	//Empty < Not Empty
+	{
+		String s;
+		String t(_text);
+		ASSERT s < t;
+	}
+
+	//Not Empty < Empty
+	{
+		String s(_text);
+		String t;
+		ASSERT !(s < t);
+	}
+
+	//Not Empty < Same
+	{
+		String s(_text);
+		String t(_text);
+		ASSERT !(s < t);
+	}
+
+	//Not Empty < Greater
+	{
+		String s(_text);
+		String t(_textGreater);
+		ASSERT s < t;
+	}
+
+	//Not Empty < Smaller
+	{
+		String s(_text);
+		String t(_textSmaller);
+		ASSERT !(s < t);
+	}
+
+	return result;
+}
+
+Bool OperatorGreaterOrEqualTCharTest()
+{
+	Bool result = true;
+
+	//Empty >= Empty
+	{
+		String s;
+		ASSERT s >= _empty;
+	}
+
+	//Empty >= Not Empty
+	{
+		String s;
+		ASSERT !(s >= _text);
+	}
+
+	//Not Empty >= Empty
+	{
+		String s(_text);
+		ASSERT s >= _empty;
+	}
+
+	//Not Empty >= Same
+	{
+		String s(_text);
+		ASSERT s >= _text;
+	}
+
+	//Not Empty >= Greater
+	{
+		String s(_text);
+		ASSERT !(s >= _textGreater);
+	}
+
+	//Not Empty >= Smaller
+	{
+		String s(_text);
+		ASSERT s >= _textSmaller;
+	}
+
+	return result;
+}
+
+Bool OperatorGreaterOrEqualStringTest()
+{
+	Bool result = true;
+
+	//Empty >= Empty
+	{
+		String s;
+		String t;
+		ASSERT s >= t;
+	}
+
+	//Empty >= Not Empty
+	{
+		String s;
+		String t(_text);
+		ASSERT !(s >= t);
+	}
+
+	//Not Empty >= Empty
+	{
+		String s(_text);
+		String t;
+		ASSERT s >= t;
+	}
+
+	//Not Empty >= Same
+	{
+		String s(_text);
+		String t(_text);
+		ASSERT s >= t;
+	}
+
+	//Not Empty >= Greater
+	{
+		String s(_text);
+		String t(_textGreater);
+		ASSERT !(s >= t);
+	}
+
+	//Not Empty >= Smaller
+	{
+		String s(_text);
+		String t(_textSmaller);
+		ASSERT s >= t;
+	}
+
+	return result;
+}
+
+Bool OperatorSmallerOrEqualTCharTest()
+{
+	Bool result = true;
+
+	//Empty <= Empty
+	{
+		String s;
+		ASSERT s <= _empty;
+	}
+
+	//Empty <= Not Empty
+	{
+		String s;
+		ASSERT s <= _text;
+	}
+
+	//Not Empty <= Empty
+	{
+		String s(_text);
+		ASSERT !(s <= _empty);
+	}
+
+	//Not Empty <= Same
+	{
+		String s(_text);
+		ASSERT s <= _text;
+	}
+
+	//Not Empty <= Greater
+	{
+		String s(_text);
+		ASSERT s <= _textGreater;
+	}
+
+	//Not Empty <= Smaller
+	{
+		String s(_text);
+		ASSERT !(s <= _textSmaller);
+	}
+
+	return result;
+}
+
+Bool OperatorSmallerOrEqualStringTest()
+{
+	Bool result = true;
+
+	//Empty <= Empty
+	{
+		String s;
+		String t;
+		ASSERT s <= t;
+	}
+
+	//Empty <= Not Empty
+	{
+		String s;
+		String t(_text);
+		ASSERT s <= t;
+	}
+
+	//Not Empty <= Empty
+	{
+		String s(_text);
+		String t;
+		ASSERT !(s <= t);
+	}
+
+	//Not Empty <= Same
+	{
+		String s(_text);
+		String t(_text);
+		ASSERT s <= t;
+	}
+
+	//Not Empty <= Greater
+	{
+		String s(_text);
+		String t(_textGreater);
+		ASSERT s <= t;
+	}
+
+	//Not Empty <= Smaller
+	{
+		String s(_text);
+		String t(_textSmaller);
+		ASSERT !(s <= t);
 	}
 
 	return result;
@@ -700,6 +1068,16 @@ Bool StringTest()
 	ASSERT OperatorEqualStringTest();
 	ASSERT OperatorNotEqualTCharTest();
 	ASSERT OperatorNotEqualStringTest();
+
+	ASSERT OperatorGreaterTCharTest();
+	ASSERT OperatorGreaterStringTest();
+	ASSERT OperatorSmallerTCharTest();
+	ASSERT OperatorSmallerStringTest();
+
+	ASSERT OperatorGreaterOrEqualTCharTest();
+	ASSERT OperatorGreaterOrEqualStringTest();
+	ASSERT OperatorSmallerOrEqualTCharTest();
+	ASSERT OperatorSmallerOrEqualStringTest();
 
 	return result;
 }
