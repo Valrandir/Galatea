@@ -43,6 +43,8 @@ namespace Core
 
 		Int Compare(TChar const * target) const;
 		Int Compare(String const & target) const;
+		void Reserve(UInt capacity);
+		void Shrink();
 		void Append(TChar const * val);
 		void Append(String const & val);
 

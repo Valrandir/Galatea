@@ -3,12 +3,14 @@
 using namespace Core;
 
 #define ASSERT result = result && 
+TChar const * _empty = Text("");
 TChar const * _text = Text("This is CoreLib");
 TChar const * _textSmaller = Text("A is smaller than T");
 TChar const * _textGreater = Text("V is Greater than T");
 TChar const * _textShorter = Text("Shorter");
 TChar const * _textBigger = Text("Very much larger than _text");
-UInt const _textlen = 16U;
+UInt const _textcap = 16U;
+UInt const _textlen = 15U;
 
 namespace StringTestNamespace {
 
@@ -46,10 +48,22 @@ Bool CtorCapacityTest()
 Bool CtorTCharTest()
 {
 	Bool result = true;
+	TChar const * nullTChar = NULL;
 
-	String s(_text);
-	ASSERT s.IsEmpty() == false;
-	ASSERT AssertCapLen(s, _textlen, _textlen);
+	//TChar NULL
+	String s1(nullTChar);
+	ASSERT s1.IsEmpty() == true;
+	ASSERT AssertCapLen(s1, 0U, 0U);
+
+	//TChar Empty
+	String s2(_empty);
+	ASSERT s2.IsEmpty() == true;
+	ASSERT AssertCapLen(s2, 0U, 0U);
+
+	//TChar not Empty
+	String s3(_text);
+	ASSERT s3.IsEmpty() == false;
+	ASSERT AssertCapLen(s3, _textcap, _textlen);
 
 	return result;
 }
@@ -68,7 +82,7 @@ Bool CtorCopyTest()
 	String s2(_text);
 	String t2(s2);
 	ASSERT t2.IsEmpty() == false;
-	ASSERT AssertCapLen(t2, _textlen, _textlen);
+	ASSERT AssertCapLen(t2, _textcap, _textlen);
 
 	return result;
 }
@@ -89,7 +103,7 @@ Bool CtorMoveTest()
 	ASSERT s2.IsEmpty() == true;
 	ASSERT AssertCapLen(s2, 0U, 0U);
 	ASSERT t2.IsEmpty() == false;
-	ASSERT AssertCapLen(t2, _textlen, _textlen);
+	ASSERT AssertCapLen(t2, _textcap, _textlen);
 
 	return result;
 }
@@ -102,7 +116,7 @@ Bool GetTCharLenTest()
 	ASSERT String::GetTCharLength(NULL) == 0U;
 
 	//Empty string Len == 1 for terminating character
-	ASSERT String::GetTCharLength(Text("")) == 1U;
+	ASSERT String::GetTCharLength(_empty) == 0U;
 
 	//Len == _textlen
 	ASSERT String::GetTCharLength(_text) == _textlen;
@@ -181,7 +195,7 @@ Bool CompareTCharTest()
 
 	//Empty to empty
 	String s1;
-	ASSERT 0 == s1.Compare(Text(""));
+	ASSERT 0 == s1.Compare(_empty);
 
 	//Empty to not empty
 	String s2;
@@ -189,7 +203,7 @@ Bool CompareTCharTest()
 
 	//Not Empty to empty
 	String s3(_text);
-	ASSERT 1 == s3.Compare(Text(""));
+	ASSERT 1 == s3.Compare(_empty);
 
 	//Not Empty to smaller
 	String s4(_text);
@@ -212,7 +226,7 @@ Bool CompareStringTest()
 
 	//Empty to empty
 	String s1;
-	ASSERT 0 == s1.Compare(String(Text("")));
+	ASSERT 0 == s1.Compare(String(_empty));
 
 	//Empty to not empty
 	String s2;
@@ -220,7 +234,7 @@ Bool CompareStringTest()
 
 	//Not Empty to empty
 	String s3(_text);
-	ASSERT 1 == s3.Compare(String(Text("")));
+	ASSERT 1 == s3.Compare(String(_empty));
 
 	//Not Empty to smaller
 	String s4(_text);
@@ -237,7 +251,7 @@ Bool CompareStringTest()
 	return result;
 }
 
-Bool OperatorEqualTest()
+Bool OperatorEqualStringTest()
 {
 	Bool result = true;
 	UInt capacity;
@@ -260,7 +274,7 @@ Bool OperatorEqualTest()
 	String s3(_text);
 	String t3 = s3;
 	ASSERT t3.IsEmpty() == false;
-	ASSERT AssertCapLen(t3, _textlen, _textlen);
+	ASSERT AssertCapLen(t3, _textcap, _textlen);
 
 	//Assign bigger string to shorter string
 	String s4(_textBigger);
@@ -281,7 +295,7 @@ Bool OperatorEqualTest()
 	return result;
 }
 
-Bool OperatorMoveTest()
+Bool OperatorMoveStringTest()
 {
 	Bool result = true;
 
@@ -297,7 +311,7 @@ Bool OperatorMoveTest()
 	ASSERT s2.IsEmpty() == true;
 	ASSERT AssertCapLen(s2, 0U, 0U);
 	ASSERT t2.IsEmpty() == false;
-	ASSERT AssertCapLen(t2, _textlen, _textlen);
+	ASSERT AssertCapLen(t2, _textcap, _textlen);
 
 	//Move Empty to not Empty
 	String s3;
@@ -315,8 +329,60 @@ Bool OperatorMoveTest()
 	ASSERT s4.IsEmpty() == true;
 	ASSERT AssertCapLen(s4, 0U, 0U);
 	ASSERT t4.IsEmpty() == false;
-	ASSERT AssertCapLen(t4, _textlen, _textlen);
+	ASSERT AssertCapLen(t4, _textcap, _textlen);
 
+	return result;
+}
+
+Bool OperatorEqualTCharTest()
+{
+	Bool result = true;
+	UInt capacity;
+
+	//Assign Empty to Empty
+	String t1 = _empty;
+	ASSERT t1.IsEmpty() == true;
+	ASSERT AssertCapLen(t1, 0U, 0U);
+
+	//Assign Empty to not Empty
+	String t2(_text);
+	capacity = t2.GetCapacity();
+	t2 = _empty;
+	ASSERT t2.IsEmpty() == true;
+	ASSERT AssertCapLen(t2, capacity, 0U);
+
+	//Assign not Empty to Empty
+	String t3 = _text;
+	ASSERT t3.IsEmpty() == false;
+	ASSERT AssertCapLen(t3, _textcap, _textlen);
+
+	//Assign bigger string to shorter string
+	String t4(_text);
+	t4 = _textBigger;
+	capacity = String::GetTCharLength(_textBigger);
+	ASSERT t4.IsEmpty() == false;
+	ASSERT AssertCapLen(t4, capacity + 1, capacity);
+
+	//Assign shorter string to bigger string
+	//Target capacity is same as before
+	String t5(_text);
+	capacity = t5.GetCapacity();
+	t5 = _textShorter;
+	ASSERT t5.IsEmpty() == false;
+	ASSERT AssertCapLen(t5, capacity, String::GetTCharLength(_textShorter));
+
+	return result;
+}
+
+Bool OperatorPlusEqualStringTest()
+{
+	Bool result = true;
+	return result;
+}
+
+Bool OperatorPlusEqualTCharTest()
+{
+	Bool result = true;
 	return result;
 }
 
@@ -343,8 +409,11 @@ Bool StringTest()
 	ASSERT CompareTCharTest();
 	ASSERT CompareStringTest();
 
-	ASSERT OperatorEqualTest();
-	ASSERT OperatorMoveTest();
+	ASSERT OperatorEqualStringTest();
+	ASSERT OperatorMoveStringTest();
+	ASSERT OperatorEqualTCharTest();
+	ASSERT OperatorPlusEqualStringTest();
+	ASSERT OperatorPlusEqualTCharTest();
 
 	return result;
 }

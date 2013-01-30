@@ -11,10 +11,10 @@ namespace Core
 		Reserve(capacity);
 	}
 
-	String::String(TChar const * val)
+	String::String(TChar const * val) : Vector(Vector::RawCopyEnabled)
 	{
 		UInt n = GetTCharLength(val);
-		AddRange(val, val + n);
+		if(n) AddRange(val, val + n + 1);
 	}
 
 	String::String(String const & val) : Vector(val)
@@ -33,7 +33,7 @@ namespace Core
 	{
 		UInt n = GetTCharLength(val);
 		Vector::Clear();
-		AddRange(val, val + n);
+		if(n) AddRange(val, val + n + 1);
 		return *this;
 	}
 
@@ -57,13 +57,21 @@ namespace Core
 	String& String::operator+=(TChar const * val)
 	{
 		UInt n = GetTCharLength(val);
-		AddRange(val, val + n);
+		if(n)
+		{
+			Vector::Remove(Vector::GetLength() - 1);
+			AddRange(val, val + n + 1);
+		}
 		return *this;
 	}
 
 	String& String::operator+=(String const & val)
 	{
-		Vector::operator+=(val);
+		if(!val.IsEmpty())
+		{
+			Vector::Remove(Vector::GetLength() - 1);
+			Vector::operator+=(val);
+		}
 		return *this;
 	}
 
@@ -103,7 +111,7 @@ namespace Core
 			++length;
 		}
 
-		return length + 1;
+		return length;
 	}
 
 	Bool String::IsEmpty() const
@@ -118,7 +126,7 @@ namespace Core
 
 	UInt String::GetLength() const
 	{
-		return Vector::GetLength();
+		return Vector::IsEmpty() ? 0U : Vector::GetLength() - 1;
 	}
 
 	TChar const * String::GetTChar() const
@@ -152,6 +160,16 @@ namespace Core
 	Int String::Compare(String const & target) const
 	{
 		return Compare(target.GetTChar());
+	}
+
+	void String::Reserve(UInt capacity)
+	{
+		Vector::Reserve(capacity);
+	}
+
+	void String::Shrink()
+	{
+		Vector::Shrink();
 	}
 
 	void String::Append(TChar const * val)
