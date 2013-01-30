@@ -20,6 +20,6 @@ struct Counter
 	Counter& operator=(Counter const && Source);
 	~Counter();
 
-	static Bool Counter::Assert(UInt Construct, UInt CopyConstruct, UInt MoveConstruct, UInt OperatorEqual, UInt OperatorMove, UInt Destruct);
+	static Bool Assert(UInt Construct, UInt CopyConstruct, UInt MoveConstruct, UInt OperatorEqual, UInt OperatorMove, UInt Destruct);
 	static void Clear();
 };

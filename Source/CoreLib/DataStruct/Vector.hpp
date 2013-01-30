@@ -6,10 +6,14 @@
 
 //Placement New
 #ifdef CoreTargetWin32
-	inline void* operator new(size_t, void* address){return address;}
+	inline void* operator new(Core::UInt, void* address){return address;}
 	inline void operator delete(void*, void*){}
 #elif CoreTargetLinux
-	inline void* operator new(long unsigned int, void* address){return address;}
+	#ifdef CoreTarget64Bits
+		inline void* operator new(long unsigned int, void* address){return address;}
+	#else
+		inline void* operator new(unsigned int, void* address){return address;}
+	#endif
 	inline void operator delete(void*, void*){}
 #endif
 

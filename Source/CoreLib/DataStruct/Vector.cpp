@@ -145,14 +145,14 @@ template<class T> Vector<T>::Vector() :
 	_end(NULL)
 {}
 
-template<class T> Vector<T>::Vector(RawCopyEnum elementType = RawCopyDisabled) :
+template<class T> Vector<T>::Vector(RawCopyEnum elementType) :
 	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
 {}
 
-template<class T> Vector<T>::Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled) :
+template<class T> Vector<T>::Vector(UInt capacity, RawCopyEnum elementType) :
 	_rawCopyMode(elementType),
 	_origin(NULL),
 	_last(NULL),

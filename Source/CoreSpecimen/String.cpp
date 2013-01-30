@@ -1,5 +1,3 @@
-#define VectorUnitTest
-
 #include "Core.hpp"
 
 using namespace Core;

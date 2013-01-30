@@ -28,6 +28,7 @@
       <File Name="../../../Source/CoreSpecimen/DataStruct/Counter.cpp"/>
       <File Name="../../../Source/CoreSpecimen/DataStruct/Counter.hpp"/>
     </VirtualDirectory>
+    <File Name="../../../Source/CoreSpecimen/String.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Release">
     <Project Name="CoreLib"/>
@@ -46,7 +47,7 @@
       <ResourceCompiler Options=""/>
     </GlobalSettings>
     <Configuration Name="Debug-32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;-O0;-Wall -m32 -std=c++0x" C_Options="-g;-O0;-Wall -m32 -std=c++0x" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+      <Compiler Options="-g -O0 -Wall -m32 -std=c++0x" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>
@@ -85,7 +86,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Debug-64" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-g;-O0;-Wall -m64 -std=c++0x" C_Options="-g;-O0;-Wall -m64 -std=c++0x" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+      <Compiler Options="-g -O0 -Wall -m64 -std=c++0x" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>
@@ -125,7 +126,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release-32" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2;-Wall -m32 -std=c++0x" C_Options="-O2;-Wall -m32 -std=c++0x" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+      <Compiler Options="-O2 -Wall -m32 -std=c++0x" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>
@@ -164,7 +165,7 @@
       </Completion>
     </Configuration>
     <Configuration Name="Release-64" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
-      <Compiler Options="-O2;-Wall -m64 -std=c++0x" C_Options="-O2;-Wall -m64 -std=c++0x" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
+      <Compiler Options="-O2 -Wall -m64 -std=c++0x" C_Options="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" UseDifferentPCHFlags="no" PCHFlags="">
         <IncludePath Value="."/>
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>

@@ -16,7 +16,7 @@ namespace Core
 			errno = ErrCode;
 		}
 
-		CString GetErrText(UInt32 ErrCode, String Buffer, UInt32 BufferSize)
+		TChar const * GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
 		{
 			return strerror_r(ErrCode, Buffer, BufferSize);
 		}
