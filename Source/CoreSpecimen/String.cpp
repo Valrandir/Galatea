@@ -1,3 +1,5 @@
+//TODO Consider using blocks {} to isolate variables and avoid doing s1,s2,s3,sx
+
 #include "Core.hpp"
 
 using namespace Core;
@@ -250,7 +252,47 @@ Bool CompareStringTest()
 	return result;
 }
 
-Bool OperatorEqualStringTest()
+Bool OperatorAssignTCharTest()
+{
+	Bool result = true;
+	UInt capacity;
+
+	//Assign Empty to Empty
+	String t1 = _empty;
+	ASSERT t1.IsEmpty() == true;
+	ASSERT AssertCapLen(t1, 0U, 0U);
+
+	//Assign Empty to not Empty
+	String t2(_text);
+	capacity = t2.GetCapacity();
+	t2 = _empty;
+	ASSERT t2.IsEmpty() == true;
+	ASSERT AssertCapLen(t2, capacity, 0U);
+
+	//Assign not Empty to Empty
+	String t3 = _text;
+	ASSERT t3.IsEmpty() == false;
+	ASSERT AssertCapLen(t3, _textcap, _textlen);
+
+	//Assign bigger string to shorter string
+	String t4(_text);
+	t4 = _textBigger;
+	capacity = String::GetTCharLength(_textBigger);
+	ASSERT t4.IsEmpty() == false;
+	ASSERT AssertCapLen(t4, capacity + 1, capacity);
+
+	//Assign shorter string to bigger string
+	//Target capacity is same as before
+	String t5(_text);
+	capacity = t5.GetCapacity();
+	t5 = _textShorter;
+	ASSERT t5.IsEmpty() == false;
+	ASSERT AssertCapLen(t5, capacity, String::GetTCharLength(_textShorter));
+
+	return result;
+}
+
+Bool OperatorAssignStringTest()
 {
 	Bool result = true;
 	UInt capacity;
@@ -333,42 +375,33 @@ Bool OperatorMoveStringTest()
 	return result;
 }
 
-Bool OperatorEqualTCharTest()
+Bool OperatorPlusEqualTCharTest()
 {
 	Bool result = true;
-	UInt capacity;
 
-	//Assign Empty to Empty
-	String t1 = _empty;
-	ASSERT t1.IsEmpty() == true;
-	ASSERT AssertCapLen(t1, 0U, 0U);
+	//Empty += Empty
+	String l1;
+	l1 += _empty;
+	ASSERT l1.IsEmpty() == true;
+	ASSERT AssertCapLen(l1, 0U, 0U);
 
-	//Assign Empty to not Empty
-	String t2(_text);
-	capacity = t2.GetCapacity();
-	t2 = _empty;
-	ASSERT t2.IsEmpty() == true;
-	ASSERT AssertCapLen(t2, capacity, 0U);
+	//Empty += Not Empty
+	String l2;
+	l2 += _text;
+	ASSERT l2.IsEmpty() == false;
+	ASSERT AssertCapLen(l2, _textcap, _textlen);
 
-	//Assign not Empty to Empty
-	String t3 = _text;
-	ASSERT t3.IsEmpty() == false;
-	ASSERT AssertCapLen(t3, _textcap, _textlen);
+	//Not Empty += Empty
+	String l3(_text);
+	l3 += _empty;
+	ASSERT l3.IsEmpty() == false;
+	ASSERT AssertCapLen(l3, _textcap, _textlen);
 
-	//Assign bigger string to shorter string
-	String t4(_text);
-	t4 = _textBigger;
-	capacity = String::GetTCharLength(_textBigger);
-	ASSERT t4.IsEmpty() == false;
-	ASSERT AssertCapLen(t4, capacity + 1, capacity);
-
-	//Assign shorter string to bigger string
-	//Target capacity is same as before
-	String t5(_text);
-	capacity = t5.GetCapacity();
-	t5 = _textShorter;
-	ASSERT t5.IsEmpty() == false;
-	ASSERT AssertCapLen(t5, capacity, String::GetTCharLength(_textShorter));
+	//Not Empty += Not Empty
+	String l4(_text);
+	l4 += _text;
+	ASSERT l4.IsEmpty() == false;
+	ASSERT AssertCapLen(l4, _textcap + _textcap - 1, _textlen + _textlen);
 
 	return result;
 }
@@ -408,33 +441,33 @@ Bool OperatorPlusEqualStringTest()
 	return result;
 }
 
-Bool OperatorPlusEqualTCharTest()
+Bool OperatorPlusTCharTest()
 {
 	Bool result = true;
 
-	//Empty += Empty
+	//Empty + Empty
 	String l1;
-	l1 += _empty;
-	ASSERT l1.IsEmpty() == true;
-	ASSERT AssertCapLen(l1, 0U, 0U);
+	String& s1 = l1 + _empty;
+	ASSERT s1.IsEmpty() == true;
+	ASSERT AssertCapLen(s1, 0U, 0U);
 
-	//Empty += Not Empty
+	//Empty + Not Empty
 	String l2;
-	l2 += _text;
-	ASSERT l2.IsEmpty() == false;
-	ASSERT AssertCapLen(l2, _textcap, _textlen);
+	String& s2 = l2 + _text;
+	ASSERT s2.IsEmpty() == false;
+	ASSERT AssertCapLen(s2, _textcap, _textlen);
 
-	//Not Empty += Empty
+	//Not Empty + Empty
 	String l3(_text);
-	l3 += _empty;
-	ASSERT l3.IsEmpty() == false;
-	ASSERT AssertCapLen(l3, _textcap, _textlen);
+	String& s3 = l3 + _empty;
+	ASSERT s3.IsEmpty() == false;
+	ASSERT AssertCapLen(s3, _textcap, _textlen);
 
-	//Not Empty += Not Empty
+	//Not Empty + Not Empty
 	String l4(_text);
-	l4 += _text;
-	ASSERT l4.IsEmpty() == false;
-	ASSERT AssertCapLen(l4, _textcap + _textcap - 1, _textlen + _textlen);
+	String& s4 = l4 + _text;
+	ASSERT s4.IsEmpty() == false;
+	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
 
 	return result;
 }
@@ -474,33 +507,160 @@ Bool OperatorPlusStringTest()
 	return result;
 }
 
-Bool OperatorPlusTCharTest()
+Bool OperatorEqualTCharTest()
 {
 	Bool result = true;
 
-	//Empty + Empty
-	String l1;
-	String& s1 = l1 + _empty;
-	ASSERT s1.IsEmpty() == true;
-	ASSERT AssertCapLen(s1, 0U, 0U);
+	//Empty == Empty
+	{
+		String l;
+		ASSERT l == _empty;
+	}
 
-	//Empty + Not Empty
-	String l2;
-	String& s2 = l2 + _text;
-	ASSERT s2.IsEmpty() == false;
-	ASSERT AssertCapLen(s2, _textcap, _textlen);
+	//Empty == Not Empty
+	{
+		String l;
+		ASSERT !(l == _text);
+	}
 
-	//Not Empty + Empty
-	String l3(_text);
-	String& s3 = l3 + _empty;
-	ASSERT s3.IsEmpty() == false;
-	ASSERT AssertCapLen(s3, _textcap, _textlen);
+	//Not Empty == Empty
+	{
+		String l(_text);
+		ASSERT !(l == _empty);
+	}
 
-	//Not Empty + Not Empty
-	String l4(_text);
-	String& s4 = l4 + _text;
-	ASSERT s4.IsEmpty() == false;
-	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
+	//Not Empty == Not Empty Same
+	{
+		String l(_text);
+		ASSERT l == _text;
+	}
+
+	//Not Empty == Not Empty Different
+	{
+		String l(_text);
+		ASSERT !(l == _textSmaller);
+	}
+
+	return result;
+}
+
+Bool OperatorEqualStringTest()
+{
+	Bool result = true;
+
+	//Empty == Empty
+	{
+		String l;
+		String r;
+		ASSERT l == r;
+	}
+
+	//Empty == Not Empty
+	{
+		String l;
+		String r(_text);
+		ASSERT !(l == r);
+	}
+
+	//Not Empty == Empty
+	{
+		String l(_text);
+		String r;
+		ASSERT !(l == r);
+	}
+
+	//Not Empty == Not Empty Same
+	{
+		String l(_text);
+		String r(_text);
+		ASSERT l == r;
+	}
+
+	//Not Empty == Not Empty Different
+	{
+		String l(_text);
+		String r(_textSmaller);
+		ASSERT !(l == r);
+	}
+
+	return result;
+}
+
+Bool OperatorNotEqualTCharTest()
+{
+	Bool result = true;
+
+	//Empty != Empty
+	{
+		String l;
+		ASSERT !(l != _empty);
+	}
+
+	//Empty != Not Empty
+	{
+		String l;
+		ASSERT l != _text;
+	}
+
+	//Not Empty != Empty
+	{
+		String l(_text);
+		ASSERT l != _empty;
+	}
+
+	//Not Empty != Not Empty Same
+	{
+		String l(_text);
+		ASSERT !(l != _text);
+	}
+
+	//Not Empty != Not Empty Different
+	{
+		String l(_text);
+		ASSERT l != _textSmaller;
+	}
+
+	return result;
+}
+
+Bool OperatorNotEqualStringTest()
+{
+	Bool result = true;
+
+	//Empty != Empty
+	{
+		String l;
+		String r;
+		ASSERT !(l != r);
+	}
+
+	//Empty != Not Empty
+	{
+		String l;
+		String r(_text);
+		ASSERT l != r;
+	}
+
+	//Not Empty != Empty
+	{
+		String l(_text);
+		String r;
+		ASSERT l != r;
+	}
+
+	//Not Empty != Not Empty Same
+	{
+		String l(_text);
+		String r(_text);
+		ASSERT !(l != r);
+	}
+
+	//Not Empty != Not Empty Different
+	{
+		String l(_text);
+		String r(_textSmaller);
+		ASSERT l != r;
+	}
 
 	return result;
 }
@@ -528,13 +688,18 @@ Bool StringTest()
 	ASSERT CompareTCharTest();
 	ASSERT CompareStringTest();
 
-	ASSERT OperatorEqualStringTest();
+	ASSERT OperatorAssignTCharTest();
+	ASSERT OperatorAssignStringTest();
 	ASSERT OperatorMoveStringTest();
-	ASSERT OperatorEqualTCharTest();
-	ASSERT OperatorPlusEqualStringTest();
 	ASSERT OperatorPlusEqualTCharTest();
-	ASSERT OperatorPlusStringTest();
+	ASSERT OperatorPlusEqualStringTest();
 	ASSERT OperatorPlusTCharTest();
+	ASSERT OperatorPlusStringTest();
+
+	ASSERT OperatorEqualTCharTest();
+	ASSERT OperatorEqualStringTest();
+	ASSERT OperatorNotEqualTCharTest();
+	ASSERT OperatorNotEqualStringTest();
 
 	return result;
 }
