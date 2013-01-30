@@ -1,3 +1,7 @@
+//TODO Add behavior mode to either Clean() or Free().
+//Clean keeps extra capacity and favor speed over memory
+//Free always shrink when the string gets shorter, using minimal memory at the cost of extra allocations
+
 #pragma once
 #include "Types.hpp"
 #include "DataStruct/Vector.hpp"

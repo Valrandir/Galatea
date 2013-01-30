@@ -376,12 +376,132 @@ Bool OperatorEqualTCharTest()
 Bool OperatorPlusEqualStringTest()
 {
 	Bool result = true;
+
+	//Empty += Empty
+	String l1;
+	String r1;
+	l1 += r1;
+	ASSERT l1.IsEmpty() == true;
+	ASSERT AssertCapLen(l1, 0U, 0U);
+
+	//Empty += Not Empty
+	String l2;
+	String r2(_text);
+	l2 += r2;
+	ASSERT l2.IsEmpty() == false;
+	ASSERT AssertCapLen(l2, _textcap, _textlen);
+
+	//Not Empty += Empty
+	String l3(_text);
+	String r3;
+	l3 += r3;
+	ASSERT l3.IsEmpty() == false;
+	ASSERT AssertCapLen(l3, _textcap, _textlen);
+
+	//Not Empty += Not Empty
+	String l4(_text);
+	String r4(_text);
+	l4 += r4;
+	ASSERT l4.IsEmpty() == false;
+	ASSERT AssertCapLen(l4, _textcap + _textcap - 1, _textlen + _textlen);
+
 	return result;
 }
 
 Bool OperatorPlusEqualTCharTest()
 {
 	Bool result = true;
+
+	//Empty += Empty
+	String l1;
+	l1 += _empty;
+	ASSERT l1.IsEmpty() == true;
+	ASSERT AssertCapLen(l1, 0U, 0U);
+
+	//Empty += Not Empty
+	String l2;
+	l2 += _text;
+	ASSERT l2.IsEmpty() == false;
+	ASSERT AssertCapLen(l2, _textcap, _textlen);
+
+	//Not Empty += Empty
+	String l3(_text);
+	l3 += _empty;
+	ASSERT l3.IsEmpty() == false;
+	ASSERT AssertCapLen(l3, _textcap, _textlen);
+
+	//Not Empty += Not Empty
+	String l4(_text);
+	l4 += _text;
+	ASSERT l4.IsEmpty() == false;
+	ASSERT AssertCapLen(l4, _textcap + _textcap - 1, _textlen + _textlen);
+
+	return result;
+}
+
+Bool OperatorPlusStringTest()
+{
+	Bool result = true;
+
+	//Empty + Empty
+	String l1;
+	String r1;
+	String& s1 = l1 + r1;
+	ASSERT s1.IsEmpty() == true;
+	ASSERT AssertCapLen(s1, 0U, 0U);
+
+	//Empty + Not Empty
+	String l2;
+	String r2(_text);
+	String& s2 = l2 + r2;
+	ASSERT s2.IsEmpty() == false;
+	ASSERT AssertCapLen(s2, _textcap, _textlen);
+
+	//Not Empty + Empty
+	String l3(_text);
+	String r3;
+	String& s3 = l3 + r3;
+	ASSERT s3.IsEmpty() == false;
+	ASSERT AssertCapLen(s3, _textcap, _textlen);
+
+	//Not Empty + Not Empty
+	String l4(_text);
+	String r4(_text);
+	String& s4 = l4 + r4;
+	ASSERT s4.IsEmpty() == false;
+	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
+
+	return result;
+}
+
+Bool OperatorPlusTCharTest()
+{
+	Bool result = true;
+
+	//Empty + Empty
+	String l1;
+	String& s1 = l1 + _empty;
+	ASSERT s1.IsEmpty() == true;
+	ASSERT AssertCapLen(s1, 0U, 0U);
+
+	//Empty + Not Empty
+	String l2;
+	String& s2 = l2 + _text;
+	ASSERT s2.IsEmpty() == false;
+	ASSERT AssertCapLen(s2, _textcap, _textlen);
+
+	//Not Empty + Empty
+	String l3(_text);
+	String& s3 = l3 + _empty;
+	ASSERT s3.IsEmpty() == false;
+	ASSERT AssertCapLen(s3, _textcap, _textlen);
+
+	//Not Empty + Not Empty
+	String l4(_text);
+	String& s4 = l4 + _text;
+	ASSERT s4.IsEmpty() == false;
+	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
+
 	return result;
 }
 
@@ -413,6 +533,8 @@ Bool StringTest()
 	ASSERT OperatorEqualTCharTest();
 	ASSERT OperatorPlusEqualStringTest();
 	ASSERT OperatorPlusEqualTCharTest();
+	ASSERT OperatorPlusStringTest();
+	ASSERT OperatorPlusTCharTest();
 
 	return result;
 }
