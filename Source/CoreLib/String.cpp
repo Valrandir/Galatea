@@ -134,32 +134,44 @@ namespace Core
 		return Vector::Begin();
 	}
 
-	//Return 0 when self == target, 1 when self > target, -1 when self < target
-	Int String::Compare(TChar const * target) const
+	//Return
+	//	 0 when source == target
+	//	 1 when source >  target
+	//	-1 when source <  target
+	Int String::Compare(TChar const * source, TChar const * target)
 	{
-		TChar const * val = GetTChar();
 		TChar const * empty = Text("");
 
-		if(val == NULL) val = empty;
+		if(source == NULL) source = empty;
 		if(target == NULL) target = empty;
 
 		while(true)
 		{
-			if(*val == '\0' && *target == '\0') return 0;
-			if(*val == '\0') return -1;
+			if(*source == '\0' && *target == '\0') return 0;
+			if(*source == '\0') return -1;
 			if(*target == '\0') return 1;
-			if(*val < *target) return -1;
-			if(*val > *target) return 1;
-			++val;
+			if(*source < *target) return -1;
+			if(*source > *target) return 1;
+			++source;
 			++target;
 		}
 
 		return 0;
 	}
 
+	Int String::Compare(String const & source, String const & target)
+	{
+		return Compare(source.GetTChar(), target.GetTChar());
+	}
+
+	Int String::Compare(TChar const * target) const
+	{
+		return Compare(GetTChar(), target);
+	}
+
 	Int String::Compare(String const & target) const
 	{
-		return Compare(target.GetTChar());
+		return Compare(GetTChar(), target.GetTChar());
 	}
 
 	void String::Reserve(UInt capacity)

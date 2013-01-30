@@ -183,8 +183,7 @@ Bool GetTCharTest()
 
 	String s(_text);
 	TChar const * tc = s.GetTChar();
-
-	ASSERT *_text == *tc;
+	ASSERT String::Compare(_text, tc) == 0U;
 
 	return result;
 }

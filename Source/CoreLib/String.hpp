@@ -41,8 +41,12 @@ namespace Core
 		UInt GetLength() const;
 		TChar const * GetTChar() const;
 
+		static Int Compare(TChar const * source, TChar const * target);
+		static Int Compare(String const & source, String const & target);
+
 		Int Compare(TChar const * target) const;
 		Int Compare(String const & target) const;
+
 		void Reserve(UInt capacity);
 		void Shrink();
 		void Append(TChar const * val);
