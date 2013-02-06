@@ -16,6 +16,9 @@
     <Filter Include="DataStruct">
       <UniqueIdentifier>{650c866e-fdb4-4f22-8d88-4f42cfb92892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{be0089e2-0168-4065-8115-f1a95ff2dc64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -41,7 +44,9 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\StdVector.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreSpecimen\String.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\String\String.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />

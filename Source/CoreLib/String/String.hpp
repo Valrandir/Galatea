@@ -3,8 +3,8 @@
 //Free always shrink when the string gets shorter, using minimal memory at the cost of extra allocations
 
 #pragma once
-#include "Types.hpp"
-#include "DataStruct/Vector.hpp"
+#include "../Types.hpp"
+#include "../DataStruct/Vector.hpp"
 
 namespace Core
 {

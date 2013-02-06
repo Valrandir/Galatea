@@ -16,6 +16,9 @@
     <Filter Include="DataStruct">
       <UniqueIdentifier>{e1c68bf5-273c-48c6-b182-038b177b3c50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{a52e4a78-c316-4d16-a7bb-cceba1e8ac89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -38,8 +41,12 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\String.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\String.Win32.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\String\String.Win32.hpp">
+      <Filter>String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp">
+      <Filter>String</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -57,7 +64,11 @@
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\String.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\String.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\String\String.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
