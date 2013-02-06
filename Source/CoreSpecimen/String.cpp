@@ -1034,6 +1034,21 @@ Bool OperatorSmallerOrEqualStringTest()
 	return result;
 }
 
+Bool FormatTest()
+{
+	Bool result = true;
+
+	TChar* format = Text("One hundred fifty seven : %d - %s");
+	UInt const buffer_size = 128U;
+	TChar buffer[buffer_size];
+
+	String::Format(buffer, buffer_size, format, 157, Text("Done"));
+
+	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+
+	return result;
+}
+
 } //namespace
 
 using namespace StringTestNamespace;
@@ -1079,6 +1094,8 @@ Bool StringTest()
 	ASSERT OperatorGreaterOrEqualStringTest();
 	ASSERT OperatorSmallerOrEqualTCharTest();
 	ASSERT OperatorSmallerOrEqualStringTest();
+
+	ASSERT FormatTest();
 
 	return result;
 }

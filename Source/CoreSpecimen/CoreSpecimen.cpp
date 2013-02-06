@@ -1,16 +1,19 @@
+#include "Core.hpp"
+using namespace Core;
+
 extern void ErrTest();
 extern void MemoryTest();
 extern void ThreadTestByValue();
 extern void ThreadTestByRef();
 extern void ThreadedErrTest();
 extern void TimeTest();
-extern bool VectorTest();
-extern bool StdVectorTest();
-extern bool StringTest();
+extern Bool VectorTest();
+extern Bool StdVectorTest();
+extern Bool StringTest();
 
 void CoreSpecimen()
 {
-	bool Skip = true;
+	Bool Skip = true;
 
 	StringTest();
 

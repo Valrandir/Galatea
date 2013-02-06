@@ -1,5 +1,11 @@
 #include "String.hpp"
 
+#ifdef CoreTargetWin32
+	#include "String.Win32.hpp"
+#elif CoreTargetLinux
+	#include "String.Linux.hpp"
+#endif
+
 namespace Core
 {
 	String::String() : Vector(Vector::RawCopyEnabled)
@@ -132,6 +138,14 @@ namespace Core
 	TChar const * String::GetTChar() const
 	{
 		return Vector::Begin();
+	}
+
+	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
+	{
+		va_list ap;
+		va_start(ap, format);
+		FormatImpl(buffer, buffer_size, format, ap);
+		va_end(ap);
 	}
 
 	//Return
