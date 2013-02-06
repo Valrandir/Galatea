@@ -12,9 +12,8 @@ namespace Core
 	{
 	}
 
-	String::String(UInt capacity) : Vector(Vector::RawCopyEnabled)
+	String::String(UInt capacity) : Vector(capacity, Vector::RawCopyEnabled)
 	{
-		Reserve(capacity);
 	}
 
 	String::String(TChar const * val) : Vector(Vector::RawCopyEnabled)
@@ -142,10 +141,19 @@ namespace Core
 
 	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
 	{
-		va_list ap;
-		va_start(ap, format);
-		FormatImpl(buffer, buffer_size, format, ap);
-		va_end(ap);
+		va_list args;
+		va_start(args, format);
+		FormatImpl(buffer, buffer_size, format, args);
+		va_end(args);
+	}
+
+	String String::FormatStr(TChar const * format, ...)
+	{
+		va_list args;
+		va_start(args, format);
+		String& str = FormatImpl(format, args);
+		va_end(args);
+		return str;
 	}
 
 	//Return

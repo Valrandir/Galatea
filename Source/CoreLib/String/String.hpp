@@ -46,6 +46,8 @@ namespace Core
 		TChar const * GetTChar() const;
 
 		static void Format(TChar* buffer, UInt buffer_size, TChar const * format, ...);
+		static String FormatStr(TChar const * format, ...);
+
 		static Int Compare(TChar const * source, TChar const * target);
 		static Int Compare(String const & source, String const & target);
 

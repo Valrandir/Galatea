@@ -1034,7 +1034,7 @@ Bool OperatorSmallerOrEqualStringTest()
 	return result;
 }
 
-Bool FormatTest()
+Bool FormatBufferTest()
 {
 	Bool result = true;
 
@@ -1045,6 +1045,19 @@ Bool FormatTest()
 	String::Format(buffer, buffer_size, format, 157, Text("Done"));
 
 	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+
+	return result;
+}
+
+Bool FormatStringTest()
+{
+	Bool result = true;
+
+	TChar* format = Text("One hundred fifty seven : %d - %s");
+
+	String str = String::FormatStr(format, 157, Text("Done"));
+
+	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
 
 	return result;
 }
@@ -1095,7 +1108,8 @@ Bool StringTest()
 	ASSERT OperatorSmallerOrEqualTCharTest();
 	ASSERT OperatorSmallerOrEqualStringTest();
 
-	ASSERT FormatTest();
+	ASSERT FormatBufferTest();
+	ASSERT FormatStringTest();
 
 	return result;
 }
