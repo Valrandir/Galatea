@@ -1034,6 +1034,17 @@ Bool OperatorSmallerOrEqualStringTest()
 	return result;
 }
 
+Bool OperatoSubscriptTest()
+{
+	Bool result = true;
+
+	String s(_text);
+	ASSERT s[0U] == Text('T');
+	ASSERT s[10U] == Text('r');
+
+	return result;
+}
+
 Bool FormatBufferTest()
 {
 	Bool result = true;
@@ -1109,6 +1120,8 @@ Bool StringTest()
 	ASSERT OperatorGreaterOrEqualStringTest();
 	ASSERT OperatorSmallerOrEqualTCharTest();
 	ASSERT OperatorSmallerOrEqualStringTest();
+
+	ASSERT OperatoSubscriptTest();
 
 	ASSERT FormatBufferTest();
 	ASSERT FormatStringTest();

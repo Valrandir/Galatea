@@ -37,6 +37,7 @@ namespace Core
 		Bool operator>=(String const &) const;
 		Bool operator<=(TChar const *) const;
 		Bool operator<=(String const &) const;
+		TChar operator[](UInt index) const;
 
 		static UInt GetTCharLength(TChar const *);
 

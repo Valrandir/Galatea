@@ -101,6 +101,11 @@ namespace Core
 	Bool String::operator<=(TChar  const * val) const { return Compare(val) <=  0; }
 	Bool String::operator<=(String const & val) const { return Compare(val) <=  0; }
 
+	TChar String::operator[](UInt index) const
+	{
+		return Vector::operator[](index);
+	}
+
 	UInt String::GetTCharLength(TChar const * val)
 	{
 		UInt length = 0U;
