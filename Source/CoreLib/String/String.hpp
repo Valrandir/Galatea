@@ -13,32 +13,32 @@ namespace Core
 		public:
 		String();
 		String(UInt capacity);
-		String(TChar const * val);
-		String(String const & val);
-		String(String && val);
+		String(TChar const *);
+		String(String const &);
+		String(String &&);
 		~String();
 
-		String& operator=(TChar const * val);
-		String& operator=(String const & val);
-		String& operator=(String && val);
-		String& operator+=(TChar const * val);
-		String& operator+=(String const & val);
-		String operator+(TChar const * val) const;
-		String operator+(String const & val) const;
-		Bool operator==(TChar const * val) const;
-		Bool operator==(String const & val) const;
-		Bool operator!=(TChar const * val) const;
-		Bool operator!=(String const & val) const;
-		Bool operator>(TChar const * val) const;
-		Bool operator>(String const & val) const;
-		Bool operator<(TChar const * val) const;
-		Bool operator<(String const & val) const;
-		Bool operator>=(TChar const * val) const;
-		Bool operator>=(String const & val) const;
-		Bool operator<=(TChar const * val) const;
-		Bool operator<=(String const & val) const;
+		String& operator=(TChar const *);
+		String& operator=(String const &);
+		String& operator=(String &&);
+		String& operator+=(TChar const *);
+		String& operator+=(String const &);
+		String operator+(TChar const *) const;
+		String operator+(String const &) const;
+		Bool operator==(TChar const *) const;
+		Bool operator==(String const &) const;
+		Bool operator!=(TChar const *) const;
+		Bool operator!=(String const &) const;
+		Bool operator>(TChar const *) const;
+		Bool operator>(String const &) const;
+		Bool operator<(TChar const *) const;
+		Bool operator<(String const &) const;
+		Bool operator>=(TChar const *) const;
+		Bool operator>=(String const &) const;
+		Bool operator<=(TChar const *) const;
+		Bool operator<=(String const &) const;
 
-		static UInt GetTCharLength(TChar const * val);
+		static UInt GetTCharLength(TChar const *);
 
 		Bool IsEmpty() const;
 		UInt GetCapacity() const;
@@ -56,16 +56,7 @@ namespace Core
 
 		void Reserve(UInt capacity);
 		void Shrink();
-		void Append(TChar const * val);
-		void Append(String const & val);
-
-		//String& Substring(UInt start);
-		//String& Substring(UInt start, UInt length);
-		//String& Format(TChar const * format, ...);
-		//String& Format(String const & format, ...);
-		//Bool StartsWith(TChar const * val);
-		//Bool StartsWith(String const & val);
-		//Bool EndsWith(TChar const * val);
-		//Bool EndsWith(String const & val);
+		void Append(TChar const *);
+		void Append(String const &);
 	};
 }
