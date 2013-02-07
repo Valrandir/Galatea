@@ -52,6 +52,10 @@ namespace Core
 			void CopyToSelf(Vector const & source);
 			void MoveToSelf(Vector & source);
 
+			/* Protected Functions */
+			protected:
+			void SetLength(UInt length);
+
 			public:
 			/* Constructors && Destructor */
 			Vector();

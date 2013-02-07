@@ -41,9 +41,6 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\String\String.Win32.hpp">
-      <Filter>String</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp">
       <Filter>String</Filter>
     </ClInclude>

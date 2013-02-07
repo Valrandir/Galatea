@@ -1057,6 +1057,8 @@ Bool FormatStringTest()
 
 	String str = String::FormatStr(format, 157, Text("Done"));
 
+	ASSERT str.GetCapacity() == 37;
+	ASSERT str.GetLength() == 36;
 	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
 
 	return result;

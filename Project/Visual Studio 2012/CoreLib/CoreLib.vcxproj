@@ -22,7 +22,6 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\String\String.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp" />

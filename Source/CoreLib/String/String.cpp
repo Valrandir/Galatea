@@ -1,10 +1,8 @@
+#include <stdarg.h>
 #include "String.hpp"
 
-#ifdef CoreTargetWin32
-	#include "String.Win32.hpp"
-#elif CoreTargetLinux
-	#include "String.Linux.hpp"
-#endif
+void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::TChar const * format, va_list args);
+Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
 
 namespace Core
 {
@@ -151,7 +149,10 @@ namespace Core
 	{
 		va_list args;
 		va_start(args, format);
-		String& str = FormatImpl(format, args);
+		UInt size = FormatImplGetRequiredSize(format, args);
+		String str(size);
+		FormatImpl(str.Begin(), size, format, args);
+		str.SetLength(size);
 		va_end(args);
 		return str;
 	}
