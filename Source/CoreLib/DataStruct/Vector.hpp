@@ -24,7 +24,7 @@ namespace Core
 		template<class T> class Vector
 		{
 			public:
-			enum RawCopyEnum{RawCopyDisabled, RawCopyEnabled};
+			enum CtorModeEnum{Pod, Once, Always};
 			typedef T Element;
 			typedef T const ConstElement;
 
@@ -32,10 +32,10 @@ namespace Core
 			#ifndef VectorUnitTest
 				private:
 			#endif
-			static RawCopyEnum DefaultMode;
+			static CtorModeEnum DefaultMode;
 
 			private:
-			RawCopyEnum _rawCopyMode;
+			CtorModeEnum _ctorMode;
 			Element* _origin; //Array Start
 			Element* _last; //Sequence End
 			Element* _end; //Array End
@@ -59,8 +59,8 @@ namespace Core
 			public:
 			/* Constructors && Destructor */
 			Vector();
-			Vector(RawCopyEnum elementType);
-			Vector(UInt capacity, RawCopyEnum elementType = RawCopyDisabled);
+			Vector(CtorModeEnum ctorMode);
+			Vector(UInt capacity, CtorModeEnum ctorMode = Always);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
 			virtual ~Vector();
@@ -73,7 +73,7 @@ namespace Core
 			ConstElement& operator[](UInt offset) const;
 
 			/* Accesors */
-			RawCopyEnum GetElementType() const;
+			CtorModeEnum GetElementType() const;
 			Bool IsEmpty() const;
 			UInt GetCapacity() const;
 			UInt GetLength() const;

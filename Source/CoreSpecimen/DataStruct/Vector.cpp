@@ -6,7 +6,6 @@
 using namespace Core;
 using namespace DataStruct;
 
-#define ASSERT result = result && 
 typedef Vector<Counter> VCntr;
 
 namespace VectorTestNamespace {
@@ -31,7 +30,7 @@ Bool AssertCapLen(VCntr& v, UInt capacity, UInt length)
 
 Bool AssertCounter(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
 {
-	if(VCntr::DefaultMode == VCntr::RawCopyDisabled)
+	if(VCntr::DefaultMode == VCntr::Always)
 		return Counter::Assert(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 	else
 		return true;
@@ -103,9 +102,9 @@ Bool CtorEmptyTest()
 Bool CtorRawCopyTest()
 {
 	Bool result = true;
-	VCntr vc(VCntr::RawCopyEnabled);
+	VCntr vc(VCntr::CtorModeEnum::Once);
 
-	ASSERT vc.GetElementType() == VCntr::RawCopyEnabled;
+	ASSERT vc.GetElementType() == VCntr::CtorModeEnum::Once;
 
 	return result;
 }
@@ -155,9 +154,9 @@ Bool CtorCopyTest()
 	ASSERT AssertBeginEndNotNull(vc3);
 
 	//Copy RawCopyEnabled vector
-	VCntr vcRaw(VCntr::RawCopyEnabled);
-	VCntr vc4(vcRaw);
-	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+	VCntr vcPod(VCntr::CtorModeEnum::Pod);
+	VCntr vc4(vcPod);
+	ASSERT vc4.GetElementType() == VCntr::CtorModeEnum::Pod;
 
 	return result;
 }
@@ -194,9 +193,9 @@ Bool CtorMoveTest()
 	ASSERT AssertBeginEndNull(vcWith5);
 
 	//Move RawCopyEnabled vector
-	VCntr vcRaw(VCntr::RawCopyEnabled);
-	VCntr vc4((VCntr&&)vcRaw);
-	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+	VCntr vcPod(VCntr::CtorModeEnum::Pod);
+	VCntr vc4((VCntr&&)vcPod);
+	ASSERT vc4.GetElementType() == VCntr::CtorModeEnum::Pod;
 
 	return result;
 }
@@ -231,9 +230,9 @@ Bool OperatorEqualTest()
 	ASSERT AssertBeginEndNotNull(vc3);
 
 	//Assign RawCopyEnabled vector
-	VCntr vcRaw(VCntr::RawCopyEnabled);
-	VCntr vc4 = vcRaw;
-	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+	VCntr vcPod(VCntr::CtorModeEnum::Pod);
+	VCntr vc4 = vcPod;
+	ASSERT vc4.GetElementType() == VCntr::CtorModeEnum::Pod;
 
 	return result;
 }
@@ -268,9 +267,9 @@ Bool OperatorMoveTest()
 	ASSERT AssertBeginEndNotNull(vc3);
 
 	//Assign RawCopyEnabled vector
-	VCntr vcRaw(VCntr::RawCopyEnabled);
-	VCntr vc4 = (VCntr&&)vcRaw;
-	ASSERT vc4.GetElementType() == VCntr::RawCopyEnabled;
+	VCntr vcPod(VCntr::CtorModeEnum::Pod);
+	VCntr vc4 = (VCntr&&)vcPod;
+	ASSERT vc4.GetElementType() == VCntr::CtorModeEnum::Pod;
 
 	return result;
 }
@@ -322,8 +321,8 @@ Bool GetElementTypeTest()
 {
 	Bool result = true;
 
-	VCntr v1(VCntr::RawCopyEnabled);
-	ASSERT v1.GetElementType() == VCntr::RawCopyEnabled;
+	VCntr v1(VCntr::CtorModeEnum::Pod);
+	ASSERT v1.GetElementType() == VCntr::CtorModeEnum::Pod;
 
 	VCntr v2;
 	ASSERT v2.GetElementType() == VCntr::DefaultMode;
@@ -766,7 +765,7 @@ Bool RemoveByRefTest()
 
 using namespace VectorTestNamespace;
 
-Bool VectorTest(VCntr::RawCopyEnum defaultMode)
+Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 {
 	Bool result = true;
 
@@ -808,8 +807,9 @@ Bool VectorTest()
 {
 	Bool result = true;
 
-	ASSERT VectorTest(VCntr::RawCopyDisabled);
-	ASSERT VectorTest(VCntr::RawCopyEnabled);
+	ASSERT VectorTest(VCntr::Always);
+	ASSERT VectorTest(VCntr::Once);
+	ASSERT VectorTest(VCntr::Pod);
 
 	return result;
 }

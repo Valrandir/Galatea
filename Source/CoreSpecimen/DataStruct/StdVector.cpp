@@ -8,8 +8,6 @@
 using namespace Core;
 using std::vector;
 
-#define ASSERT result = result &&  
-
 Bool StdConstructEmptyTest()
 {
 	Bool result = true;

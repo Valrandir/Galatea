@@ -6,15 +6,15 @@ Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
 
 namespace Core
 {
-	String::String() : Vector(Vector::RawCopyEnabled)
+	String::String() : Vector(Vector::CtorModeEnum::Pod)
 	{
 	}
 
-	String::String(UInt capacity) : Vector(capacity, Vector::RawCopyEnabled)
+	String::String(UInt capacity) : Vector(capacity, Vector::CtorModeEnum::Pod)
 	{
 	}
 
-	String::String(TChar const * val) : Vector(Vector::RawCopyEnabled)
+	String::String(TChar const * val) : Vector(Vector::CtorModeEnum::Pod)
 	{
 		UInt n = GetTCharLength(val);
 		if(n) AddRange(val, val + n + 1);

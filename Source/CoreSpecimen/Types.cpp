@@ -1,5 +1,3 @@
-#define ASSERT result = result && 
-
 #include "Core.hpp"
 
 using namespace Core;

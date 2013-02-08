@@ -4,7 +4,7 @@
 /* Static *********************************************************************/
 /******************************************************************************/
 
-template<class T> typename Vector<T>::RawCopyEnum Vector<T>::DefaultMode = Vector<T>::RawCopyDisabled;
+template<class T> typename Vector<T>::CtorModeEnum Vector<T>::DefaultMode = Vector<T>::CtorModeEnum::Always;
 
 /******************************************************************************/
 /* Private Functions **********************************************************/
@@ -14,7 +14,7 @@ template<class T> void Vector<T>::Deallocate()
 {
 	if(_origin)
 	{
-		if(_rawCopyMode == RawCopyDisabled)
+		if(_ctorMode != CtorModeEnum::Pod)
 			Destroy(_origin, _last);
 
 		System::Memory::Free(_origin);
@@ -33,7 +33,7 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 
 	if(!IsEmpty())
 	{
-		if(_rawCopyMode == RawCopyEnabled)
+		if(_ctorMode != CtorModeEnum::Always)
 			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * GetLength());
 		else
 		{
@@ -79,7 +79,7 @@ template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* en
 
 template <class T> void Vector<T>::Move(Element* target, Element* begin, Element* end) const
 {
-	if(_rawCopyMode == RawCopyEnabled)
+	if(_ctorMode != CtorModeEnum::Always)
 		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
 	else
 	{
@@ -97,29 +97,38 @@ template <class T> void Vector<T>::Move(Element* target, Element* begin, Element
 
 template <class T> void Vector<T>::CopyToSelf(Vector const & source)
 {
+	UInt length;
 	ConstElement *it, *source_it, *source_end;
 
 	Deallocate();
-	_rawCopyMode = source._rawCopyMode;
+	_ctorMode = source._ctorMode;
 
 	if(!source.IsEmpty())
 	{
-		Allocate(source.GetLength());
+		length = source.GetLength();
+		Allocate(length);
 
 		it = _origin;
 		source_it = source.Begin();
 		source_end = source.End();
-		while(source_it != source_end)
+
+		if(_ctorMode != CtorModeEnum::Always)
 		{
-			Construct(it++, source_it++);
-			++_last;
+			System::Memory::Move((VoidPtr)source_it, (VoidPtr)it, sizeof(Element) * length);
+			_last += length;
 		}
+		else
+			while(source_it != source_end)
+			{
+				Construct(it++, source_it++);
+				++_last;
+			}
 	}
 }
 
 template <class T> void Vector<T>::MoveToSelf(Vector & source)
 {
-	_rawCopyMode = source._rawCopyMode;
+	_ctorMode = source._ctorMode;
 
 	if(source.IsEmpty())
 		Deallocate();
@@ -148,21 +157,21 @@ template<class T> void Vector<T>::SetLength(UInt length)
 /******************************************************************************/
 
 template<class T> Vector<T>::Vector() :
-	_rawCopyMode(DefaultMode),
+	_ctorMode(DefaultMode),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
 {}
 
-template<class T> Vector<T>::Vector(RawCopyEnum elementType) :
-	_rawCopyMode(elementType),
+template<class T> Vector<T>::Vector(CtorModeEnum ctorMode) :
+	_ctorMode(ctorMode),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
 {}
 
-template<class T> Vector<T>::Vector(UInt capacity, RawCopyEnum elementType) :
-	_rawCopyMode(elementType),
+template<class T> Vector<T>::Vector(UInt capacity, CtorModeEnum ctorMode) :
+	_ctorMode(ctorMode),
 	_origin(NULL),
 	_last(NULL),
 	_end(NULL)
@@ -233,9 +242,9 @@ template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt o
 /* Accesors *******************************************************************/
 /******************************************************************************/
 
-template<class T> typename Vector<T>::RawCopyEnum Vector<T>::GetElementType() const
+template<class T> typename Vector<T>::CtorModeEnum Vector<T>::GetElementType() const
 {
-	return _rawCopyMode;
+	return _ctorMode;
 }
 
 template<class T> Bool Vector<T>::IsEmpty() const
@@ -315,7 +324,9 @@ template<class T> void Vector<T>::Shrink()
 
 template<class T> void Vector<T>::Clear()
 {
-	Destroy(_origin, _last);
+	if(_ctorMode != CtorModeEnum::Pod)
+		Destroy(_origin, _last);
+
 	_last = _origin;
 }
 
@@ -327,17 +338,32 @@ template<class T> void Vector<T>::Free()
 template<class T> void Vector<T>::Add(ConstElement& value)
 {
 	AutoAllocate();
-	Construct(_last, &value);
+
+	if(_ctorMode != CtorModeEnum::Pod)
+		Construct(_last, &value);
+	else
+		*_last = value;
+
 	++_last;
 }
 
 template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* end)
 {
+	UInt length;
+
 	if(begin && end && begin <= end)
 	{
-		Reserve(GetLength() + end - begin);
-		while(begin != end)
-			Construct(_last++, begin++);
+		length = end - begin;
+		Reserve(GetLength() + length);
+
+		if(_ctorMode != CtorModeEnum::Always)
+		{
+			System::Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
+			_last += length;
+		}
+		else
+			while(begin != end)
+				Construct(_last++, begin++);
 	}
 }
 
@@ -354,7 +380,10 @@ template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 	Move(element + 1, element, _last);
 	++_last;
 
-	Construct(element, &value);
+	if(_ctorMode == CtorModeEnum::Always)
+		Construct(element, &value);
+	else
+		*element = value;
 }
 
 template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
@@ -373,19 +402,24 @@ template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 	Move(element + 1, element, _last);
 	++_last;
 
-	Construct(element, &value);
+	if(_ctorMode == CtorModeEnum::Always)
+		Construct(element, &value);
+	else
+		*element = value;
 }
 
 template<class T> void Vector<T>::Remove(Element& element)
 {
 	if(!IsEmpty() && &element)
 	{
-		Destroy(&element);
+		if(_ctorMode != CtorModeEnum::Pod)
+			Destroy(&element);
 
 		if(&element != _last - 1)
 		{
 			Move(&element, &element + 1, _last);
-			Destroy(_last - 1);
+			if(_ctorMode == CtorModeEnum::Always)
+				Destroy(_last - 1);
 		}
 
 		--_last;
@@ -407,12 +441,14 @@ template<class T> void Vector<T>::Remove(UInt offset)
 
 		element = &operator[](offset);
 
-		Destroy(element);
+		if(_ctorMode != CtorModeEnum::Pod)
+			Destroy(element);
 
 		if(element != _last - 1)
 		{
 			Move(element, element + 1, _last);
-			Destroy(_last - 1);
+			if(_ctorMode == CtorModeEnum::Always)
+				Destroy(_last - 1);
 		}
 
 		--_last;
