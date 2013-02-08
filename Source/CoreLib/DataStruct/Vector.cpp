@@ -355,7 +355,7 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 		length = end - begin;
 		Reserve(GetLength() + length);
 
-		if(_ctorMode != CtorModeEnum::Always)
+		if(_ctorMode == CtorModeEnum::Pod)
 		{
 			System::Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
 			_last += length;
@@ -379,10 +379,10 @@ template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 	Move(element + 1, element, _last);
 	++_last;
 
-	if(_ctorMode == CtorModeEnum::Always)
-		Construct(element, &value);
-	else
+	if(_ctorMode == CtorModeEnum::Pod)
 		*element = value;
+	else
+		Construct(element, &value);
 }
 
 template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
@@ -401,10 +401,10 @@ template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 	Move(element + 1, element, _last);
 	++_last;
 
-	if(_ctorMode == CtorModeEnum::Always)
-		Construct(element, &value);
-	else
+	if(_ctorMode == CtorModeEnum::Pod)
 		*element = value;
+	else
+		Construct(element, &value);
 }
 
 template<class T> void Vector<T>::Remove(Element& element)

@@ -426,7 +426,7 @@ Bool OperatorPlusEqualTest()
 		Counter::Clear();
 		target += source;
 		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCapLen(target, 5U, 5U);
 		ASSERT AssertBeginEndNotNull(target);
@@ -440,7 +440,7 @@ Bool OperatorPlusEqualTest()
 		Counter::Clear();
 		target += source;
 		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
 		ASSERT AssertCapLen(target, 10U, 10U);
 		ASSERT AssertBeginEndNotNull(target);
@@ -774,7 +774,7 @@ Bool AddRangeTest()
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
 		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCapLen(target, 5U, 5U);
 		ASSERT AssertBeginEndNotNull(target);
@@ -788,7 +788,7 @@ Bool AddRangeTest()
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
 		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
 		ASSERT AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
 		ASSERT AssertCapLen(target, 10U, 10U);
 		ASSERT AssertBeginEndNotNull(target);
@@ -809,7 +809,7 @@ Bool InsertByIndexTest()
 	v.Insert(100U, c1);
 	ASSERT AssertCapLen(v, 2U, 1U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT v[0U].ID == 1U;
 
@@ -817,7 +817,7 @@ Bool InsertByIndexTest()
 	v.Insert(100U, c2);
 	ASSERT AssertCapLen(v, 2U, 2U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT v[1U].ID == 2U;
 
@@ -825,7 +825,7 @@ Bool InsertByIndexTest()
 	v.Insert(0U, c3);
 	ASSERT AssertCapLen(v, 4U, 3U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 2U);
 	ASSERT v[0U].ID == 3U;
 	ASSERT v[1U].ID == 1U;
@@ -835,7 +835,7 @@ Bool InsertByIndexTest()
 	v.Insert(1U, c4);
 	ASSERT AssertCapLen(v, 4U, 4U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 0U);
 	ASSERT v[0U].ID == 3U;
 	ASSERT v[1U].ID == 4U;
@@ -858,7 +858,7 @@ Bool InsertByRefTest()
 	v.Insert(v[4], c1);
 	ASSERT AssertCapLen(v, 8U, 6U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 1U, 0U, 0U, 0U);
 	ASSERT v[0U].ID == 1U;
 	ASSERT v[1U].ID == 2U;
@@ -871,7 +871,7 @@ Bool InsertByRefTest()
 	v.Insert(v[0], c2);
 	ASSERT AssertCapLen(v, 8U, 7U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 6U, 0U, 0U, 0U);
 	ASSERT v[0U].ID == 7U;
 	ASSERT v[1U].ID == 1U;
@@ -885,7 +885,7 @@ Bool InsertByRefTest()
 	v.Insert(v[3], c3);
 	ASSERT AssertCapLen(v, 8U, 8U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 0U);
 	ASSERT v[0U].ID == 7U;
 	ASSERT v[1U].ID == 1U;
@@ -900,7 +900,7 @@ Bool InsertByRefTest()
 	v.Insert(v[6], c4);
 	ASSERT AssertCapLen(v, 16U, 9U);
 	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 1U, 0U, 0U);
+	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 	ASSERT AssertCntrAlways(0U, 1U, 10U, 0U, 0U, 8U);
 	ASSERT v[0U].ID == 7U;
 	ASSERT v[1U].ID == 1U;
