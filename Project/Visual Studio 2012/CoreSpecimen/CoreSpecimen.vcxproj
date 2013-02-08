@@ -29,6 +29,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />

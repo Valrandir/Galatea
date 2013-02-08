@@ -1,6 +1,7 @@
 #include "Core.hpp"
 using namespace Core;
 
+extern Bool TypesTest();
 extern void ErrTest();
 extern void MemoryTest();
 extern void ThreadTestByValue();
@@ -15,12 +16,14 @@ void CoreSpecimen()
 {
 	Bool Skip = true;
 
+	TypesTest();
 	StringTest();
 
 	//Force linking of all tests
 	//Select which test to run in debug mode.
 	if(!Skip)
 	{
+		TypesTest();
 		ErrTest();
 		MemoryTest();
 		ThreadTestByValue();

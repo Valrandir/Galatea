@@ -47,6 +47,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\String\String.cpp">
       <Filter>String</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />
