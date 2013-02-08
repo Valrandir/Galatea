@@ -30,8 +30,11 @@
     <VirtualDirectory Name="DataStruct">
       <File Name="../../../Source/CoreLib/DataStruct/Vector.hpp"/>
     </VirtualDirectory>
-    <File Name="../../../Source/CoreLib/String.cpp"/>
-    <File Name="../../../Source/CoreLib/String.hpp"/>
+    <VirtualDirectory Name="String">
+      <File Name="../../../Source/CoreLib/String/String.cpp"/>
+      <File Name="../../../Source/CoreLib/String/String.hpp"/>
+      <File Name="../../../Source/CoreLib/String/String.Linux.cpp"/>
+    </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Settings Type="Static Library">
@@ -53,7 +56,10 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      
+      
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -92,7 +98,10 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      
+      
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -130,7 +139,10 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      
+      
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -169,7 +181,10 @@
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[]]>
+        <![CDATA[
+      
+      
+      ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -199,4 +214,5 @@
       </Completion>
     </Configuration>
   </Settings>
+  <Dependencies Name="Debug-64"/>
 </CodeLite_Project>

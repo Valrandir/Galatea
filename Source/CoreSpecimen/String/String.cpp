@@ -17,7 +17,7 @@ UInt const _textlen = 15U;
 
 namespace StringTestNamespace {
 
-Bool AssertCapLen(String& s, UInt capacity, UInt length)
+Bool AssertCapLen(String const & s, UInt capacity, UInt length)
 {
 	return s.GetCapacity() == capacity && s.GetLength() == length;
 }
@@ -37,7 +37,7 @@ Bool CtorCapacityTest()
 {
 	Bool result = true;
 
-	String s1(0U);
+	String s1((UInt)0U);
 	ASSERT s1.IsEmpty() == true;
 	ASSERT AssertCapLen(s1, 0U, 0U);
 
@@ -448,25 +448,25 @@ Bool OperatorPlusTCharTest()
 
 	//Empty + Empty
 	String l1;
-	String& s1 = l1 + _empty;
+	String const & s1 = l1 + _empty;
 	ASSERT s1.IsEmpty() == true;
 	ASSERT AssertCapLen(s1, 0U, 0U);
 
 	//Empty + Not Empty
 	String l2;
-	String& s2 = l2 + _text;
+	String const & s2 = l2 + _text;
 	ASSERT s2.IsEmpty() == false;
 	ASSERT AssertCapLen(s2, _textcap, _textlen);
 
 	//Not Empty + Empty
 	String l3(_text);
-	String& s3 = l3 + _empty;
+	String const & s3 = l3 + _empty;
 	ASSERT s3.IsEmpty() == false;
 	ASSERT AssertCapLen(s3, _textcap, _textlen);
 
 	//Not Empty + Not Empty
 	String l4(_text);
-	String& s4 = l4 + _text;
+	String const & s4 = l4 + _text;
 	ASSERT s4.IsEmpty() == false;
 	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
 
@@ -480,28 +480,28 @@ Bool OperatorPlusStringTest()
 	//Empty + Empty
 	String l1;
 	String r1;
-	String& s1 = l1 + r1;
+	String const & s1 = l1 + r1;
 	ASSERT s1.IsEmpty() == true;
 	ASSERT AssertCapLen(s1, 0U, 0U);
 
 	//Empty + Not Empty
 	String l2;
 	String r2(_text);
-	String& s2 = l2 + r2;
+	String const & s2 = l2 + r2;
 	ASSERT s2.IsEmpty() == false;
 	ASSERT AssertCapLen(s2, _textcap, _textlen);
 
 	//Not Empty + Empty
 	String l3(_text);
 	String r3;
-	String& s3 = l3 + r3;
+	String const & s3 = l3 + r3;
 	ASSERT s3.IsEmpty() == false;
 	ASSERT AssertCapLen(s3, _textcap, _textlen);
 
 	//Not Empty + Not Empty
 	String l4(_text);
 	String r4(_text);
-	String& s4 = l4 + r4;
+	String const & s4 = l4 + r4;
 	ASSERT s4.IsEmpty() == false;
 	ASSERT AssertCapLen(s4, _textcap + _textcap - 1, _textlen + _textlen);
 
@@ -1049,13 +1049,27 @@ Bool FormatBufferTest()
 {
 	Bool result = true;
 
-	TChar* format = Text("One hundred fifty seven : %d - %s");
-	UInt const buffer_size = 128U;
-	TChar buffer[buffer_size];
+	TChar const * format = Text("One hundred fifty seven : %d - %s");
 
-	String::Format(buffer, buffer_size, format, 157, Text("Done"));
+	//Buffer is large enough
+	{
+		UInt const buffer_size = 128U;
+		TChar buffer[buffer_size];
 
-	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+		String::Format(buffer, buffer_size, format, 157, Text("Done"));
+
+		ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+	}
+
+	//Buffer is too short, so the output was truncated
+	{
+		UInt const buffer_size = 24U;
+		TChar buffer[buffer_size];
+
+		String::Format(buffer, buffer_size, format, 157, Text("Done"));
+
+		ASSERT 0 == String::Compare(Text("One hundred fifty seven"), buffer);
+	}
 
 	return result;
 }
@@ -1064,7 +1078,7 @@ Bool FormatStringTest()
 {
 	Bool result = true;
 
-	TChar* format = Text("One hundred fifty seven : %d - %s");
+	TChar const * format = Text("One hundred fifty seven : %d - %s");
 
 	String str = String::FormatStr(format, 157, Text("Done"));
 

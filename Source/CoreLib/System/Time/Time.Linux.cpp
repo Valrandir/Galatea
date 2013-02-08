@@ -9,7 +9,8 @@ namespace Core
 		{
 			void Sleep(UInt32 Milliseconds)
 			{
-				timespec req = {Milliseconds / 1000, Milliseconds % 1000 * 1000000};
+				Int32 msecs = (Int32)Milliseconds;
+				timespec req = {msecs / 1000, msecs % 1000 * 1000000};
 				nanosleep(&req, NULL);
 			}
 		}

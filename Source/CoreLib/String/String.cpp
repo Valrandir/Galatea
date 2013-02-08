@@ -43,10 +43,12 @@ namespace Core
 	String& String::operator=(String const & val)
 	{
 		if(this != &val)
+		{
 			if(val.IsEmpty())
 				Clear();
 			else
 				*this = val.GetTChar();
+		}
 
 		return *this;
 	}
@@ -153,12 +155,21 @@ namespace Core
 	String String::FormatStr(TChar const * format, ...)
 	{
 		va_list args;
+		UInt size;
+		String str;
+
 		va_start(args, format);
-		UInt size = FormatImplGetRequiredSize(format, args);
-		String str(size);
-		FormatImpl(str.Begin(), size, format, args);
-		str.SetLength(size);
+		size = FormatImplGetRequiredSize(format, args);
 		va_end(args);
+
+		str.Reserve(size);
+
+		va_start(args, format);
+		FormatImpl(str.Begin(), size, format, args);
+		va_end(args);
+
+		str.SetLength(size);
+
 		return str;
 	}
 
