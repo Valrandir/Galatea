@@ -31,11 +31,24 @@
     <VirtualDirectory Name="String">
       <File Name="../../../Source/CoreSpecimen/String/String.cpp"/>
     </VirtualDirectory>
+    <File Name="../../../Source/CoreSpecimen/Types.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Release">
     <Project Name="CoreLib"/>
   </Dependencies>
   <Dependencies Name="Debug">
+    <Project Name="CoreLib"/>
+  </Dependencies>
+  <Dependencies Name="Debug-32">
+    <Project Name="CoreLib"/>
+  </Dependencies>
+  <Dependencies Name="Debug-64">
+    <Project Name="CoreLib"/>
+  </Dependencies>
+  <Dependencies Name="Release-32">
+    <Project Name="CoreLib"/>
+  </Dependencies>
+  <Dependencies Name="Release-64">
     <Project Name="CoreLib"/>
   </Dependencies>
   <Settings Type="Executable">
@@ -54,14 +67,11 @@
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="-m32" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      
-      
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -97,14 +107,11 @@
         <Preprocessor Value="CoreTargetLinux"/>
         <Preprocessor Value="CoreTarget64Bits"/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="-m64" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      
-      
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -139,14 +146,11 @@
         <IncludePath Value="../../../Include/"/>
         <Preprocessor Value="CoreTargetLinux"/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="-m32" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      
-      
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -182,14 +186,11 @@
         <Preprocessor Value="CoreTargetLinux"/>
         <Preprocessor Value="CoreTarget64Bits"/>
       </Compiler>
-      <Linker Options="" Required="yes"/>
+      <Linker Options="-m64" Required="yes"/>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[
-      
-      
-      ]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -219,16 +220,4 @@
       </Completion>
     </Configuration>
   </Settings>
-  <Dependencies Name="Debug-32">
-    <Project Name="CoreLib"/>
-  </Dependencies>
-  <Dependencies Name="Debug-64">
-    <Project Name="CoreLib"/>
-  </Dependencies>
-  <Dependencies Name="Release-32">
-    <Project Name="CoreLib"/>
-  </Dependencies>
-  <Dependencies Name="Release-64">
-    <Project Name="CoreLib"/>
-  </Dependencies>
 </CodeLite_Project>
