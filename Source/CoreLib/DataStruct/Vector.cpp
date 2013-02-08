@@ -128,11 +128,10 @@ template <class T> void Vector<T>::CopyToSelf(Vector const & source)
 
 template <class T> void Vector<T>::MoveToSelf(Vector & source)
 {
+	Deallocate();
 	_ctorMode = source._ctorMode;
 
-	if(source.IsEmpty())
-		Deallocate();
-	else
+	if(!source.IsEmpty())
 	{
 		_origin = source._origin;
 		_last = source._last;

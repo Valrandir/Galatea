@@ -60,7 +60,7 @@ namespace Core
 			/* Constructors && Destructor */
 			Vector();
 			Vector(CtorModeEnum ctorMode);
-			Vector(UInt capacity, CtorModeEnum ctorMode = Always);
+			Vector(UInt capacity, CtorModeEnum ctorMode = DefaultMode);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
 			virtual ~Vector();
