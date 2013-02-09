@@ -52,10 +52,6 @@ namespace Core
 			void CopyToSelf(Vector const & source);
 			void MoveToSelf(Vector & source);
 
-			/* Protected Functions */
-			protected:
-			void SetLength(UInt length);
-
 			public:
 			/* Constructors && Destructor */
 			Vector();
@@ -99,6 +95,7 @@ namespace Core
 			void Insert(UInt offset, ConstElement& value);
 			void Remove(Element& item);
 			void Remove(UInt position);
+			Element* DrivePointer(UInt future_length);
 		};
 
 		#include "Vector.cpp"

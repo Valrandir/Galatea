@@ -165,10 +165,8 @@ namespace Core
 		str.Reserve(size);
 
 		va_start(args, format);
-		FormatImpl(str.Begin(), size, format, args);
+		FormatImpl(str.DrivePointer(size), size, format, args);
 		va_end(args);
-
-		str.SetLength(size);
 
 		return str;
 	}

@@ -143,15 +143,6 @@ template <class T> void Vector<T>::MoveToSelf(Vector & source)
 }
 
 /******************************************************************************/
-/* Protected Functions ********************************************************/
-/******************************************************************************/
-
-template<class T> void Vector<T>::SetLength(UInt length)
-{
-	_last = _origin + length;
-}
-
-/******************************************************************************/
 /* Constructors && Destructor *************************************************/
 /******************************************************************************/
 
@@ -452,4 +443,10 @@ template<class T> void Vector<T>::Remove(UInt offset)
 
 		--_last;
 	}
+}
+
+template<class T> typename Vector<T>::Element* Vector<T>::DrivePointer(UInt future_length)
+{
+	_last = _origin + future_length;
+	return _origin;
 }
