@@ -6,25 +6,25 @@ Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
 
 namespace Core
 {
-	String::String() : Vector(Vector::CtorModeEnum::Pod)
+	String::String() : _vctr(Vector::CtorModeEnum::Pod)
 	{
 	}
 
-	String::String(UInt capacity) : Vector(capacity, Vector::CtorModeEnum::Pod)
+	String::String(UInt capacity) : _vctr(capacity, Vector::CtorModeEnum::Pod)
 	{
 	}
 
-	String::String(TChar const * val) : Vector(Vector::CtorModeEnum::Pod)
+	String::String(TChar const * val) : _vctr(Vector::CtorModeEnum::Pod)
 	{
 		UInt n = GetTCharLength(val);
-		if(n) AddRange(val, val + n + 1);
+		if(n) _vctr.AddRange(val, val + n + 1);
 	}
 
-	String::String(String const & val) : Vector(val)
+	String::String(String const & val) : _vctr(val._vctr)
 	{
 	}
 
-	String::String(String && val) : Vector((Vector&&)val)
+	String::String(String && val) : _vctr((Vector&&)val)
 	{
 	}
 
@@ -35,8 +35,8 @@ namespace Core
 	String& String::operator=(TChar const * val)
 	{
 		UInt n = GetTCharLength(val);
-		Vector::Clear();
-		if(n) AddRange(val, val + n + 1);
+		_vctr.Clear();
+		if(n) _vctr.AddRange(val, val + n + 1);
 		return *this;
 	}
 
@@ -45,7 +45,7 @@ namespace Core
 		if(this != &val)
 		{
 			if(val.IsEmpty())
-				Clear();
+				_vctr.Clear();
 			else
 				*this = val.GetTChar();
 		}
@@ -55,7 +55,7 @@ namespace Core
 
 	String& String::operator=(String && val)
 	{
-		Vector::operator=((Vector&&)val);
+		_vctr.operator=((Vector&&)val);
 		return *this;
 	}
 
@@ -64,8 +64,8 @@ namespace Core
 		UInt n = GetTCharLength(val);
 		if(n)
 		{
-			Vector::Remove(Vector::GetLength() - 1);
-			AddRange(val, val + n + 1);
+			_vctr.Remove(_vctr.GetLength() - 1);
+			_vctr.AddRange(val, val + n + 1);
 		}
 		return *this;
 	}
@@ -74,8 +74,8 @@ namespace Core
 	{
 		if(!val.IsEmpty())
 		{
-			Vector::Remove(Vector::GetLength() - 1);
-			Vector::operator+=(val);
+			_vctr.Remove(_vctr.GetLength() - 1);
+			_vctr.operator+=(val._vctr);
 		}
 		return *this;
 	}
@@ -105,7 +105,7 @@ namespace Core
 
 	TChar String::operator[](UInt index) const
 	{
-		return Vector::operator[](index);
+		return _vctr.operator[](index);
 	}
 
 	UInt String::GetTCharLength(TChar const * val)
@@ -126,22 +126,22 @@ namespace Core
 
 	Bool String::IsEmpty() const
 	{
-		return Vector::IsEmpty();
+		return _vctr.IsEmpty();
 	}
 
 	UInt String::GetCapacity() const
 	{
-		return Vector::GetCapacity();
+		return _vctr.GetCapacity();
 	}
 
 	UInt String::GetLength() const
 	{
-		return Vector::IsEmpty() ? 0U : Vector::GetLength() - 1;
+		return _vctr.IsEmpty() ? 0U : _vctr.GetLength() - 1;
 	}
 
 	TChar const * String::GetTChar() const
 	{
-		return Vector::Begin();
+		return _vctr.Begin();
 	}
 
 	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
@@ -165,7 +165,7 @@ namespace Core
 		str.Reserve(size);
 
 		va_start(args, format);
-		FormatImpl(str.DrivePointer(size), size, format, args);
+		FormatImpl(str._vctr.DrivePointer(size), size, format, args);
 		va_end(args);
 
 		return str;
@@ -213,12 +213,12 @@ namespace Core
 
 	void String::Reserve(UInt capacity)
 	{
-		Vector::Reserve(capacity);
+		_vctr.Reserve(capacity);
 	}
 
 	void String::Shrink()
 	{
-		Vector::Shrink();
+		_vctr.Shrink();
 	}
 
 	void String::Append(TChar const * val)

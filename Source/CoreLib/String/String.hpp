@@ -8,8 +8,12 @@
 
 namespace Core
 {
-	class String : private DataStruct::Vector<TChar>
+	class String
 	{
+		private:
+		typedef DataStruct::Vector<TChar> Vector;
+		Vector _vctr;
+
 		public:
 		String();
 		String(UInt capacity);
