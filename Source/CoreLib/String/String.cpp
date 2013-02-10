@@ -221,13 +221,44 @@ namespace Core
 		_vctr.Shrink();
 	}
 
-	void String::Append(TChar const * val)
+	void String::Append(TChar const * str)
 	{
-		*this += val;
+		*this += str;
 	}
 
-	void String::Append(String const & val)
+	void String::Append(String const & str)
 	{
-		*this += val;
+		*this += str;
+	}
+
+	Int String::IndexOf(TChar const chr, Int position) const
+	{
+		Int idx, length = GetLength();
+
+		if(length == 0 || position < 0 || position >= length) return -1;
+
+		for(idx = position; idx < length; ++idx)
+			if(_vctr[idx] == chr)
+				return idx;
+
+		return -1;
+	}
+
+	Int String::LastIndexOf(TChar const chr, Int position) const
+	{
+		Int idx, length = GetLength();
+
+		if(length == 0 || position < -1 || position >= length) return -1;
+		if(position == -1) position = length - 1;
+
+		for(idx = position; idx >= 0; --idx)
+		{
+			if(_vctr[idx] == chr)
+			{
+				return idx;
+			}
+		}
+
+		return -1;
 	}
 }

@@ -1205,6 +1205,106 @@ Bool FormatStringTest()
 	return result;
 }
 
+Bool IndexOfTest()
+{
+	Bool result = true;
+
+	String empty;
+	String len[] = {Text("0"), Text("01"), Text("012")};
+	TChar chr[] = {Text('0'), Text('1'), Text('2')};
+
+	//Empty string
+	ASSERT empty.IndexOf(chr[0]) == -1;
+
+	//Position too small
+	ASSERT len[0].IndexOf(chr[0], -10) == -1;
+
+	//Position too big
+	ASSERT len[0].IndexOf(chr[0], 10) == -1;
+
+	//Length 1 - Not Found
+	ASSERT len[0].IndexOf(chr[1]) == -1;
+
+	//Length 1 - Found
+	ASSERT len[0].IndexOf(chr[0]) == 0;
+
+	//Length 2 - Found at beginning
+	ASSERT len[1].IndexOf(chr[0]) == 0;
+
+	//Length 2 - Found at end
+	ASSERT len[1].IndexOf(chr[1]) == 1;
+
+	//Length 2 - Not Found because of Position
+	ASSERT len[1].IndexOf(chr[0], 1) == -1;
+
+	//Length 2 - Found at Position
+	ASSERT len[1].IndexOf(chr[1], 1) == 1;
+
+	//Length 3 - Found at beginning
+	ASSERT len[2].IndexOf(chr[0]) == 0;
+
+	//Length 3 - Not Found because of Position
+	ASSERT len[2].IndexOf(chr[0], 1) == -1;
+
+	//Length 3 - Found at Position
+	ASSERT len[2].IndexOf(chr[1], 1) == 1;
+
+	//Length 3 - Found after Position
+	ASSERT len[2].IndexOf(chr[2], 1) == 2;
+
+	return result;
+}
+
+Bool LastIndexOfTest()
+{
+	Bool result = true;
+
+	String empty;
+	String len[] = {Text("0"), Text("01"), Text("012")};
+	TChar chr[] = {Text('0'), Text('1'), Text('2')};
+
+	//Empty string
+	ASSERT empty.LastIndexOf(chr[0]) == -1;
+
+	//Position too small
+	ASSERT len[0].LastIndexOf(chr[0], -10) == -1;
+
+	//Position too big
+	ASSERT len[0].LastIndexOf(chr[0], 10) == -1;
+
+	//Length 1 - Not Found
+	ASSERT len[0].LastIndexOf(chr[1]) == -1;
+
+	//Length 1 - Found
+	ASSERT len[0].LastIndexOf(chr[0]) == 0;
+
+	//Length 2 - Found at beginning
+	ASSERT len[1].LastIndexOf(chr[0]) == 0;
+
+	//Length 2 - Found at end
+	ASSERT len[1].LastIndexOf(chr[1]) == 1;
+
+	//Length 2 - Not Found because of Position
+	ASSERT len[1].LastIndexOf(chr[0], 1) == -1;
+
+	//Length 2 - Found at Position
+	ASSERT len[1].LastIndexOf(chr[1], 1) == 1;
+
+	//Length 3 - Found at beginning
+	ASSERT len[2].LastIndexOf(chr[0]) == 0;
+
+	//Length 3 - Not Found because of Position
+	ASSERT len[2].LastIndexOf(chr[0], 1) == -1;
+
+	//Length 3 - Found at Position
+	ASSERT len[2].LastIndexOf(chr[1], 1) == 1;
+
+	//Length 3 - Found after Position
+	ASSERT len[2].LastIndexOf(chr[2], 1) == 2;
+
+	return result;
+}
+
 } //namespace
 
 using namespace StringTestNamespace;
@@ -1255,6 +1355,9 @@ Bool StringTest()
 
 	ASSERT FormatBufferTest();
 	ASSERT FormatStringTest();
+
+	ASSERT IndexOfTest();
+	ASSERT LastIndexOfTest();
 
 	return result;
 }

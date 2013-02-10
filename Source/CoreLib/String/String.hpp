@@ -61,7 +61,10 @@ namespace Core
 
 		void Reserve(UInt capacity);
 		void Shrink();
-		void Append(TChar const *);
-		void Append(String const &);
+		void Append(TChar const * str);
+		void Append(String const & str);
+
+		Int IndexOf(TChar const chr, Int position = 0) const;
+		Int LastIndexOf(TChar const chr, Int position = -1) const;
 	};
 }
