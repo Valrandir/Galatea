@@ -18,6 +18,7 @@ namespace Core
 		String();
 		String(UInt capacity);
 		String(TChar const *);
+		String(TChar const * begin, TChar const *end);
 		String(String const &);
 		String(String &&);
 		~String();
@@ -66,5 +67,7 @@ namespace Core
 
 		Int IndexOf(TChar const chr, Int position = 0) const;
 		Int LastIndexOf(TChar const chr, Int position = -1) const;
+
+		String SubString(UInt start, UInt length) const;
 	};
 }

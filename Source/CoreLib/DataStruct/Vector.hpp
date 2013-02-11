@@ -24,7 +24,7 @@ namespace Core
 		template<class T> class Vector
 		{
 			public:
-			enum CtorModeEnum{Pod, Once, Always};
+			enum CtorModeEnum{Always, Once, Pod};
 			typedef T Element;
 			typedef T const ConstElement;
 
@@ -44,19 +44,19 @@ namespace Core
 			void Deallocate();
 			void Allocate(UInt capacity);
 			void AutoAllocate();
-			void Assign(ConstElement* target, Element *source) const;
 			void Construct(ConstElement* target, ConstElement* source) const;
+			void Move(ConstElement* target, Element *source) const;
 			void Destroy(ConstElement* target) const;
 			void Destroy(ConstElement* begin, ConstElement* end) const;
-			void Move(Element* target, Element* begin, Element* end) const;
+			void MoveRange(Element* target, Element* begin, Element* end) const;
 			void CopyToSelf(Vector const & source);
 			void MoveToSelf(Vector & source);
 
 			public:
 			/* Constructors && Destructor */
-			Vector();
-			Vector(CtorModeEnum ctorMode);
+			Vector(CtorModeEnum ctorMode = DefaultMode);
 			Vector(UInt capacity, CtorModeEnum ctorMode = DefaultMode);
+			Vector(ConstElement* begin, ConstElement* end, CtorModeEnum ctorMode = DefaultMode);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
 			virtual ~Vector();

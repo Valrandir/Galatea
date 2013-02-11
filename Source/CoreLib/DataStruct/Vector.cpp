@@ -37,7 +37,7 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * GetLength());
 		else
 		{
-			Move(newOrigin, _origin, _last);
+			MoveRange(newOrigin, _origin, _last);
 			Destroy(_origin, _last);
 		}
 		System::Memory::Free(_origin);
@@ -56,14 +56,14 @@ template <class T> void Vector<T>::AutoAllocate()
 		Allocate(GetCapacity() << 1U);
 }
 
-template <class T> void Vector<T>::Assign(ConstElement* target, Element *source) const
-{
-	new((VoidPtr)target) Element((Element&&)(*source));
-}
-
 template <class T> void Vector<T>::Construct(ConstElement* target, ConstElement *source) const
 {
 	new((VoidPtr)target) Element(*source);
+}
+
+template <class T> void Vector<T>::Move(ConstElement* target, Element *source) const
+{
+	new((VoidPtr)target) Element((Element&&)(*source));
 }
 
 template <class T> void Vector<T>::Destroy(ConstElement* target) const
@@ -77,7 +77,7 @@ template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* en
 		Destroy(begin++);
 }
 
-template <class T> void Vector<T>::Move(Element* target, Element* begin, Element* end) const
+template <class T> void Vector<T>::MoveRange(Element* target, Element* begin, Element* end) const
 {
 	if(_ctorMode != CtorModeEnum::Always)
 		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
@@ -85,12 +85,12 @@ template <class T> void Vector<T>::Move(Element* target, Element* begin, Element
 	{
 		if(target < begin)
 			while(begin != end)
-				Assign(target++, begin++);
+				Move(target++, begin++);
 		else
 		{
 			target += end - begin - 1;
 			while(begin != end)
-				Assign(target--, --end);
+				Move(target--, --end);
 		}
 	}
 }
@@ -145,14 +145,6 @@ template <class T> void Vector<T>::MoveToSelf(Vector & source)
 /******************************************************************************/
 /* Constructors && Destructor *************************************************/
 /******************************************************************************/
-
-template<class T> Vector<T>::Vector() :
-	_ctorMode(DefaultMode),
-	_origin(NULL),
-	_last(NULL),
-	_end(NULL)
-{}
-
 template<class T> Vector<T>::Vector(CtorModeEnum ctorMode) :
 	_ctorMode(ctorMode),
 	_origin(NULL),
@@ -183,6 +175,15 @@ template<class T> Vector<T>::Vector(Vector&& source) :
 	_end(NULL)
 {
 	MoveToSelf(source);
+}
+
+template<class T> Vector<T>::Vector(ConstElement* begin, ConstElement* end, CtorModeEnum ctorMode) :
+	_ctorMode(ctorMode),
+	_origin(NULL),
+	_last(NULL),
+	_end(NULL)
+{
+	AddRange(begin, end);
 }
 
 template<class T> Vector<T>::~Vector()
@@ -341,20 +342,20 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 {
 	UInt length;
 
-	if(begin && end && begin <= end)
-	{
-		length = end - begin;
-		Reserve(GetLength() + length);
+	if(begin == end)
+		return;
 
-		if(_ctorMode == CtorModeEnum::Pod)
-		{
-			System::Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
-			_last += length;
-		}
-		else
-			while(begin != end)
-				Construct(_last++, begin++);
+	length = end - begin;
+	Reserve(GetLength() + length);
+
+	if(_ctorMode == CtorModeEnum::Pod)
+	{
+		System::Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
+		_last += length;
 	}
+	else
+		while(begin != end)
+			Construct(_last++, begin++);
 }
 
 template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
@@ -367,7 +368,7 @@ template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 
 	element = &operator[](offset);
 
-	Move(element + 1, element, _last);
+	MoveRange(element + 1, element, _last);
 	++_last;
 
 	if(_ctorMode == CtorModeEnum::Pod)
@@ -389,7 +390,7 @@ template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 
 	element = &operator[](offset);
 
-	Move(element + 1, element, _last);
+	MoveRange(element + 1, element, _last);
 	++_last;
 
 	if(_ctorMode == CtorModeEnum::Pod)
@@ -407,7 +408,7 @@ template<class T> void Vector<T>::Remove(Element& element)
 
 		if(&element != _last - 1)
 		{
-			Move(&element, &element + 1, _last);
+			MoveRange(&element, &element + 1, _last);
 			if(_ctorMode == CtorModeEnum::Always)
 				Destroy(_last - 1);
 		}
@@ -436,7 +437,7 @@ template<class T> void Vector<T>::Remove(UInt offset)
 
 		if(element != _last - 1)
 		{
-			Move(element, element + 1, _last);
+			MoveRange(element, element + 1, _last);
 			if(_ctorMode == CtorModeEnum::Always)
 				Destroy(_last - 1);
 		}

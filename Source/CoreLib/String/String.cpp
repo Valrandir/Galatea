@@ -20,6 +20,13 @@ namespace Core
 		if(n) _vctr.AddRange(val, val + n + 1);
 	}
 
+	String::String(TChar const * begin, TChar const * end) : _vctr(Vector::CtorModeEnum::Pod)
+	{
+		_vctr.Reserve(end - begin + 1);
+		_vctr.AddRange(begin, end);
+		_vctr.Add(Text('\0'));
+	}
+
 	String::String(String const & val) : _vctr(val._vctr)
 	{
 	}
@@ -260,5 +267,18 @@ namespace Core
 		}
 
 		return -1;
+	}
+
+	String String::SubString(UInt start, UInt length) const
+	{
+		UInt const self_length = GetLength();
+
+		if(IsEmpty() || length == 0 || start < 0 || start >= self_length)
+			return String();
+
+		if(length >= self_length)
+			length = self_length;
+
+		return String(&_vctr[start], &_vctr[start + length]);
 	}
 }

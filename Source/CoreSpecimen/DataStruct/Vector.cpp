@@ -185,7 +185,7 @@ Bool CtorCopyTest()
 		ASSERT AssertBeginEndNotNull(target);
 	}
 
-	//Copy RawCopyEnabled vector
+	//Copy Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target(source);
@@ -238,11 +238,43 @@ Bool CtorMoveTest()
 		ASSERT AssertBeginEndNull(source);
 	}
 
-	//Move RawCopyEnabled vector
+	//Move Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target((VCntr&&)source);
 		ASSERT target.GetElementType() == VCntr::CtorModeEnum::Pod;
+	}
+
+	return result;
+}
+
+Bool CtorRangeTest()
+{
+	Bool result = true;
+
+	//Construct with zero element
+	{
+		VCntr source;
+		Counter::Clear();
+		VCntr target(source.Begin(), source.End());
+		ASSERT AssertCntrPod();
+		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCapLen(target, 0U, 0U);
+		ASSERT AssertBeginEndNull(target);
+	}
+
+	//Construct with five elements
+	{
+		VCntr source;
+		AddFiveElements(source);
+		Counter::Clear();
+		VCntr target(source.Begin(), source.End());
+		ASSERT AssertCntrPod();
+		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		ASSERT AssertCapLen(target, 5U, 5U);
+		ASSERT AssertBeginEndNotNull(target);
 	}
 
 	return result;
@@ -329,7 +361,7 @@ Bool OperatorEqualTest()
 		ASSERT AssertBeginEndNotNull(target);
 	}
 
-	//Assign RawCopyEnabled vector
+	//Assign Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target = source;
@@ -380,7 +412,7 @@ Bool OperatorMoveTest()
 		ASSERT AssertBeginEndNotNull(source);
 	}
 
-	//Assign RawCopyEnabled vector
+	//Assign Pod vector
 	{
 		VCntr target(VCntr::CtorModeEnum::Pod);
 		VCntr source = (VCntr&&)target;
@@ -1040,6 +1072,7 @@ Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 	ASSERT CtorCapacityTest();
 	ASSERT CtorCopyTest();
 	ASSERT CtorMoveTest();
+	ASSERT CtorRangeTest();
 
 	ASSERT OperatorEqualTest();
 	ASSERT OperatorMoveTest();

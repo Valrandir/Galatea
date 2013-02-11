@@ -1150,7 +1150,7 @@ Bool OperatorSmallerOrEqualStringTest()
 	return result;
 }
 
-Bool OperatoSubscriptTest()
+Bool OperatorSubscriptTest()
 {
 	Bool result = true;
 
@@ -1305,6 +1305,51 @@ Bool LastIndexOfTest()
 	return result;
 }
 
+Bool SubStringText()
+{
+	Bool result = true;
+	String empty;
+	String text(_text);
+
+	//Return empty string when called on an empty string
+	{
+		String s = empty.SubString(0U, 5U);
+		ASSERT s.IsEmpty() == true;
+	}
+
+	//Length == 0 returns empty string
+	{
+		String s = text.SubString(0U, 0U);
+		ASSERT s.IsEmpty() == true;
+	}
+
+	//Return first 5 characters
+	{
+		String s = text.SubString(0U, 5U);
+		ASSERT s.Compare(Text("This ")) == 0;
+	}
+
+	//Return last 5 characters
+	{
+		String s = text.SubString(text.GetLength() - 5U, 5U);
+		ASSERT s.Compare(Text("reLib")) == 0;
+	}
+
+	//Return 5 characters starting at 7
+	{
+		String s = text.SubString(7U, 5U);
+		ASSERT s.Compare(Text(" Core")) == 0;
+	}
+
+	//Truncate when length is too big
+	{
+		String s = text.SubString(0U, 1000U);
+		ASSERT s.Compare(_text) == 0;
+	}
+
+	return result;
+}
+
 } //namespace
 
 using namespace StringTestNamespace;
@@ -1351,13 +1396,14 @@ Bool StringTest()
 	ASSERT OperatorSmallerOrEqualTCharTest();
 	ASSERT OperatorSmallerOrEqualStringTest();
 
-	ASSERT OperatoSubscriptTest();
+	ASSERT OperatorSubscriptTest();
 
 	ASSERT FormatBufferTest();
 	ASSERT FormatStringTest();
 
 	ASSERT IndexOfTest();
 	ASSERT LastIndexOfTest();
+	ASSERT SubStringText();
 
 	return result;
 }
