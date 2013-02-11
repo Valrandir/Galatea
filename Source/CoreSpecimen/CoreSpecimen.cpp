@@ -15,16 +15,16 @@ Bool CoreSpecimen()
 {
 	Bool result = true;
 
-	ASSERT TypesTest();
+	CHECK TypesTest();
 
 	ErrTest();
 	MemoryTest();
-	ASSERT ThreadTest();
+	CHECK ThreadTest();
 	//ThreadedErrTest();
 	//TimeTest();
 
-	ASSERT VectorTest();
-	ASSERT StringTest();
+	CHECK VectorTest();
+	CHECK StringTest();
 
 	return result;
 }

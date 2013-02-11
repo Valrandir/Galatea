@@ -25,13 +25,13 @@ Bool ThreadTestByValue()
 	System::Threading::Thread* Thread;
 
 	Thread = System::Threading::CreateThread(ThreadEntryByValue, ThreadParam);
-	ASSERT Thread;
+	CHECK Thread;
 
 	if(Thread)
 	{
 		ReturnValue = Thread->Join();
 		Delete(Thread);
-		ASSERT (Int)ReturnValue == Param * Param;
+		CHECK (Int)ReturnValue == Param * Param;
 	}
 
 	return result;
@@ -47,14 +47,14 @@ Bool ThreadTestByRef()
 	System::Threading::Thread* Thread;
 
 	Thread = System::Threading::CreateThread(ThreadEntryByRef, ThreadParam);
-	ASSERT Thread != 0;
+	CHECK Thread != 0;
 
 	if(Thread)
 	{
 		ReturnValue = Thread->Join();
 		Delete(Thread);
-		ASSERT *(UInt32*)ReturnValue == Param;
-		ASSERT ReturnValue == &Param;
+		CHECK *(UInt32*)ReturnValue == Param;
+		CHECK ReturnValue == &Param;
 	}
 
 	return result;
@@ -64,8 +64,8 @@ Bool ThreadTest()
 {
 	Bool result = true;
 
-	ASSERT ThreadTestByValue();
-	ASSERT ThreadTestByRef();
+	CHECK ThreadTestByValue();
+	CHECK ThreadTestByRef();
 
 	return result;
 }

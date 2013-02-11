@@ -13,7 +13,7 @@ UInt const _textlen = 15U;
 
 namespace StringTestNamespace {
 
-Bool AssertCapLen(String const & s, UInt capacity, UInt length)
+Bool CHECKCapLen(String const & s, UInt capacity, UInt length)
 {
 	return s.GetCapacity() == capacity && s.GetLength() == length;
 }
@@ -23,8 +23,8 @@ Bool CtorEmptyTest()
 	Bool result = true;
 
 	String s;
-	ASSERT s.IsEmpty() == true;
-	ASSERT AssertCapLen(s, 0U, 0U);
+	CHECK s.IsEmpty() == true;
+	CHECK CHECKCapLen(s, 0U, 0U);
 
 	return result;
 }
@@ -36,15 +36,15 @@ Bool CtorCapacityTest()
 	//No Capacity
 	{
 		String s((UInt)0U);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//Capacity
 	{
 		String s(10U);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 10U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 10U, 0U);
 	}
 
 	return result;
@@ -58,22 +58,22 @@ Bool CtorTCharTest()
 	//TChar NULL
 	{
 		String s(nullTChar);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//TChar Empty
 	{
 		String s(_empty);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//TChar not Empty
 	{
 		String s(_text);
-		ASSERT s.IsEmpty() == false;
-		ASSERT AssertCapLen(s, _textcap, _textlen);
+		CHECK s.IsEmpty() == false;
+		CHECK CHECKCapLen(s, _textcap, _textlen);
 	}
 
 	return result;
@@ -87,16 +87,16 @@ Bool CtorCopyTest()
 	{
 		String s;
 		String t(s);
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, 0U, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, 0U, 0U);
 	}
 
 	//Copy not Empty
 	{
 		String s(_text);
 		String t(s);
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -110,18 +110,18 @@ Bool CtorMoveTest()
 	{
 		String s;
 		String t((String&&)s);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//Move not Empty
 	{
 		String s(_text);
 		String t((String&&)s);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -132,13 +132,13 @@ Bool GetTCharLenTest()
 	Bool result = true;
 
 	//Null
-	ASSERT String::GetTCharLength(NULL) == 0U;
+	CHECK String::GetTCharLength(NULL) == 0U;
 
 	//Empty string Len == 1 for terminating character
-	ASSERT String::GetTCharLength(_empty) == 0U;
+	CHECK String::GetTCharLength(_empty) == 0U;
 
 	//Len == _textlen
-	ASSERT String::GetTCharLength(_text) == _textlen;
+	CHECK String::GetTCharLength(_text) == _textlen;
 
 	return result;
 }
@@ -150,19 +150,19 @@ Bool IsEmptyTest()
 	//Empty
 	{
 		String s;
-		ASSERT s.IsEmpty() == true;
+		CHECK s.IsEmpty() == true;
 	}
 
 	//Empty with Capacity
 	{
 		String s(10U);
-		ASSERT s.IsEmpty() == true;
+		CHECK s.IsEmpty() == true;
 	}
 
 	//Not Empty
 	{
 		String s(_text);
-		ASSERT s.IsEmpty() == false;
+		CHECK s.IsEmpty() == false;
 	}
 
 	return result;
@@ -175,13 +175,13 @@ Bool GetCapacityTest()
 	//Empty
 	{
 		String s;
-		ASSERT s.GetCapacity() == 0U;
+		CHECK s.GetCapacity() == 0U;
 	}
 
 	//Capacity
 	{
 		String s(10U);
-		ASSERT s.GetCapacity() == 10U;
+		CHECK s.GetCapacity() == 10U;
 	}
 
 	return result;
@@ -194,19 +194,19 @@ Bool GetLengthTest()
 	//Empty
 	{
 		String s;
-		ASSERT s.GetLength() == 0U;
+		CHECK s.GetLength() == 0U;
 	}
 
 	//Empty with Capacity
 	{
 		String s(10U);
-		ASSERT s.GetLength() == 0U;
+		CHECK s.GetLength() == 0U;
 	}
 
 	//Not Empty
 	{
 		String s(_text);
-		ASSERT s.GetLength() == _textlen;
+		CHECK s.GetLength() == _textlen;
 	}
 
 	return result;
@@ -218,7 +218,7 @@ Bool GetTCharTest()
 
 	String s(_text);
 	TChar const * tc = s.GetTChar();
-	ASSERT String::Compare(_text, tc) == 0U;
+	CHECK String::Compare(_text, tc) == 0U;
 
 	return result;
 }
@@ -230,37 +230,37 @@ Bool CompareTCharTest()
 	//Empty to empty
 	{
 	String s;
-	ASSERT 0 == s.Compare(_empty);
+	CHECK 0 == s.Compare(_empty);
 	}
 
 	//Empty to not empty
 	{
 		String s;
-		ASSERT -1 == s.Compare(Text("Not Empty"));
+		CHECK -1 == s.Compare(Text("Not Empty"));
 	}
 
 	//Not Empty to empty
 	{
 		String s(_text);
-		ASSERT 1 == s.Compare(_empty);
+		CHECK 1 == s.Compare(_empty);
 	}
 
 	//Not Empty to smaller
 	{
 		String s(_text);
-		ASSERT 1 == s.Compare(_textSmaller);
+		CHECK 1 == s.Compare(_textSmaller);
 	}
 
 	//Not Empty to greater
 	{
 		String s(_text);
-		ASSERT -1 == s.Compare(_textGreater);
+		CHECK -1 == s.Compare(_textGreater);
 	}
 
 	//Not Empty to same
 	{
 		String s(_text);
-		ASSERT 0 == s.Compare(_text);
+		CHECK 0 == s.Compare(_text);
 	}
 
 	return result;
@@ -273,37 +273,37 @@ Bool CompareStringTest()
 	//Empty to empty
 	{
 		String s;
-		ASSERT 0 == s.Compare(String(_empty));
+		CHECK 0 == s.Compare(String(_empty));
 	}
 
 	//Empty to not empty
 	{
 		String s;
-		ASSERT -1 == s.Compare(String(Text("Not Empty")));
+		CHECK -1 == s.Compare(String(Text("Not Empty")));
 	}
 
 	//Not Empty to empty
 	{
 		String s(_text);
-		ASSERT 1 == s.Compare(String(_empty));
+		CHECK 1 == s.Compare(String(_empty));
 	}
 
 	//Not Empty to smaller
 	{
 		String s(_text);
-		ASSERT 1 == s.Compare(String(_textSmaller));
+		CHECK 1 == s.Compare(String(_textSmaller));
 	}
 
 	//Not Empty to greater
 	{
 		String s(_text);
-		ASSERT -1 == s.Compare(String(_textGreater));
+		CHECK -1 == s.Compare(String(_textGreater));
 	}
 
 	//Not Empty to same
 	{
 		String s(_text);
-		ASSERT 0 == s.Compare(String(_text));
+		CHECK 0 == s.Compare(String(_text));
 	}
 
 	return result;
@@ -317,8 +317,8 @@ Bool OperatorAssignTCharTest()
 	//Assign Empty to Empty
 	{
 		String t = _empty;
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, 0U, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, 0U, 0U);
 	}
 
 	//Assign Empty to not Empty
@@ -326,15 +326,15 @@ Bool OperatorAssignTCharTest()
 		String t(_text);
 		capacity = t.GetCapacity();
 		t = _empty;
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, capacity, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, capacity, 0U);
 	}
 
 	//Assign not Empty to Empty
 	{
 		String t = _text;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	//Assign bigger string to shorter string
@@ -342,8 +342,8 @@ Bool OperatorAssignTCharTest()
 		String t(_text);
 		t = _textBigger;
 		capacity = String::GetTCharLength(_textBigger);
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, capacity + 1, capacity);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, capacity + 1, capacity);
 	}
 
 	//Assign shorter string to bigger string
@@ -352,8 +352,8 @@ Bool OperatorAssignTCharTest()
 		String t(_text);
 		capacity = t.GetCapacity();
 		t = _textShorter;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, capacity, String::GetTCharLength(_textShorter));
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, capacity, String::GetTCharLength(_textShorter));
 	}
 
 	return result;
@@ -368,8 +368,8 @@ Bool OperatorAssignStringTest()
 	{
 		String s;
 		String t = s;
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, 0U, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, 0U, 0U);
 	}
 
 	//Assign Empty to not Empty
@@ -378,16 +378,16 @@ Bool OperatorAssignStringTest()
 		String t(_text);
 		capacity = t.GetCapacity();
 		t = s;
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, capacity, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, capacity, 0U);
 	}
 
 	//Assign not Empty to Empty
 	{
 		String s(_text);
 		String t = s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	//Assign bigger string to shorter string
@@ -395,8 +395,8 @@ Bool OperatorAssignStringTest()
 		String s(_textBigger);
 		String t(_text);
 		t = s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, s.GetCapacity(), s.GetLength());
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, s.GetCapacity(), s.GetLength());
 	}
 
 	//Assign shorter string to bigger string
@@ -406,8 +406,8 @@ Bool OperatorAssignStringTest()
 		String t(_text);
 		capacity = t.GetCapacity();
 		t = s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, capacity, s.GetLength());
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, capacity, s.GetLength());
 	}
 
 	return result;
@@ -421,18 +421,18 @@ Bool OperatorMoveStringTest()
 	{
 		String s;
 		String t((String&&)s);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//Move not Empty to Empty
 	{
 		String s(_text);
 		String t((String&&)s);
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	//Move Empty to not Empty
@@ -440,10 +440,10 @@ Bool OperatorMoveStringTest()
 		String s;
 		String t(_text);
 		t = (String&&)s;
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, 0U, 0U);
 	}
 
 	//Move not Empty to not Empty
@@ -451,10 +451,10 @@ Bool OperatorMoveStringTest()
 		String s(_text);
 		String t(_text);
 		t = (String&&)s;
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -468,32 +468,32 @@ Bool OperatorPlusEqualTCharTest()
 	{
 		String s;
 		s += _empty;
-		ASSERT s.IsEmpty() == true;
-		ASSERT AssertCapLen(s, 0U, 0U);
+		CHECK s.IsEmpty() == true;
+		CHECK CHECKCapLen(s, 0U, 0U);
 	}
 
 	//Empty += Not Empty
 	{
 		String s;
 		s += _text;
-		ASSERT s.IsEmpty() == false;
-		ASSERT AssertCapLen(s, _textcap, _textlen);
+		CHECK s.IsEmpty() == false;
+		CHECK CHECKCapLen(s, _textcap, _textlen);
 	}
 
 	//Not Empty += Empty
 	{
 		String s(_text);
 		s += _empty;
-		ASSERT s.IsEmpty() == false;
-		ASSERT AssertCapLen(s, _textcap, _textlen);
+		CHECK s.IsEmpty() == false;
+		CHECK CHECKCapLen(s, _textcap, _textlen);
 	}
 
 	//Not Empty += Not Empty
 	{
 		String s(_text);
 		s += _text;
-		ASSERT s.IsEmpty() == false;
-		ASSERT AssertCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK s.IsEmpty() == false;
+		CHECK CHECKCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -508,8 +508,8 @@ Bool OperatorPlusEqualStringTest()
 		String t;
 		String s;
 		t += s;
-		ASSERT t.IsEmpty() == true;
-		ASSERT AssertCapLen(t, 0U, 0U);
+		CHECK t.IsEmpty() == true;
+		CHECK CHECKCapLen(t, 0U, 0U);
 	}
 
 	//Empty += Not Empty
@@ -517,8 +517,8 @@ Bool OperatorPlusEqualStringTest()
 		String t;
 		String s(_text);
 		t += s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	//Not Empty += Empty
@@ -526,8 +526,8 @@ Bool OperatorPlusEqualStringTest()
 		String t(_text);
 		String s;
 		t += s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap, _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap, _textlen);
 	}
 
 	//Not Empty += Not Empty
@@ -535,8 +535,8 @@ Bool OperatorPlusEqualStringTest()
 		String t(_text);
 		String s(_text);
 		t += s;
-		ASSERT t.IsEmpty() == false;
-		ASSERT AssertCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK t.IsEmpty() == false;
+		CHECK CHECKCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -550,32 +550,32 @@ Bool OperatorPlusTCharTest()
 	{
 		String s;
 		String const & ref = s + _empty;
-		ASSERT ref.IsEmpty() == true;
-		ASSERT AssertCapLen(ref, 0U, 0U);
+		CHECK ref.IsEmpty() == true;
+		CHECK CHECKCapLen(ref, 0U, 0U);
 	}
 
 	//Empty + Not Empty
 	{
 		String s;
 		String const & ref = s + _text;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap, _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Empty
 	{
 		String s(_text);
 		String const & ref = s + _empty;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap, _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Not Empty
 	{
 		String s(_text);
 		String const & ref = s + _text;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -590,8 +590,8 @@ Bool OperatorPlusStringTest()
 		String l;
 		String r;
 		String const & ref = l + r;
-		ASSERT ref.IsEmpty() == true;
-		ASSERT AssertCapLen(ref, 0U, 0U);
+		CHECK ref.IsEmpty() == true;
+		CHECK CHECKCapLen(ref, 0U, 0U);
 	}
 
 	//Empty + Not Empty
@@ -599,8 +599,8 @@ Bool OperatorPlusStringTest()
 		String l;
 		String r(_text);
 		String const & ref = l + r;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap, _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Empty
@@ -608,8 +608,8 @@ Bool OperatorPlusStringTest()
 		String l(_text);
 		String r;
 		String const & ref = l + r;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap, _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Not Empty
@@ -617,8 +617,8 @@ Bool OperatorPlusStringTest()
 		String l(_text);
 		String r(_text);
 		String const & ref = l + r;
-		ASSERT ref.IsEmpty() == false;
-		ASSERT AssertCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK ref.IsEmpty() == false;
+		CHECK CHECKCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -631,31 +631,31 @@ Bool OperatorEqualTCharTest()
 	//Empty == Empty
 	{
 		String s;
-		ASSERT s == _empty;
+		CHECK s == _empty;
 	}
 
 	//Empty == Not Empty
 	{
 		String s;
-		ASSERT !(s == _text);
+		CHECK !(s == _text);
 	}
 
 	//Not Empty == Empty
 	{
 		String s(_text);
-		ASSERT !(s == _empty);
+		CHECK !(s == _empty);
 	}
 
 	//Not Empty == Same
 	{
 		String s(_text);
-		ASSERT s == _text;
+		CHECK s == _text;
 	}
 
 	//Not Empty == Different
 	{
 		String s(_text);
-		ASSERT !(s == _textSmaller);
+		CHECK !(s == _textSmaller);
 	}
 
 	return result;
@@ -669,35 +669,35 @@ Bool OperatorEqualStringTest()
 	{
 		String l;
 		String r;
-		ASSERT l == r;
+		CHECK l == r;
 	}
 
 	//Empty == Not Empty
 	{
 		String l;
 		String r(_text);
-		ASSERT !(l == r);
+		CHECK !(l == r);
 	}
 
 	//Not Empty == Empty
 	{
 		String l(_text);
 		String r;
-		ASSERT !(l == r);
+		CHECK !(l == r);
 	}
 
 	//Not Empty == Same
 	{
 		String l(_text);
 		String r(_text);
-		ASSERT l == r;
+		CHECK l == r;
 	}
 
 	//Not Empty == Different
 	{
 		String l(_text);
 		String r(_textSmaller);
-		ASSERT !(l == r);
+		CHECK !(l == r);
 	}
 
 	return result;
@@ -710,31 +710,31 @@ Bool OperatorNotEqualTCharTest()
 	//Empty != Empty
 	{
 		String s;
-		ASSERT !(s != _empty);
+		CHECK !(s != _empty);
 	}
 
 	//Empty != Not Empty
 	{
 		String s;
-		ASSERT s != _text;
+		CHECK s != _text;
 	}
 
 	//Not Empty != Empty
 	{
 		String s(_text);
-		ASSERT s != _empty;
+		CHECK s != _empty;
 	}
 
 	//Not Empty != Same
 	{
 		String s(_text);
-		ASSERT !(s != _text);
+		CHECK !(s != _text);
 	}
 
 	//Not Empty != Different
 	{
 		String s(_text);
-		ASSERT s != _textSmaller;
+		CHECK s != _textSmaller;
 	}
 
 	return result;
@@ -748,35 +748,35 @@ Bool OperatorNotEqualStringTest()
 	{
 		String l;
 		String r;
-		ASSERT !(l != r);
+		CHECK !(l != r);
 	}
 
 	//Empty != Not Empty
 	{
 		String l;
 		String r(_text);
-		ASSERT l != r;
+		CHECK l != r;
 	}
 
 	//Not Empty != Empty
 	{
 		String l(_text);
 		String r;
-		ASSERT l != r;
+		CHECK l != r;
 	}
 
 	//Not Empty != Same
 	{
 		String l(_text);
 		String r(_text);
-		ASSERT !(l != r);
+		CHECK !(l != r);
 	}
 
 	//Not Empty != Different
 	{
 		String l(_text);
 		String r(_textSmaller);
-		ASSERT l != r;
+		CHECK l != r;
 	}
 
 	return result;
@@ -789,37 +789,37 @@ Bool OperatorGreaterTCharTest()
 	//Empty > Empty
 	{
 		String s;
-		ASSERT !(s > _empty);
+		CHECK !(s > _empty);
 	}
 
 	//Empty > Not Empty
 	{
 		String s;
-		ASSERT !(s > _text);
+		CHECK !(s > _text);
 	}
 
 	//Not Empty > Empty
 	{
 		String s(_text);
-		ASSERT s > _empty;
+		CHECK s > _empty;
 	}
 
 	//Not Empty > Same
 	{
 		String s(_text);
-		ASSERT !(s > _text);
+		CHECK !(s > _text);
 	}
 
 	//Not Empty > Greater
 	{
 		String s(_text);
-		ASSERT !(s > _textGreater);
+		CHECK !(s > _textGreater);
 	}
 
 	//Not Empty > Smaller
 	{
 		String s(_text);
-		ASSERT s > _textSmaller;
+		CHECK s > _textSmaller;
 	}
 
 	return result;
@@ -833,42 +833,42 @@ Bool OperatorGreaterStringTest()
 	{
 		String s;
 		String t;
-		ASSERT !(s > t);
+		CHECK !(s > t);
 	}
 
 	//Empty > Not Empty
 	{
 		String s;
 		String t(_text);
-		ASSERT !(s > t);
+		CHECK !(s > t);
 	}
 
 	//Not Empty > Empty
 	{
 		String s(_text);
 		String t;
-		ASSERT s > t;
+		CHECK s > t;
 	}
 
 	//Not Empty > Same
 	{
 		String s(_text);
 		String t(_text);
-		ASSERT !(s > t);
+		CHECK !(s > t);
 	}
 
 	//Not Empty > Greater
 	{
 		String s(_text);
 		String t(_textGreater);
-		ASSERT !(s > t);
+		CHECK !(s > t);
 	}
 
 	//Not Empty > Smaller
 	{
 		String s(_text);
 		String t(_textSmaller);
-		ASSERT s > t;
+		CHECK s > t;
 	}
 
 	return result;
@@ -881,37 +881,37 @@ Bool OperatorSmallerTCharTest()
 	//Empty < Empty
 	{
 		String s;
-		ASSERT !(s < _empty);
+		CHECK !(s < _empty);
 	}
 
 	//Empty < Not Empty
 	{
 		String s;
-		ASSERT s < _text;
+		CHECK s < _text;
 	}
 
 	//Not Empty < Empty
 	{
 		String s(_text);
-		ASSERT !(s < _empty);
+		CHECK !(s < _empty);
 	}
 
 	//Not Empty < Same
 	{
 		String s(_text);
-		ASSERT !(s < _text);
+		CHECK !(s < _text);
 	}
 
 	//Not Empty < Greater
 	{
 		String s(_text);
-		ASSERT s < _textGreater;
+		CHECK s < _textGreater;
 	}
 
 	//Not Empty < Smaller
 	{
 		String s(_text);
-		ASSERT !(s < _textSmaller);
+		CHECK !(s < _textSmaller);
 	}
 
 	return result;
@@ -925,42 +925,42 @@ Bool OperatorSmallerStringTest()
 	{
 		String s;
 		String t;
-		ASSERT !(s < t);
+		CHECK !(s < t);
 	}
 
 	//Empty < Not Empty
 	{
 		String s;
 		String t(_text);
-		ASSERT s < t;
+		CHECK s < t;
 	}
 
 	//Not Empty < Empty
 	{
 		String s(_text);
 		String t;
-		ASSERT !(s < t);
+		CHECK !(s < t);
 	}
 
 	//Not Empty < Same
 	{
 		String s(_text);
 		String t(_text);
-		ASSERT !(s < t);
+		CHECK !(s < t);
 	}
 
 	//Not Empty < Greater
 	{
 		String s(_text);
 		String t(_textGreater);
-		ASSERT s < t;
+		CHECK s < t;
 	}
 
 	//Not Empty < Smaller
 	{
 		String s(_text);
 		String t(_textSmaller);
-		ASSERT !(s < t);
+		CHECK !(s < t);
 	}
 
 	return result;
@@ -973,37 +973,37 @@ Bool OperatorGreaterOrEqualTCharTest()
 	//Empty >= Empty
 	{
 		String s;
-		ASSERT s >= _empty;
+		CHECK s >= _empty;
 	}
 
 	//Empty >= Not Empty
 	{
 		String s;
-		ASSERT !(s >= _text);
+		CHECK !(s >= _text);
 	}
 
 	//Not Empty >= Empty
 	{
 		String s(_text);
-		ASSERT s >= _empty;
+		CHECK s >= _empty;
 	}
 
 	//Not Empty >= Same
 	{
 		String s(_text);
-		ASSERT s >= _text;
+		CHECK s >= _text;
 	}
 
 	//Not Empty >= Greater
 	{
 		String s(_text);
-		ASSERT !(s >= _textGreater);
+		CHECK !(s >= _textGreater);
 	}
 
 	//Not Empty >= Smaller
 	{
 		String s(_text);
-		ASSERT s >= _textSmaller;
+		CHECK s >= _textSmaller;
 	}
 
 	return result;
@@ -1017,42 +1017,42 @@ Bool OperatorGreaterOrEqualStringTest()
 	{
 		String s;
 		String t;
-		ASSERT s >= t;
+		CHECK s >= t;
 	}
 
 	//Empty >= Not Empty
 	{
 		String s;
 		String t(_text);
-		ASSERT !(s >= t);
+		CHECK !(s >= t);
 	}
 
 	//Not Empty >= Empty
 	{
 		String s(_text);
 		String t;
-		ASSERT s >= t;
+		CHECK s >= t;
 	}
 
 	//Not Empty >= Same
 	{
 		String s(_text);
 		String t(_text);
-		ASSERT s >= t;
+		CHECK s >= t;
 	}
 
 	//Not Empty >= Greater
 	{
 		String s(_text);
 		String t(_textGreater);
-		ASSERT !(s >= t);
+		CHECK !(s >= t);
 	}
 
 	//Not Empty >= Smaller
 	{
 		String s(_text);
 		String t(_textSmaller);
-		ASSERT s >= t;
+		CHECK s >= t;
 	}
 
 	return result;
@@ -1065,37 +1065,37 @@ Bool OperatorSmallerOrEqualTCharTest()
 	//Empty <= Empty
 	{
 		String s;
-		ASSERT s <= _empty;
+		CHECK s <= _empty;
 	}
 
 	//Empty <= Not Empty
 	{
 		String s;
-		ASSERT s <= _text;
+		CHECK s <= _text;
 	}
 
 	//Not Empty <= Empty
 	{
 		String s(_text);
-		ASSERT !(s <= _empty);
+		CHECK !(s <= _empty);
 	}
 
 	//Not Empty <= Same
 	{
 		String s(_text);
-		ASSERT s <= _text;
+		CHECK s <= _text;
 	}
 
 	//Not Empty <= Greater
 	{
 		String s(_text);
-		ASSERT s <= _textGreater;
+		CHECK s <= _textGreater;
 	}
 
 	//Not Empty <= Smaller
 	{
 		String s(_text);
-		ASSERT !(s <= _textSmaller);
+		CHECK !(s <= _textSmaller);
 	}
 
 	return result;
@@ -1109,42 +1109,42 @@ Bool OperatorSmallerOrEqualStringTest()
 	{
 		String s;
 		String t;
-		ASSERT s <= t;
+		CHECK s <= t;
 	}
 
 	//Empty <= Not Empty
 	{
 		String s;
 		String t(_text);
-		ASSERT s <= t;
+		CHECK s <= t;
 	}
 
 	//Not Empty <= Empty
 	{
 		String s(_text);
 		String t;
-		ASSERT !(s <= t);
+		CHECK !(s <= t);
 	}
 
 	//Not Empty <= Same
 	{
 		String s(_text);
 		String t(_text);
-		ASSERT s <= t;
+		CHECK s <= t;
 	}
 
 	//Not Empty <= Greater
 	{
 		String s(_text);
 		String t(_textGreater);
-		ASSERT s <= t;
+		CHECK s <= t;
 	}
 
 	//Not Empty <= Smaller
 	{
 		String s(_text);
 		String t(_textSmaller);
-		ASSERT !(s <= t);
+		CHECK !(s <= t);
 	}
 
 	return result;
@@ -1155,8 +1155,8 @@ Bool OperatorSubscriptTest()
 	Bool result = true;
 
 	String s(_text);
-	ASSERT s[0U] == Text('T');
-	ASSERT s[10U] == Text('r');
+	CHECK s[0U] == Text('T');
+	CHECK s[10U] == Text('r');
 
 	return result;
 }
@@ -1174,7 +1174,7 @@ Bool FormatBufferTest()
 
 		String::Format(buffer, buffer_size, format, 157, Text("Done"));
 
-		ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
 	}
 
 	//Buffer is too short, so the output was truncated
@@ -1184,7 +1184,7 @@ Bool FormatBufferTest()
 
 		String::Format(buffer, buffer_size, format, 157, Text("Done"));
 
-		ASSERT 0 == String::Compare(Text("One hundred fifty seven"), buffer);
+		CHECK 0 == String::Compare(Text("One hundred fifty seven"), buffer);
 	}
 
 	return result;
@@ -1198,9 +1198,9 @@ Bool FormatStringTest()
 
 	String str = String::FormatStr(format, 157, Text("Done"));
 
-	ASSERT str.GetCapacity() == 37;
-	ASSERT str.GetLength() == 36;
-	ASSERT 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
+	CHECK str.GetCapacity() == 37;
+	CHECK str.GetLength() == 36;
+	CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
 
 	return result;
 }
@@ -1214,43 +1214,43 @@ Bool IndexOfTest()
 	TChar chr[] = {Text('0'), Text('1'), Text('2')};
 
 	//Empty string
-	ASSERT empty.IndexOf(chr[0]) == -1;
+	CHECK empty.IndexOf(chr[0]) == -1;
 
 	//Position too small
-	ASSERT len[0].IndexOf(chr[0], -10) == -1;
+	CHECK len[0].IndexOf(chr[0], -10) == -1;
 
 	//Position too big
-	ASSERT len[0].IndexOf(chr[0], 10) == -1;
+	CHECK len[0].IndexOf(chr[0], 10) == -1;
 
 	//Length 1 - Not Found
-	ASSERT len[0].IndexOf(chr[1]) == -1;
+	CHECK len[0].IndexOf(chr[1]) == -1;
 
 	//Length 1 - Found
-	ASSERT len[0].IndexOf(chr[0]) == 0;
+	CHECK len[0].IndexOf(chr[0]) == 0;
 
 	//Length 2 - Found at beginning
-	ASSERT len[1].IndexOf(chr[0]) == 0;
+	CHECK len[1].IndexOf(chr[0]) == 0;
 
 	//Length 2 - Found at end
-	ASSERT len[1].IndexOf(chr[1]) == 1;
+	CHECK len[1].IndexOf(chr[1]) == 1;
 
 	//Length 2 - Not Found because of Position
-	ASSERT len[1].IndexOf(chr[0], 1) == -1;
+	CHECK len[1].IndexOf(chr[0], 1) == -1;
 
 	//Length 2 - Found at Position
-	ASSERT len[1].IndexOf(chr[1], 1) == 1;
+	CHECK len[1].IndexOf(chr[1], 1) == 1;
 
 	//Length 3 - Found at beginning
-	ASSERT len[2].IndexOf(chr[0]) == 0;
+	CHECK len[2].IndexOf(chr[0]) == 0;
 
 	//Length 3 - Not Found because of Position
-	ASSERT len[2].IndexOf(chr[0], 1) == -1;
+	CHECK len[2].IndexOf(chr[0], 1) == -1;
 
 	//Length 3 - Found at Position
-	ASSERT len[2].IndexOf(chr[1], 1) == 1;
+	CHECK len[2].IndexOf(chr[1], 1) == 1;
 
 	//Length 3 - Found after Position
-	ASSERT len[2].IndexOf(chr[2], 1) == 2;
+	CHECK len[2].IndexOf(chr[2], 1) == 2;
 
 	return result;
 }
@@ -1264,43 +1264,43 @@ Bool LastIndexOfTest()
 	TChar chr[] = {Text('0'), Text('1'), Text('2')};
 
 	//Empty string
-	ASSERT empty.LastIndexOf(chr[0]) == -1;
+	CHECK empty.LastIndexOf(chr[0]) == -1;
 
 	//Position too small
-	ASSERT len[0].LastIndexOf(chr[0], -10) == -1;
+	CHECK len[0].LastIndexOf(chr[0], -10) == -1;
 
 	//Position too big
-	ASSERT len[0].LastIndexOf(chr[0], 10) == -1;
+	CHECK len[0].LastIndexOf(chr[0], 10) == -1;
 
 	//Length 1 - Not Found
-	ASSERT len[0].LastIndexOf(chr[1]) == -1;
+	CHECK len[0].LastIndexOf(chr[1]) == -1;
 
 	//Length 1 - Found
-	ASSERT len[0].LastIndexOf(chr[0]) == 0;
+	CHECK len[0].LastIndexOf(chr[0]) == 0;
 
 	//Length 2 - Found at beginning
-	ASSERT len[1].LastIndexOf(chr[0]) == 0;
+	CHECK len[1].LastIndexOf(chr[0]) == 0;
 
 	//Length 2 - Found at end
-	ASSERT len[1].LastIndexOf(chr[1]) == 1;
+	CHECK len[1].LastIndexOf(chr[1]) == 1;
 
 	//Length 2 - Not Found because of Position
-	ASSERT len[1].LastIndexOf(chr[1], 0) == -1;
+	CHECK len[1].LastIndexOf(chr[1], 0) == -1;
 
 	//Length 2 - Found at Position
-	ASSERT len[1].LastIndexOf(chr[0], 0) == 0;
+	CHECK len[1].LastIndexOf(chr[0], 0) == 0;
 
 	//Length 3 - Found at end
-	ASSERT len[2].LastIndexOf(chr[2]) == 2;
+	CHECK len[2].LastIndexOf(chr[2]) == 2;
 
 	//Length 3 - Not Found because of Position
-	ASSERT len[2].LastIndexOf(chr[2], 1) == -1;
+	CHECK len[2].LastIndexOf(chr[2], 1) == -1;
 
 	//Length 3 - Found at Position
-	ASSERT len[2].LastIndexOf(chr[1], 1) == 1;
+	CHECK len[2].LastIndexOf(chr[1], 1) == 1;
 
 	//Length 3 - Found before Position
-	ASSERT len[2].LastIndexOf(chr[0], 1) == 0;
+	CHECK len[2].LastIndexOf(chr[0], 1) == 0;
 
 	return result;
 }
@@ -1314,37 +1314,37 @@ Bool SubStringText()
 	//Return empty string when called on an empty string
 	{
 		String s = empty.SubString(0U, 5U);
-		ASSERT s.IsEmpty() == true;
+		CHECK s.IsEmpty() == true;
 	}
 
 	//Length == 0 returns empty string
 	{
 		String s = text.SubString(0U, 0U);
-		ASSERT s.IsEmpty() == true;
+		CHECK s.IsEmpty() == true;
 	}
 
 	//Return first 5 characters
 	{
 		String s = text.SubString(0U, 5U);
-		ASSERT s.Compare(Text("This ")) == 0;
+		CHECK s.Compare(Text("This ")) == 0;
 	}
 
 	//Return last 5 characters
 	{
 		String s = text.SubString(text.GetLength() - 5U, 5U);
-		ASSERT s.Compare(Text("reLib")) == 0;
+		CHECK s.Compare(Text("reLib")) == 0;
 	}
 
 	//Return 5 characters starting at 7
 	{
 		String s = text.SubString(7U, 5U);
-		ASSERT s.Compare(Text(" Core")) == 0;
+		CHECK s.Compare(Text(" Core")) == 0;
 	}
 
 	//Truncate when length is too big
 	{
 		String s = text.SubString(0U, 1000U);
-		ASSERT s.Compare(_text) == 0;
+		CHECK s.Compare(_text) == 0;
 	}
 
 	return result;
@@ -1358,52 +1358,52 @@ Bool StringTest()
 {
 	Bool result = true;
 
-	ASSERT CtorEmptyTest();
-	ASSERT CtorCapacityTest();
-	ASSERT CtorTCharTest();
-	ASSERT CtorCopyTest();
-	ASSERT CtorMoveTest();
+	CHECK CtorEmptyTest();
+	CHECK CtorCapacityTest();
+	CHECK CtorTCharTest();
+	CHECK CtorCopyTest();
+	CHECK CtorMoveTest();
 
-	ASSERT GetTCharLenTest();
-	ASSERT IsEmptyTest();
-	ASSERT GetCapacityTest();
-	ASSERT GetLengthTest();
-	ASSERT GetTCharTest();
+	CHECK GetTCharLenTest();
+	CHECK IsEmptyTest();
+	CHECK GetCapacityTest();
+	CHECK GetLengthTest();
+	CHECK GetTCharTest();
 
-	ASSERT CompareTCharTest();
-	ASSERT CompareStringTest();
+	CHECK CompareTCharTest();
+	CHECK CompareStringTest();
 
-	ASSERT OperatorAssignTCharTest();
-	ASSERT OperatorAssignStringTest();
-	ASSERT OperatorMoveStringTest();
-	ASSERT OperatorPlusEqualTCharTest();
-	ASSERT OperatorPlusEqualStringTest();
-	ASSERT OperatorPlusTCharTest();
-	ASSERT OperatorPlusStringTest();
+	CHECK OperatorAssignTCharTest();
+	CHECK OperatorAssignStringTest();
+	CHECK OperatorMoveStringTest();
+	CHECK OperatorPlusEqualTCharTest();
+	CHECK OperatorPlusEqualStringTest();
+	CHECK OperatorPlusTCharTest();
+	CHECK OperatorPlusStringTest();
 
-	ASSERT OperatorEqualTCharTest();
-	ASSERT OperatorEqualStringTest();
-	ASSERT OperatorNotEqualTCharTest();
-	ASSERT OperatorNotEqualStringTest();
+	CHECK OperatorEqualTCharTest();
+	CHECK OperatorEqualStringTest();
+	CHECK OperatorNotEqualTCharTest();
+	CHECK OperatorNotEqualStringTest();
 
-	ASSERT OperatorGreaterTCharTest();
-	ASSERT OperatorGreaterStringTest();
-	ASSERT OperatorSmallerTCharTest();
-	ASSERT OperatorSmallerStringTest();
+	CHECK OperatorGreaterTCharTest();
+	CHECK OperatorGreaterStringTest();
+	CHECK OperatorSmallerTCharTest();
+	CHECK OperatorSmallerStringTest();
 
-	ASSERT OperatorGreaterOrEqualTCharTest();
-	ASSERT OperatorGreaterOrEqualStringTest();
-	ASSERT OperatorSmallerOrEqualTCharTest();
-	ASSERT OperatorSmallerOrEqualStringTest();
+	CHECK OperatorGreaterOrEqualTCharTest();
+	CHECK OperatorGreaterOrEqualStringTest();
+	CHECK OperatorSmallerOrEqualTCharTest();
+	CHECK OperatorSmallerOrEqualStringTest();
 
-	ASSERT OperatorSubscriptTest();
+	CHECK OperatorSubscriptTest();
 
-	ASSERT FormatBufferTest();
-	ASSERT FormatStringTest();
+	CHECK FormatBufferTest();
+	CHECK FormatStringTest();
 
-	ASSERT IndexOfTest();
-	ASSERT LastIndexOfTest();
-	ASSERT SubStringText();
+	CHECK IndexOfTest();
+	CHECK LastIndexOfTest();
+	CHECK SubStringText();
 
 	return result;
 }

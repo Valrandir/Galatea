@@ -57,10 +57,10 @@ Bool AssertBeginEndNull(VCntr& v)
 	Bool result = true;
 	VCntr const & c = v;
 
-	ASSERT v.Begin() == NULL && v.End() == NULL;
-	ASSERT c.Begin() == NULL && c.End() == NULL;
-	ASSERT v.RBegin() == v.End() - 1 && v.REnd() == v.Begin() - 1;
-	ASSERT c.RBegin() == c.End() - 1 && c.REnd() == c.Begin() - 1;
+	CHECK v.Begin() == NULL && v.End() == NULL;
+	CHECK c.Begin() == NULL && c.End() == NULL;
+	CHECK v.RBegin() == v.End() - 1 && v.REnd() == v.Begin() - 1;
+	CHECK c.RBegin() == c.End() - 1 && c.REnd() == c.Begin() - 1;
 
 	return result;
 }
@@ -70,10 +70,10 @@ Bool AssertBeginEndNotNull(VCntr& v)
 	Bool result = true;
 	VCntr const & c = v;
 
-	ASSERT v.Begin() && v.End() == v.Begin() + v.GetLength();
-	ASSERT c.Begin() && c.End() == c.Begin() + c.GetLength();
-	ASSERT v.RBegin() && v.REnd() == v.RBegin() - v.GetLength();
-	ASSERT c.RBegin() && c.REnd() == c.RBegin() - c.GetLength();
+	CHECK v.Begin() && v.End() == v.Begin() + v.GetLength();
+	CHECK c.Begin() && c.End() == c.Begin() + c.GetLength();
+	CHECK v.RBegin() && v.REnd() == v.RBegin() - v.GetLength();
+	CHECK c.RBegin() && c.REnd() == c.RBegin() - c.GetLength();
 
 	return result;
 }
@@ -92,10 +92,10 @@ Bool AssertIteratageLength(VCntr& v, UInt length)
 	for(k = 0, cit = c.Begin(), cend = c.End(); cit != cend; ++k, ++cit);
 	for(l = 0, cit = c.RBegin(), cend = c.REnd(); cit != cend; ++l, --cit);
 
-	ASSERT i == length;
-	ASSERT j == length;
-	ASSERT k == length;
-	ASSERT l == length;
+	CHECK i == length;
+	CHECK j == length;
+	CHECK k == length;
+	CHECK l == length;
 
 	return result;
 }
@@ -107,13 +107,13 @@ Bool CtorEmptyTest()
 	Bool result = true;
 	VCntr vc;
 
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
 
-	ASSERT AssertCapLen(vc, 0U, 0U);
-	ASSERT vc.GetElementType() == VCntr::DefaultMode;
-	ASSERT AssertBeginEndNull(vc);
+	CHECK AssertCapLen(vc, 0U, 0U);
+	CHECK vc.GetElementType() == VCntr::DefaultMode;
+	CHECK AssertBeginEndNull(vc);
 
 	return result;
 }
@@ -123,7 +123,7 @@ Bool CtorModeTest()
 	Bool result = true;
 	VCntr vc(VCntr::CtorModeEnum::Once);
 
-	ASSERT vc.GetElementType() == VCntr::CtorModeEnum::Once;
+	CHECK vc.GetElementType() == VCntr::CtorModeEnum::Once;
 
 	return result;
 }
@@ -135,11 +135,11 @@ Bool CtorCapacityTest()
 	Bool result = true;
 	VCntr vc(10U);
 
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCapLen(vc, 10U, 0U);
-	ASSERT AssertBeginEndNotNull(vc);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+	CHECK AssertCapLen(vc, 10U, 0U);
+	CHECK AssertBeginEndNotNull(vc);
 
 	return result;
 }
@@ -153,11 +153,11 @@ Bool CtorCopyTest()
 		VCntr source;
 		Counter::Clear();
 		VCntr target(source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Copy Vector with capacity 5 and no elements
@@ -165,11 +165,11 @@ Bool CtorCopyTest()
 		VCntr source(5U);
 		Counter::Clear();
 		VCntr target(source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Copy Vector with 5 elements
@@ -178,18 +178,18 @@ Bool CtorCopyTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		VCntr target(source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Copy Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target(source);
-		ASSERT target.GetElementType() == VCntr::CtorModeEnum::Pod;
+		CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
 	}
 
 	return result;
@@ -204,11 +204,11 @@ Bool CtorMoveTest()
 		VCntr source;
 		Counter::Clear();
 		VCntr target((VCntr&&)source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 }
 
 	//Move Vector with capacity 5 and no elements
@@ -216,11 +216,11 @@ Bool CtorMoveTest()
 		VCntr source(5U);
 		Counter::Clear();
 		VCntr target((VCntr&&)source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Move Vector with 5 elements
@@ -229,20 +229,20 @@ Bool CtorMoveTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		VCntr target((VCntr&&)source);
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
-		ASSERT AssertCapLen(source, 0U, 0U);
-		ASSERT AssertBeginEndNull(source);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
+		CHECK AssertCapLen(source, 0U, 0U);
+		CHECK AssertBeginEndNull(source);
 	}
 
 	//Move Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target((VCntr&&)source);
-		ASSERT target.GetElementType() == VCntr::CtorModeEnum::Pod;
+		CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
 	}
 
 	return result;
@@ -257,11 +257,11 @@ Bool CtorRangeTest()
 		VCntr source;
 		Counter::Clear();
 		VCntr target(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Construct with five elements
@@ -270,11 +270,11 @@ Bool CtorRangeTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		VCntr target(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	return result;
@@ -289,11 +289,11 @@ Bool OperatorEqualTest()
 		VCntr source;
 		Counter::Clear();
 		VCntr target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Assign Vector with capacity 5 and no elements to empty vector
@@ -301,11 +301,11 @@ Bool OperatorEqualTest()
 		VCntr source(5U);
 		Counter::Clear();
 		VCntr target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Assign Vector with 5 elements to empty vector
@@ -314,11 +314,11 @@ Bool OperatorEqualTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		VCntr target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Assign empty vector to vector with 5 elements
@@ -327,11 +327,11 @@ Bool OperatorEqualTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Assign Vector with capacity 5 and no elements to vector with 5 elements
@@ -340,11 +340,11 @@ Bool OperatorEqualTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Assign Vector with 5 elements to vector with 5 elements
@@ -354,18 +354,18 @@ Bool OperatorEqualTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		target = source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 5U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Assign Pod vector
 	{
 		VCntr source(VCntr::CtorModeEnum::Pod);
 		VCntr target = source;
-		ASSERT target.GetElementType() == VCntr::CtorModeEnum::Pod;
+		CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
 	}
 
 	return result;
@@ -380,11 +380,11 @@ Bool OperatorMoveTest()
 		VCntr target;
 		Counter::Clear();
 		VCntr source = (VCntr&&)target;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(source, 0U, 0U);
-		ASSERT AssertBeginEndNull(source);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(source, 0U, 0U);
+		CHECK AssertBeginEndNull(source);
 	}
 
 	//Assign Vector with capacity 5 and no elements
@@ -392,11 +392,11 @@ Bool OperatorMoveTest()
 		VCntr target(5U);
 		Counter::Clear();
 		VCntr source = (VCntr&&)target;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(source, 0U, 0U);
-		ASSERT AssertBeginEndNull(source);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(source, 0U, 0U);
+		CHECK AssertBeginEndNull(source);
 	}
 
 	//Assign Vector with 5 elements
@@ -405,18 +405,18 @@ Bool OperatorMoveTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		VCntr source = (VCntr&&)target;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(source, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(source);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(source, 5U, 5U);
+		CHECK AssertBeginEndNotNull(source);
 	}
 
 	//Assign Pod vector
 	{
 		VCntr target(VCntr::CtorModeEnum::Pod);
 		VCntr source = (VCntr&&)target;
-		ASSERT source.GetElementType() == VCntr::CtorModeEnum::Pod;
+		CHECK source.GetElementType() == VCntr::CtorModeEnum::Pod;
 	}
 
 	return result;
@@ -431,11 +431,11 @@ Bool OperatorPlusEqualTest()
 		VCntr source, target;
 		Counter::Clear();
 		target += source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Append empty to not empty
@@ -444,11 +444,11 @@ Bool OperatorPlusEqualTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		target += source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Append not empty to empty
@@ -457,11 +457,11 @@ Bool OperatorPlusEqualTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		target += source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Append not empty to not empty
@@ -471,11 +471,11 @@ Bool OperatorPlusEqualTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		target += source;
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(target, 10U, 10U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
+		CHECK AssertCapLen(target, 10U, 10U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	return result;
@@ -488,13 +488,13 @@ Bool GetElementTypeTest()
 	//Specify mode obtain same mode
 	{
 		VCntr v(VCntr::CtorModeEnum::Pod);
-		ASSERT v.GetElementType() == VCntr::CtorModeEnum::Pod;
+		CHECK v.GetElementType() == VCntr::CtorModeEnum::Pod;
 	}
 
 	//Don't specify mode obtain default
 	{
 		VCntr v;
-		ASSERT v.GetElementType() == VCntr::DefaultMode;
+		CHECK v.GetElementType() == VCntr::DefaultMode;
 	}
 
 	return result;
@@ -507,20 +507,20 @@ Bool IsEmptyTest()
 	//No Capacity
 	{
 		VCntr v;
-		ASSERT v.IsEmpty() == true;
+		CHECK v.IsEmpty() == true;
 	}
 
 	//Capacity and no elements
 	{
 		VCntr v(10U);
-		ASSERT v.IsEmpty() == true;
+		CHECK v.IsEmpty() == true;
 	}
 
 	//Capacity and elements
 	{
 		VCntr v(10U);
 		v.Add(Counter());
-		ASSERT v.IsEmpty() == false;
+		CHECK v.IsEmpty() == false;
 	}
 
 	return result;
@@ -533,13 +533,13 @@ Bool GetCapacityTest()
 	//No Capacity Specified
 	{
 		VCntr v;
-		ASSERT v.GetCapacity() == 0;
+		CHECK v.GetCapacity() == 0;
 	}
 
 	//Capacity Specified
 	{
 		VCntr v(10U);
-		ASSERT v.GetCapacity() == 10U;
+		CHECK v.GetCapacity() == 10U;
 	}
 
 	return result;
@@ -552,20 +552,20 @@ Bool GetLengthTest()
 	//No Capacity
 	{
 		VCntr v;
-		ASSERT v.GetLength() == 0;
+		CHECK v.GetLength() == 0;
 	}
 
 	//Capacity
 	{
 		VCntr v(10U);
-		ASSERT v.GetLength() == 0U;
+		CHECK v.GetLength() == 0U;
 	}
 
 	//Length
 	{
 		VCntr v(10U);
 		v.Add(Counter());
-		ASSERT v.GetLength() == 1U;
+		CHECK v.GetLength() == 1U;
 	}
 
 	return result;
@@ -578,33 +578,33 @@ Bool IteratorsTest()
 	//No Capacity
 	{
 		VCntr v;
-		ASSERT AssertBeginEndNull(v);
+		CHECK AssertBeginEndNull(v);
 	}
 
 	//Capacity
 	{
 		VCntr v(10U);
-		ASSERT AssertCapLen(v, 10U, 0U);
-		ASSERT AssertBeginEndNotNull(v);
-		ASSERT AssertIteratageLength(v, 0U);
+		CHECK AssertCapLen(v, 10U, 0U);
+		CHECK AssertBeginEndNotNull(v);
+		CHECK AssertIteratageLength(v, 0U);
 	}
 
 	//Length == 1
 	{
 		VCntr v(10U);
 		v.Add(Counter());
-		ASSERT AssertCapLen(v, 10U, 1U);
-		ASSERT AssertBeginEndNotNull(v);
-		ASSERT AssertIteratageLength(v, 1U);
+		CHECK AssertCapLen(v, 10U, 1U);
+		CHECK AssertBeginEndNotNull(v);
+		CHECK AssertIteratageLength(v, 1U);
 	}
 
 	//Length == 5
 	{
 		VCntr v(15U);
 		AddFiveElements(v);
-		ASSERT AssertCapLen(v, 15U, 5U);
-		ASSERT AssertBeginEndNotNull(v);
-		ASSERT AssertIteratageLength(v, 5U);
+		CHECK AssertCapLen(v, 15U, 5U);
+		CHECK AssertBeginEndNotNull(v);
+		CHECK AssertIteratageLength(v, 5U);
 	}
 
 	return result;
@@ -618,14 +618,14 @@ Bool ReserveTest()
 	{
 		VCntr v;
 		v.Reserve(10U);
-		ASSERT v.GetCapacity() == 10U;
+		CHECK v.GetCapacity() == 10U;
 	}
 
 	//Reserve 10 to a vector having 15
 	{
 		VCntr v(15U);
 		v.Reserve(10U);
-		ASSERT v.GetCapacity() == 15U;
+		CHECK v.GetCapacity() == 15U;
 	}
 
 	return result;
@@ -639,7 +639,7 @@ Bool ShrinkTest()
 	{
 		VCntr v(10U);
 		v.Shrink();
-		ASSERT v.GetCapacity() == 0U;
+		CHECK v.GetCapacity() == 0U;
 	}
 
 	//Capacity 10 Length 5
@@ -647,7 +647,7 @@ Bool ShrinkTest()
 		VCntr v(10U);
 		AddFiveElements(v);
 		v.Shrink();
-		ASSERT AssertCapLen(v, 5U, 5U);
+		CHECK AssertCapLen(v, 5U, 5U);
 	}
 
 	return result;
@@ -662,10 +662,10 @@ Bool ClearTest()
 		VCntr v;
 		Counter::Clear();
 		v.Clear();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(v, 0U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(v, 0U, 0U);
 	}
 
 	//Capacity
@@ -673,10 +673,10 @@ Bool ClearTest()
 		VCntr v(10U);
 		Counter::Clear();
 		v.Clear();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(v, 10U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(v, 10U, 0U);
 	}
 
 	//Length
@@ -685,10 +685,10 @@ Bool ClearTest()
 		AddFiveElements(v);
 		Counter::Clear();
 		v.Clear();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(v, 10U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCapLen(v, 10U, 0U);
 	}
 
 	return result;
@@ -703,10 +703,10 @@ Bool FreeTest()
 		VCntr v;
 		Counter::Clear();
 		v.Free();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(v, 0U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(v, 0U, 0U);
 	}
 
 	//Capacity
@@ -714,10 +714,10 @@ Bool FreeTest()
 		VCntr v(10U);
 		Counter::Clear();
 		v.Free();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(v, 0U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(v, 0U, 0U);
 	}
 
 	//Length
@@ -726,10 +726,10 @@ Bool FreeTest()
 		AddFiveElements(v);
 		Counter::Clear();
 		v.Free();
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(v, 0U, 0U);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 5U);
+		CHECK AssertCapLen(v, 0U, 0U);
 	}
 
 	return result;
@@ -745,27 +745,27 @@ Bool AddTest()
 
 	Counter::Clear();
 	v.Add(c1);
-	ASSERT AssertCapLen(v, 2U, 1U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 1U;
+	CHECK AssertCapLen(v, 2U, 1U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 1U;
 
 	Counter::Clear();
 	v.Add(c2);
-	ASSERT AssertCapLen(v, 2U, 2U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT v[1U].ID == 2U;
+	CHECK AssertCapLen(v, 2U, 2U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK v[1U].ID == 2U;
 
 	Counter::Clear();
 	v.Add(c3);
-	ASSERT AssertCapLen(v, 4U, 3U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 2U);
-	ASSERT v[2U].ID == 3U;
+	CHECK AssertCapLen(v, 4U, 3U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 2U);
+	CHECK v[2U].ID == 3U;
 
 	return result;
 }
@@ -779,11 +779,11 @@ Bool AddRangeTest()
 		VCntr source, target;
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 0U, 0U);
-		ASSERT AssertBeginEndNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 0U, 0U);
+		CHECK AssertBeginEndNull(target);
 	}
 
 	//Append empty to not empty
@@ -792,11 +792,11 @@ Bool AddRangeTest()
 		AddFiveElements(target);
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Append not empty to empty
@@ -805,11 +805,11 @@ Bool AddRangeTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCapLen(target, 5U, 5U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCapLen(target, 5U, 5U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	//Append not empty to not empty
@@ -819,11 +819,11 @@ Bool AddRangeTest()
 		AddFiveElements(source);
 		Counter::Clear();
 		target.AddRange(source.Begin(), source.End());
-		ASSERT AssertCntrPod();
-		ASSERT AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
-		ASSERT AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
-		ASSERT AssertCapLen(target, 10U, 10U);
-		ASSERT AssertBeginEndNotNull(target);
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce(0U, 5U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
+		CHECK AssertCapLen(target, 10U, 10U);
+		CHECK AssertBeginEndNotNull(target);
 	}
 
 	return result;
@@ -839,40 +839,40 @@ Bool InsertByIndexTest()
 
 	Counter::Clear();
 	v.Insert(100U, c1);
-	ASSERT AssertCapLen(v, 2U, 1U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 1U;
+	CHECK AssertCapLen(v, 2U, 1U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 1U;
 
 	Counter::Clear();
 	v.Insert(100U, c2);
-	ASSERT AssertCapLen(v, 2U, 2U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT v[1U].ID == 2U;
+	CHECK AssertCapLen(v, 2U, 2U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK v[1U].ID == 2U;
 
 	Counter::Clear();
 	v.Insert(0U, c3);
-	ASSERT AssertCapLen(v, 4U, 3U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 3U;
-	ASSERT v[1U].ID == 1U;
-	ASSERT v[2U].ID == 2U;
+	CHECK AssertCapLen(v, 4U, 3U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 3U;
+	CHECK v[1U].ID == 1U;
+	CHECK v[2U].ID == 2U;
 
 	Counter::Clear();
 	v.Insert(1U, c4);
-	ASSERT AssertCapLen(v, 4U, 4U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 3U;
-	ASSERT v[1U].ID == 4U;
-	ASSERT v[2U].ID == 1U;
-	ASSERT v[3U].ID == 2U;
+	CHECK AssertCapLen(v, 4U, 4U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 3U;
+	CHECK v[1U].ID == 4U;
+	CHECK v[2U].ID == 1U;
+	CHECK v[3U].ID == 2U;
 
 	return result;
 }
@@ -888,61 +888,61 @@ Bool InsertByRefTest()
 
 	Counter::Clear();
 	v.Insert(v[4], c1);
-	ASSERT AssertCapLen(v, 8U, 6U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 1U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 2U;
-	ASSERT v[2U].ID == 3U;
-	ASSERT v[3U].ID == 4U;
-	ASSERT v[4U].ID == 6U;
-	ASSERT v[5U].ID == 5U;
+	CHECK AssertCapLen(v, 8U, 6U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 1U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 2U;
+	CHECK v[2U].ID == 3U;
+	CHECK v[3U].ID == 4U;
+	CHECK v[4U].ID == 6U;
+	CHECK v[5U].ID == 5U;
 
 	Counter::Clear();
 	v.Insert(v[0], c2);
-	ASSERT AssertCapLen(v, 8U, 7U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 6U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 7U;
-	ASSERT v[1U].ID == 1U;
-	ASSERT v[2U].ID == 2U;
-	ASSERT v[3U].ID == 3U;
-	ASSERT v[4U].ID == 4U;
-	ASSERT v[5U].ID == 6U;
-	ASSERT v[6U].ID == 5U;
+	CHECK AssertCapLen(v, 8U, 7U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 6U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 7U;
+	CHECK v[1U].ID == 1U;
+	CHECK v[2U].ID == 2U;
+	CHECK v[3U].ID == 3U;
+	CHECK v[4U].ID == 4U;
+	CHECK v[5U].ID == 6U;
+	CHECK v[6U].ID == 5U;
 
 	Counter::Clear();
 	v.Insert(v[3], c3);
-	ASSERT AssertCapLen(v, 8U, 8U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 0U);
-	ASSERT v[0U].ID == 7U;
-	ASSERT v[1U].ID == 1U;
-	ASSERT v[2U].ID == 2U;
-	ASSERT v[3U].ID == 8U;
-	ASSERT v[4U].ID == 3U;
-	ASSERT v[5U].ID == 4U;
-	ASSERT v[6U].ID == 6U;
-	ASSERT v[7U].ID == 5U;
+	CHECK AssertCapLen(v, 8U, 8U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 0U);
+	CHECK v[0U].ID == 7U;
+	CHECK v[1U].ID == 1U;
+	CHECK v[2U].ID == 2U;
+	CHECK v[3U].ID == 8U;
+	CHECK v[4U].ID == 3U;
+	CHECK v[5U].ID == 4U;
+	CHECK v[6U].ID == 6U;
+	CHECK v[7U].ID == 5U;
 
 	Counter::Clear();
 	v.Insert(v[6], c4);
-	ASSERT AssertCapLen(v, 16U, 9U);
-	ASSERT AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
-	ASSERT AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
-	ASSERT AssertCntrAlways(0U, 1U, 10U, 0U, 0U, 8U);
-	ASSERT v[0U].ID == 7U;
-	ASSERT v[1U].ID == 1U;
-	ASSERT v[2U].ID == 2U;
-	ASSERT v[3U].ID == 8U;
-	ASSERT v[4U].ID == 3U;
-	ASSERT v[5U].ID == 4U;
-	ASSERT v[6U].ID == 9U;
-	ASSERT v[7U].ID == 6U;
-	ASSERT v[8U].ID == 5U;
+	CHECK AssertCapLen(v, 16U, 9U);
+	CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
+	CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
+	CHECK AssertCntrAlways(0U, 1U, 10U, 0U, 0U, 8U);
+	CHECK v[0U].ID == 7U;
+	CHECK v[1U].ID == 1U;
+	CHECK v[2U].ID == 2U;
+	CHECK v[3U].ID == 8U;
+	CHECK v[4U].ID == 3U;
+	CHECK v[5U].ID == 4U;
+	CHECK v[6U].ID == 9U;
+	CHECK v[7U].ID == 6U;
+	CHECK v[8U].ID == 5U;
 
 	return result;
 }
@@ -956,48 +956,48 @@ Bool RemoveByIndexTest()
 
 	Counter::Clear();
 	v.Remove(100U);
-	ASSERT AssertCapLen(v, 5U, 4U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 2U;
-	ASSERT v[2U].ID == 3U;
-	ASSERT v[3U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 4U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 2U;
+	CHECK v[2U].ID == 3U;
+	CHECK v[3U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(1U);
-	ASSERT AssertCapLen(v, 5U, 3U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 3U;
-	ASSERT v[2U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 3U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 3U;
+	CHECK v[2U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(1U);
-	ASSERT AssertCapLen(v, 5U, 2U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 2U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(0U);
-	ASSERT AssertCapLen(v, 5U, 1U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 1U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(0U);
-	ASSERT AssertCapLen(v, 5U, 0U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCapLen(v, 5U, 0U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
 
 	return result;
 }
@@ -1011,48 +1011,48 @@ Bool RemoveByRefTest()
 
 	Counter::Clear();
 	v.Remove(v[4]);
-	ASSERT AssertCapLen(v, 5U, 4U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 2U;
-	ASSERT v[2U].ID == 3U;
-	ASSERT v[3U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 4U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 2U;
+	CHECK v[2U].ID == 3U;
+	CHECK v[3U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(v[1]);
-	ASSERT AssertCapLen(v, 5U, 3U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 3U;
-	ASSERT v[2U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 3U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 3U;
+	CHECK v[2U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(v[1]);
-	ASSERT AssertCapLen(v, 5U, 2U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 2U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(v[0]);
-	ASSERT AssertCapLen(v, 5U, 1U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-	ASSERT v[0U].ID == 4U;
+	CHECK AssertCapLen(v, 5U, 1U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
+	CHECK v[0U].ID == 4U;
 
 	Counter::Clear();
 	v.Remove(v[0]);
-	ASSERT AssertCapLen(v, 5U, 0U);
-	ASSERT AssertCntrPod();
-	ASSERT AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
-	ASSERT AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCapLen(v, 5U, 0U);
+	CHECK AssertCntrPod();
+	CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
+	CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
 
 	return result;
 }
@@ -1067,35 +1067,35 @@ Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 
 	VCntr::DefaultMode = defaultMode;
 
-	ASSERT CtorEmptyTest();
-	ASSERT CtorModeTest();
-	ASSERT CtorCapacityTest();
-	ASSERT CtorCopyTest();
-	ASSERT CtorMoveTest();
-	ASSERT CtorRangeTest();
+	CHECK CtorEmptyTest();
+	CHECK CtorModeTest();
+	CHECK CtorCapacityTest();
+	CHECK CtorCopyTest();
+	CHECK CtorMoveTest();
+	CHECK CtorRangeTest();
 
-	ASSERT OperatorEqualTest();
-	ASSERT OperatorMoveTest();
-	ASSERT OperatorPlusEqualTest();
+	CHECK OperatorEqualTest();
+	CHECK OperatorMoveTest();
+	CHECK OperatorPlusEqualTest();
 
-	ASSERT GetElementTypeTest();
-	ASSERT IsEmptyTest();
-	ASSERT GetCapacityTest();
-	ASSERT GetLengthTest();
+	CHECK GetElementTypeTest();
+	CHECK IsEmptyTest();
+	CHECK GetCapacityTest();
+	CHECK GetLengthTest();
 
-	ASSERT IteratorsTest();
+	CHECK IteratorsTest();
 
-	ASSERT ReserveTest();
-	ASSERT ShrinkTest();
-	ASSERT ClearTest();
-	ASSERT FreeTest();
+	CHECK ReserveTest();
+	CHECK ShrinkTest();
+	CHECK ClearTest();
+	CHECK FreeTest();
 
-	ASSERT AddTest();
-	ASSERT AddRangeTest();
-	ASSERT InsertByIndexTest();
-	ASSERT InsertByRefTest();
-	ASSERT RemoveByIndexTest();
-	ASSERT RemoveByRefTest();
+	CHECK AddTest();
+	CHECK AddRangeTest();
+	CHECK InsertByIndexTest();
+	CHECK InsertByRefTest();
+	CHECK RemoveByIndexTest();
+	CHECK RemoveByRefTest();
 
 	return result;
 }
@@ -1104,9 +1104,9 @@ Bool VectorTest()
 {
 	Bool result = true;
 
-	ASSERT VectorTest(VCntr::Always);
-	ASSERT VectorTest(VCntr::Once);
-	ASSERT VectorTest(VCntr::Pod);
+	CHECK VectorTest(VCntr::Always);
+	CHECK VectorTest(VCntr::Once);
+	CHECK VectorTest(VCntr::Pod);
 
 	return result;
 }

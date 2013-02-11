@@ -34,16 +34,16 @@ Bool StdAddTest()
 	Counter::Clear();
 
 	v.push_back(c1);
-	ASSERT v.capacity() == 1U && v.size() == 1U;
-	ASSERT v[0U].ID == 1U;
+	CHECK v.capacity() == 1U && v.size() == 1U;
+	CHECK v[0U].ID == 1U;
 
 	v.push_back(c2);
-	ASSERT v.capacity() == 2U && v.size() == 2U;
-	ASSERT v[1U].ID == 2U;
+	CHECK v.capacity() == 2U && v.size() == 2U;
+	CHECK v[1U].ID == 2U;
 
 	v.push_back(c3);
-	ASSERT v.capacity() == 3U && v.size() == 3U;
-	ASSERT v[2U].ID == 3U;
+	CHECK v.capacity() == 3U && v.size() == 3U;
+	CHECK v[2U].ID == 3U;
 
 	return result;
 }
@@ -56,28 +56,28 @@ Bool StdInsertTest()
 
 	Counter::Clear();
 	v.insert(v.end(), c1);
-	ASSERT v.capacity() == 1U && v.size() == 1U;
-	ASSERT v[0U].ID == 1U;
+	CHECK v.capacity() == 1U && v.size() == 1U;
+	CHECK v[0U].ID == 1U;
 
 	Counter::Clear();
 	v.insert(v.end(), c2);
-	ASSERT v.capacity() == 2U && v.size() == 2U;
-	ASSERT v[1U].ID == 2U;
+	CHECK v.capacity() == 2U && v.size() == 2U;
+	CHECK v[1U].ID == 2U;
 
 	Counter::Clear();
 	v.insert(v.begin(), c3);
-	ASSERT v.capacity() == 3U && v.size() == 3U;
-	ASSERT v[0U].ID == 3U;
-	ASSERT v[1U].ID == 1U;
-	ASSERT v[2U].ID == 2U;
+	CHECK v.capacity() == 3U && v.size() == 3U;
+	CHECK v[0U].ID == 3U;
+	CHECK v[1U].ID == 1U;
+	CHECK v[2U].ID == 2U;
 
 	Counter::Clear();
 	v.insert(v.begin() + 1, c4);
-	ASSERT v.capacity() == 4U && v.size() == 4U;
-	ASSERT v[0U].ID == 3U;
-	ASSERT v[1U].ID == 4U;
-	ASSERT v[2U].ID == 1U;
-	ASSERT v[3U].ID == 2U;
+	CHECK v.capacity() == 4U && v.size() == 4U;
+	CHECK v[0U].ID == 3U;
+	CHECK v[1U].ID == 4U;
+	CHECK v[2U].ID == 1U;
+	CHECK v[3U].ID == 2U;
 
 	return result;
 }
@@ -95,25 +95,25 @@ Bool StdRemoveTest()
 
 	Counter::Clear();
 	v.erase(v.end() - 1);
-	ASSERT v.capacity() == 4U && v.size() == 3U;
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 2U;
-	ASSERT v[2U].ID == 3U;
+	CHECK v.capacity() == 4U && v.size() == 3U;
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 2U;
+	CHECK v[2U].ID == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin() + 1);
-	ASSERT v.capacity() == 4U && v.size() == 2U;
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 3U;
+	CHECK v.capacity() == 4U && v.size() == 2U;
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin());
-	ASSERT v.capacity() == 4U && v.size() == 1U;
-	ASSERT v[0U].ID == 3U;
+	CHECK v.capacity() == 4U && v.size() == 1U;
+	CHECK v[0U].ID == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin());
-	ASSERT v.capacity() == 4U && v.size() == 0U;
+	CHECK v.capacity() == 4U && v.size() == 0U;
 
 	return result;
 }
@@ -129,14 +129,14 @@ Bool StdConstructCopyTest()
 
 	Counter::Clear();
 	vector<Counter> v2(v1);
-	ASSERT v2.capacity() == 2U && v2.size() == 2U;
-	ASSERT v2[0U].ID == 1U;
-	ASSERT v2[1U].ID == 2U;
+	CHECK v2.capacity() == 2U && v2.size() == 2U;
+	CHECK v2[0U].ID == 1U;
+	CHECK v2[1U].ID == 2U;
 
 	vector<Counter> v3;
 	Counter::Clear();
 	vector<Counter> v4(v3);
-	ASSERT v4.capacity() == 0U && v4.size() == 0U;
+	CHECK v4.capacity() == 0U && v4.size() == 0U;
 
 	return result;
 }
@@ -152,22 +152,22 @@ Bool StdConstructEqualTest()
 
 	Counter::Clear();
 	vector<Counter> v2 = v1;
-	ASSERT v2.capacity() == 2U && v2.size() == 2U;
-	ASSERT v2[0U].ID == 1U;
-	ASSERT v2[1U].ID == 2U;
+	CHECK v2.capacity() == 2U && v2.size() == 2U;
+	CHECK v2[0U].ID == 1U;
+	CHECK v2[1U].ID == 2U;
 
 	Counter::Clear();
 	v2 = v2;
-	ASSERT v2.capacity() == 2U && v2.size() == 2U;
+	CHECK v2.capacity() == 2U && v2.size() == 2U;
 
 	vector<Counter> v3;
 	v3.push_back(c3);
 	v3.push_back(c4);
 	Counter::Clear();
 	v2 = v3;
-	ASSERT v2.capacity() == 2U && v2.size() == 2U;
-	ASSERT v2[0U].ID == 3U;
-	ASSERT v2[1U].ID == 4U;
+	CHECK v2.capacity() == 2U && v2.size() == 2U;
+	CHECK v2[0U].ID == 3U;
+	CHECK v2[1U].ID == 4U;
 
 	return result;
 }
@@ -202,9 +202,9 @@ Bool StdShrinkTest()
 	Counter::Clear();
 	v.shrink_to_fit();
 	result = v.capacity() == 7U && v.size() == 7U;
-	ASSERT v[0U].ID == 1U;
-	ASSERT v[1U].ID == 2U;
-	ASSERT v[2U].ID == 3U;
+	CHECK v[0U].ID == 1U;
+	CHECK v[1U].ID == 2U;
+	CHECK v[2U].ID == 3U;
 
 	return result;
 }
@@ -245,7 +245,7 @@ Bool StdBeginEndTest()
 	Counter::Clear();
 
 	for(auto it = v.begin(); it < v.end(); ++i, ++it)
-		ASSERT it->ID == c[i].ID;
+		CHECK it->ID == c[i].ID;
 
 	result = v.capacity() == 3U && v.size() == 3U;
 
@@ -256,22 +256,22 @@ Bool StdVectorTest()
 {
 	Bool result = true;
 
-	ASSERT StdConstructEmptyTest();
-	ASSERT StdConstructCapacityTest();
+	CHECK StdConstructEmptyTest();
+	CHECK StdConstructCapacityTest();
 
-	ASSERT StdAddTest();
-	ASSERT StdInsertTest();
-	ASSERT StdRemoveTest();
+	CHECK StdAddTest();
+	CHECK StdInsertTest();
+	CHECK StdRemoveTest();
 
-	ASSERT StdConstructCopyTest();
-	ASSERT StdConstructEqualTest();
+	CHECK StdConstructCopyTest();
+	CHECK StdConstructEqualTest();
 
-	ASSERT StdReserveTest();
-	ASSERT StdShrinkTest();
-	ASSERT StdClearTest();
-	ASSERT StdFreeTest();
+	CHECK StdReserveTest();
+	CHECK StdShrinkTest();
+	CHECK StdClearTest();
+	CHECK StdFreeTest();
 
-	ASSERT StdBeginEndTest();
+	CHECK StdBeginEndTest();
 
 	return result;
 }
