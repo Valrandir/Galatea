@@ -1285,22 +1285,22 @@ Bool LastIndexOfTest()
 	ASSERT len[1].LastIndexOf(chr[1]) == 1;
 
 	//Length 2 - Not Found because of Position
-	ASSERT len[1].LastIndexOf(chr[0], 1) == -1;
+	ASSERT len[1].LastIndexOf(chr[1], 0) == -1;
 
 	//Length 2 - Found at Position
-	ASSERT len[1].LastIndexOf(chr[1], 1) == 1;
+	ASSERT len[1].LastIndexOf(chr[0], 0) == 0;
 
-	//Length 3 - Found at beginning
-	ASSERT len[2].LastIndexOf(chr[0]) == 0;
+	//Length 3 - Found at end
+	ASSERT len[2].LastIndexOf(chr[2]) == 2;
 
 	//Length 3 - Not Found because of Position
-	ASSERT len[2].LastIndexOf(chr[0], 1) == -1;
+	ASSERT len[2].LastIndexOf(chr[2], 1) == -1;
 
 	//Length 3 - Found at Position
 	ASSERT len[2].LastIndexOf(chr[1], 1) == 1;
 
-	//Length 3 - Found after Position
-	ASSERT len[2].LastIndexOf(chr[2], 1) == 2;
+	//Length 3 - Found before Position
+	ASSERT len[2].LastIndexOf(chr[0], 1) == 0;
 
 	return result;
 }

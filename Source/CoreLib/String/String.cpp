@@ -248,8 +248,8 @@ namespace Core
 	{
 		Int idx, length = GetLength();
 
-		if(length == 0 || position < -1 || position >= length) return -1;
 		if(position == -1) position = length - 1;
+		if(length == 0 || position < 0 || position >= length) return -1;
 
 		for(idx = position; idx >= 0; --idx)
 		{
