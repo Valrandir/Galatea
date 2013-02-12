@@ -13,7 +13,7 @@ UInt const _textlen = 15U;
 
 namespace StringTestNamespace {
 
-Bool CHECKCapLen(String const & s, UInt capacity, UInt length)
+Bool CheckCapLen(String const & s, UInt capacity, UInt length)
 {
 	return s.GetCapacity() == capacity && s.GetLength() == length;
 }
@@ -24,7 +24,7 @@ Bool CtorEmptyTest()
 
 	String s;
 	CHECK s.IsEmpty() == true;
-	CHECK CHECKCapLen(s, 0U, 0U);
+	CHECK CheckCapLen(s, 0U, 0U);
 
 	return result;
 }
@@ -37,14 +37,14 @@ Bool CtorCapacityTest()
 	{
 		String s((UInt)0U);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//Capacity
 	{
 		String s(10U);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 10U, 0U);
+		CHECK CheckCapLen(s, 10U, 0U);
 	}
 
 	return result;
@@ -59,21 +59,21 @@ Bool CtorTCharTest()
 	{
 		String s(nullTChar);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//TChar Empty
 	{
 		String s(_empty);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//TChar not Empty
 	{
 		String s(_text);
 		CHECK s.IsEmpty() == false;
-		CHECK CHECKCapLen(s, _textcap, _textlen);
+		CHECK CheckCapLen(s, _textcap, _textlen);
 	}
 
 	return result;
@@ -88,7 +88,7 @@ Bool CtorCopyTest()
 		String s;
 		String t(s);
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, 0U, 0U);
+		CHECK CheckCapLen(t, 0U, 0U);
 	}
 
 	//Copy not Empty
@@ -96,7 +96,7 @@ Bool CtorCopyTest()
 		String s(_text);
 		String t(s);
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -111,7 +111,7 @@ Bool CtorMoveTest()
 		String s;
 		String t((String&&)s);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//Move not Empty
@@ -119,9 +119,9 @@ Bool CtorMoveTest()
 		String s(_text);
 		String t((String&&)s);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -318,7 +318,7 @@ Bool OperatorAssignTCharTest()
 	{
 		String t = _empty;
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, 0U, 0U);
+		CHECK CheckCapLen(t, 0U, 0U);
 	}
 
 	//Assign Empty to not Empty
@@ -327,14 +327,14 @@ Bool OperatorAssignTCharTest()
 		capacity = t.GetCapacity();
 		t = _empty;
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, capacity, 0U);
+		CHECK CheckCapLen(t, capacity, 0U);
 	}
 
 	//Assign not Empty to Empty
 	{
 		String t = _text;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	//Assign bigger string to shorter string
@@ -343,7 +343,7 @@ Bool OperatorAssignTCharTest()
 		t = _textBigger;
 		capacity = String::GetTCharLength(_textBigger);
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, capacity + 1, capacity);
+		CHECK CheckCapLen(t, capacity + 1, capacity);
 	}
 
 	//Assign shorter string to bigger string
@@ -353,7 +353,7 @@ Bool OperatorAssignTCharTest()
 		capacity = t.GetCapacity();
 		t = _textShorter;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, capacity, String::GetTCharLength(_textShorter));
+		CHECK CheckCapLen(t, capacity, String::GetTCharLength(_textShorter));
 	}
 
 	return result;
@@ -369,7 +369,7 @@ Bool OperatorAssignStringTest()
 		String s;
 		String t = s;
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, 0U, 0U);
+		CHECK CheckCapLen(t, 0U, 0U);
 	}
 
 	//Assign Empty to not Empty
@@ -379,7 +379,7 @@ Bool OperatorAssignStringTest()
 		capacity = t.GetCapacity();
 		t = s;
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, capacity, 0U);
+		CHECK CheckCapLen(t, capacity, 0U);
 	}
 
 	//Assign not Empty to Empty
@@ -387,7 +387,7 @@ Bool OperatorAssignStringTest()
 		String s(_text);
 		String t = s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	//Assign bigger string to shorter string
@@ -396,7 +396,7 @@ Bool OperatorAssignStringTest()
 		String t(_text);
 		t = s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, s.GetCapacity(), s.GetLength());
+		CHECK CheckCapLen(t, s.GetCapacity(), s.GetLength());
 	}
 
 	//Assign shorter string to bigger string
@@ -407,7 +407,7 @@ Bool OperatorAssignStringTest()
 		capacity = t.GetCapacity();
 		t = s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, capacity, s.GetLength());
+		CHECK CheckCapLen(t, capacity, s.GetLength());
 	}
 
 	return result;
@@ -422,7 +422,7 @@ Bool OperatorMoveStringTest()
 		String s;
 		String t((String&&)s);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//Move not Empty to Empty
@@ -430,9 +430,9 @@ Bool OperatorMoveStringTest()
 		String s(_text);
 		String t((String&&)s);
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	//Move Empty to not Empty
@@ -441,9 +441,9 @@ Bool OperatorMoveStringTest()
 		String t(_text);
 		t = (String&&)s;
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, 0U, 0U);
+		CHECK CheckCapLen(t, 0U, 0U);
 	}
 
 	//Move not Empty to not Empty
@@ -452,9 +452,9 @@ Bool OperatorMoveStringTest()
 		String t(_text);
 		t = (String&&)s;
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	return result;
@@ -469,7 +469,7 @@ Bool OperatorPlusEqualTCharTest()
 		String s;
 		s += _empty;
 		CHECK s.IsEmpty() == true;
-		CHECK CHECKCapLen(s, 0U, 0U);
+		CHECK CheckCapLen(s, 0U, 0U);
 	}
 
 	//Empty += Not Empty
@@ -477,7 +477,7 @@ Bool OperatorPlusEqualTCharTest()
 		String s;
 		s += _text;
 		CHECK s.IsEmpty() == false;
-		CHECK CHECKCapLen(s, _textcap, _textlen);
+		CHECK CheckCapLen(s, _textcap, _textlen);
 	}
 
 	//Not Empty += Empty
@@ -485,7 +485,7 @@ Bool OperatorPlusEqualTCharTest()
 		String s(_text);
 		s += _empty;
 		CHECK s.IsEmpty() == false;
-		CHECK CHECKCapLen(s, _textcap, _textlen);
+		CHECK CheckCapLen(s, _textcap, _textlen);
 	}
 
 	//Not Empty += Not Empty
@@ -493,7 +493,7 @@ Bool OperatorPlusEqualTCharTest()
 		String s(_text);
 		s += _text;
 		CHECK s.IsEmpty() == false;
-		CHECK CHECKCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK CheckCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -509,7 +509,7 @@ Bool OperatorPlusEqualStringTest()
 		String s;
 		t += s;
 		CHECK t.IsEmpty() == true;
-		CHECK CHECKCapLen(t, 0U, 0U);
+		CHECK CheckCapLen(t, 0U, 0U);
 	}
 
 	//Empty += Not Empty
@@ -518,7 +518,7 @@ Bool OperatorPlusEqualStringTest()
 		String s(_text);
 		t += s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	//Not Empty += Empty
@@ -527,7 +527,7 @@ Bool OperatorPlusEqualStringTest()
 		String s;
 		t += s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap, _textlen);
+		CHECK CheckCapLen(t, _textcap, _textlen);
 	}
 
 	//Not Empty += Not Empty
@@ -536,7 +536,7 @@ Bool OperatorPlusEqualStringTest()
 		String s(_text);
 		t += s;
 		CHECK t.IsEmpty() == false;
-		CHECK CHECKCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK CheckCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -551,7 +551,7 @@ Bool OperatorPlusTCharTest()
 		String s;
 		String const & ref = s + _empty;
 		CHECK ref.IsEmpty() == true;
-		CHECK CHECKCapLen(ref, 0U, 0U);
+		CHECK CheckCapLen(ref, 0U, 0U);
 	}
 
 	//Empty + Not Empty
@@ -559,7 +559,7 @@ Bool OperatorPlusTCharTest()
 		String s;
 		String const & ref = s + _text;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap, _textlen);
+		CHECK CheckCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Empty
@@ -567,7 +567,7 @@ Bool OperatorPlusTCharTest()
 		String s(_text);
 		String const & ref = s + _empty;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap, _textlen);
+		CHECK CheckCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Not Empty
@@ -575,7 +575,7 @@ Bool OperatorPlusTCharTest()
 		String s(_text);
 		String const & ref = s + _text;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK CheckCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
@@ -591,7 +591,7 @@ Bool OperatorPlusStringTest()
 		String r;
 		String const & ref = l + r;
 		CHECK ref.IsEmpty() == true;
-		CHECK CHECKCapLen(ref, 0U, 0U);
+		CHECK CheckCapLen(ref, 0U, 0U);
 	}
 
 	//Empty + Not Empty
@@ -600,7 +600,7 @@ Bool OperatorPlusStringTest()
 		String r(_text);
 		String const & ref = l + r;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap, _textlen);
+		CHECK CheckCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Empty
@@ -609,7 +609,7 @@ Bool OperatorPlusStringTest()
 		String r;
 		String const & ref = l + r;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap, _textlen);
+		CHECK CheckCapLen(ref, _textcap, _textlen);
 	}
 
 	//Not Empty + Not Empty
@@ -618,7 +618,7 @@ Bool OperatorPlusStringTest()
 		String r(_text);
 		String const & ref = l + r;
 		CHECK ref.IsEmpty() == false;
-		CHECK CHECKCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
+		CHECK CheckCapLen(ref, _textcap + _textcap - 1, _textlen + _textlen);
 	}
 
 	return result;
