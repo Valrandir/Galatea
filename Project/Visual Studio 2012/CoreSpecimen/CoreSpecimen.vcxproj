@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\StdVector.cpp" />

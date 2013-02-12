@@ -19,6 +19,12 @@
     <Filter Include="String">
       <UniqueIdentifier>{a52e4a78-c316-4d16-a7bb-cceba1e8ac89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assert">
+      <UniqueIdentifier>{32e6df5d-ceda-4fdc-bbd6-26666d971eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assert\Win32">
+      <UniqueIdentifier>{ce66ef6d-e568-48ca-927b-ad7a17a790ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -44,6 +50,15 @@
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp">
       <Filter>String</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp">
+      <Filter>Assert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp">
+      <Filter>Assert\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp">
+      <Filter>Assert\Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -66,6 +81,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp">
       <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp">
+      <Filter>Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp">
+      <Filter>Assert\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp">
+      <Filter>Assert\Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -19,6 +19,9 @@
     <Filter Include="String">
       <UniqueIdentifier>{be0089e2-0168-4065-8115-f1a95ff2dc64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assert">
+      <UniqueIdentifier>{94ed6b47-036a-4811-8120-1662ecfb0740}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -48,6 +51,9 @@
       <Filter>String</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Types.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Assert\Assert.cpp">
+      <Filter>Assert</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />

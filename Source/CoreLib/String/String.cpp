@@ -238,6 +238,11 @@ namespace Core
 		*this += str;
 	}
 
+	TChar* String::DrivePointer(UInt future_length)
+	{
+		return _vctr.DrivePointer(future_length + 1);
+	}
+
 	Int String::IndexOf(TChar const chr, Int position) const
 	{
 		Int idx, length = GetLength();

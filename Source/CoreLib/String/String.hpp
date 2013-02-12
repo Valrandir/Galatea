@@ -8,6 +8,12 @@
 
 namespace Core
 {
+	#ifdef CoreTargetWin32
+		TChar const * const NewLine = Text("\r\n");
+	#elif CoreTargetLinux
+		TChar const * const NewLine = Text("\n");
+	#endif
+
 	class String
 	{
 		private:
@@ -64,6 +70,8 @@ namespace Core
 		void Shrink();
 		void Append(TChar const * str);
 		void Append(String const & str);
+
+		TChar* DrivePointer(UInt future_length);
 
 		Int IndexOf(TChar const chr, Int position = 0) const;
 		Int LastIndexOf(TChar const chr, Int position = -1) const;

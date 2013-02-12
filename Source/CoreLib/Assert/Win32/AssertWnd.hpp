@@ -1,0 +1,20 @@
+#pragma once
+#include "Window.hpp"
+
+class AssertWnd : public Window
+{
+	static int const TEXTBOX_ID = 1;
+	static int const BTN_COPY_ID = 2;
+	static int const BTN_CLOSE_ID = 3;
+	HWND _hText;
+
+	public:
+	AssertWnd();
+	LRESULT WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+	void SetText(LPCTSTR text);
+	void ShowModal();
+
+	private:
+	void btnCopy_OnClick();
+	void btnClose_OnClick();
+};

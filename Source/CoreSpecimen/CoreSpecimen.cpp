@@ -2,6 +2,7 @@
 using namespace Core;
 
 extern Bool TypesTest();
+extern Bool AssertTest();
 extern void ErrTest();
 extern void MemoryTest();
 extern Bool ThreadTest();
@@ -16,7 +17,7 @@ Bool CoreSpecimen()
 	Bool result = true;
 
 	CHECK TypesTest();
-
+	CHECK AssertTest();
 	ErrTest();
 	MemoryTest();
 	CHECK ThreadTest();

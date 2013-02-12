@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp" />
@@ -30,6 +33,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
