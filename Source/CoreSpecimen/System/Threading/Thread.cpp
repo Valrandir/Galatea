@@ -30,7 +30,7 @@ Bool ThreadTestByValue()
 	if(Thread)
 	{
 		ReturnValue = Thread->Join();
-		Delete(Thread);
+		DeletePtr(Thread);
 		CHECK (Int)ReturnValue == Param * Param;
 	}
 
@@ -52,7 +52,7 @@ Bool ThreadTestByRef()
 	if(Thread)
 	{
 		ReturnValue = Thread->Join();
-		Delete(Thread);
+		DeletePtr(Thread);
 		CHECK *(UInt32*)ReturnValue == Param;
 		CHECK ReturnValue == &Param;
 	}

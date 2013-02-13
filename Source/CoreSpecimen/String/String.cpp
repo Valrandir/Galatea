@@ -470,6 +470,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK String::Compare(s.GetTChar(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -478,6 +479,7 @@ namespace StringTestNamespace
 			s += _text;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK String::Compare(s.GetTChar(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -486,6 +488,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK String::Compare(s.GetTChar(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -494,6 +497,7 @@ namespace StringTestNamespace
 			s += _text;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
+			CHECK String::Compare(s, String(_text) + _text) == 0;
 		}
 
 		return result;
@@ -510,6 +514,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, 0U, 0U);
+			CHECK String::Compare(t.GetTChar(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -519,6 +524,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
+			CHECK String::Compare(t.GetTChar(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -528,6 +534,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
+			CHECK String::Compare(t.GetTChar(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -537,6 +544,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
+			CHECK String::Compare(t, String(_text) + _text) == 0;
 		}
 
 		return result;
@@ -1161,6 +1169,187 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool AppendTCharTest()
+	{
+		Bool result = true;
+
+		//Empty += Empty
+		{
+			String s;
+			s.Append(_empty);
+			CHECK s.IsEmpty() == true;
+			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK String::Compare(s.GetTChar(), _empty) == 0;
+		}
+
+		//Empty += Not Empty
+		{
+			String s;
+			s.Append(_text);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK String::Compare(s.GetTChar(), _text) == 0;
+		}
+
+		//Not Empty += Empty
+		{
+			String s(_text);
+			s.Append(_empty);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK String::Compare(s.GetTChar(), _text) == 0;
+		}
+
+		//Not Empty += Not Empty
+		{
+			String s(_text);
+			s.Append(_text);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
+			CHECK String::Compare(s, String(_text) + _text) == 0;
+		}
+
+		return result;
+	}
+
+	Bool AppendStringTest()
+	{
+		Bool result = true;
+
+		//Empty += Empty
+		{
+			String t;
+			String s;
+			t.Append(s);
+			CHECK t.IsEmpty() == true;
+			CHECK CheckCapLen(t, 0U, 0U);
+			CHECK String::Compare(t.GetTChar(), _empty) == 0;
+		}
+
+		//Empty += Not Empty
+		{
+			String t;
+			String s(_text);
+			t.Append(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap, _textlen);
+			CHECK String::Compare(t.GetTChar(), _text) == 0;
+		}
+
+		//Not Empty += Empty
+		{
+			String t(_text);
+			String s;
+			t.Append(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap, _textlen);
+			CHECK String::Compare(t.GetTChar(), _text) == 0;
+		}
+
+		//Not Empty += Not Empty
+		{
+			String t(_text);
+			String s(_text);
+			t.Append(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
+			CHECK String::Compare(t, String(_text) + _text) == 0;
+		}
+
+		return result;
+	}
+
+	Bool AppendLineTCharTest()
+	{
+		Bool result = true;
+
+		//Empty += Empty
+		{
+			String s;
+			s.AppendLine(_empty);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, 3U, 2U);
+			CHECK String::Compare(s.GetTChar(), NewLine) == 0;
+		}
+
+		//Empty += Not Empty
+		{
+			String s;
+			s.AppendLine(_text);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap + 2, _textlen + 2);
+			CHECK String::Compare(s.GetTChar(), String(_text) + NewLine) == 0;
+		}
+
+		//Not Empty += Empty
+		{
+			String s(_text);
+			s.AppendLine(_empty);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap + 2, _textlen + 2);
+			CHECK String::Compare(s.GetTChar(), String(_text) + NewLine) == 0;
+		}
+
+		//Not Empty += Not Empty
+		{
+			String s(_text);
+			s.AppendLine(_text);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap + _textcap - 1 + 2, _textlen + _textlen + 2);
+			CHECK String::Compare(s, String(_text) + _text + NewLine) == 0;
+		}
+
+		return result;
+	}
+
+	Bool AppendLineStringTest()
+	{
+		Bool result = true;
+
+		//Empty += Empty
+		{
+			String t;
+			String s;
+			t.AppendLine(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, 3U, 2U);
+			CHECK String::Compare(t.GetTChar(), NewLine) == 0;
+		}
+
+		//Empty += Not Empty
+		{
+			String t;
+			String s(_text);
+			t.AppendLine(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap + 2, _textlen + 2);
+			CHECK String::Compare(t.GetTChar(), String(_text) + NewLine) == 0;
+		}
+
+		//Not Empty += Empty
+		{
+			String t(_text);
+			String s;
+			t.AppendLine(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap + 2, _textlen + 2);
+			CHECK String::Compare(t.GetTChar(), String(_text) + NewLine) == 0;
+		}
+
+		//Not Empty += Not Empty
+		{
+			String t(_text);
+			String s(_text);
+			t.AppendLine(s);
+			CHECK t.IsEmpty() == false;
+			CHECK CheckCapLen(t, _textcap + _textcap - 1 + 2, _textlen + _textlen + 2);
+			CHECK String::Compare(t, String(_text) + _text + NewLine) == 0;
+		}
+
+		return result;
+	}
+
+
 	Bool FormatBufferTest()
 	{
 		Bool result = true;
@@ -1395,6 +1584,11 @@ Bool StringTest()
 	CHECK OperatorSmallerOrEqualStringTest();
 
 	CHECK OperatorSubscriptTest();
+
+	CHECK AppendTCharTest();
+	CHECK AppendStringTest();
+	CHECK AppendLineTCharTest();
+	CHECK AppendLineStringTest();
 
 	CHECK FormatBufferTest();
 	CHECK FormatStringTest();

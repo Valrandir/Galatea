@@ -4,22 +4,22 @@ using namespace Core;
 
 struct Counter
 {
-	UInt ID;
-	static UInt IDIncrement;
-	static UInt Construct;
-	static UInt CopyConstruct;
-	static UInt MoveConstruct;
-	static UInt OperatorEqual;
-	static UInt OperatorMove;
-	static UInt Destruct;
+	UInt _id;
+	static UInt _idIncrement;
+	static UInt _construct;
+	static UInt _copyConstruct;
+	static UInt _moveConstruct;
+	static UInt _operatorEqual;
+	static UInt _operatorMove;
+	static UInt _destruct;
 
 	Counter();
-	Counter(Counter const & Source);
-	Counter(Counter const && Source);
-	Counter& operator=(Counter const & Source);
-	Counter& operator=(Counter const && Source);
+	Counter(Counter const & source);
+	Counter(Counter const && source);
+	Counter& operator=(Counter const & source);
+	Counter& operator=(Counter const && source);
 	~Counter();
 
-	static Bool Assert(UInt Construct, UInt CopyConstruct, UInt MoveConstruct, UInt OperatorEqual, UInt OperatorMove, UInt Destruct);
+	static Bool Compare(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct);
 	static void Clear();
 };

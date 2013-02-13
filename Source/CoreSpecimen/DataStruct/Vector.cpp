@@ -31,7 +31,7 @@ namespace VectorTestNamespace
 	Bool AssertCntrAlways(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
 	{
 		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Always)
-			return Counter::Assert(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
+			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
 	}
@@ -39,7 +39,7 @@ namespace VectorTestNamespace
 	Bool AssertCntrOnce(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
 	{
 		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Once)
-			return Counter::Assert(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
+			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
 	}
@@ -47,7 +47,7 @@ namespace VectorTestNamespace
 	Bool AssertCntrPod(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
 		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Pod)
-			return Counter::Assert(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
+			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
 	}
@@ -749,7 +749,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 1U;
+		CHECK v[0U]._id == 1U;
 
 		Counter::Clear();
 		v.Add(c2);
@@ -757,7 +757,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-		CHECK v[1U].ID == 2U;
+		CHECK v[1U]._id == 2U;
 
 		Counter::Clear();
 		v.Add(c3);
@@ -765,7 +765,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 2U);
-		CHECK v[2U].ID == 3U;
+		CHECK v[2U]._id == 3U;
 
 		return result;
 	}
@@ -843,7 +843,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 1U;
+		CHECK v[0U]._id == 1U;
 
 		Counter::Clear();
 		v.Insert(100U, c2);
@@ -851,7 +851,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 0U, 0U, 0U, 0U);
-		CHECK v[1U].ID == 2U;
+		CHECK v[1U]._id == 2U;
 
 		Counter::Clear();
 		v.Insert(0U, c3);
@@ -859,9 +859,9 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 3U;
-		CHECK v[1U].ID == 1U;
-		CHECK v[2U].ID == 2U;
+		CHECK v[0U]._id == 3U;
+		CHECK v[1U]._id == 1U;
+		CHECK v[2U]._id == 2U;
 
 		Counter::Clear();
 		v.Insert(1U, c4);
@@ -869,10 +869,10 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 2U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 3U;
-		CHECK v[1U].ID == 4U;
-		CHECK v[2U].ID == 1U;
-		CHECK v[3U].ID == 2U;
+		CHECK v[0U]._id == 3U;
+		CHECK v[1U]._id == 4U;
+		CHECK v[2U]._id == 1U;
+		CHECK v[3U]._id == 2U;
 
 		return result;
 	}
@@ -892,12 +892,12 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 1U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 2U;
-		CHECK v[2U].ID == 3U;
-		CHECK v[3U].ID == 4U;
-		CHECK v[4U].ID == 6U;
-		CHECK v[5U].ID == 5U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 2U;
+		CHECK v[2U]._id == 3U;
+		CHECK v[3U]._id == 4U;
+		CHECK v[4U]._id == 6U;
+		CHECK v[5U]._id == 5U;
 
 		Counter::Clear();
 		v.Insert(v[0], c2);
@@ -905,13 +905,13 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 6U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 7U;
-		CHECK v[1U].ID == 1U;
-		CHECK v[2U].ID == 2U;
-		CHECK v[3U].ID == 3U;
-		CHECK v[4U].ID == 4U;
-		CHECK v[5U].ID == 6U;
-		CHECK v[6U].ID == 5U;
+		CHECK v[0U]._id == 7U;
+		CHECK v[1U]._id == 1U;
+		CHECK v[2U]._id == 2U;
+		CHECK v[3U]._id == 3U;
+		CHECK v[4U]._id == 4U;
+		CHECK v[5U]._id == 6U;
+		CHECK v[6U]._id == 5U;
 
 		Counter::Clear();
 		v.Insert(v[3], c3);
@@ -919,14 +919,14 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 4U, 0U, 0U, 0U);
-		CHECK v[0U].ID == 7U;
-		CHECK v[1U].ID == 1U;
-		CHECK v[2U].ID == 2U;
-		CHECK v[3U].ID == 8U;
-		CHECK v[4U].ID == 3U;
-		CHECK v[5U].ID == 4U;
-		CHECK v[6U].ID == 6U;
-		CHECK v[7U].ID == 5U;
+		CHECK v[0U]._id == 7U;
+		CHECK v[1U]._id == 1U;
+		CHECK v[2U]._id == 2U;
+		CHECK v[3U]._id == 8U;
+		CHECK v[4U]._id == 3U;
+		CHECK v[5U]._id == 4U;
+		CHECK v[6U]._id == 6U;
+		CHECK v[7U]._id == 5U;
 
 		Counter::Clear();
 		v.Insert(v[6], c4);
@@ -934,15 +934,15 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod(0U, 0U, 0U, 1U, 0U, 0U);
 		CHECK AssertCntrOnce(0U, 1U, 0U, 0U, 0U, 0U);
 		CHECK AssertCntrAlways(0U, 1U, 10U, 0U, 0U, 8U);
-		CHECK v[0U].ID == 7U;
-		CHECK v[1U].ID == 1U;
-		CHECK v[2U].ID == 2U;
-		CHECK v[3U].ID == 8U;
-		CHECK v[4U].ID == 3U;
-		CHECK v[5U].ID == 4U;
-		CHECK v[6U].ID == 9U;
-		CHECK v[7U].ID == 6U;
-		CHECK v[8U].ID == 5U;
+		CHECK v[0U]._id == 7U;
+		CHECK v[1U]._id == 1U;
+		CHECK v[2U]._id == 2U;
+		CHECK v[3U]._id == 8U;
+		CHECK v[4U]._id == 3U;
+		CHECK v[5U]._id == 4U;
+		CHECK v[6U]._id == 9U;
+		CHECK v[7U]._id == 6U;
+		CHECK v[8U]._id == 5U;
 
 		return result;
 	}
@@ -960,10 +960,10 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 2U;
-		CHECK v[2U].ID == 3U;
-		CHECK v[3U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 2U;
+		CHECK v[2U]._id == 3U;
+		CHECK v[3U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(1U);
@@ -971,9 +971,9 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 3U;
-		CHECK v[2U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 3U;
+		CHECK v[2U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(1U);
@@ -981,8 +981,8 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(0U);
@@ -990,7 +990,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 4U;
+		CHECK v[0U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(0U);
@@ -1015,10 +1015,10 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 1U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 2U;
-		CHECK v[2U].ID == 3U;
-		CHECK v[3U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 2U;
+		CHECK v[2U]._id == 3U;
+		CHECK v[3U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(v[1]);
@@ -1026,9 +1026,9 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 2U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 3U;
-		CHECK v[2U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 3U;
+		CHECK v[2U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(v[1]);
@@ -1036,8 +1036,8 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 1U;
-		CHECK v[1U].ID == 4U;
+		CHECK v[0U]._id == 1U;
+		CHECK v[1U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(v[0]);
@@ -1045,7 +1045,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrPod();
 		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 1U);
 		CHECK AssertCntrAlways(0U, 0U, 1U, 0U, 0U, 2U);
-		CHECK v[0U].ID == 4U;
+		CHECK v[0U]._id == 4U;
 
 		Counter::Clear();
 		v.Remove(v[0]);

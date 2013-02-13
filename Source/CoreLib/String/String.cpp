@@ -238,6 +238,18 @@ namespace Core
 		*this += str;
 	}
 
+	void String::AppendLine(TChar const * str)
+	{
+		*this += str;
+		*this += NewLine;
+	}
+
+	void String::AppendLine(String const & str)
+	{
+		*this += str;
+		*this += NewLine;
+	}
+
 	TChar* String::DrivePointer(UInt future_length)
 	{
 		return _vctr.DrivePointer(future_length + 1);

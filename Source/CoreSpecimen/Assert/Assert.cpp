@@ -2,15 +2,20 @@
 
 using namespace Core;
 
+Bool ReturnTrue()
+{
+	return true;
+}
+
 Bool AssertTest()
 {
 	Bool result = true;
 
 	//Pass
-	//Assert(true);
+	Assert(ReturnTrue() == true);
 
 	//Fail
-	//Assert(false);
+	Assert(ReturnTrue() == false);
 
 	return result;
 }

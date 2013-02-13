@@ -35,15 +35,15 @@ Bool StdAddTest()
 
 	v.push_back(c1);
 	CHECK v.capacity() == 1U && v.size() == 1U;
-	CHECK v[0U].ID == 1U;
+	CHECK v[0U]._id == 1U;
 
 	v.push_back(c2);
 	CHECK v.capacity() == 2U && v.size() == 2U;
-	CHECK v[1U].ID == 2U;
+	CHECK v[1U]._id == 2U;
 
 	v.push_back(c3);
 	CHECK v.capacity() == 3U && v.size() == 3U;
-	CHECK v[2U].ID == 3U;
+	CHECK v[2U]._id == 3U;
 
 	return result;
 }
@@ -57,27 +57,27 @@ Bool StdInsertTest()
 	Counter::Clear();
 	v.insert(v.end(), c1);
 	CHECK v.capacity() == 1U && v.size() == 1U;
-	CHECK v[0U].ID == 1U;
+	CHECK v[0U]._id == 1U;
 
 	Counter::Clear();
 	v.insert(v.end(), c2);
 	CHECK v.capacity() == 2U && v.size() == 2U;
-	CHECK v[1U].ID == 2U;
+	CHECK v[1U]._id == 2U;
 
 	Counter::Clear();
 	v.insert(v.begin(), c3);
 	CHECK v.capacity() == 3U && v.size() == 3U;
-	CHECK v[0U].ID == 3U;
-	CHECK v[1U].ID == 1U;
-	CHECK v[2U].ID == 2U;
+	CHECK v[0U]._id == 3U;
+	CHECK v[1U]._id == 1U;
+	CHECK v[2U]._id == 2U;
 
 	Counter::Clear();
 	v.insert(v.begin() + 1, c4);
 	CHECK v.capacity() == 4U && v.size() == 4U;
-	CHECK v[0U].ID == 3U;
-	CHECK v[1U].ID == 4U;
-	CHECK v[2U].ID == 1U;
-	CHECK v[3U].ID == 2U;
+	CHECK v[0U]._id == 3U;
+	CHECK v[1U]._id == 4U;
+	CHECK v[2U]._id == 1U;
+	CHECK v[3U]._id == 2U;
 
 	return result;
 }
@@ -96,20 +96,20 @@ Bool StdRemoveTest()
 	Counter::Clear();
 	v.erase(v.end() - 1);
 	CHECK v.capacity() == 4U && v.size() == 3U;
-	CHECK v[0U].ID == 1U;
-	CHECK v[1U].ID == 2U;
-	CHECK v[2U].ID == 3U;
+	CHECK v[0U]._id == 1U;
+	CHECK v[1U]._id == 2U;
+	CHECK v[2U]._id == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin() + 1);
 	CHECK v.capacity() == 4U && v.size() == 2U;
-	CHECK v[0U].ID == 1U;
-	CHECK v[1U].ID == 3U;
+	CHECK v[0U]._id == 1U;
+	CHECK v[1U]._id == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin());
 	CHECK v.capacity() == 4U && v.size() == 1U;
-	CHECK v[0U].ID == 3U;
+	CHECK v[0U]._id == 3U;
 
 	Counter::Clear();
 	v.erase(v.begin());
@@ -130,8 +130,8 @@ Bool StdConstructCopyTest()
 	Counter::Clear();
 	vector<Counter> v2(v1);
 	CHECK v2.capacity() == 2U && v2.size() == 2U;
-	CHECK v2[0U].ID == 1U;
-	CHECK v2[1U].ID == 2U;
+	CHECK v2[0U]._id == 1U;
+	CHECK v2[1U]._id == 2U;
 
 	vector<Counter> v3;
 	Counter::Clear();
@@ -153,8 +153,8 @@ Bool StdConstructEqualTest()
 	Counter::Clear();
 	vector<Counter> v2 = v1;
 	CHECK v2.capacity() == 2U && v2.size() == 2U;
-	CHECK v2[0U].ID == 1U;
-	CHECK v2[1U].ID == 2U;
+	CHECK v2[0U]._id == 1U;
+	CHECK v2[1U]._id == 2U;
 
 	Counter::Clear();
 	v2 = v2;
@@ -166,8 +166,8 @@ Bool StdConstructEqualTest()
 	Counter::Clear();
 	v2 = v3;
 	CHECK v2.capacity() == 2U && v2.size() == 2U;
-	CHECK v2[0U].ID == 3U;
-	CHECK v2[1U].ID == 4U;
+	CHECK v2[0U]._id == 3U;
+	CHECK v2[1U]._id == 4U;
 
 	return result;
 }
@@ -202,9 +202,9 @@ Bool StdShrinkTest()
 	Counter::Clear();
 	v.shrink_to_fit();
 	result = v.capacity() == 7U && v.size() == 7U;
-	CHECK v[0U].ID == 1U;
-	CHECK v[1U].ID == 2U;
-	CHECK v[2U].ID == 3U;
+	CHECK v[0U]._id == 1U;
+	CHECK v[1U]._id == 2U;
+	CHECK v[2U]._id == 3U;
 
 	return result;
 }
@@ -245,7 +245,7 @@ Bool StdBeginEndTest()
 	Counter::Clear();
 
 	for(auto it = v.begin(); it < v.end(); ++i, ++it)
-		CHECK it->ID == c[i].ID;
+		CHECK it->_id == c[i]._id;
 
 	result = v.capacity() == 3U && v.size() == 3U;
 

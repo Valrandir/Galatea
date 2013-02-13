@@ -4,7 +4,7 @@
 	#define NULL 0
 #endif
 
-#define Delete(ptr) delete(ptr); (ptr) = NULL
+#define DeletePtr(ptr) delete(ptr); (ptr) = NULL
 
 namespace Core
 {
@@ -37,10 +37,17 @@ namespace Core
 	typedef bool Bool;
 
 	#if CoreTargetWin32 && UNICODE
-		#define Text(quote)L##quote
+		#define _Text(quote)L##quote
+		#define Text(quote)_Text(quote)
 		typedef wchar_t TChar;
 	#else
 		#define Text(quote)quote
 		typedef char TChar;
+	#endif
+
+	#ifdef CoreTargetWin32
+		#define NewLine Text("\r\n")
+	#elif CoreTargetLinux
+		define NewLine Text("\n")
 	#endif
 }

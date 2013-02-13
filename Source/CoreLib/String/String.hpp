@@ -8,12 +8,6 @@
 
 namespace Core
 {
-	#ifdef CoreTargetWin32
-		TChar const * const NewLine = Text("\r\n");
-	#elif CoreTargetLinux
-		TChar const * const NewLine = Text("\n");
-	#endif
-
 	class String
 	{
 		private:
@@ -70,6 +64,8 @@ namespace Core
 		void Shrink();
 		void Append(TChar const * str);
 		void Append(String const & str);
+		void AppendLine(TChar const * str);
+		void AppendLine(String const & str);
 
 		TChar* DrivePointer(UInt future_length);
 

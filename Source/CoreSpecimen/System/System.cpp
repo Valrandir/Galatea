@@ -47,6 +47,6 @@ void ThreadedErrTest()
 	//UInt32 bOut = *(UInt32*)bThread->Join();
 	UInt32* aOut = (UInt32*)aThread->Join();
 	UInt32* bOut = (UInt32*)bThread->Join();
-	Delete(aThread);
-	Delete(bThread);
+	DeletePtr(aThread);
+	DeletePtr(bThread);
 }

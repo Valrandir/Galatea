@@ -1,75 +1,75 @@
 #include "Counter.hpp"
 
-UInt Counter::IDIncrement = 0U;
-UInt Counter::Construct = 0U;
-UInt Counter::CopyConstruct = 0U;
-UInt Counter::MoveConstruct = 0U;
-UInt Counter::OperatorEqual = 0U;
-UInt Counter::OperatorMove = 0U;
-UInt Counter::Destruct = 0U;
+UInt Counter::_idIncrement = 0U;
+UInt Counter::_construct = 0U;
+UInt Counter::_copyConstruct = 0U;
+UInt Counter::_moveConstruct = 0U;
+UInt Counter::_operatorEqual = 0U;
+UInt Counter::_operatorMove = 0U;
+UInt Counter::_destruct = 0U;
 
 //Constructor
 Counter::Counter()
 {
-	++Construct;
-	++IDIncrement;
-	ID = IDIncrement;
+	++_construct;
+	++_idIncrement;
+	_id = _idIncrement;
 }
 
 //Copy Constructor
-Counter::Counter(Counter const & Source)
+Counter::Counter(Counter const & source)
 {
-	++CopyConstruct;
-	ID = Source.ID;
+	++_copyConstruct;
+	_id = source._id;
 }
 
 //Move Constructor
-Counter::Counter(Counter const && Source)
+Counter::Counter(Counter const && source)
 {
-	++MoveConstruct;
-	ID = Source.ID;
+	++_moveConstruct;
+	_id = source._id;
 }
 
 //Assignment Operator
-Counter& Counter::operator=(Counter const & Source)
+Counter& Counter::operator=(Counter const & source)
 {
-	++OperatorEqual;
-	ID = Source.ID;
+	++_operatorEqual;
+	_id = source._id;
 	return *this;
 }
 
 //Move Assignment Operator
-Counter& Counter::operator=(Counter const && Source)
+Counter& Counter::operator=(Counter const && source)
 {
-	++OperatorMove;
-	ID = Source.ID;
+	++_operatorMove;
+	_id = source._id;
 	return *this;
 }
 
 //Destructor
 Counter::~Counter()
 {
-	++Destruct;
+	++_destruct;
 }
 
-Bool Counter::Assert(UInt Construct, UInt CopyConstruct, UInt MoveConstruct, UInt OperatorEqual, UInt OperatorMove, UInt Destruct)
+Bool Counter::Compare(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
 {
 	return
-		Counter::Construct == Construct &&
-		Counter::CopyConstruct == CopyConstruct &&
-		Counter::MoveConstruct == MoveConstruct &&
-		Counter::OperatorEqual == OperatorEqual &&
-		Counter::OperatorMove == OperatorMove &&
-		Counter::Destruct == Destruct;
+		Counter::_construct == construct &&
+		Counter::_copyConstruct == copyConstruct &&
+		Counter::_moveConstruct == moveConstruct &&
+		Counter::_operatorEqual == operatorEqual &&
+		Counter::_operatorMove == operatorMove &&
+		Counter::_destruct == destruct;
 }
 
 void Counter::Clear()
 {
-	IDIncrement = 0U;
-	Construct = 0U;
-	CopyConstruct = 0U;
-	MoveConstruct = 0U;
-	OperatorEqual = 0U;
-	OperatorMove = 0U;
-	Destruct = 0U;
+	_idIncrement = 0U;
+	_construct = 0U;
+	_copyConstruct = 0U;
+	_moveConstruct = 0U;
+	_operatorEqual = 0U;
+	_operatorMove = 0U;
+	_destruct = 0U;
 }

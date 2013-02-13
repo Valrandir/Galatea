@@ -34,7 +34,7 @@ namespace Core
 				}
 				else
 				{
-					Delete(Thread);
+					DeletePtr(Thread);
 					return NULL;
 				}
 			}
