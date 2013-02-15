@@ -11,7 +11,7 @@ AssertWnd::AssertWnd() : Window(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS
 		WS_EX_CLIENTEDGE,
 		TEXT("EDIT"),
 		NULL,
-		WS_VISIBLE | WS_CHILD | ES_READONLY | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL,
+		WS_VISIBLE | WS_CHILD | ES_READONLY | ES_MULTILINE | WS_HSCROLL | WS_VSCROLL,
 		8,
 		8,
 		_width - 16,
@@ -21,6 +21,11 @@ AssertWnd::AssertWnd() : Window(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS
 		_hInst,
 		NULL
 	);
+
+	//Set Font
+	_hFont = CreateFont(0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Text("Courrier New"));
+	if(_hFont)
+		SendMessage(_hText, WM_SETFONT, (WPARAM)_hFont, 0);
 
 	//Create Copy Button
 	CreateWindow
@@ -53,6 +58,12 @@ AssertWnd::AssertWnd() : Window(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS
 		_hInst,
 		NULL
 	);
+}
+
+AssertWnd::~AssertWnd()
+{
+	if(_hFont)
+		DeleteObject(_hFont);
 }
 
 LRESULT AssertWnd::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
