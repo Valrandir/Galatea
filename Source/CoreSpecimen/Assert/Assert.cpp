@@ -15,7 +15,7 @@ Bool AssertTest()
 	Assert(ReturnTrue() == true);
 
 	//Fail
-	Assert(ReturnTrue() == false);
+	//Assert(ReturnTrue() == false);
 
 	return result;
 }

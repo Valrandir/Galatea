@@ -48,6 +48,6 @@ namespace Core
 	#ifdef CoreTargetWin32
 		#define NewLine Text("\r\n")
 	#elif CoreTargetLinux
-		define NewLine Text("\n")
+		#define NewLine Text("\n")
 	#endif
 }

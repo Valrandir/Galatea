@@ -1262,13 +1262,14 @@ namespace StringTestNamespace
 	Bool AppendLineTCharTest()
 	{
 		Bool result = true;
-
+		UInt nlLength = String::GetTCharLength(NewLine);
+		
 		//Empty += Empty
 		{
 			String s;
 			s.AppendLine(_empty);
 			CHECK s.IsEmpty() == false;
-			CHECK CheckCapLen(s, 3U, 2U);
+			CHECK CheckCapLen(s, 1U + nlLength, nlLength);
 			CHECK String::Compare(s.GetTChar(), NewLine) == 0;
 		}
 
@@ -1277,7 +1278,7 @@ namespace StringTestNamespace
 			String s;
 			s.AppendLine(_text);
 			CHECK s.IsEmpty() == false;
-			CHECK CheckCapLen(s, _textcap + 2, _textlen + 2);
+			CHECK CheckCapLen(s, _textcap + nlLength, _textlen + nlLength);
 			CHECK String::Compare(s.GetTChar(), String(_text) + NewLine) == 0;
 		}
 
@@ -1286,7 +1287,7 @@ namespace StringTestNamespace
 			String s(_text);
 			s.AppendLine(_empty);
 			CHECK s.IsEmpty() == false;
-			CHECK CheckCapLen(s, _textcap + 2, _textlen + 2);
+			CHECK CheckCapLen(s, _textcap + nlLength, _textlen + nlLength);
 			CHECK String::Compare(s.GetTChar(), String(_text) + NewLine) == 0;
 		}
 
@@ -1295,7 +1296,7 @@ namespace StringTestNamespace
 			String s(_text);
 			s.AppendLine(_text);
 			CHECK s.IsEmpty() == false;
-			CHECK CheckCapLen(s, _textcap + _textcap - 1 + 2, _textlen + _textlen + 2);
+			CHECK CheckCapLen(s, _textcap + _textcap - 1 + nlLength, _textlen + _textlen + nlLength);
 			CHECK String::Compare(s, String(_text) + _text + NewLine) == 0;
 		}
 
@@ -1305,6 +1306,7 @@ namespace StringTestNamespace
 	Bool AppendLineStringTest()
 	{
 		Bool result = true;
+		UInt nlLength = String::GetTCharLength(NewLine);
 
 		//Empty += Empty
 		{
@@ -1312,7 +1314,7 @@ namespace StringTestNamespace
 			String s;
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, 3U, 2U);
+			CHECK CheckCapLen(t, 1U + nlLength, nlLength);
 			CHECK String::Compare(t.GetTChar(), NewLine) == 0;
 		}
 
@@ -1322,7 +1324,7 @@ namespace StringTestNamespace
 			String s(_text);
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, _textcap + 2, _textlen + 2);
+			CHECK CheckCapLen(t, _textcap + nlLength, _textlen + nlLength);
 			CHECK String::Compare(t.GetTChar(), String(_text) + NewLine) == 0;
 		}
 
@@ -1332,7 +1334,7 @@ namespace StringTestNamespace
 			String s;
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, _textcap + 2, _textlen + 2);
+			CHECK CheckCapLen(t, _textcap + nlLength, _textlen + nlLength);
 			CHECK String::Compare(t.GetTChar(), String(_text) + NewLine) == 0;
 		}
 
@@ -1342,7 +1344,7 @@ namespace StringTestNamespace
 			String s(_text);
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, _textcap + _textcap - 1 + 2, _textlen + _textlen + 2);
+			CHECK CheckCapLen(t, _textcap + _textcap - 1 + nlLength, _textlen + _textlen + nlLength);
 			CHECK String::Compare(t, String(_text) + _text + NewLine) == 0;
 		}
 

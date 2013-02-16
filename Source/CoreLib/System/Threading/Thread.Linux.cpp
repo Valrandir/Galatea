@@ -36,7 +36,7 @@ namespace Core
 				else
 				{
 					System::SetErrCode((UInt32)ErrCode);
-					Delete(Thread);
+					DeletePtr(Thread);
 					return NULL;
 				}
 			}

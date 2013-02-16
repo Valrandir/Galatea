@@ -23,7 +23,7 @@ AssertWnd::AssertWnd() : Window(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS
 	);
 
 	//Set Font
-	_hFont = CreateFont(0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Text("Courrier New"));
+	_hFont = CreateFont(0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TEXT("Courrier New"));
 	if(_hFont)
 		SendMessage(_hText, WM_SETFONT, (WPARAM)_hFont, 0);
 

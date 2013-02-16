@@ -1,52 +1,65 @@
 #include "../Core.hpp"
 using namespace Core;
-
-void ErrTest()
-{
-	UInt32 ErrCode;
-	TChar Buffer[512];
-	TChar const * ErrText;
-
-	System::SetErrCode(10U);
-	ErrCode = System::GetErrCode();
-	ErrText = System::GetErrText(ErrCode, Buffer, 512U);
-}
-
-
-//Test if SetErrCode / GetErrCode are thread safe
 using namespace System;
 using namespace Threading;
 
+Bool ErrTest()
+{
+	Bool result = true;
+
+	UInt32 errCode;
+	TChar buffer[512];
+	TChar const * errText;
+
+	System::SetErrCode(10U);
+	errCode = System::GetErrCode();
+	errText = System::GetErrText(errCode, buffer, 512U);
+
+	CHECK errCode == 10U;
+	CHECK String::GetTCharLength(errText) > 4;
+	
+	return result;
+}
+
 VoidPtr ThreadA(VoidPtr Param)
 {
-	UInt32* ErrCode = (UInt32*)Param;
-	SetErrCode(*ErrCode);
-	Time::Sleep(2500);
-	*ErrCode = GetErrCode() + 100;
-	return (VoidPtr)ErrCode;
+	UInt32* errCode = (UInt32*)Param;
+	SetErrCode(*errCode);
+	Time::Sleep(20);
+	*errCode = GetErrCode() + 100;
+	return (VoidPtr)errCode;
 }
 
 VoidPtr ThreadB(VoidPtr Param)
 {
-	UInt32* ErrCode = (UInt32*)Param;
-	SetErrCode(*ErrCode);
-	Time::Sleep(5000);
-	*ErrCode = GetErrCode() + 1;
-	return (VoidPtr)ErrCode;
+	UInt32* errCode = (UInt32*)Param;
+	Time::Sleep(10);
+	SetErrCode(*errCode);
+	*errCode = GetErrCode() + 1;
+	return (VoidPtr)errCode;
 }
 
-//Pass if aOut = 10U and bOut = 15U
+//Test if SetErrCode / GetErrCode are thread safe
+//Pass if aOut = 110U and bOut = 16U
 //Fail if aOut == bOut
-void ThreadedErrTest()
+Bool ThreadedErrTest()
 {
+	Bool result = true;
+
 	UInt32 aIn = 10U;
 	UInt32 bIn = 15U;
+
 	Thread* aThread = CreateThread(ThreadA, (VoidPtr)&aIn);
 	Thread* bThread = CreateThread(ThreadB, (VoidPtr)&bIn);
-	//UInt32 aOut = *(UInt32*)aThread->Join();
-	//UInt32 bOut = *(UInt32*)bThread->Join();
-	UInt32* aOut = (UInt32*)aThread->Join();
-	UInt32* bOut = (UInt32*)bThread->Join();
+
+	UInt32 aOut = *(UInt32*)aThread->Join();
+	UInt32 bOut = *(UInt32*)bThread->Join();
+
 	DeletePtr(aThread);
 	DeletePtr(bThread);
+
+	CHECK aOut == 110U;
+	CHECK bOut == 16U;
+
+	return result;
 }

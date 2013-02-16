@@ -3,11 +3,11 @@ using namespace Core;
 
 extern Bool TypesTest();
 extern Bool AssertTest();
-extern void ErrTest();
-extern void MemoryTest();
+extern Bool ErrTest();
+extern Bool MemoryTest();
 extern Bool ThreadTest();
-extern void ThreadedErrTest();
-extern void TimeTest();
+extern Bool ThreadedErrTest();
+extern Bool TimeTest();
 extern Bool VectorTest();
 extern Bool StdVectorTest();
 extern Bool StringTest();
@@ -18,12 +18,11 @@ Bool CoreSpecimen()
 
 	CHECK TypesTest();
 	CHECK AssertTest();
-	ErrTest();
-	MemoryTest();
+	CHECK ErrTest();
+	CHECK MemoryTest();
 	CHECK ThreadTest();
-	//ThreadedErrTest();
-	//TimeTest();
-
+	CHECK ThreadedErrTest();
+	CHECK TimeTest();
 	CHECK VectorTest();
 	CHECK StringTest();
 
