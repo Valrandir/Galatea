@@ -16,7 +16,7 @@ void Window::CenterWindowPos(int &x, int &y, int width, int height)
 
 LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if(auto self = (Window*)GetWindowLong(hWnd, GWL_USERDATA))
+	if(auto self = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA))
 		return self->WindowProc(hWnd, msg, wParam, lParam);
 	else
 		return DefWindowProc(hWnd, msg, wParam, lParam);
@@ -63,7 +63,7 @@ void Window::Initialize(LPCTSTR title, int width, int height, DWORD style)
 	AdjustWindowRect(style, width, height);
 	_hWnd = CreateWindow(wc.lpszClassName, title, style, x, y, width, height, HWND_DESKTOP, NULL, _hInst, NULL);
 
-	SetWindowLong(_hWnd, GWL_USERDATA, (LONG)this);
+	SetWindowLongPtr(_hWnd, GWLP_USERDATA, (LONG)this);
 }
 
 Window::Window(LPCTSTR title, int width, int height, DWORD style)
