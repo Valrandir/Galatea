@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Source\CoreSpecimen\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\StdVector.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\String\String.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp" />

@@ -19,11 +19,11 @@
     <Filter Include="String">
       <UniqueIdentifier>{a52e4a78-c316-4d16-a7bb-cceba1e8ac89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assert">
-      <UniqueIdentifier>{32e6df5d-ceda-4fdc-bbd6-26666d971eaf}</UniqueIdentifier>
+    <Filter Include="System\Assert">
+      <UniqueIdentifier>{6a9fd70d-bafa-432d-ac61-210bd2e49da7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assert\Win32">
-      <UniqueIdentifier>{ce66ef6d-e568-48ca-927b-ad7a17a790ed}</UniqueIdentifier>
+    <Filter Include="System\Assert\Win32">
+      <UniqueIdentifier>{1f46ec96-5519-4db0-bfbb-0fcb57464dce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,14 +50,14 @@
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp">
       <Filter>String</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp">
-      <Filter>Assert</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Assert.hpp">
+      <Filter>System\Assert</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp">
-      <Filter>Assert\Win32</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.hpp">
+      <Filter>System\Assert\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp">
-      <Filter>Assert\Win32</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.hpp">
+      <Filter>System\Assert\Win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -82,14 +82,14 @@
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp">
       <Filter>String</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp">
-      <Filter>Assert</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Assert.Win32.cpp">
+      <Filter>System\Assert</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp">
-      <Filter>Assert\Win32</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.cpp">
+      <Filter>System\Assert\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp">
-      <Filter>Assert\Win32</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.cpp">
+      <Filter>System\Assert\Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

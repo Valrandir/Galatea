@@ -1,6 +1,6 @@
 #include "Assert.hpp"
 #include "Win32/AssertWnd.hpp"
-#include "../String/String.hpp"
+#include "../../String/String.hpp"
 
 void ShowAssertWindow(Core::String msg);
 

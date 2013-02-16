@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Assert.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp" />
@@ -33,9 +33,6 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -44,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Assert.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp" />

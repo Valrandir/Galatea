@@ -1,5 +1,5 @@
 #pragma once
-#include "../Types.hpp"
+#include "../../Types.hpp"
 
 #ifdef _DEBUG
 	#define Assert(fn) if(!fn) Core::Assert::Fail(Text(#fn), Text(__FUNCTION__), Text(__FILE__), __LINE__);

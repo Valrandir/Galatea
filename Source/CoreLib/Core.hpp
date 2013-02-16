@@ -11,6 +11,6 @@
 #include "System/Threading/Thread.hpp"
 #include "System/Time/Time.hpp"
 
-#include "Assert/Assert.hpp"
+#include "System/Assert/Assert.hpp"
 #include "DataStruct/Vector.hpp"
 #include "String/String.hpp"

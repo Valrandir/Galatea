@@ -21,6 +21,9 @@
       <VirtualDirectory Name="Threading">
         <File Name="../../../Source/CoreSpecimen/System/Threading/Thread.cpp"/>
       </VirtualDirectory>
+      <VirtualDirectory Name="Assert">
+        <File Name="../../../Source/CoreSpecimen/System/Assert/Assert.cpp"/>
+      </VirtualDirectory>
     </VirtualDirectory>
     <File Name="../../../Source/CoreSpecimen/Core.hpp"/>
     <VirtualDirectory Name="DataStruct">
@@ -32,9 +35,6 @@
       <File Name="../../../Source/CoreSpecimen/String/String.cpp"/>
     </VirtualDirectory>
     <File Name="../../../Source/CoreSpecimen/Types.cpp"/>
-    <VirtualDirectory Name="Assert">
-      <File Name="../../../Source/CoreSpecimen/Assert/Assert.cpp"/>
-    </VirtualDirectory>
   </VirtualDirectory>
   <Dependencies Name="Release">
     <Project Name="CoreLib"/>
@@ -75,6 +75,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -116,6 +117,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -156,6 +158,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -197,6 +200,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
