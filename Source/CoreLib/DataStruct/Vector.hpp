@@ -2,6 +2,7 @@
 
 #pragma once
 #include "../Types.hpp"
+#include "../System/Assert/Assert.hpp"
 #include "../System/Memory/Memory.hpp"
 
 //Placement New

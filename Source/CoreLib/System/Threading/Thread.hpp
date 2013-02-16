@@ -7,7 +7,7 @@ namespace Core
 	{
 		namespace Threading
 		{
-			typedef VoidPtr (*ThreadFonc)(VoidPtr ThreadParam);
+			typedef VoidPtr (*ThreadFonc)(VoidPtr threadParam);
 
 			class Thread
 			{
@@ -16,7 +16,7 @@ namespace Core
 				virtual ~Thread(){}
 			};
 
-			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+			Thread* CreateThread(ThreadFonc threadEntry, VoidPtr threadParam);
 			//Thread* GetCurrentThread();
 		}
 	}

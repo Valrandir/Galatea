@@ -6,54 +6,54 @@ namespace Core
 	{
 		namespace Threading
 		{
-			void* ThreadImpl::NativeThreadEntry(void* ThreadParam)
+			void* ThreadImpl::NativeThreadEntry(void* threadParam)
 			{
-				ThreadImpl& ThreadRef = *(ThreadImpl*)ThreadParam;
-				ThreadRef.ReturnValue = ThreadRef.ThreadEntry(ThreadRef.ThreadParam);
+				ThreadImpl& threadRef = *(ThreadImpl*)threadParam;
+				threadRef._returnValue = threadRef._threadEntry(threadRef._threadParam);
 				return (void*)0U;
 			}
 
-			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
-				ThreadEntry(ThreadEntry),
-				ThreadParam(ThreadParam),
-				ReturnValue(0),
-				ThreadID(0)
+			ThreadImpl::ThreadImpl(ThreadFonc threadEntry, VoidPtr threadParam) :
+				_threadEntry(threadEntry),
+				_threadParam(threadParam),
+				_returnValue(0),
+				_threadID(0)
 			{}
 
-			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc threadEntry, VoidPtr threadParam)
 			{
-				Int32 ErrCode;
-				pthread_t ThreadID;
-				ThreadImpl* Thread = new ThreadImpl(ThreadEntry, ThreadParam);
+				Int32 errCode;
+				pthread_t threadID;
+				ThreadImpl* thread = new ThreadImpl(threadEntry, threadParam);
 
-				ErrCode = pthread_create(&ThreadID, NULL, NativeThreadEntry, (void*)Thread);
+				errCode = pthread_create(&threadID, NULL, NativeThreadEntry, (void*)thread);
 
-				if(!ErrCode)
+				if(!errCode)
 				{
-					Thread->ThreadID = ThreadID;
-					return Thread;
+					thread->_threadID = threadID;
+					return thread;
 				}
 				else
 				{
-					System::SetErrCode((UInt32)ErrCode);
-					DeletePtr(Thread);
+					System::SetErrCode((UInt32)errCode);
+					DeletePtr(thread);
 					return NULL;
 				}
 			}
 
-			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			Thread* CreateThread(ThreadFonc threadEntry, VoidPtr threadParam)
 			{
-				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
+				return ThreadImpl::CreateInstance(threadEntry, threadParam);
 			}
 
 			VoidPtr ThreadImpl::Join()
 			{
-				if(ThreadID)
+				if(_threadID)
 				{
-					pthread_join(ThreadID, NULL);
-					ThreadID = 0;
+					pthread_join(_threadID, NULL);
+					_threadID = 0;
 				}
-				return ReturnValue;
+				return _returnValue;
 			}
 		}
 	}

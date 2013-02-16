@@ -11,16 +11,16 @@ namespace Core
 		{
 			class ThreadImpl : public Thread
 			{
-				ThreadFonc ThreadEntry;
-				VoidPtr ThreadParam;
-				VoidPtr ReturnValue;
-				HANDLE ThreadHandle;
+				ThreadFonc _threadEntry;
+				VoidPtr _threadParam;
+				VoidPtr _returnValue;
+				HANDLE _threadHandle;
 
-				static DWORD WINAPI NativeThreadEntry(LPVOID ThreadParam);
-				ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				static DWORD WINAPI NativeThreadEntry(LPVOID threadParam);
+				ThreadImpl(ThreadFonc threadEntry, VoidPtr threadParam);
 
 				public:
-				static ThreadImpl* CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam);
+				static ThreadImpl* CreateInstance(ThreadFonc threadEntry, VoidPtr threadParam);
 				VoidPtr Join();
 			};
 		}

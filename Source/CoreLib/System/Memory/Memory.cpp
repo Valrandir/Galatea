@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Memory.hpp"
+#include "../Assert/Assert.hpp"
 
 namespace Core
 {
@@ -10,7 +11,9 @@ namespace Core
 		{
 			VoidPtr Alloc(UInt Bytes)
 			{
-				return malloc(Bytes);
+				void *ptr = malloc(Bytes);
+				Assert(ptr != 0);
+				return ptr;
 			}
 
 			void Free(VoidPtr MemoryPtr)

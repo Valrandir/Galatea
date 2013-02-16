@@ -2,7 +2,7 @@
 #include "../../Types.hpp"
 
 #ifdef CoreDebug
-	#define Assert(fn) if(!fn) Core::Assert::Fail(Text(#fn), Text(__FUNCTION__), Text(__FILE__), __LINE__);
+	#define Assert(fn) if(!(fn)) Core::Assert::Fail(Text(#fn), Text(__FUNCTION__), Text(__FILE__), __LINE__)
 #else
 	#define Assert
 #endif

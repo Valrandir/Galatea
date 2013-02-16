@@ -58,27 +58,39 @@ template <class T> void Vector<T>::AutoAllocate()
 
 template <class T> void Vector<T>::Construct(ConstElement* target, ConstElement *source) const
 {
+	Assert(target);
+	Assert(source);
 	new((VoidPtr)target) Element(*source);
 }
 
 template <class T> void Vector<T>::Move(ConstElement* target, Element *source) const
 {
+	Assert(target);
+	Assert(source);
 	new((VoidPtr)target) Element((Element&&)(*source));
 }
 
 template <class T> void Vector<T>::Destroy(ConstElement* target) const
 {
+	Assert(target);
 	target->~Element();
 }
 
 template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* end) const
 {
+	Assert(begin);
+	Assert(end);
+
 	while(begin != end)
 		Destroy(begin++);
 }
 
 template <class T> void Vector<T>::MoveRange(Element* target, Element* begin, Element* end) const
 {
+	Assert(target);
+	Assert(begin);
+	Assert(end);
+
 	if(_ctorMode != CtorModeEnum::Always)
 		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
 	else
@@ -221,11 +233,15 @@ template<class T> Vector<T>& Vector<T>::operator+=(Vector const & source)
 
 template<class T> typename Vector<T>::Element& Vector<T>::operator[](UInt offset)
 {
+	Assert(_origin);
+	Assert(offset >= 0U && offset < GetLength());
 	return *(_origin + offset);
 }
 
 template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt offset) const
 {
+	Assert(_origin);
+	Assert(offset >= 0U && offset < GetLength());
 	return *(_origin + offset);
 }
 
@@ -315,10 +331,13 @@ template<class T> void Vector<T>::Shrink()
 
 template<class T> void Vector<T>::Clear()
 {
-	if(_ctorMode != CtorModeEnum::Pod)
-		Destroy(_origin, _last);
+	if(!IsEmpty())
+	{
+		if(_ctorMode != CtorModeEnum::Pod)
+			Destroy(_origin, _last);
 
-	_last = _origin;
+		_last = _origin;
+	}
 }
 
 template<class T> void Vector<T>::Free()
@@ -342,8 +361,9 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 {
 	UInt length;
 
-	if(begin == end)
-		return;
+	Assert(begin);
+	Assert(end);
+	Assert(begin != end);
 
 	length = end - begin;
 	Reserve(GetLength() + length);
@@ -365,8 +385,7 @@ template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 
 	offset = &at - _origin;
 	AutoAllocate();
-
-	element = &operator[](offset);
+	element = _origin + offset;
 
 	MoveRange(element + 1, element, _last);
 	++_last;
@@ -387,8 +406,7 @@ template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 		offset = length;
 
 	AutoAllocate();
-
-	element = &operator[](offset);
+	element = _origin + offset;
 
 	MoveRange(element + 1, element, _last);
 	++_last;
@@ -430,7 +448,7 @@ template<class T> void Vector<T>::Remove(UInt offset)
 		if(offset >= length)
 			offset = length - 1;
 
-		element = &operator[](offset);
+		element = _origin + offset;
 
 		if(_ctorMode != CtorModeEnum::Pod)
 			Destroy(element);

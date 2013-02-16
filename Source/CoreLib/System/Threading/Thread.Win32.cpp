@@ -6,30 +6,30 @@ namespace Core
 	{
 		namespace Threading
 		{
-			DWORD WINAPI ThreadImpl::NativeThreadEntry(LPVOID ThreadParam)
+			DWORD WINAPI ThreadImpl::NativeThreadEntry(LPVOID threadParam)
 			{
-				ThreadImpl& ThreadRef = *(ThreadImpl*)ThreadParam;
-				ThreadRef.ReturnValue = ThreadRef.ThreadEntry(ThreadRef.ThreadParam);
+				ThreadImpl& threadRef = *(ThreadImpl*)threadParam;
+				threadRef._returnValue = threadRef._threadEntry(threadRef._threadParam);
 				return (DWORD)0U;
 			}
 
-			ThreadImpl::ThreadImpl(ThreadFonc ThreadEntry, VoidPtr ThreadParam) :
-				ThreadEntry(ThreadEntry),
-				ThreadParam(ThreadParam),
-				ReturnValue(0),
-				ThreadHandle(0)
+			ThreadImpl::ThreadImpl(ThreadFonc threadEntry, VoidPtr threadParam) :
+				_threadEntry(threadEntry),
+				_threadParam(threadParam),
+				_returnValue(0),
+				_threadHandle(0)
 			{}
 
-			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			ThreadImpl* ThreadImpl::CreateInstance(ThreadFonc threadEntry, VoidPtr threadParam)
 			{
-				HANDLE ThreadHandle;
-				ThreadImpl* Thread = new ThreadImpl(ThreadEntry, ThreadParam);
+				HANDLE threadHandle;
+				ThreadImpl* Thread = new ThreadImpl(threadEntry, threadParam);
 
-				ThreadHandle = ::CreateThread(NULL, 0, NativeThreadEntry, (LPVOID)Thread, 0, NULL);
+				threadHandle = ::CreateThread(NULL, 0, NativeThreadEntry, (LPVOID)Thread, 0, NULL);
 
-				if(ThreadHandle)
+				if(threadHandle)
 				{
-					Thread->ThreadHandle = ThreadHandle;
+					Thread->_threadHandle = threadHandle;
 					return Thread;
 				}
 				else
@@ -41,17 +41,17 @@ namespace Core
 
 			VoidPtr ThreadImpl::Join()
 			{
-				if(ThreadHandle)
+				if(_threadHandle)
 				{
-					WaitForSingleObject(ThreadHandle, INFINITE);
-					ThreadHandle = 0;
+					WaitForSingleObject(_threadHandle, INFINITE);
+					_threadHandle = 0;
 				}
-				return ReturnValue;
+				return _returnValue;
 			}
 
-			Thread* CreateThread(ThreadFonc ThreadEntry, VoidPtr ThreadParam)
+			Thread* CreateThread(ThreadFonc threadEntry, VoidPtr threadParam)
 			{
-				return ThreadImpl::CreateInstance(ThreadEntry, ThreadParam);
+				return ThreadImpl::CreateInstance(threadEntry, threadParam);
 			}
 
 			//Thread* GetCurrentThread()

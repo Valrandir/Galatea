@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include "String.hpp"
+#include "../System/Assert/Assert.hpp"
 
 void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::TChar const * format, va_list args);
 Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
@@ -68,11 +69,12 @@ namespace Core
 
 	String& String::operator+=(TChar const * val)
 	{
-		UInt n = GetTCharLength(val);
-		if(n)
+		Assert(val);
+		UInt length = GetTCharLength(val);
+		if(length)
 		{
 			_vctr.Remove(_vctr.GetLength() - 1);
-			_vctr.AddRange(val, val + n + 1);
+			_vctr.AddRange(val, val + length + 1);
 		}
 		return *this;
 	}
@@ -89,6 +91,7 @@ namespace Core
 
 	String String::operator+(TChar const * val) const
 	{
+		Assert(val);
 		return String(*this) += val;
 	}
 
@@ -153,6 +156,10 @@ namespace Core
 
 	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
 	{
+		Assert(buffer);
+		Assert(buffer_size > 0);
+		Assert(format);
+
 		va_list args;
 		va_start(args, format);
 		FormatImpl(buffer, buffer_size, format, args);
@@ -161,6 +168,8 @@ namespace Core
 
 	String String::FormatStr(TChar const * format, ...)
 	{
+		Assert(format);
+
 		va_list args;
 		UInt size;
 		String str;
@@ -230,6 +239,7 @@ namespace Core
 
 	void String::Append(TChar const * str)
 	{
+		Assert(str);
 		*this += str;
 	}
 
@@ -240,6 +250,7 @@ namespace Core
 
 	void String::AppendLine(TChar const * str)
 	{
+		Assert(str);
 		*this += str;
 		*this += NewLine;
 	}
