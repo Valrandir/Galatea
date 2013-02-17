@@ -10,9 +10,9 @@ namespace Core
 	{
 		void Fail(TChar const * failed_text, TChar const * function, TChar const * file, UInt line)
 		{
-			String msg;
+			static Bool failing = false; if(failing) return; failing = true;
 
-			msg = String::FormatStr
+			String msg = String::FormatStr
 			(
 				Text("Failed Call : %s") NewLine
 				Text("Function : %s") NewLine
