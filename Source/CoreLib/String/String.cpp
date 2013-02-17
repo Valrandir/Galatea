@@ -7,6 +7,8 @@ Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
 
 namespace Core
 {
+	UInt String::NewLineLength = String::GetTCharLength(NewLine);
+
 	String::String() : _vctr(Vector::CtorModeEnum::Pod)
 	{
 	}
@@ -229,7 +231,7 @@ namespace Core
 
 	void String::Reserve(UInt capacity)
 	{
-		_vctr.Reserve(capacity);
+		_vctr.Reserve(capacity + NewLineLength);
 	}
 
 	void String::Shrink()

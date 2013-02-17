@@ -1389,8 +1389,8 @@ namespace StringTestNamespace
 
 		String str = String::FormatStr(format, 157, Text("Done"));
 
-		CHECK str.GetCapacity() == 37;
-		CHECK str.GetLength() == 36;
+		CHECK str.GetCapacity() == 37U + String::GetTCharLength(NewLine);
+		CHECK str.GetLength() == 36U;
 		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
 
 		return result;
