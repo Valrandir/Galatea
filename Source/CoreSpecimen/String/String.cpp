@@ -266,49 +266,6 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool CompareStringTest()
-	{
-		Bool result = true;
-
-		//Empty to empty
-		{
-			String s;
-			CHECK 0 == s.Compare(String(_empty));
-		}
-
-		//Empty to not empty
-		{
-			String s;
-			CHECK -1 == s.Compare(String(Text("Not Empty")));
-		}
-
-		//Not Empty to empty
-		{
-			String s(_text);
-			CHECK 1 == s.Compare(String(_empty));
-		}
-
-		//Not Empty to smaller
-		{
-			String s(_text);
-			CHECK 1 == s.Compare(String(_textSmaller));
-		}
-
-		//Not Empty to greater
-		{
-			String s(_text);
-			CHECK -1 == s.Compare(String(_textGreater));
-		}
-
-		//Not Empty to same
-		{
-			String s(_text);
-			CHECK 0 == s.Compare(String(_text));
-		}
-
-		return result;
-	}
-
 	Bool OperatorAssignTCharTest()
 	{
 		Bool result = true;
@@ -669,48 +626,6 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorEqualStringTest()
-	{
-		Bool result = true;
-
-		//Empty == Empty
-		{
-			String l;
-			String r;
-			CHECK l == r;
-		}
-
-		//Empty == Not Empty
-		{
-			String l;
-			String r(_text);
-			CHECK !(l == r);
-		}
-
-		//Not Empty == Empty
-		{
-			String l(_text);
-			String r;
-			CHECK !(l == r);
-		}
-
-		//Not Empty == Same
-		{
-			String l(_text);
-			String r(_text);
-			CHECK l == r;
-		}
-
-		//Not Empty == Different
-		{
-			String l(_text);
-			String r(_textSmaller);
-			CHECK !(l == r);
-		}
-
-		return result;
-	}
-
 	Bool OperatorNotEqualTCharTest()
 	{
 		Bool result = true;
@@ -743,48 +658,6 @@ namespace StringTestNamespace
 		{
 			String s(_text);
 			CHECK s != _textSmaller;
-		}
-
-		return result;
-	}
-
-	Bool OperatorNotEqualStringTest()
-	{
-		Bool result = true;
-
-		//Empty != Empty
-		{
-			String l;
-			String r;
-			CHECK !(l != r);
-		}
-
-		//Empty != Not Empty
-		{
-			String l;
-			String r(_text);
-			CHECK l != r;
-		}
-
-		//Not Empty != Empty
-		{
-			String l(_text);
-			String r;
-			CHECK l != r;
-		}
-
-		//Not Empty != Same
-		{
-			String l(_text);
-			String r(_text);
-			CHECK !(l != r);
-		}
-
-		//Not Empty != Different
-		{
-			String l(_text);
-			String r(_textSmaller);
-			CHECK l != r;
 		}
 
 		return result;
@@ -833,55 +706,6 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorGreaterStringTest()
-	{
-		Bool result = true;
-
-		//Empty > Empty
-		{
-			String s;
-			String t;
-			CHECK !(s > t);
-		}
-
-		//Empty > Not Empty
-		{
-			String s;
-			String t(_text);
-			CHECK !(s > t);
-		}
-
-		//Not Empty > Empty
-		{
-			String s(_text);
-			String t;
-			CHECK s > t;
-		}
-
-		//Not Empty > Same
-		{
-			String s(_text);
-			String t(_text);
-			CHECK !(s > t);
-		}
-
-		//Not Empty > Greater
-		{
-			String s(_text);
-			String t(_textGreater);
-			CHECK !(s > t);
-		}
-
-		//Not Empty > Smaller
-		{
-			String s(_text);
-			String t(_textSmaller);
-			CHECK s > t;
-		}
-
-		return result;
-	}
-
 	Bool OperatorSmallerTCharTest()
 	{
 		Bool result = true;
@@ -920,55 +744,6 @@ namespace StringTestNamespace
 		{
 			String s(_text);
 			CHECK !(s < _textSmaller);
-		}
-
-		return result;
-	}
-
-	Bool OperatorSmallerStringTest()
-	{
-		Bool result = true;
-
-		//Empty < Empty
-		{
-			String s;
-			String t;
-			CHECK !(s < t);
-		}
-
-		//Empty < Not Empty
-		{
-			String s;
-			String t(_text);
-			CHECK s < t;
-		}
-
-		//Not Empty < Empty
-		{
-			String s(_text);
-			String t;
-			CHECK !(s < t);
-		}
-
-		//Not Empty < Same
-		{
-			String s(_text);
-			String t(_text);
-			CHECK !(s < t);
-		}
-
-		//Not Empty < Greater
-		{
-			String s(_text);
-			String t(_textGreater);
-			CHECK s < t;
-		}
-
-		//Not Empty < Smaller
-		{
-			String s(_text);
-			String t(_textSmaller);
-			CHECK !(s < t);
 		}
 
 		return result;
@@ -1017,55 +792,6 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorGreaterOrEqualStringTest()
-	{
-		Bool result = true;
-
-		//Empty >= Empty
-		{
-			String s;
-			String t;
-			CHECK s >= t;
-		}
-
-		//Empty >= Not Empty
-		{
-			String s;
-			String t(_text);
-			CHECK !(s >= t);
-		}
-
-		//Not Empty >= Empty
-		{
-			String s(_text);
-			String t;
-			CHECK s >= t;
-		}
-
-		//Not Empty >= Same
-		{
-			String s(_text);
-			String t(_text);
-			CHECK s >= t;
-		}
-
-		//Not Empty >= Greater
-		{
-			String s(_text);
-			String t(_textGreater);
-			CHECK !(s >= t);
-		}
-
-		//Not Empty >= Smaller
-		{
-			String s(_text);
-			String t(_textSmaller);
-			CHECK s >= t;
-		}
-
-		return result;
-	}
-
 	Bool OperatorSmallerOrEqualTCharTest()
 	{
 		Bool result = true;
@@ -1104,55 +830,6 @@ namespace StringTestNamespace
 		{
 			String s(_text);
 			CHECK !(s <= _textSmaller);
-		}
-
-		return result;
-	}
-
-	Bool OperatorSmallerOrEqualStringTest()
-	{
-		Bool result = true;
-
-		//Empty <= Empty
-		{
-			String s;
-			String t;
-			CHECK s <= t;
-		}
-
-		//Empty <= Not Empty
-		{
-			String s;
-			String t(_text);
-			CHECK s <= t;
-		}
-
-		//Not Empty <= Empty
-		{
-			String s(_text);
-			String t;
-			CHECK !(s <= t);
-		}
-
-		//Not Empty <= Same
-		{
-			String s(_text);
-			String t(_text);
-			CHECK s <= t;
-		}
-
-		//Not Empty <= Greater
-		{
-			String s(_text);
-			String t(_textGreater);
-			CHECK s <= t;
-		}
-
-		//Not Empty <= Smaller
-		{
-			String s(_text);
-			String t(_textSmaller);
-			CHECK !(s <= t);
 		}
 
 		return result;
@@ -1560,7 +1237,6 @@ Bool StringTest()
 	CHECK GetTCharTest();
 
 	CHECK CompareTCharTest();
-	CHECK CompareStringTest();
 
 	CHECK OperatorAssignTCharTest();
 	CHECK OperatorAssignStringTest();
@@ -1571,19 +1247,13 @@ Bool StringTest()
 	CHECK OperatorPlusStringTest();
 
 	CHECK OperatorEqualTCharTest();
-	CHECK OperatorEqualStringTest();
 	CHECK OperatorNotEqualTCharTest();
-	CHECK OperatorNotEqualStringTest();
 
 	CHECK OperatorGreaterTCharTest();
-	CHECK OperatorGreaterStringTest();
 	CHECK OperatorSmallerTCharTest();
-	CHECK OperatorSmallerStringTest();
 
 	CHECK OperatorGreaterOrEqualTCharTest();
-	CHECK OperatorGreaterOrEqualStringTest();
 	CHECK OperatorSmallerOrEqualTCharTest();
-	CHECK OperatorSmallerOrEqualStringTest();
 
 	CHECK OperatorSubscriptTest();
 

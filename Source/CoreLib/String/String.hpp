@@ -20,6 +20,7 @@ namespace Core
 		String(String &&);
 		~String();
 
+		operator TChar const * () const;
 		String& operator=(TChar const *);
 		String& operator=(String const &);
 		String& operator=(String &&);
@@ -28,17 +29,11 @@ namespace Core
 		String operator+(TChar const *) const;
 		String operator+(String const &) const;
 		Bool operator==(TChar const *) const;
-		Bool operator==(String const &) const;
 		Bool operator!=(TChar const *) const;
-		Bool operator!=(String const &) const;
 		Bool operator>(TChar const *) const;
-		Bool operator>(String const &) const;
 		Bool operator<(TChar const *) const;
-		Bool operator<(String const &) const;
 		Bool operator>=(TChar const *) const;
-		Bool operator>=(String const &) const;
 		Bool operator<=(TChar const *) const;
-		Bool operator<=(String const &) const;
 		TChar operator[](UInt index) const;
 
 		static UInt GetTCharLength(TChar const *);
@@ -52,10 +47,8 @@ namespace Core
 		static String FormatStr(TChar const * format, ...);
 
 		static Int Compare(TChar const * source, TChar const * target);
-		static Int Compare(String const & source, String const & target);
 
 		Int Compare(TChar const * target) const;
-		Int Compare(String const & target) const;
 
 		void Reserve(UInt capacity);
 		void Shrink();
