@@ -22,6 +22,9 @@
     <Filter Include="System\Assert">
       <UniqueIdentifier>{ad9f5240-e530-4866-ba31-7bdf2f74fc99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\File">
+      <UniqueIdentifier>{385d1b38-90a7-4282-ab0a-67df38b2a0a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -53,6 +56,9 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Types.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Assert\Assert.cpp">
       <Filter>System\Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\File\File.cpp">
+      <Filter>System\File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

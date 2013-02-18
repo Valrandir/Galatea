@@ -25,6 +25,9 @@
     <Filter Include="System\Assert\Win32">
       <UniqueIdentifier>{1f46ec96-5519-4db0-bfbb-0fcb57464dce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System\File">
+      <UniqueIdentifier>{6fbc368a-3f12-4620-bb48-31fabe1fc38b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -59,6 +62,12 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.hpp">
       <Filter>System\Assert\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.hpp">
+      <Filter>System\File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.hpp">
+      <Filter>System\File</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
@@ -90,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.cpp">
       <Filter>System\Assert\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.cpp">
+      <Filter>System\File</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
