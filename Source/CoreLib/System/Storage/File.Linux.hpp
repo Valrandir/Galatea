@@ -1,6 +1,4 @@
 #pragma once
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
 #include "File.hpp"
 
 namespace Core
@@ -11,10 +9,10 @@ namespace Core
 		{
 			class FileImpl : public File
 			{
-				HANDLE _hFile;
+				Int32 _fileId;
 
 				public:
-				FileImpl(HANDLE hFile);
+				FileImpl(int fileId);
 				~FileImpl();
 
 				UInt64 GetPosition() const;

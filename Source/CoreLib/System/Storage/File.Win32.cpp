@@ -1,4 +1,3 @@
-#pragma once
 #include "File.Win32.hpp"
 
 namespace Core
@@ -7,7 +6,7 @@ namespace Core
 	{
 		namespace Storage
 		{
-			File* File::Open(TChar const * fileName, UInt flags)
+			File* File::Open(TChar const * fileName, UInt32 flags)
 			{
 				DWORD access;
 				DWORD share;
@@ -19,9 +18,9 @@ namespace Core
 				if(flags == 0)
 					flags = OpenFlagEnum::OpenRead;
 
-				access = flags & OpenFlagEnum::OpenRead ? GENERIC_READ : 0;
-				access |= flags & OpenFlagEnum::OpenWrite ? GENERIC_WRITE : 0;
-				share = flags & OpenFlagEnum::OpenExclusive ? 0 : FILE_SHARE_READ;
+				access = flags & OpenFlagEnum::OpenRead ? GENERIC_READ : 0U;
+				access |= flags & OpenFlagEnum::OpenWrite ? GENERIC_WRITE : 0U;
+				share = flags & OpenFlagEnum::OpenExclusive ? 0U : FILE_SHARE_READ;
 				overwrite = flags & OpenFlagEnum::OpenOverwrite ? CREATE_ALWAYS : OPEN_ALWAYS;
 
 				hFile = CreateFile(fileName, access, share, 0, overwrite, FILE_ATTRIBUTE_NORMAL, 0);
@@ -86,7 +85,7 @@ namespace Core
 				SetFilePointerEx(_hFile, li, 0, FILE_END);
 			}
 
-			void FileImpl::Read(VoidPtr buffer, UInt bufferSize)
+			void FileImpl::Read(VoidPtr buffer, UInt32 bufferSize)
 			{
 				DWORD bytesRead;
 				BOOL readResult;
@@ -98,7 +97,7 @@ namespace Core
 				Assert(readResult != FALSE);
 			}
 
-			void FileImpl::Write(VoidPtr const buffer, UInt bufferSize)
+			void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize)
 			{
 				DWORD bytesWritten;
 				BOOL writeResult;

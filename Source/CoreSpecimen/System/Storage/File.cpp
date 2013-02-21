@@ -9,7 +9,7 @@ Bool FileTest()
 
 	TChar const * fileName = Text("FileTest.txt");
 	String message = Text("Hello World!") NewLine;
-	UInt mode = File::OpenFlagEnum::OpenRead | File::OpenFlagEnum::OpenWrite;
+	UInt mode = File::OpenFlagEnum::OpenRead | File::OpenFlagEnum::OpenWrite | File::OpenOverwrite;
 	File* file;
 	UInt64 position;
 
@@ -22,7 +22,7 @@ Bool FileTest()
 	position = file->GetPosition();
 	CHECK(position == 0U);
 
-	file->Write((VoidPtr)message.GetTChar(), message.GetLength() * sizeof(TChar));
+	file->Write((VoidPtr)message.GetTChar(), (UInt32)message.GetLength() * sizeof(TChar));
 	position = file->GetPosition();
 	CHECK(position == message.GetLength() * sizeof(TChar));
 

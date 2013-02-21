@@ -26,7 +26,7 @@ namespace Core
 					OpenExclusive = 8
 				};
 
-				static File* Open(TChar const * fileName, UInt flags);
+				static File* Open(TChar const * fileName, UInt32 flags);
 				static Bool Exists(TChar const * fileName);
 				static Bool Delete(TChar const * fileName);
 
@@ -35,8 +35,8 @@ namespace Core
 				virtual UInt64 GetPosition() const = 0;
 				virtual void Seek(Int64 distance) = 0;
 				virtual void SeekToEnd() = 0;
-				virtual void Read(VoidPtr buffer, UInt bufferSize) = 0;
-				virtual void Write(VoidPtr const buffer, UInt bufferSize) = 0;
+				virtual void Read(VoidPtr buffer, UInt32 bufferSize) = 0;
+				virtual void Write(VoidPtr const buffer, UInt32 bufferSize) = 0;
 				virtual void Close() = 0;
 			};
 		}
