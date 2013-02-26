@@ -9,7 +9,7 @@ Bool FileTest()
 
 	TChar const * fileName = Text("FileTest.txt");
 	String message = Text("Hello World!") NewLine;
-	UInt mode = File::OpenFlagEnum::OpenRead | File::OpenFlagEnum::OpenWrite | File::OpenOverwrite;
+	UInt32 mode = File::OpenFlagEnum::OpenRead | File::OpenFlagEnum::OpenWrite | File::OpenOverwrite;
 	File* file;
 	UInt64 position;
 

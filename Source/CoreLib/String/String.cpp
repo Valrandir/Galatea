@@ -78,9 +78,18 @@ namespace Core
 	{
 		Assert(val);
 		UInt length = GetTCharLength(val);
+		UInt current_length, new_length;
+		Bool MaxSizeOverflow;
+
 		if(length)
 		{
-			_vctr.Remove(_vctr.GetLength() - 1);
+			//Check for MaxSize overflow
+			current_length = _vctr.GetLength();
+			new_length = current_length + length;
+			MaxSizeOverflow = !(new_length >= MaxSize || new_length < current_length);
+			Assert(MaxSizeOverflow);
+
+			_vctr.Remove(current_length - 1);
 			_vctr.AddRange(val, val + length + 1);
 		}
 		return *this;
@@ -257,27 +266,27 @@ namespace Core
 		return _vctr.DrivePointer(future_length + 1);
 	}
 
-	Int String::IndexOf(TChar const chr, Int position) const
+	UInt String::IndexOf(TChar const chr, UInt position) const
 	{
-		Int idx, length = GetLength();
+		UInt idx, length = GetLength();
 
-		if(length == 0 || position < 0 || position >= length) return -1;
+		if(length == 0 || position < 0 || position > length) return NoMatch;
 
 		for(idx = position; idx < length; ++idx)
 			if(_vctr[idx] == chr)
 				return idx;
 
-		return -1;
+		return NoMatch;
 	}
 
-	Int String::LastIndexOf(TChar const chr, Int position) const
+	UInt String::LastIndexOf(TChar const chr, UInt position) const
 	{
-		Int idx, length = GetLength();
+		UInt idx, length = GetLength();
 
-		if(position == -1) position = length - 1;
-		if(length == 0 || position < 0 || position >= length) return -1;
+		if(position == NoMatch) position = length - 1;
+		if(length == 0 || position < 0 || position > length) return NoMatch;
 
-		for(idx = position; idx >= 0; --idx)
+		for(idx = position; idx >= 0 && idx != NoMatch; --idx)
 		{
 			if(_vctr[idx] == chr)
 			{
@@ -285,7 +294,7 @@ namespace Core
 			}
 		}
 
-		return -1;
+		return NoMatch;
 	}
 
 	String String::SubString(UInt start, UInt length) const

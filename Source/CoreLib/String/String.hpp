@@ -12,6 +12,9 @@ namespace Core
 		static UInt NewLineLength;
 
 		public:
+		static const UInt NoMatch = (UInt)-1;
+		static const UInt MaxSize = NoMatch - 1;
+
 		String();
 		String(UInt capacity);
 		String(TChar const *);
@@ -59,8 +62,8 @@ namespace Core
 
 		TChar* DrivePointer(UInt future_length);
 
-		Int IndexOf(TChar const chr, Int position = 0) const;
-		Int LastIndexOf(TChar const chr, Int position = -1) const;
+		UInt IndexOf(TChar const chr, UInt position = 0) const;
+		UInt LastIndexOf(TChar const chr, UInt position = NoMatch) const;
 
 		String SubString(UInt start, UInt length) const;
 	};

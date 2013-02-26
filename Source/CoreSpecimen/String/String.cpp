@@ -127,6 +127,18 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool MaxLengthTest()
+	{
+		Bool result = true;
+
+		UInt noMatch = String::NoMatch;
+		UInt maxSize = String::MaxSize;
+
+		CHECK maxSize == noMatch - 1;
+
+		return result;
+	}
+
 	Bool GetTCharLenTest()
 	{
 		Bool result = true;
@@ -1082,16 +1094,16 @@ namespace StringTestNamespace
 		TChar chr[] = {Text('0'), Text('1'), Text('2')};
 
 		//Empty string
-		CHECK empty.IndexOf(chr[0]) == -1;
+		CHECK empty.IndexOf(chr[0]) == String::NoMatch;
 
 		//Position too small
-		CHECK len[0].IndexOf(chr[0], -10) == -1;
+		CHECK len[0].IndexOf(chr[0], -10) == String::NoMatch;
 
 		//Position too big
-		CHECK len[0].IndexOf(chr[0], 10) == -1;
+		CHECK len[0].IndexOf(chr[0], 10) == String::NoMatch;
 
 		//Length 1 - Not Found
-		CHECK len[0].IndexOf(chr[1]) == -1;
+		CHECK len[0].IndexOf(chr[1]) == String::NoMatch;
 
 		//Length 1 - Found
 		CHECK len[0].IndexOf(chr[0]) == 0;
@@ -1103,7 +1115,7 @@ namespace StringTestNamespace
 		CHECK len[1].IndexOf(chr[1]) == 1;
 
 		//Length 2 - Not Found because of Position
-		CHECK len[1].IndexOf(chr[0], 1) == -1;
+		CHECK len[1].IndexOf(chr[0], 1) == String::NoMatch;
 
 		//Length 2 - Found at Position
 		CHECK len[1].IndexOf(chr[1], 1) == 1;
@@ -1112,7 +1124,7 @@ namespace StringTestNamespace
 		CHECK len[2].IndexOf(chr[0]) == 0;
 
 		//Length 3 - Not Found because of Position
-		CHECK len[2].IndexOf(chr[0], 1) == -1;
+		CHECK len[2].IndexOf(chr[0], 1) == String::NoMatch;
 
 		//Length 3 - Found at Position
 		CHECK len[2].IndexOf(chr[1], 1) == 1;
@@ -1132,16 +1144,16 @@ namespace StringTestNamespace
 		TChar chr[] = {Text('0'), Text('1'), Text('2')};
 
 		//Empty string
-		CHECK empty.LastIndexOf(chr[0]) == -1;
+		CHECK empty.LastIndexOf(chr[0]) == String::NoMatch;
 
 		//Position too small
-		CHECK len[0].LastIndexOf(chr[0], -10) == -1;
+		CHECK len[0].LastIndexOf(chr[0], -10) == String::NoMatch;
 
 		//Position too big
-		CHECK len[0].LastIndexOf(chr[0], 10) == -1;
+		CHECK len[0].LastIndexOf(chr[0], 10) == String::NoMatch;
 
 		//Length 1 - Not Found
-		CHECK len[0].LastIndexOf(chr[1]) == -1;
+		CHECK len[0].LastIndexOf(chr[1]) == String::NoMatch;
 
 		//Length 1 - Found
 		CHECK len[0].LastIndexOf(chr[0]) == 0;
@@ -1153,7 +1165,7 @@ namespace StringTestNamespace
 		CHECK len[1].LastIndexOf(chr[1]) == 1;
 
 		//Length 2 - Not Found because of Position
-		CHECK len[1].LastIndexOf(chr[1], 0) == -1;
+		CHECK len[1].LastIndexOf(chr[1], 0) == String::NoMatch;
 
 		//Length 2 - Found at Position
 		CHECK len[1].LastIndexOf(chr[0], 0) == 0;
@@ -1162,7 +1174,7 @@ namespace StringTestNamespace
 		CHECK len[2].LastIndexOf(chr[2]) == 2;
 
 		//Length 3 - Not Found because of Position
-		CHECK len[2].LastIndexOf(chr[2], 1) == -1;
+		CHECK len[2].LastIndexOf(chr[2], 1) == String::NoMatch;
 
 		//Length 3 - Found at Position
 		CHECK len[2].LastIndexOf(chr[1], 1) == 1;
@@ -1230,6 +1242,7 @@ Bool StringTest()
 	CHECK CtorCopyTest();
 	CHECK CtorMoveTest();
 
+	CHECK MaxLengthTest();
 	CHECK GetTCharLenTest();
 	CHECK IsEmptyTest();
 	CHECK GetCapacityTest();
