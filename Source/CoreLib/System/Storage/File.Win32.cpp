@@ -6,107 +6,107 @@ namespace Core
 	{
 		namespace Storage
 		{
-			File* File::Open(TChar const * fileName, UInt32 flags)
+			FileImpl::FileImpl(HANDLE hFile) : _hFile(hFile)
 			{
-				DWORD access;
-				DWORD share;
-				DWORD overwrite;
-				HANDLE hFile;
+			}
 
+			File* File::Create(TChar const * fileName)
+			{
 				Assert(fileName != NULL);
+				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
+			}
 
-				if(flags == 0)
-					flags = OpenFlagEnum::OpenRead;
+			File* File::Open(TChar const * fileName)
+			{
+				Assert(fileName != NULL);
+				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
+			}
 
-				access = flags & OpenFlagEnum::OpenRead ? GENERIC_READ : 0U;
-				access |= flags & OpenFlagEnum::OpenWrite ? GENERIC_WRITE : 0U;
-				share = flags & OpenFlagEnum::OpenExclusive ? 0U : FILE_SHARE_READ;
-				overwrite = flags & OpenFlagEnum::OpenOverwrite ? CREATE_ALWAYS : OPEN_ALWAYS;
-
-				hFile = CreateFile(fileName, access, share, 0, overwrite, FILE_ATTRIBUTE_NORMAL, 0);
-
-				if(hFile == INVALID_HANDLE_VALUE)
-					return NULL;
-
-				return new FileImpl(hFile);
+			File* File::OpenReadOnly(TChar const * fileName)
+			{
+				Assert(fileName != NULL);
+				HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
 			}
 
 			Bool File::Exists(TChar const * fileName)
 			{
+				Assert(fileName != NULL);
 				DWORD attr = GetFileAttributes(fileName);
 				return attr != INVALID_FILE_ATTRIBUTES && !(attr & FILE_ATTRIBUTE_DIRECTORY);
 			}
 
 			Bool File::Delete(TChar const * fileName)
 			{
+				Assert(fileName != NULL);
 				return DeleteFile(fileName) != 0;
 			}
 
-			FileImpl::FileImpl(HANDLE hFile) : _hFile(hFile)
+			Int64 File::GetFileSize(TChar const * fileName)
 			{
-			}
-
-			FileImpl::~FileImpl()
-			{
-				Close();
-			}
-
-			UInt64 FileImpl::GetPosition() const
-			{
-				LARGE_INTEGER li[2];
-
-				Assert(_hFile != 0);
-
-				li[0].QuadPart = 0U;
-				li[1].QuadPart = 0U;
-
-				SetFilePointerEx(_hFile, *li, li + 1, FILE_CURRENT);
-
-				return li[1].QuadPart;
-			}
-
-			void FileImpl::Seek(Int64 distance)
-			{
+				Assert(fileName != NULL);
+				WIN32_FILE_ATTRIBUTE_DATA attr = {0};
 				LARGE_INTEGER li;
 
-				Assert(_hFile != 0);
+				//Assert(GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr));
+				GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr);
+				li.LowPart = attr.nFileSizeLow;
+				li.HighPart = attr.nFileSizeHigh;
 
-				li.QuadPart = distance;
+				return li.QuadPart;
+			}
+
+			Int64 FileImpl::GetFileSize() const
+			{
+				Assert(_hFile != 0);
+				LARGE_INTEGER fileSize;
+				Assert(GetFileSizeEx(_hFile, &fileSize));
+				return fileSize.QuadPart;
+			}
+
+			Int64 FileImpl::GetSeekPos() const
+			{
+				Assert(_hFile != 0);
+				LARGE_INTEGER distance = {0};
+				LARGE_INTEGER newPosition = {0};
+				SetFilePointerEx(_hFile, distance, &newPosition, FILE_CURRENT);
+				return newPosition.QuadPart;
+			}
+
+			void FileImpl::Seek(Int64 position) const
+			{
+				Assert(_hFile != 0);
+				LARGE_INTEGER li;
+				li.QuadPart = position;
 				SetFilePointerEx(_hFile, li, 0, FILE_BEGIN);
 			}
 
-			void FileImpl::SeekToEnd()
+			void FileImpl::SeekToEnd() const
 			{
-				LARGE_INTEGER li;
-
 				Assert(_hFile != 0);
-
+				LARGE_INTEGER li;
 				li.QuadPart = 0U;
 				SetFilePointerEx(_hFile, li, 0, FILE_END);
 			}
 
-			void FileImpl::Read(VoidPtr buffer, UInt32 bufferSize)
+			void FileImpl::Read(VoidPtr buffer, UInt32 bufferSize) const
 			{
-				DWORD bytesRead;
-				BOOL readResult;
-
 				Assert(buffer != 0);
 				Assert(_hFile != 0);
-
-				readResult = ReadFile(_hFile, buffer, bufferSize, &bytesRead, 0);
-				Assert(readResult != FALSE);
+				DWORD bytesRead;
+				BOOL readResult = ReadFile(_hFile, buffer, bufferSize, &bytesRead, 0);
+				//Assert(readResult != FALSE);
 			}
 
-			void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize)
+			void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize) const
 			{
-				DWORD bytesWritten;
-				BOOL writeResult;
-
 				Assert(buffer != 0);
 				Assert(_hFile != 0);
-
-				writeResult = WriteFile(_hFile, buffer, bufferSize, &bytesWritten, 0);
-				Assert(writeResult != FALSE);
+				DWORD bytesWritten;
+				BOOL writeResult = WriteFile(_hFile, buffer, bufferSize, &bytesWritten, 0);
+				//Assert(writeResult != FALSE);
 			}
 
 			void FileImpl::Close()
@@ -116,6 +116,11 @@ namespace Core
 					CloseHandle(_hFile);
 					_hFile = 0;
 				}
+			}
+
+			FileImpl::~FileImpl()
+			{
+				Close();
 			}
 		}
 	}

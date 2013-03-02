@@ -4,7 +4,7 @@
 	#define NULL 0
 #endif
 
-#define DeletePtr(ptr) delete(ptr); (ptr) = NULL
+#define DeletePtr(ptr) if(ptr) { delete(ptr); (ptr) = NULL; }
 
 namespace Core
 {
@@ -29,9 +29,13 @@ namespace Core
 	#ifndef CoreTarget64Bits
 		typedef Int32 Int;
 		typedef UInt32 UInt;
+		typedef Int32* IntPtr;
+		typedef UInt32* UIntPtr;
 	#else
 		typedef Int64 Int;
 		typedef UInt64 UInt;
+		typedef Int64* IntPtr;
+		typedef UInt64* UIntPtr;
 	#endif
 
 	typedef bool Bool;

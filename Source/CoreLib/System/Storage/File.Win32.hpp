@@ -15,14 +15,14 @@ namespace Core
 
 				public:
 				FileImpl(HANDLE hFile);
-				~FileImpl();
-
-				UInt64 GetPosition() const;
-				void Seek(Int64 distance);
-				void SeekToEnd();
-				void Read(VoidPtr buffer, UInt32 bufferSize);
-				void Write(VoidPtr const buffer, UInt32 bufferSize);
+				Int64 GetFileSize() const;
+				Int64 GetSeekPos() const;
+				void Seek(Int64 position) const;
+				void SeekToEnd() const;
+				void Read(VoidPtr buffer, UInt32 bufferSize) const;
+				void Write(VoidPtr const buffer, UInt32 bufferSize) const;
 				void Close();
+				~FileImpl();
 			};
 		}
 	}
