@@ -48,7 +48,7 @@ namespace Core
 			{
 				Assert(fileName != NULL);
 				WIN32_FILE_ATTRIBUTE_DATA attr = {0};
-				LARGE_INTEGER li;
+				LARGE_INTEGER li = {0};
 
 				//Assert(GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr));
 				GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr);
@@ -61,7 +61,7 @@ namespace Core
 			Int64 FileImpl::GetFileSize() const
 			{
 				Assert(_hFile != 0);
-				LARGE_INTEGER fileSize;
+				LARGE_INTEGER fileSize = {0};
 				Assert(GetFileSizeEx(_hFile, &fileSize));
 				return fileSize.QuadPart;
 			}
