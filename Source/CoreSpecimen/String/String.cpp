@@ -1076,7 +1076,7 @@ namespace StringTestNamespace
 
 		TChar const * format = Text("One hundred fifty seven : %d - %s");
 
-		String str = String::FormatStr(format, 157, Text("Done"));
+		String str = String::FormatToStr(format, 157, Text("Done"));
 
 		CHECK str.GetCapacity() == 37U + String::GetTCharLength(NewLine);
 		CHECK str.GetLength() == 36U;

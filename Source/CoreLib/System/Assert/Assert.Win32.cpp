@@ -12,7 +12,7 @@ namespace Core
 		{
 			static Bool failing = false; if(failing) return; failing = true;
 
-			String msg = String::FormatStr
+			String msg = String::FormatToStr
 			(
 				Text("Failed Call : %s") NewLine
 				Text("Function : %s") NewLine

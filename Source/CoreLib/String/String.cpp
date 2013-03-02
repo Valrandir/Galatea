@@ -9,6 +9,89 @@ namespace Core
 {
 	UInt String::NewLineLength = String::GetTCharLength(NewLine);
 
+	/******************************************************************************/
+	/* public static **************************************************************/
+	/******************************************************************************/
+
+	UInt String::GetTCharLength(TChar const * val)
+	{
+		UInt length = 0U;
+
+		if(val == NULL)
+			return 0U;
+
+		while(*val != '\0')
+		{
+			++val;
+			++length;
+		}
+
+		return length;
+	}
+
+	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
+	{
+		Assert(buffer);
+		Assert(buffer_size > 0);
+		Assert(format);
+
+		va_list args;
+		va_start(args, format);
+		FormatImpl(buffer, buffer_size, format, args);
+		va_end(args);
+	}
+
+	String String::FormatToStr(TChar const * format, ...)
+	{
+		Assert(format);
+
+		va_list args;
+		UInt size;
+		String str;
+
+		va_start(args, format);
+		size = FormatImplGetRequiredSize(format, args);
+		va_end(args);
+
+		str.Reserve(size);
+
+		va_start(args, format);
+		FormatImpl(str._vctr.DrivePointer(size), size, format, args);
+		va_end(args);
+
+		return str;
+	}
+
+	Int String::Compare(TChar const * source, TChar const * target)
+	{
+		//Return
+		//	 0 when source == target
+		//	 1 when source >  target
+		//	-1 when source <  target
+
+		TChar const * empty = Text("");
+
+		if(source == NULL) source = empty;
+		if(target == NULL) target = empty;
+
+		while(true)
+		{
+			if(*source == '\0' && *target == '\0') return 0;
+			if(*source == '\0') return -1;
+			if(*target == '\0') return 1;
+			if(*source < *target) return -1;
+			if(*source > *target) return 1;
+			++source;
+			++target;
+		}
+
+		return 0;
+	}
+
+	/******************************************************************************/
+	/* Constructors && Destructor *************************************************/
+	/******************************************************************************/
+
 	String::String() : _vctr(Vector::CtorModeEnum::Pod)
 	{
 	}
@@ -41,6 +124,10 @@ namespace Core
 	String::~String()
 	{
 	}
+
+	/******************************************************************************/
+	/* Operators ******************************************************************/
+	/******************************************************************************/
 
 	String::operator TChar const * () const
 	{
@@ -128,21 +215,9 @@ namespace Core
 		return _vctr.operator[](index);
 	}
 
-	UInt String::GetTCharLength(TChar const * val)
-	{
-		UInt length = 0U;
-
-		if(val == NULL)
-			return 0U;
-
-		while(*val != '\0')
-		{
-			++val;
-			++length;
-		}
-
-		return length;
-	}
+	/******************************************************************************/
+	/* Public Const Functions *****************************************************/
+	/******************************************************************************/
 
 	Bool String::IsEmpty() const
 	{
@@ -164,106 +239,9 @@ namespace Core
 		return _vctr.Begin();
 	}
 
-	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
-	{
-		Assert(buffer);
-		Assert(buffer_size > 0);
-		Assert(format);
-
-		va_list args;
-		va_start(args, format);
-		FormatImpl(buffer, buffer_size, format, args);
-		va_end(args);
-	}
-
-	String String::FormatStr(TChar const * format, ...)
-	{
-		Assert(format);
-
-		va_list args;
-		UInt size;
-		String str;
-
-		va_start(args, format);
-		size = FormatImplGetRequiredSize(format, args);
-		va_end(args);
-
-		str.Reserve(size);
-
-		va_start(args, format);
-		FormatImpl(str._vctr.DrivePointer(size), size, format, args);
-		va_end(args);
-
-		return str;
-	}
-
-	//Return
-	//	 0 when source == target
-	//	 1 when source >  target
-	//	-1 when source <  target
-	Int String::Compare(TChar const * source, TChar const * target)
-	{
-		TChar const * empty = Text("");
-
-		if(source == NULL) source = empty;
-		if(target == NULL) target = empty;
-
-		while(true)
-		{
-			if(*source == '\0' && *target == '\0') return 0;
-			if(*source == '\0') return -1;
-			if(*target == '\0') return 1;
-			if(*source < *target) return -1;
-			if(*source > *target) return 1;
-			++source;
-			++target;
-		}
-
-		return 0;
-	}
-
 	Int String::Compare(TChar const * target) const
 	{
 		return Compare(GetTChar(), target);
-	}
-
-	void String::Reserve(UInt capacity)
-	{
-		_vctr.Reserve(capacity + NewLineLength);
-	}
-
-	void String::Shrink()
-	{
-		_vctr.Shrink();
-	}
-
-	void String::Append(TChar const * str)
-	{
-		Assert(str);
-		*this += str;
-	}
-
-	void String::Append(String const & str)
-	{
-		*this += str;
-	}
-
-	void String::AppendLine(TChar const * str)
-	{
-		Assert(str);
-		*this += str;
-		*this += NewLine;
-	}
-
-	void String::AppendLine(String const & str)
-	{
-		*this += str;
-		*this += NewLine;
-	}
-
-	TChar* String::DrivePointer(UInt future_length)
-	{
-		return _vctr.DrivePointer(future_length + 1);
 	}
 
 	UInt String::IndexOf(TChar const chr, UInt position) const
@@ -308,5 +286,48 @@ namespace Core
 			length = self_length;
 
 		return String(&_vctr[start], &_vctr[start + length]);
+	}
+
+	/******************************************************************************/
+	/* Public Functions ***********************************************************/
+	/******************************************************************************/
+
+	void String::Reserve(UInt capacity)
+	{
+		_vctr.Reserve(capacity + NewLineLength);
+	}
+
+	void String::Shrink()
+	{
+		_vctr.Shrink();
+	}
+
+	void String::Append(TChar const * str)
+	{
+		Assert(str);
+		*this += str;
+	}
+
+	void String::Append(String const & str)
+	{
+		*this += str;
+	}
+
+	void String::AppendLine(TChar const * str)
+	{
+		Assert(str);
+		*this += str;
+		*this += NewLine;
+	}
+
+	void String::AppendLine(String const & str)
+	{
+		*this += str;
+		*this += NewLine;
+	}
+
+	TChar* String::DrivePointer(UInt future_length)
+	{
+		return _vctr.DrivePointer(future_length + 1);
 	}
 }

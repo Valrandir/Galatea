@@ -157,6 +157,7 @@ template <class T> void Vector<T>::MoveToSelf(Vector & source)
 /******************************************************************************/
 /* Constructors && Destructor *************************************************/
 /******************************************************************************/
+
 template<class T> Vector<T>::Vector(CtorModeEnum ctorMode) :
 	_ctorMode(ctorMode),
 	_origin(NULL),

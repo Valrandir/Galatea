@@ -6,15 +6,20 @@ namespace Core
 {
 	class String
 	{
-		private:
+		static UInt NewLineLength;
 		typedef DataStruct::Vector<TChar> Vector;
 		Vector _vctr;
-		static UInt NewLineLength;
 
 		public:
+		/* public static */
+		static UInt GetTCharLength(TChar const *);
+		static void Format(TChar* buffer, UInt buffer_size, TChar const * format, ...);
+		static String FormatToStr(TChar const * format, ...);
+		static Int Compare(TChar const * source, TChar const * target);
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt MaxSize = NoMatch - 1;
 
+		/* Constructors && Destructor */
 		String();
 		String(UInt capacity);
 		String(TChar const *);
@@ -23,6 +28,7 @@ namespace Core
 		String(String &&);
 		~String();
 
+		/* Operators */
 		operator TChar const * () const;
 		String& operator=(TChar const *);
 		String& operator=(String const &);
@@ -39,32 +45,23 @@ namespace Core
 		Bool operator<=(TChar const *) const;
 		TChar operator[](UInt index) const;
 
-		static UInt GetTCharLength(TChar const *);
-
+		/* Public Const Functions */
 		Bool IsEmpty() const;
 		UInt GetCapacity() const;
 		UInt GetLength() const;
 		TChar const * GetTChar() const;
-
-		static void Format(TChar* buffer, UInt buffer_size, TChar const * format, ...);
-		static String FormatStr(TChar const * format, ...);
-
-		static Int Compare(TChar const * source, TChar const * target);
-
 		Int Compare(TChar const * target) const;
+		UInt IndexOf(TChar const chr, UInt position = 0) const;
+		UInt LastIndexOf(TChar const chr, UInt position = NoMatch) const;
+		String SubString(UInt start, UInt length) const;
 
+		/* Public Functions */
 		void Reserve(UInt capacity);
 		void Shrink();
 		void Append(TChar const * str);
 		void Append(String const & str);
 		void AppendLine(TChar const * str);
 		void AppendLine(String const & str);
-
 		TChar* DrivePointer(UInt future_length);
-
-		UInt IndexOf(TChar const chr, UInt position = 0) const;
-		UInt LastIndexOf(TChar const chr, UInt position = NoMatch) const;
-
-		String SubString(UInt start, UInt length) const;
 	};
 }
