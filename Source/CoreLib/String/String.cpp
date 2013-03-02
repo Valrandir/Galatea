@@ -2,8 +2,8 @@
 #include "String.hpp"
 #include "../System/Assert/Assert.hpp"
 
-void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::TChar const * format, va_list args);
-Core::UInt FormatImplGetRequiredSize(Core::TChar const * format, va_list args);
+void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::CStr format, va_list args);
+Core::UInt FormatImplGetRequiredSize(Core::CStr format, va_list args);
 
 namespace Core
 {
@@ -13,7 +13,7 @@ namespace Core
 	/* public static **************************************************************/
 	/******************************************************************************/
 
-	UInt String::GetTCharLength(TChar const * val)
+	UInt String::GetTCharLength(CStr val)
 	{
 		UInt length = 0U;
 
@@ -29,7 +29,7 @@ namespace Core
 		return length;
 	}
 
-	void String::Format(TChar* buffer, UInt buffer_size, TChar const * format, ...)
+	void String::Format(TChar* buffer, UInt buffer_size, CStr format, ...)
 	{
 		Assert(buffer);
 		Assert(buffer_size > 0);
@@ -41,7 +41,7 @@ namespace Core
 		va_end(args);
 	}
 
-	String String::FormatToStr(TChar const * format, ...)
+	String String::FormatToStr(CStr format, ...)
 	{
 		Assert(format);
 
@@ -62,14 +62,14 @@ namespace Core
 		return str;
 	}
 
-	Int String::Compare(TChar const * source, TChar const * target)
+	Int String::Compare(CStr source, CStr target)
 	{
 		//Return
 		//	 0 when source == target
 		//	 1 when source >  target
 		//	-1 when source <  target
 
-		TChar const * empty = Text("");
+		CStr empty = Text("");
 
 		if(source == NULL) source = empty;
 		if(target == NULL) target = empty;
@@ -100,13 +100,13 @@ namespace Core
 	{
 	}
 
-	String::String(TChar const * val) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr val) : _vctr(Vector::CtorModeEnum::Pod)
 	{
 		UInt n = GetTCharLength(val);
 		if(n) _vctr.AddRange(val, val + n + 1);
 	}
 
-	String::String(TChar const * begin, TChar const * end) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr begin, CStr end) : _vctr(Vector::CtorModeEnum::Pod)
 	{
 		_vctr.Reserve(end - begin + 1);
 		_vctr.AddRange(begin, end);
@@ -129,12 +129,12 @@ namespace Core
 	/* Operators ******************************************************************/
 	/******************************************************************************/
 
-	String::operator TChar const * () const
+	String::operator CStr () const
 	{
 		return GetTChar();
 	}
 
-	String& String::operator=(TChar const * val)
+	String& String::operator=(CStr val)
 	{
 		UInt n = GetTCharLength(val);
 		_vctr.Clear();
@@ -161,7 +161,7 @@ namespace Core
 		return *this;
 	}
 
-	String& String::operator+=(TChar const * val)
+	String& String::operator+=(CStr val)
 	{
 		Assert(val);
 		UInt length = GetTCharLength(val);
@@ -192,7 +192,7 @@ namespace Core
 		return *this;
 	}
 
-	String String::operator+(TChar const * val) const
+	String String::operator+(CStr val) const
 	{
 		Assert(val);
 		return String(*this) += val;
@@ -234,12 +234,12 @@ namespace Core
 		return _vctr.IsEmpty() ? 0U : _vctr.GetLength() - 1;
 	}
 
-	TChar const * String::GetTChar() const
+	CStr String::GetTChar() const
 	{
 		return _vctr.Begin();
 	}
 
-	Int String::Compare(TChar const * target) const
+	Int String::Compare(CStr target) const
 	{
 		return Compare(GetTChar(), target);
 	}
@@ -302,7 +302,7 @@ namespace Core
 		_vctr.Shrink();
 	}
 
-	void String::Append(TChar const * str)
+	void String::Append(CStr str)
 	{
 		Assert(str);
 		*this += str;
@@ -313,7 +313,7 @@ namespace Core
 		*this += str;
 	}
 
-	void String::AppendLine(TChar const * str)
+	void String::AppendLine(CStr str)
 	{
 		Assert(str);
 		*this += str;

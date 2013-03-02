@@ -10,41 +10,41 @@ namespace Core
 			{
 			}
 
-			File* File::Create(TChar const * fileName)
+			File* File::Create(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
 			}
 
-			File* File::Open(TChar const * fileName)
+			File* File::Open(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
 			}
 
-			File* File::OpenReadOnly(TChar const * fileName)
+			File* File::OpenReadOnly(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
 			}
 
-			Bool File::Exists(TChar const * fileName)
+			Bool File::Exists(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				DWORD attr = GetFileAttributes(fileName);
 				return attr != INVALID_FILE_ATTRIBUTES && !(attr & FILE_ATTRIBUTE_DIRECTORY);
 			}
 
-			Bool File::Delete(TChar const * fileName)
+			Bool File::Delete(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				return DeleteFile(fileName) != 0;
 			}
 
-			Int64 File::GetFileSize(TChar const * fileName)
+			Int64 File::GetFileSize(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				WIN32_FILE_ATTRIBUTE_DATA attr = {0};

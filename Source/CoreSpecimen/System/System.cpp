@@ -9,7 +9,7 @@ Bool ErrTest()
 
 	UInt32 errCode;
 	TChar buffer[512];
-	TChar const * errText;
+	CStr errText;
 
 	System::SetErrCode(10U);
 	errCode = System::GetErrCode();

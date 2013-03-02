@@ -10,7 +10,7 @@ namespace Core
 	{
 		namespace Storage
 		{
-			File* File::Open(TChar const * fileName, UInt32 flags)
+			File* File::Open(CStr fileName, UInt32 flags)
 			{
 				Int32 fileId;
 				UInt32 mode;
@@ -32,7 +32,7 @@ namespace Core
 				return new FileImpl(fileId);
 			}
 
-			Bool File::Exists(TChar const * fileName)
+			Bool File::Exists(CStr fileName)
 			{
 				struct stat s;
 				int ret;
@@ -42,7 +42,7 @@ namespace Core
 				return ret != -1;
 			}
 
-			Bool File::Delete(TChar const * fileName)
+			Bool File::Delete(CStr fileName)
 			{
 				return unlink(fileName) == 0;
 			}

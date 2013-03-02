@@ -3,7 +3,7 @@
 using namespace Core;
 using namespace System::Storage;
 
-TChar const * _fileName = Text("FileTest.txt");
+CStr _fileName = Text("FileTest.txt");
 
 Bool CreateTest()
 {

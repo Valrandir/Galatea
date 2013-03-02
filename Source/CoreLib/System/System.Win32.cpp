@@ -16,7 +16,7 @@ namespace Core
 			SetLastError(ErrCode);
 		}
 
-		TChar const * GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
+		CStr GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
 		{
 			if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, ErrCode, 0, Buffer, BufferSize, NULL))
 				*Buffer = 0;

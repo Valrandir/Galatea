@@ -2,12 +2,12 @@
 
 using namespace Core;
 
-TChar const * _empty = Text("");
-TChar const * _text = Text("This is CoreLib");
-TChar const * _textSmaller = Text("A is smaller than T");
-TChar const * _textGreater = Text("V is Greater than T");
-TChar const * _textShorter = Text("Shorter");
-TChar const * _textBigger = Text("Very much larger than _text");
+CStr _empty = Text("");
+CStr _text = Text("This is CoreLib");
+CStr _textSmaller = Text("A is smaller than T");
+CStr _textGreater = Text("V is Greater than T");
+CStr _textShorter = Text("Shorter");
+CStr _textBigger = Text("Very much larger than _text");
 UInt const _textcap = 16U;
 UInt const _textlen = 15U;
 
@@ -53,7 +53,7 @@ namespace StringTestNamespace
 	Bool CtorTCharTest()
 	{
 		Bool result = true;
-		TChar const * nullTChar = NULL;
+		CStr nullTChar = NULL;
 
 		//TChar NULL
 		{
@@ -229,7 +229,7 @@ namespace StringTestNamespace
 		Bool result = true;
 
 		String s(_text);
-		TChar const * tc = s.GetTChar();
+		CStr tc = s.GetTChar();
 		CHECK String::Compare(_text, tc) == 0U;
 
 		return result;
@@ -1045,7 +1045,7 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 
-		TChar const * format = Text("One hundred fifty seven : %d - %s");
+		CStr format = Text("One hundred fifty seven : %d - %s");
 
 		//Buffer is large enough
 		{
@@ -1074,7 +1074,7 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 
-		TChar const * format = Text("One hundred fifty seven : %d - %s");
+		CStr format = Text("One hundred fifty seven : %d - %s");
 
 		String str = String::FormatToStr(format, 157, Text("Done"));
 

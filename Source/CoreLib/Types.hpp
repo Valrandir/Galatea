@@ -49,6 +49,8 @@ namespace Core
 		typedef char TChar;
 	#endif
 
+	typedef TChar const * CStr;
+
 	#ifdef CoreTargetWin32
 		#define NewLine Text("\r\n")
 	#elif CoreTargetLinux

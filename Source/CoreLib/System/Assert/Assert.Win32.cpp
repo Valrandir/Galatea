@@ -8,7 +8,7 @@ namespace Core
 {
 	namespace Assert
 	{
-		void Fail(TChar const * failed_text, TChar const * function, TChar const * file, UInt line)
+		void Fail(CStr failed_text, CStr function, CStr file, UInt line)
 		{
 			static Bool failing = false; if(failing) return; failing = true;
 

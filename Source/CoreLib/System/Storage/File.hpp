@@ -18,12 +18,12 @@ namespace Core
 				File& operator=(File&);
 
 				public:
-				static File* Create(TChar const * fileName);
-				static File* Open(TChar const * fileName);
-				static File* OpenReadOnly(TChar const * fileName);
-				static Bool Exists(TChar const * fileName);
-				static Bool Delete(TChar const * fileName);
-				static Int64 GetFileSize(TChar const * fileName);
+				static File* Create(CStr fileName);
+				static File* Open(CStr fileName);
+				static File* OpenReadOnly(CStr fileName);
+				static Bool Exists(CStr fileName);
+				static Bool Delete(CStr fileName);
+				static Int64 GetFileSize(CStr fileName);
 
 				virtual Int64 GetFileSize() const = 0;
 				virtual Int64 GetSeekPos() const = 0;
