@@ -31,15 +31,11 @@ namespace Core
 		typedef UInt32 UInt;
 		typedef Int32* IntPtr;
 		typedef UInt32* UIntPtr;
-		#define ToInt32(value) value
-		#define ToUInt32(value) value
 	#else
 		typedef Int64 Int;
 		typedef UInt64 UInt;
 		typedef Int64* IntPtr;
 		typedef UInt64* UIntPtr;
-		Int32 ToInt32(Int64 value);
-		UInt32 ToUInt32(UInt64 value);
 	#endif
 
 	typedef bool Bool;
@@ -60,4 +56,7 @@ namespace Core
 	#elif CoreTargetLinux
 		#define NewLine Text("\n")
 	#endif
+
+	Int32 ToInt32(Int64 value);
+	UInt32 ToUInt32(UInt64 value);
 }

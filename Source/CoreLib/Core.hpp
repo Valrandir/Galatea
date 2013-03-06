@@ -15,3 +15,4 @@
 #include "DataStruct/Vector.hpp"
 #include "String/String.hpp"
 #include "System/Storage/File.hpp"
+#include "System/Storage/TextFile.hpp"

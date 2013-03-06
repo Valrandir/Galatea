@@ -31,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Types.cpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Time\Time.hpp">
       <Filter>System\Time</Filter>
     </ClInclude>
@@ -66,6 +67,9 @@
       <Filter>System\Storage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.hpp">
+      <Filter>System\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\TextFile.hpp">
       <Filter>System\Storage</Filter>
     </ClInclude>
   </ItemGroup>
@@ -106,6 +110,8 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.cpp">
       <Filter>System\Storage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Types.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\TextFile.cpp">
+      <Filter>System\Storage</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Storage\File.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Storage\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Threading\Thread.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Time\Time.cpp" />

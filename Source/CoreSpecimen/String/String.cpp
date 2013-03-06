@@ -2,17 +2,17 @@
 
 using namespace Core;
 
-CStr _empty = Text("");
-CStr _text = Text("This is CoreLib");
-CStr _textSmaller = Text("A is smaller than T");
-CStr _textGreater = Text("V is Greater than T");
-CStr _textShorter = Text("Shorter");
-CStr _textBigger = Text("Very much larger than _text");
-UInt const _textcap = 16U;
-UInt const _textlen = 15U;
-
 namespace StringTestNamespace
 {
+	CStr _empty = Text("");
+	CStr _text = Text("This is CoreLib");
+	CStr _textSmaller = Text("A is smaller than T");
+	CStr _textGreater = Text("V is Greater than T");
+	CStr _textShorter = Text("Shorter");
+	CStr _textBigger = Text("Very much larger than _text");
+	UInt const _textcap = 16U;
+	UInt const _textlen = 15U;
+
 	Bool CheckCapLen(String const & s, UInt capacity, UInt length)
 	{
 		return s.GetCapacity() == capacity && s.GetLength() == length;

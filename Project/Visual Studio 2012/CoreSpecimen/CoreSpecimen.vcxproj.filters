@@ -60,6 +60,9 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Storage\File.cpp">
       <Filter>System\Storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\System\Storage\TextFile.cpp">
+      <Filter>System\Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />

@@ -3,221 +3,225 @@
 using namespace Core;
 using namespace System::Storage;
 
-CStr _fileName = Text("FileTest.txt");
-
-Bool CreateTest()
+namespace FileTestNamespace
 {
-	Bool result = true;
-	File* file;
+	CStr _fileName = Text("FileTest.txt");
 
-	//File does not exists, create it and size will be 0 and SeekPos will be 0
-	File::Delete(_fileName);
-	CHECK(file = File::Create(_fileName));
-	CHECK(file->GetFileSize() == 0);
-	CHECK(file->GetSeekPos() == 0);
-	DeletePtr(file);
+	Bool CreateTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, create it and it will be truncated and SeekPos will be 0
-	CHECK(file = File::Create(_fileName));
-	CHECK(file->GetFileSize() == 0);
-	CHECK(file->GetSeekPos() == 0);
-	DeletePtr(file);
+		//File does not exists, create it and size will be 0 and SeekPos will be 0
+		File::Delete(_fileName);
+		CHECK(file = File::Create(_fileName));
+		CHECK(file->GetFileSize() == 0);
+		CHECK(file->GetSeekPos() == 0);
+		DeletePtr(file);
 
-	File::Delete(_fileName);
+		//File exists, create it and it will be truncated and SeekPos will be 0
+		CHECK(file = File::Create(_fileName));
+		CHECK(file->GetFileSize() == 0);
+		CHECK(file->GetSeekPos() == 0);
+		DeletePtr(file);
 
-	return result;
-}
+		File::Delete(_fileName);
 
-Bool OpenTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//File does not exists, open it and it will fail
-	File::Delete(_fileName);
-	file = File::Open(_fileName);
-	CHECK(file == 0);
+	Bool OpenTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, open it and it will work
-	CHECK(file = File::Create(_fileName));
-	DeletePtr(file);
-	CHECK(file = File::Open(_fileName));
-	DeletePtr(file);
+		//File does not exists, open it and it will fail
+		File::Delete(_fileName);
+		file = File::Open(_fileName);
+		CHECK(file == 0);
 
-	File::Delete(_fileName);
+		//File exists, open it and it will work
+		CHECK(file = File::Create(_fileName));
+		DeletePtr(file);
+		CHECK(file = File::Open(_fileName));
+		DeletePtr(file);
 
-	return result;
-}
+		File::Delete(_fileName);
 
-Bool OpenReadOnlyTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//File does not exists, open it and it will fail
-	File::Delete(_fileName);
-	file = File::OpenReadOnly(_fileName);
-	CHECK(file == 0);
+	Bool OpenReadOnlyTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, open it and it will work, write to it and it will fail
-	CHECK(file = File::Create(_fileName));
-	DeletePtr(file);
-	CHECK(file = File::OpenReadOnly(_fileName));
-	file->Write((VoidPtr)_fileName, 5);
-	CHECK(file->GetFileSize() == 0);
-	DeletePtr(file);
+		//File does not exists, open it and it will fail
+		File::Delete(_fileName);
+		file = File::OpenReadOnly(_fileName);
+		CHECK(file == 0);
 
-	File::Delete(_fileName);
+		//File exists, open it and it will work, write to it and it will fail
+		CHECK(file = File::Create(_fileName));
+		DeletePtr(file);
+		CHECK(file = File::OpenReadOnly(_fileName));
+		file->Write((VoidPtr)_fileName, 5);
+		CHECK(file->GetFileSize() == 0);
+		DeletePtr(file);
 
-	return result;
-}
+		File::Delete(_fileName);
 
-Bool ExistsTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//File does not exists, Exists returns false
-	File::Delete(_fileName);
-	CHECK(File::Exists(_fileName) == false);
+	Bool ExistsTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, Exists returns true
-	file = File::Create(_fileName);
-	DeletePtr(file)
-	CHECK(File::Exists(_fileName) == true);
+		//File does not exists, Exists returns false
+		File::Delete(_fileName);
+		CHECK(File::Exists(_fileName) == false);
 
-	File::Delete(_fileName);
+		//File exists, Exists returns true
+		file = File::Create(_fileName);
+		DeletePtr(file)
+		CHECK(File::Exists(_fileName) == true);
 
-	return result;
-}
+		File::Delete(_fileName);
 
-Bool DeleteTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//File does not exists, Delete returns false
-	CHECK(File::Delete(_fileName) == false);
+	Bool DeleteTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, Delete returns true, then file no longer exists
-	file = File::Create(_fileName);
-	DeletePtr(file)
-	CHECK(File::Delete(_fileName) == true);
-	CHECK(File::Exists(_fileName) == false);
+		//File does not exists, Delete returns false
+		CHECK(File::Delete(_fileName) == false);
 
-	return result;
-}
+		//File exists, Delete returns true, then file no longer exists
+		file = File::Create(_fileName);
+		DeletePtr(file)
+		CHECK(File::Delete(_fileName) == true);
+		CHECK(File::Exists(_fileName) == false);
 
-Bool GetFileSizeTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//File does not exists, GetFileSize returns 0
-	File::Delete(_fileName);
-	CHECK(File::GetFileSize(_fileName) == 0);
+	Bool GetFileSizeTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//File exists, but is empty, GetFileSize returns 0
-	file = File::Create(_fileName);
-	CHECK(file->GetFileSize() == 0);
-	DeletePtr(file)
-	CHECK(File::GetFileSize(_fileName) == 0);
+		//File does not exists, GetFileSize returns 0
+		File::Delete(_fileName);
+		CHECK(File::GetFileSize(_fileName) == 0);
 
-	//File exists, and is not empty, GetFileSize returns size
-	file = File::Open(_fileName);
-	file->Write((VoidPtr)_fileName, 5);
-	CHECK(file->GetFileSize() == 5);
-	DeletePtr(file)
-	CHECK(File::GetFileSize(_fileName) == 5);
+		//File exists, but is empty, GetFileSize returns 0
+		file = File::Create(_fileName);
+		CHECK(file->GetFileSize() == 0);
+		DeletePtr(file)
+		CHECK(File::GetFileSize(_fileName) == 0);
 
-	File::Delete(_fileName);
+		//File exists, and is not empty, GetFileSize returns size
+		file = File::Open(_fileName);
+		file->Write((VoidPtr)_fileName, 5);
+		CHECK(file->GetFileSize() == 5);
+		DeletePtr(file)
+		CHECK(File::GetFileSize(_fileName) == 5);
 
-	return result;
-}
+		File::Delete(_fileName);
 
-Bool GetSeekPosTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//SeekPos is at zero, GetSeekPos returns 0
-	file = File::Create(_fileName);
-	CHECK(file->GetSeekPos() == 0);
+	Bool GetSeekPosTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//SeekPos is at 5, GetSeekPos returns 5
-	file->Write((VoidPtr)_fileName, 5);
-	CHECK(file->GetSeekPos() == 5);
+		//SeekPos is at zero, GetSeekPos returns 0
+		file = File::Create(_fileName);
+		CHECK(file->GetSeekPos() == 0);
 
-	DeletePtr(file)
-	File::Delete(_fileName);
+		//SeekPos is at 5, GetSeekPos returns 5
+		file->Write((VoidPtr)_fileName, 5);
+		CHECK(file->GetSeekPos() == 5);
 
-	return result;
-}
+		DeletePtr(file)
+		File::Delete(_fileName);
 
-Bool SeekTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//Seek is at 0, GetSeekPos returns 0
-	file = File::Create(_fileName);
-	CHECK(file->GetSeekPos() == 0);
+	Bool SeekTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//Seek is at 3, GetSeekPos returns 3
-	file->Write((VoidPtr)_fileName, 3);
-	CHECK(file->GetSeekPos() == 3);
+		//Seek is at 0, GetSeekPos returns 0
+		file = File::Create(_fileName);
+		CHECK(file->GetSeekPos() == 0);
 
-	DeletePtr(file)
-	File::Delete(_fileName);
+		//Seek is at 3, GetSeekPos returns 3
+		file->Write((VoidPtr)_fileName, 3);
+		CHECK(file->GetSeekPos() == 3);
 
-	return result;
-}
+		DeletePtr(file)
+		File::Delete(_fileName);
 
-Bool SeekToEndTest()
-{
-	Bool result = true;
-	File* file;
+		return result;
+	}
 
-	//Create, write 6 bytes and close
-	file = File::Create(_fileName);
-	file->Write((VoidPtr)_fileName, 6);
-	DeletePtr(file);
+	Bool SeekToEndTest()
+	{
+		Bool result = true;
+		File* file;
 
-	//Create, GetSeekPos returns 0, SeekToEnd, GetSeekPos returns 6
-	file = File::Open(_fileName);
-	CHECK(file->GetSeekPos() == 0);
-	file->SeekToEnd();
-	CHECK(file->GetSeekPos() == 6);
+		//Create, write 6 bytes and close
+		file = File::Create(_fileName);
+		file->Write((VoidPtr)_fileName, 6);
+		DeletePtr(file);
 
-	DeletePtr(file)
-	File::Delete(_fileName);
+		//Create, GetSeekPos returns 0, SeekToEnd, GetSeekPos returns 6
+		file = File::Open(_fileName);
+		CHECK(file->GetSeekPos() == 0);
+		file->SeekToEnd();
+		CHECK(file->GetSeekPos() == 6);
 
-	return result;
-}
+		DeletePtr(file)
+		File::Delete(_fileName);
 
-Bool ReadWriteTest()
-{
-	Bool result = true;
-	File* file;
-	UInt32 const bufferSize = 128;
-	TChar buffer[bufferSize];
+		return result;
+	}
 
-	file = File::Create(_fileName);
-	file->Write((VoidPtr)_fileName, ToUInt32(String::GetTCharLength(_fileName)) * sizeof(TChar) + sizeof(TChar));
-	file->Seek(0);
-	file->Read(buffer, bufferSize);
-	DeletePtr(file);
-	File::Delete(_fileName);
+	Bool ReadWriteTest()
+	{
+		Bool result = true;
+		File* file;
+		UInt32 const bufferSize = 128;
+		TChar buffer[bufferSize];
 
-	String read = buffer;
-	CHECK(String::Compare(_fileName, read) == 0);
+		file = File::Create(_fileName);
+		file->Write((VoidPtr)_fileName, ToUInt32(String::GetTCharLength(_fileName)) * sizeof(TChar) + sizeof(TChar));
+		file->Seek(0);
+		file->Read(buffer, bufferSize);
+		DeletePtr(file);
+		File::Delete(_fileName);
 
-	return result;
+		String read = buffer;
+		CHECK(String::Compare(_fileName, read) == 0);
+
+		return result;
+	}
 }
 
 Bool FileTest()
 {
 	Bool result = true;
+	using namespace FileTestNamespace;
 
 	CHECK(CreateTest());
 	CHECK(OpenTest());

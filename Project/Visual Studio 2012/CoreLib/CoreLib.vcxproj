@@ -28,6 +28,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.hpp" />
@@ -49,6 +50,7 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp" />
