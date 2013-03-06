@@ -3,7 +3,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "File.Linux.hpp"
- 
+#include "../Assert/Assert.hpp"
+
 namespace Core
 {
 	namespace System
@@ -49,7 +50,7 @@ namespace Core
 				return unlink(fileName) == 0;
 			}
 
-			Int64 File::GetFileSize(CStr fileName)
+			UInt64 File::GetFileSize(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				struct stat st = {0};
@@ -58,7 +59,7 @@ namespace Core
 				return st.st_size;
 			}
 
-			Int64 FileImpl::GetFileSize() const
+			UInt64 FileImpl::GetFileSize() const
 			{
 				Assert(_fileId != 0);
 				struct stat st = {0};
@@ -67,14 +68,14 @@ namespace Core
 				return st.st_size;
 			}
 
-			Int64 FileImpl::GetSeekPos() const
+			UInt64 FileImpl::GetSeekPos() const
 			{
 				Assert(_fileId != 0);
 				return lseek64(_fileId, 0, SEEK_CUR);
 				return 0U;
 			}
 
-			void FileImpl::Seek(Int64 position) const
+			void FileImpl::Seek(UInt64 position) const
 			{
 				Assert(_fileId != 0);
 				lseek64(_fileId, position, SEEK_SET);

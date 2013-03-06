@@ -45,7 +45,7 @@ namespace Core
 				return DeleteFile(fileName) != 0;
 			}
 
-			Int64 File::GetFileSize(CStr fileName)
+			UInt64 File::GetFileSize(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				WIN32_FILE_ATTRIBUTE_DATA attr = {0};
@@ -59,7 +59,7 @@ namespace Core
 				return li.QuadPart;
 			}
 
-			Int64 FileImpl::GetFileSize() const
+			UInt64 FileImpl::GetFileSize() const
 			{
 				Assert(_hFile != 0);
 				LARGE_INTEGER fileSize = {0};
@@ -67,7 +67,7 @@ namespace Core
 				return fileSize.QuadPart;
 			}
 
-			Int64 FileImpl::GetSeekPos() const
+			UInt64 FileImpl::GetSeekPos() const
 			{
 				Assert(_hFile != 0);
 				LARGE_INTEGER distance = {0};
@@ -76,7 +76,7 @@ namespace Core
 				return newPosition.QuadPart;
 			}
 
-			void FileImpl::Seek(Int64 position) const
+			void FileImpl::Seek(UInt64 position) const
 			{
 				Assert(_hFile != 0);
 				LARGE_INTEGER li;

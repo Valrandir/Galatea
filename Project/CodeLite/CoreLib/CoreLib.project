@@ -25,13 +25,17 @@
         <File Name="../../../Source/CoreLib/System/Threading/Thread.Linux.hpp"/>
         <File Name="../../../Source/CoreLib/System/Threading/Thread.hpp"/>
       </VirtualDirectory>
-      <File Name="../../../Source/CoreLib/System/Assert/Assert.hpp"/>
-      <File Name="../../../Source/CoreLib/System/Assert/Assert.Linux.cpp"/>
       <VirtualDirectory Name="Storage">
         <File Name="../../../Source/CoreLib/System/Storage/File.cpp"/>
         <File Name="../../../Source/CoreLib/System/Storage/File.hpp"/>
         <File Name="../../../Source/CoreLib/System/Storage/File.Linux.cpp"/>
         <File Name="../../../Source/CoreLib/System/Storage/File.Linux.hpp"/>
+        <File Name="../../../Source/CoreLib/System/Storage/TextFile.cpp"/>
+        <File Name="../../../Source/CoreLib/System/Storage/TextFile.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="Assert">
+        <File Name="../../../Source/CoreLib/System/Assert/Assert.hpp"/>
+        <File Name="../../../Source/CoreLib/System/Assert/Assert.Linux.cpp"/>
       </VirtualDirectory>
     </VirtualDirectory>
     <File Name="../../../Source/CoreLib/Types.hpp"/>
@@ -68,6 +72,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -115,6 +120,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -154,6 +160,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -197,6 +204,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       

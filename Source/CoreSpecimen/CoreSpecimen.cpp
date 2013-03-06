@@ -12,6 +12,7 @@ extern Bool VectorTest();
 extern Bool StdVectorTest();
 extern Bool StringTest();
 extern Bool FileTest();
+extern Bool TextFileTest();
 
 Bool CoreSpecimen()
 {
@@ -27,6 +28,7 @@ Bool CoreSpecimen()
 	CHECK VectorTest();
 	CHECK StringTest();
 	CHECK FileTest();
+	CHECK TextFileTest();
 
 	return result;
 }

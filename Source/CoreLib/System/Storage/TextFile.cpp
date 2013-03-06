@@ -57,14 +57,14 @@ namespace Core
 			void TextFile::WriteText(CStr text) const
 			{
 				Assert(_file);
-				UInt32 textSize = ToUInt32(String::GetTCharLength(text));
+				UInt32 textSize = ToUInt32(String::GetTCharLength(text)) * sizeof(TChar);
 				_file->Write((VoidPtr)text, textSize);
 			}
 
 			void TextFile::WriteText(String text) const
 			{
 				Assert(_file);
-				_file->Write((VoidPtr)text.GetTChar(), text.GetLength());
+				_file->Write((VoidPtr)text.GetTChar(), ToUInt32(text.GetLength()));
 			}
 
 			void TextFile::Close()
