@@ -52,6 +52,7 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Types.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8D3A6DB6-7DDB-458F-8F59-2380B442BEC0}</ProjectGuid>

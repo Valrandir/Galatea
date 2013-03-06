@@ -106,5 +106,6 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.cpp">
       <Filter>System\Storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Types.cpp" />
   </ItemGroup>
 </Project>
