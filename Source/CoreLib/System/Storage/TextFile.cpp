@@ -54,17 +54,47 @@ namespace Core
 				return text;
 			}
 
-			void TextFile::WriteText(CStr text) const
+			String TextFile::ReadLine() const
 			{
-				Assert(_file);
-				UInt32 textSize = ToUInt32(String::GetTCharLength(text)) * sizeof(TChar);
-				_file->Write((VoidPtr)text, textSize);
+				return Text("");
 			}
 
-			void TextFile::WriteText(String text) const
+			void TextFile::Write(CStr text, UInt32 cchLength) const
 			{
 				Assert(_file);
-				_file->Write((VoidPtr)text.GetTChar(), ToUInt32(text.GetLength()));
+				_file->Write((VoidPtr)text, cchLength * sizeof(TChar));
+			}
+
+			void TextFile::Write(CStr text) const
+			{
+				Assert(_file);
+				Write(text, ToUInt32(String::GetTCharLength(text)));
+			}
+
+			void TextFile::Write(String const & text) const
+			{
+				Assert(_file);
+				Write(text, ToUInt32(text.GetLength()));
+			}
+
+			void TextFile::WriteLine(CStr text, UInt32 cchLength) const
+			{
+				Assert(_file);
+				Write(text, cchLength);
+				Write(NewLine);
+			}
+
+			void TextFile::WriteLine(CStr text) const
+			{
+				Assert(_file);
+				Write(text);
+				Write(NewLine);
+			}
+
+			void TextFile::WriteLine(String const & text) const
+			{
+				Assert(_file);
+				WriteLine(text, text.GetLength());
 			}
 
 			void TextFile::Close()

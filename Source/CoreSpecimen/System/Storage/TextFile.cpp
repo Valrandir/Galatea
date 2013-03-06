@@ -20,7 +20,7 @@ namespace TextFileTestNamespace
 		UInt64 fileSize, textSize;
 
 		textFile = TextFile::Create(_fileName);
-		textFile->WriteText(_Content);
+		textFile->Write(_Content);
 		DeletePtr(textFile);
 
 		fileSize = File::GetFileSize(_fileName);

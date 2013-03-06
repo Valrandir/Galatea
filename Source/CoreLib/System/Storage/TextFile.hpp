@@ -21,8 +21,13 @@ namespace Core
 				static TextFile* Open(CStr fileName);
 				static TextFile* OpenReadOnly(CStr fileName);
 				String ReadAll() const;
-				void WriteText(CStr text) const;
-				void WriteText(String text) const;
+				String ReadLine() const;
+				void Write(CStr text, UInt32 cchLength) const;
+				void Write(CStr text) const;
+				void Write(String const & text) const;
+				void WriteLine(CStr text, UInt32 cchLength) const;
+				void WriteLine(CStr text) const;
+				void WriteLine(String const & text) const;
 				void Close();
 				~TextFile();
 			};
