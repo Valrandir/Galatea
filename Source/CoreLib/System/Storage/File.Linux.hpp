@@ -10,9 +10,10 @@ namespace Core
 			class FileImpl : public File
 			{
 				Int32 _fileId;
+				Bool _isReadOnly;
 
 				public:
-				FileImpl(int fileId);
+				FileImpl(int fileId, Bool readOnly);
 				~FileImpl();
 
 				UInt64 GetFileSize() const;

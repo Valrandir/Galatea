@@ -12,9 +12,10 @@ namespace Core
 			class FileImpl : public File
 			{
 				HANDLE _hFile;
+				Bool _isReadOnly;
 
 				public:
-				FileImpl(HANDLE hFile);
+				FileImpl(HANDLE hFile, Bool readOnly);
 				UInt64 GetFileSize() const;
 				UInt64 GetSeekPos() const;
 				void Seek(UInt64 position) const;

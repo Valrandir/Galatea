@@ -7,7 +7,7 @@ namespace Core
 	{
 		namespace Storage
 		{
-			FileImpl::FileImpl(HANDLE hFile) : _hFile(hFile)
+			FileImpl::FileImpl(HANDLE hFile, Bool readOnly) : _hFile(hFile), _isReadOnly(readOnly)
 			{
 			}
 
@@ -15,21 +15,21 @@ namespace Core
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, false);
 			}
 
 			File* File::Open(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, false);
 			}
 
 			File* File::OpenReadOnly(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile);
+				return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, true);
 			}
 
 			Bool File::Exists(CStr fileName)
@@ -103,8 +103,9 @@ namespace Core
 
 			void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize) const
 			{
-				Assert(buffer != 0);
 				Assert(_hFile != 0);
+				Assert(_isReadOnly == false);
+				Assert(buffer != 0);
 				DWORD bytesWritten;
 				BOOL writeResult = WriteFile(_hFile, buffer, bufferSize, &bytesWritten, 0);
 				//Assert(writeResult != FALSE);

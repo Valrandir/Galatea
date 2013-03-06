@@ -11,7 +11,7 @@ namespace Core
 	{
 		namespace Storage
 		{
-			FileImpl::FileImpl(int fileId) : _fileId(fileId)
+			FileImpl::FileImpl(int fileId, Bool readOnly) : _fileId(fileId), _isReadOnly(readOnly)
 			{
 			}
 
@@ -19,21 +19,21 @@ namespace Core
 			{
 				Assert(fileName != NULL);
 				Int32 fileId = open(fileName, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-				return fileId == -1 ? NULL : new FileImpl(fileId);
+				return fileId == -1 ? NULL : new FileImpl(fileId, false);
 			}
 			
 			File* File::Open(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				Int32 fileId = open(fileName, O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-				return fileId == -1 ? NULL : new FileImpl(fileId);
+				return fileId == -1 ? NULL : new FileImpl(fileId, false);
 			}
 
 			File* File::OpenReadOnly(CStr fileName)
 			{
 				Assert(fileName != NULL);
 				Int32 fileId = open(fileName, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-				return fileId == -1 ? NULL : new FileImpl(fileId);
+				return fileId == -1 ? NULL : new FileImpl(fileId, true);
 			}
 
 			Bool File::Exists(CStr fileName)
@@ -99,6 +99,7 @@ namespace Core
 			void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize) const
 			{
 				Assert(_fileId != 0);
+				Assert(_isReadOnly == false);
 				Assert(buffer != 0);
 				write(_fileId, buffer, bufferSize);
 				//size_t ret = write(_fileId, buffer, bufferSize);
