@@ -203,7 +203,7 @@ Bool ReadWriteTest()
 	TChar buffer[bufferSize];
 
 	file = File::Create(_fileName);
-	file->Write((VoidPtr)_fileName, (UInt32)String::GetTCharLength(_fileName) * sizeof(TChar) + sizeof(TChar));
+	file->Write((VoidPtr)_fileName, ToUInt32(String::GetTCharLength(_fileName)) * sizeof(TChar) + sizeof(TChar));
 	file->Seek(0);
 	file->Read(buffer, bufferSize);
 	DeletePtr(file);
