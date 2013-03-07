@@ -13,10 +13,137 @@ namespace StringTestNamespace
 	UInt const _textcap = 16U;
 	UInt const _textlen = 15U;
 
+	/******************************************************************************/
+	/* Testing Tools **************************************************************/
+	/******************************************************************************/
+
 	Bool CheckCapLen(String const & s, UInt capacity, UInt length)
 	{
 		return s.GetCapacity() == capacity && s.GetLength() == length;
 	}
+
+	/******************************************************************************/
+	/* public static **************************************************************/
+	/******************************************************************************/
+
+	Bool GetTCharLenTest()
+	{
+		Bool result = true;
+
+		//Null
+		CHECK String::GetTCharLength(NULL) == 0U;
+
+		//Empty string Len == 1 for terminating character
+		CHECK String::GetTCharLength(_empty) == 0U;
+
+		//Len == _textlen
+		CHECK String::GetTCharLength(_text) == _textlen;
+
+		return result;
+	}
+
+	Bool FormatBufferTest()
+	{
+		Bool result = true;
+
+		CStr format = Text("One hundred fifty seven : %d - %s");
+
+		//Buffer is large enough
+		{
+			UInt const buffer_size = 128U;
+			TChar buffer[buffer_size];
+
+			String::Format(buffer, buffer_size, format, 157, Text("Done"));
+
+			CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
+		}
+
+		//Buffer is too short, so the output was truncated
+		{
+			UInt const buffer_size = 24U;
+			TChar buffer[buffer_size];
+
+			String::Format(buffer, buffer_size, format, 157, Text("Done"));
+
+			CHECK 0 == String::Compare(Text("One hundred fifty seven"), buffer);
+		}
+
+		return result;
+	}
+
+	Bool FormatStringTest()
+	{
+		Bool result = true;
+
+		CStr format = Text("One hundred fifty seven : %d - %s");
+
+		String str = String::FormatToStr(format, 157, Text("Done"));
+
+		CHECK str.GetCapacity() == 37U + String::GetTCharLength(NewLine);
+		CHECK str.GetLength() == 36U;
+		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
+
+		return result;
+	}
+
+	Bool CompareTCharTest()
+	{
+		Bool result = true;
+
+		//Empty to empty
+		{
+		String s;
+		CHECK 0 == s.Compare(_empty);
+		}
+
+		//Empty to not empty
+		{
+			String s;
+			CHECK -1 == s.Compare(Text("Not Empty"));
+		}
+
+		//Not Empty to empty
+		{
+			String s(_text);
+			CHECK 1 == s.Compare(_empty);
+		}
+
+		//Not Empty to smaller
+		{
+			String s(_text);
+			CHECK 1 == s.Compare(_textSmaller);
+		}
+
+		//Not Empty to greater
+		{
+			String s(_text);
+			CHECK -1 == s.Compare(_textGreater);
+		}
+
+		//Not Empty to same
+		{
+			String s(_text);
+			CHECK 0 == s.Compare(_text);
+		}
+
+		return result;
+	}
+
+	Bool MaxLengthTest()
+	{
+		Bool result = true;
+
+		UInt noMatch = String::NoMatch;
+		UInt maxSize = String::MaxSize;
+
+		CHECK maxSize == noMatch - 1;
+
+		return result;
+	}
+
+	/******************************************************************************/
+	/* Constructors && Destructor *************************************************/
+	/******************************************************************************/
 
 	Bool CtorEmptyTest()
 	{
@@ -127,156 +254,9 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool MaxLengthTest()
-	{
-		Bool result = true;
-
-		UInt noMatch = String::NoMatch;
-		UInt maxSize = String::MaxSize;
-
-		CHECK maxSize == noMatch - 1;
-
-		return result;
-	}
-
-	Bool GetTCharLenTest()
-	{
-		Bool result = true;
-
-		//Null
-		CHECK String::GetTCharLength(NULL) == 0U;
-
-		//Empty string Len == 1 for terminating character
-		CHECK String::GetTCharLength(_empty) == 0U;
-
-		//Len == _textlen
-		CHECK String::GetTCharLength(_text) == _textlen;
-
-		return result;
-	}
-
-	Bool IsEmptyTest()
-	{
-		Bool result = true;
-
-		//Empty
-		{
-			String s;
-			CHECK s.IsEmpty() == true;
-		}
-
-		//Empty with Capacity
-		{
-			String s(10U);
-			CHECK s.IsEmpty() == true;
-		}
-
-		//Not Empty
-		{
-			String s(_text);
-			CHECK s.IsEmpty() == false;
-		}
-
-		return result;
-	}
-
-	Bool GetCapacityTest()
-	{
-		Bool result = true;
-
-		//Empty
-		{
-			String s;
-			CHECK s.GetCapacity() == 0U;
-		}
-
-		//Capacity
-		{
-			String s(10U);
-			CHECK s.GetCapacity() == 10U;
-		}
-
-		return result;
-	}
-
-	Bool GetLengthTest()
-	{
-		Bool result = true;
-
-		//Empty
-		{
-			String s;
-			CHECK s.GetLength() == 0U;
-		}
-
-		//Empty with Capacity
-		{
-			String s(10U);
-			CHECK s.GetLength() == 0U;
-		}
-
-		//Not Empty
-		{
-			String s(_text);
-			CHECK s.GetLength() == _textlen;
-		}
-
-		return result;
-	}
-
-	Bool GetTCharTest()
-	{
-		Bool result = true;
-
-		String s(_text);
-		CStr tc = s.GetTChar();
-		CHECK String::Compare(_text, tc) == 0U;
-
-		return result;
-	}
-
-	Bool CompareTCharTest()
-	{
-		Bool result = true;
-
-		//Empty to empty
-		{
-		String s;
-		CHECK 0 == s.Compare(_empty);
-		}
-
-		//Empty to not empty
-		{
-			String s;
-			CHECK -1 == s.Compare(Text("Not Empty"));
-		}
-
-		//Not Empty to empty
-		{
-			String s(_text);
-			CHECK 1 == s.Compare(_empty);
-		}
-
-		//Not Empty to smaller
-		{
-			String s(_text);
-			CHECK 1 == s.Compare(_textSmaller);
-		}
-
-		//Not Empty to greater
-		{
-			String s(_text);
-			CHECK -1 == s.Compare(_textGreater);
-		}
-
-		//Not Empty to same
-		{
-			String s(_text);
-			CHECK 0 == s.Compare(_text);
-		}
-
-		return result;
-	}
+	/******************************************************************************/
+	/* Operators ******************************************************************/
+	/******************************************************************************/
 
 	Bool OperatorAssignTCharTest()
 	{
@@ -858,6 +838,239 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	/******************************************************************************/
+	/* Public Const Functions *****************************************************/
+	/******************************************************************************/
+
+	Bool IsEmptyTest()
+	{
+		Bool result = true;
+
+		//Empty
+		{
+			String s;
+			CHECK s.IsEmpty() == true;
+		}
+
+		//Empty with Capacity
+		{
+			String s(10U);
+			CHECK s.IsEmpty() == true;
+		}
+
+		//Not Empty
+		{
+			String s(_text);
+			CHECK s.IsEmpty() == false;
+		}
+
+		return result;
+	}
+
+	Bool GetCapacityTest()
+	{
+		Bool result = true;
+
+		//Empty
+		{
+			String s;
+			CHECK s.GetCapacity() == 0U;
+		}
+
+		//Capacity
+		{
+			String s(10U);
+			CHECK s.GetCapacity() == 10U;
+		}
+
+		return result;
+	}
+
+	Bool GetLengthTest()
+	{
+		Bool result = true;
+
+		//Empty
+		{
+			String s;
+			CHECK s.GetLength() == 0U;
+		}
+
+		//Empty with Capacity
+		{
+			String s(10U);
+			CHECK s.GetLength() == 0U;
+		}
+
+		//Not Empty
+		{
+			String s(_text);
+			CHECK s.GetLength() == _textlen;
+		}
+
+		return result;
+	}
+
+	Bool GetTCharTest()
+	{
+		Bool result = true;
+
+		String s(_text);
+		CStr tc = s.GetTChar();
+		CHECK String::Compare(_text, tc) == 0U;
+
+		return result;
+	}
+
+	Bool IndexOfTest()
+	{
+		Bool result = true;
+
+		String empty;
+		String len[] = {Text("0"), Text("01"), Text("012")};
+		TChar chr[] = {Text('0'), Text('1'), Text('2')};
+
+		//Empty string
+		CHECK empty.IndexOf(chr[0]) == String::NoMatch;
+
+		//Position too small
+		CHECK len[0].IndexOf(chr[0], -10) == String::NoMatch;
+
+		//Position too big
+		CHECK len[0].IndexOf(chr[0], 10) == String::NoMatch;
+
+		//Length 1 - Not Found
+		CHECK len[0].IndexOf(chr[1]) == String::NoMatch;
+
+		//Length 1 - Found
+		CHECK len[0].IndexOf(chr[0]) == 0;
+
+		//Length 2 - Found at beginning
+		CHECK len[1].IndexOf(chr[0]) == 0;
+
+		//Length 2 - Found at end
+		CHECK len[1].IndexOf(chr[1]) == 1;
+
+		//Length 2 - Not Found because of Position
+		CHECK len[1].IndexOf(chr[0], 1) == String::NoMatch;
+
+		//Length 2 - Found at Position
+		CHECK len[1].IndexOf(chr[1], 1) == 1;
+
+		//Length 3 - Found at beginning
+		CHECK len[2].IndexOf(chr[0]) == 0;
+
+		//Length 3 - Not Found because of Position
+		CHECK len[2].IndexOf(chr[0], 1) == String::NoMatch;
+
+		//Length 3 - Found at Position
+		CHECK len[2].IndexOf(chr[1], 1) == 1;
+
+		//Length 3 - Found after Position
+		CHECK len[2].IndexOf(chr[2], 1) == 2;
+
+		return result;
+	}
+
+	Bool LastIndexOfTest()
+	{
+		Bool result = true;
+
+		String empty;
+		String len[] = {Text("0"), Text("01"), Text("012")};
+		TChar chr[] = {Text('0'), Text('1'), Text('2')};
+
+		//Empty string
+		CHECK empty.LastIndexOf(chr[0]) == String::NoMatch;
+
+		//Position too small
+		CHECK len[0].LastIndexOf(chr[0], -10) == String::NoMatch;
+
+		//Position too big
+		CHECK len[0].LastIndexOf(chr[0], 10) == String::NoMatch;
+
+		//Length 1 - Not Found
+		CHECK len[0].LastIndexOf(chr[1]) == String::NoMatch;
+
+		//Length 1 - Found
+		CHECK len[0].LastIndexOf(chr[0]) == 0;
+
+		//Length 2 - Found at beginning
+		CHECK len[1].LastIndexOf(chr[0]) == 0;
+
+		//Length 2 - Found at end
+		CHECK len[1].LastIndexOf(chr[1]) == 1;
+
+		//Length 2 - Not Found because of Position
+		CHECK len[1].LastIndexOf(chr[1], 0) == String::NoMatch;
+
+		//Length 2 - Found at Position
+		CHECK len[1].LastIndexOf(chr[0], 0) == 0;
+
+		//Length 3 - Found at end
+		CHECK len[2].LastIndexOf(chr[2]) == 2;
+
+		//Length 3 - Not Found because of Position
+		CHECK len[2].LastIndexOf(chr[2], 1) == String::NoMatch;
+
+		//Length 3 - Found at Position
+		CHECK len[2].LastIndexOf(chr[1], 1) == 1;
+
+		//Length 3 - Found before Position
+		CHECK len[2].LastIndexOf(chr[0], 1) == 0;
+
+		return result;
+	}
+
+	Bool SubStringText()
+	{
+		Bool result = true;
+		String empty;
+		String text(_text);
+
+		//Return empty string when called on an empty string
+		{
+			String s = empty.SubString(0U, 5U);
+			CHECK s.IsEmpty() == true;
+		}
+
+		//Length == 0 returns empty string
+		{
+			String s = text.SubString(0U, 0U);
+			CHECK s.IsEmpty() == true;
+		}
+
+		//Return first 5 characters
+		{
+			String s = text.SubString(0U, 5U);
+			CHECK s.Compare(Text("This ")) == 0;
+		}
+
+		//Return last 5 characters
+		{
+			String s = text.SubString(text.GetLength() - 5U, 5U);
+			CHECK s.Compare(Text("reLib")) == 0;
+		}
+
+		//Return 5 characters starting at 7
+		{
+			String s = text.SubString(7U, 5U);
+			CHECK s.Compare(Text(" Core")) == 0;
+		}
+
+		//Truncate when length is too big
+		{
+			String s = text.SubString(0U, 1000U);
+			CHECK s.Compare(_text) == 0;
+		}
+
+		return result;
+	}
+
+	/******************************************************************************/
+	/* Public Functions ***********************************************************/
+	/******************************************************************************/
+
 	Bool AppendTCharTest()
 	{
 		Bool result = true;
@@ -1039,196 +1252,6 @@ namespace StringTestNamespace
 
 		return result;
 	}
-
-
-	Bool FormatBufferTest()
-	{
-		Bool result = true;
-
-		CStr format = Text("One hundred fifty seven : %d - %s");
-
-		//Buffer is large enough
-		{
-			UInt const buffer_size = 128U;
-			TChar buffer[buffer_size];
-
-			String::Format(buffer, buffer_size, format, 157, Text("Done"));
-
-			CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
-		}
-
-		//Buffer is too short, so the output was truncated
-		{
-			UInt const buffer_size = 24U;
-			TChar buffer[buffer_size];
-
-			String::Format(buffer, buffer_size, format, 157, Text("Done"));
-
-			CHECK 0 == String::Compare(Text("One hundred fifty seven"), buffer);
-		}
-
-		return result;
-	}
-
-	Bool FormatStringTest()
-	{
-		Bool result = true;
-
-		CStr format = Text("One hundred fifty seven : %d - %s");
-
-		String str = String::FormatToStr(format, 157, Text("Done"));
-
-		CHECK str.GetCapacity() == 37U + String::GetTCharLength(NewLine);
-		CHECK str.GetLength() == 36U;
-		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetTChar());
-
-		return result;
-	}
-
-	Bool IndexOfTest()
-	{
-		Bool result = true;
-
-		String empty;
-		String len[] = {Text("0"), Text("01"), Text("012")};
-		TChar chr[] = {Text('0'), Text('1'), Text('2')};
-
-		//Empty string
-		CHECK empty.IndexOf(chr[0]) == String::NoMatch;
-
-		//Position too small
-		CHECK len[0].IndexOf(chr[0], -10) == String::NoMatch;
-
-		//Position too big
-		CHECK len[0].IndexOf(chr[0], 10) == String::NoMatch;
-
-		//Length 1 - Not Found
-		CHECK len[0].IndexOf(chr[1]) == String::NoMatch;
-
-		//Length 1 - Found
-		CHECK len[0].IndexOf(chr[0]) == 0;
-
-		//Length 2 - Found at beginning
-		CHECK len[1].IndexOf(chr[0]) == 0;
-
-		//Length 2 - Found at end
-		CHECK len[1].IndexOf(chr[1]) == 1;
-
-		//Length 2 - Not Found because of Position
-		CHECK len[1].IndexOf(chr[0], 1) == String::NoMatch;
-
-		//Length 2 - Found at Position
-		CHECK len[1].IndexOf(chr[1], 1) == 1;
-
-		//Length 3 - Found at beginning
-		CHECK len[2].IndexOf(chr[0]) == 0;
-
-		//Length 3 - Not Found because of Position
-		CHECK len[2].IndexOf(chr[0], 1) == String::NoMatch;
-
-		//Length 3 - Found at Position
-		CHECK len[2].IndexOf(chr[1], 1) == 1;
-
-		//Length 3 - Found after Position
-		CHECK len[2].IndexOf(chr[2], 1) == 2;
-
-		return result;
-	}
-
-	Bool LastIndexOfTest()
-	{
-		Bool result = true;
-
-		String empty;
-		String len[] = {Text("0"), Text("01"), Text("012")};
-		TChar chr[] = {Text('0'), Text('1'), Text('2')};
-
-		//Empty string
-		CHECK empty.LastIndexOf(chr[0]) == String::NoMatch;
-
-		//Position too small
-		CHECK len[0].LastIndexOf(chr[0], -10) == String::NoMatch;
-
-		//Position too big
-		CHECK len[0].LastIndexOf(chr[0], 10) == String::NoMatch;
-
-		//Length 1 - Not Found
-		CHECK len[0].LastIndexOf(chr[1]) == String::NoMatch;
-
-		//Length 1 - Found
-		CHECK len[0].LastIndexOf(chr[0]) == 0;
-
-		//Length 2 - Found at beginning
-		CHECK len[1].LastIndexOf(chr[0]) == 0;
-
-		//Length 2 - Found at end
-		CHECK len[1].LastIndexOf(chr[1]) == 1;
-
-		//Length 2 - Not Found because of Position
-		CHECK len[1].LastIndexOf(chr[1], 0) == String::NoMatch;
-
-		//Length 2 - Found at Position
-		CHECK len[1].LastIndexOf(chr[0], 0) == 0;
-
-		//Length 3 - Found at end
-		CHECK len[2].LastIndexOf(chr[2]) == 2;
-
-		//Length 3 - Not Found because of Position
-		CHECK len[2].LastIndexOf(chr[2], 1) == String::NoMatch;
-
-		//Length 3 - Found at Position
-		CHECK len[2].LastIndexOf(chr[1], 1) == 1;
-
-		//Length 3 - Found before Position
-		CHECK len[2].LastIndexOf(chr[0], 1) == 0;
-
-		return result;
-	}
-
-	Bool SubStringText()
-	{
-		Bool result = true;
-		String empty;
-		String text(_text);
-
-		//Return empty string when called on an empty string
-		{
-			String s = empty.SubString(0U, 5U);
-			CHECK s.IsEmpty() == true;
-		}
-
-		//Length == 0 returns empty string
-		{
-			String s = text.SubString(0U, 0U);
-			CHECK s.IsEmpty() == true;
-		}
-
-		//Return first 5 characters
-		{
-			String s = text.SubString(0U, 5U);
-			CHECK s.Compare(Text("This ")) == 0;
-		}
-
-		//Return last 5 characters
-		{
-			String s = text.SubString(text.GetLength() - 5U, 5U);
-			CHECK s.Compare(Text("reLib")) == 0;
-		}
-
-		//Return 5 characters starting at 7
-		{
-			String s = text.SubString(7U, 5U);
-			CHECK s.Compare(Text(" Core")) == 0;
-		}
-
-		//Truncate when length is too big
-		{
-			String s = text.SubString(0U, 1000U);
-			CHECK s.Compare(_text) == 0;
-		}
-
-		return result;
-	}
 }
 
 Bool StringTest()
@@ -1236,20 +1259,17 @@ Bool StringTest()
 	using namespace StringTestNamespace;
 	Bool result = true;
 
+	CHECK GetTCharLenTest();
+	CHECK FormatBufferTest();
+	CHECK FormatStringTest();
+	CHECK CompareTCharTest();
+	CHECK MaxLengthTest();
+
 	CHECK CtorEmptyTest();
 	CHECK CtorCapacityTest();
 	CHECK CtorTCharTest();
 	CHECK CtorCopyTest();
 	CHECK CtorMoveTest();
-
-	CHECK MaxLengthTest();
-	CHECK GetTCharLenTest();
-	CHECK IsEmptyTest();
-	CHECK GetCapacityTest();
-	CHECK GetLengthTest();
-	CHECK GetTCharTest();
-
-	CHECK CompareTCharTest();
 
 	CHECK OperatorAssignTCharTest();
 	CHECK OperatorAssignStringTest();
@@ -1258,29 +1278,26 @@ Bool StringTest()
 	CHECK OperatorPlusEqualStringTest();
 	CHECK OperatorPlusTCharTest();
 	CHECK OperatorPlusStringTest();
-
 	CHECK OperatorEqualTCharTest();
 	CHECK OperatorNotEqualTCharTest();
-
 	CHECK OperatorGreaterTCharTest();
 	CHECK OperatorSmallerTCharTest();
-
 	CHECK OperatorGreaterOrEqualTCharTest();
 	CHECK OperatorSmallerOrEqualTCharTest();
-
 	CHECK OperatorSubscriptTest();
+
+	CHECK IsEmptyTest();
+	CHECK GetCapacityTest();
+	CHECK GetLengthTest();
+	CHECK GetTCharTest();
+	CHECK IndexOfTest();
+	CHECK LastIndexOfTest();
+	CHECK SubStringText();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();
 	CHECK AppendLineTCharTest();
 	CHECK AppendLineStringTest();
-
-	CHECK FormatBufferTest();
-	CHECK FormatStringTest();
-
-	CHECK IndexOfTest();
-	CHECK LastIndexOfTest();
-	CHECK SubStringText();
 
 	return result;
 }
