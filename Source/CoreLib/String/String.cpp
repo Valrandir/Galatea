@@ -13,18 +13,16 @@ namespace Core
 	/* public static **************************************************************/
 	/******************************************************************************/
 
-	UInt String::GetTCharLength(CStr val)
+	UInt String::GetTCharLength(CStr text)
 	{
 		UInt length = 0U;
 
-		if(val == NULL)
-			return 0U;
-
-		while(*val != '\0')
-		{
-			++val;
-			++length;
-		}
+		if(text)
+			while(*text != '\0')
+			{
+				++text;
+				++length;
+			}
 
 		return length;
 	}
@@ -88,6 +86,71 @@ namespace Core
 		return 0;
 	}
 
+	UInt String::IndexOf(CStr text, UInt textLength, TChar const chr, UInt start)
+	{
+		CStr it, end;
+
+		if(start >= textLength)
+			return NoMatch;
+
+		it = text + start;
+		end = text + textLength;
+
+		while(it < end)
+		{
+			if(*it == chr)
+				return it - text;
+			++it;
+		}
+
+		return NoMatch;
+	}
+
+	UInt String::IndexOf(CStr text, TChar const chr, UInt start)
+	{
+		return IndexOf(text, GetTCharLength(text), chr, start);
+	}
+
+	UInt String::LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start)
+	{
+		CStr rend, it;
+
+		if(start >= textLength && start != NoMatch)
+			return NoMatch;
+
+		rend = text - 1;
+		it = start == NoMatch ? text + textLength - 1 : text + start;
+
+		while(rend < it)
+		{
+			if(*it == chr)
+				return it - text;
+			--it;
+		}
+
+		return NoMatch;
+	}
+
+	UInt String::LastIndexOf(CStr text, TChar const chr, UInt start)
+	{
+		return LastIndexOf(text, GetTCharLength(text), chr, start);
+	}
+
+	String String::SubString(CStr text, UInt textLength, UInt start, UInt length)
+	{
+		if(length > textLength) length = textLength;
+		if(text == 0 || length == 0 || start + length > textLength) return String();
+		return String(text + start, text + start + length);
+	}
+
+	String String::SubString(CStr text, UInt start, UInt length)
+	{
+		UInt textLength =  GetTCharLength(text);
+		if(length > textLength) length = textLength;
+		if(text == 0 || length == 0 || start + length > textLength) return String();
+		return String(text + start, text + start + length);
+	}
+
 	/******************************************************************************/
 	/* Constructors && Destructor *************************************************/
 	/******************************************************************************/
@@ -100,10 +163,10 @@ namespace Core
 	{
 	}
 
-	String::String(CStr val) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr text) : _vctr(Vector::CtorModeEnum::Pod)
 	{
-		UInt n = GetTCharLength(val);
-		if(n) _vctr.AddRange(val, val + n + 1);
+		UInt n = GetTCharLength(text);
+		if(n) _vctr.AddRange(text, text + n + 1);
 	}
 
 	String::String(CStr begin, CStr end) : _vctr(Vector::CtorModeEnum::Pod)
@@ -113,11 +176,11 @@ namespace Core
 		_vctr.Add(Text('\0'));
 	}
 
-	String::String(String const & val) : _vctr(val._vctr)
+	String::String(String const & text) : _vctr(text._vctr)
 	{
 	}
 
-	String::String(String && val) : _vctr((Vector&&)val)
+	String::String(String && text) : _vctr((Vector&&)text)
 	{
 	}
 
@@ -134,37 +197,37 @@ namespace Core
 		return GetTChar();
 	}
 
-	String& String::operator=(CStr val)
+	String& String::operator=(CStr text)
 	{
-		UInt n = GetTCharLength(val);
+		UInt n = GetTCharLength(text);
 		_vctr.Clear();
-		if(n) _vctr.AddRange(val, val + n + 1);
+		if(n) _vctr.AddRange(text, text + n + 1);
 		return *this;
 	}
 
-	String& String::operator=(String const & val)
+	String& String::operator=(String const & text)
 	{
-		if(this != &val)
+		if(this != &text)
 		{
-			if(val.IsEmpty())
+			if(text.IsEmpty())
 				_vctr.Clear();
 			else
-				*this = val.GetTChar();
+				*this = text.GetTChar();
 		}
 	
 		return *this;
 	}
 
-	String& String::operator=(String && val)
+	String& String::operator=(String && text)
 	{
-		_vctr.operator=((Vector&&)val);
+		_vctr.operator=((Vector&&)text);
 		return *this;
 	}
 
-	String& String::operator+=(CStr val)
+	String& String::operator+=(CStr text)
 	{
-		Assert(val);
-		UInt length = GetTCharLength(val);
+		Assert(text);
+		UInt length = GetTCharLength(text);
 		UInt current_length, new_length;
 		Bool MaxSizeOverflow;
 
@@ -177,38 +240,38 @@ namespace Core
 			Assert(MaxSizeOverflow);
 
 			_vctr.Remove(current_length - 1);
-			_vctr.AddRange(val, val + length + 1);
+			_vctr.AddRange(text, text + length + 1);
 		}
 		return *this;
 	}
 
-	String& String::operator+=(String const & val)
+	String& String::operator+=(String const & text)
 	{
-		if(!val.IsEmpty())
+		if(!text.IsEmpty())
 		{
 			_vctr.Remove(_vctr.GetLength() - 1);
-			_vctr.operator+=(val._vctr);
+			_vctr.operator+=(text._vctr);
 		}
 		return *this;
 	}
 
-	String String::operator+(CStr val) const
+	String String::operator+(CStr text) const
 	{
-		Assert(val);
-		return String(*this) += val;
+		Assert(text);
+		return String(*this) += text;
 	}
 
-	String String::operator+(String const & val) const
+	String String::operator+(String const & text) const
 	{
-		return String(*this) += val;
+		return String(*this) += text;
 	}
 
-	Bool String::operator==(TChar  const * val) const { return Compare(val) ==  0; }
-	Bool String::operator!=(TChar  const * val) const { return Compare(val) !=  0; }
-	Bool String::operator> (TChar  const * val) const { return Compare(val) ==  1; }
-	Bool String::operator< (TChar  const * val) const { return Compare(val) == -1; }
-	Bool String::operator>=(TChar  const * val) const { return Compare(val) >=  0; }
-	Bool String::operator<=(TChar  const * val) const { return Compare(val) <=  0; }
+	Bool String::operator==(TChar  const * text) const { return Compare(text) ==  0; }
+	Bool String::operator!=(TChar  const * text) const { return Compare(text) !=  0; }
+	Bool String::operator> (TChar  const * text) const { return Compare(text) ==  1; }
+	Bool String::operator< (TChar  const * text) const { return Compare(text) == -1; }
+	Bool String::operator>=(TChar  const * text) const { return Compare(text) >=  0; }
+	Bool String::operator<=(TChar  const * text) const { return Compare(text) <=  0; }
 
 	TChar String::operator[](UInt index) const
 	{
@@ -244,48 +307,19 @@ namespace Core
 		return Compare(GetTChar(), target);
 	}
 
-	UInt String::IndexOf(TChar const chr, UInt position) const
+	UInt String::IndexOf(TChar const chr, UInt start) const
 	{
-		UInt idx, length = GetLength();
-
-		if(length == 0 || position < 0 || position > length) return NoMatch;
-
-		for(idx = position; idx < length; ++idx)
-			if(_vctr[idx] == chr)
-				return idx;
-
-		return NoMatch;
+		return IndexOf(GetTChar(), chr, start);
 	}
 
-	UInt String::LastIndexOf(TChar const chr, UInt position) const
+	UInt String::LastIndexOf(TChar const chr, UInt start) const
 	{
-		UInt idx, length = GetLength();
-
-		if(position == NoMatch) position = length - 1;
-		if(length == 0 || position < 0 || position > length) return NoMatch;
-
-		for(idx = position; idx >= 0 && idx != NoMatch; --idx)
-		{
-			if(_vctr[idx] == chr)
-			{
-				return idx;
-			}
-		}
-
-		return NoMatch;
+		return LastIndexOf(GetTChar(), chr, start);
 	}
 
 	String String::SubString(UInt start, UInt length) const
 	{
-		UInt const self_length = GetLength();
-
-		if(IsEmpty() || length == 0 || start < 0 || start >= self_length)
-			return String();
-
-		if(length >= self_length)
-			length = self_length;
-
-		return String(&_vctr[start], &_vctr[start + length]);
+		return SubString(GetTChar(), GetLength(), start, length);
 	}
 
 	/******************************************************************************/
