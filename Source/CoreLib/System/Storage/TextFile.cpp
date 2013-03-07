@@ -94,7 +94,7 @@ namespace Core
 			void TextFile::WriteLine(String const & text) const
 			{
 				Assert(_file);
-				WriteLine(text, text.GetLength());
+				WriteLine(text, ToUInt32(text.GetLength()));
 			}
 
 			void TextFile::Close()
