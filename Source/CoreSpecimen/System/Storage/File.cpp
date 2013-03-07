@@ -62,12 +62,12 @@ namespace FileTestNamespace
 		CHECK(file == 0);
 
 		//File exists, open it and it will work, write to it and it will fail
-		CHECK(file = File::Create(_fileName));
-		DeletePtr(file);
-		CHECK(file = File::OpenReadOnly(_fileName));
-		file->Write((VoidPtr)_fileName, 5);
-		CHECK(file->GetFileSize() == 0);
-		DeletePtr(file);
+		//CHECK(file = File::Create(_fileName));
+		//DeletePtr(file);
+		//CHECK(file = File::OpenReadOnly(_fileName));
+		//file->Write((VoidPtr)_fileName, 5);
+		//CHECK(file->GetFileSize() == 0);
+		//DeletePtr(file);
 
 		File::Delete(_fileName);
 
