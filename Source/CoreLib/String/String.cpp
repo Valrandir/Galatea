@@ -139,7 +139,7 @@ namespace Core
 	String String::SubString(CStr text, UInt textLength, UInt start, UInt length)
 	{
 		if(length > textLength) length = textLength;
-		if(text == 0 || length == 0 || start + length > textLength) return String();
+		if(!text || !length || start + length > textLength) return String();
 		return String(text + start, text + start + length);
 	}
 
@@ -147,13 +147,64 @@ namespace Core
 	{
 		UInt textLength =  GetTCharLength(text);
 		if(length > textLength) length = textLength;
-		if(text == 0 || length == 0 || start + length > textLength) return String();
+		if(!text || !length || start + length > textLength) return String();
 		return String(text + start, text + start + length);
 	}
 
-	UInt String::Split(CStr text, UInt charCount, CStr delimiter, DataStruct::Vector<String>& outList)
+	String::StringPtrVector* String::Split(CStr text, UInt charCount, TChar delimiter)
 	{
-		return 0U;
+		CStr begin, it, end;
+		UInt count = 0;
+		StringPtrVector* vStr;
+
+		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Once);
+
+		if(!text || !charCount)
+			return vStr;
+
+		begin = text;
+		it = text;
+		end = text + charCount;
+
+		while(it < end)
+		{
+			if(*it == delimiter)
+			{
+				if(*begin == delimiter)
+					++begin;
+				else
+				{
+					vStr->Add(new String(begin, it));
+					begin = it + 1;
+					++count;
+				}
+			}
+			++it;
+		}
+
+		if(begin != end)
+		{
+			vStr->Add(new String(begin, end));
+			++count;
+		}
+
+		return vStr;
+	}
+
+	String::StringPtrVector* String::SplitAny(CStr text, UInt charCount, CStr delimiter)
+	{
+		CStr begin, it, end;
+		UInt count = 0;
+
+		begin = text;
+		it = text;
+		end = text + charCount;
+
+		while(it < end)
+		{
+		}
+
+		return 0;
 	}
 
 	/******************************************************************************/
@@ -327,9 +378,14 @@ namespace Core
 		return SubString(GetTChar(), GetLength(), start, length);
 	}
 
-	UInt String::Split(CStr delimiter, DataStruct::Vector<String>& list) const
+	String::StringPtrVector* String::Split(TChar delimiter) const
 	{
-		return Split(GetTChar(), GetLength(), delimiter, list);
+		return Split(GetTChar(), GetLength(), delimiter);
+	}
+
+	String::StringPtrVector* String::SplitAny(CStr delimiter) const
+	{
+		return SplitAny(GetTChar(), GetLength(), delimiter);
 	}
 
 	/******************************************************************************/

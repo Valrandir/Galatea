@@ -1067,7 +1067,47 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool SplitTest(String text)
+	{
+		Bool result = true;
+		String::StringPtrVector* vStr;
+
+		vStr = text.Split(Text('='));
+
+		CHECK vStr->GetLength() == 4;
+		CHECK 0 == String::Compare(*(*vStr)[0], Text("ScrResX "));
+		CHECK 0 == String::Compare(*(*vStr)[1], Text(" 1280 "));
+		CHECK 0 == String::Compare(*(*vStr)[2], Text(" ScrResY "));
+		CHECK 0 == String::Compare(*(*vStr)[3], Text(" 1024"));
+
+		DeletePtr(vStr);
+
+		return result;
+	}
+
 	Bool SplitTest()
+	{
+		Bool result = true;
+
+		CHECK SplitTest(Text("ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitTest(Text("ScrResX = 1280 = ScrResY = 1024="));
+		CHECK SplitTest(Text("=ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitTest(Text("=ScrResX = 1280 = ScrResY = 1024="));
+
+		CHECK SplitTest(Text("ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitTest(Text("ScrResX == 1280 == ScrResY == 1024=="));
+		CHECK SplitTest(Text("==ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitTest(Text("==ScrResX == 1280 == ScrResY == 1024=="));
+
+		CHECK SplitTest(Text("ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitTest(Text("ScrResX === 1280 === ScrResY === 1024==="));
+		CHECK SplitTest(Text("===ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitTest(Text("===ScrResX === 1280 === ScrResY === 1024==="));
+
+		return result;
+	}
+
+	Bool SplitAnyTest()
 	{
 		Bool result = true;
 		return result;
@@ -1300,6 +1340,7 @@ Bool StringTest()
 	CHECK LastIndexOfTest();
 	CHECK SubStringTest();
 	CHECK SplitTest();
+	CHECK SplitAnyTest();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();

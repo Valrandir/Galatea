@@ -11,6 +11,8 @@ namespace Core
 		Vector _vctr;
 
 		public:
+		typedef DataStruct::Vector<String*> StringPtrVector;
+
 		/* public static */
 		static UInt GetTCharLength(CStr);
 		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
@@ -22,7 +24,8 @@ namespace Core
 		static UInt LastIndexOf(CStr text, TChar const chr, UInt start = NoMatch);
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
-		static UInt Split(CStr text, UInt charCount, CStr delimiter, DataStruct::Vector<String>& outList);
+		static StringPtrVector* Split(CStr text, UInt charCount, TChar delimiter);
+		static StringPtrVector* SplitAny(CStr text, UInt charCount, CStr delimiter);
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt MaxSize = NoMatch - 1;
 
@@ -61,7 +64,8 @@ namespace Core
 		UInt IndexOf(TChar const chr, UInt start = 0) const;
 		UInt LastIndexOf(TChar const chr, UInt start = NoMatch) const;
 		String SubString(UInt start, UInt length) const;
-		UInt Split(CStr delimiter, DataStruct::Vector<String>& list) const;
+		StringPtrVector* Split(TChar delimiter) const;
+		StringPtrVector* SplitAny(CStr delimiter) const;
 
 		/* Public Functions */
 		void Reserve(UInt capacity);
