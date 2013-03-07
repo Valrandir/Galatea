@@ -14,7 +14,7 @@ namespace Core
 
 			String msg = String::FormatToStr
 			(
-				Text("Failed Call : %s") NewLine
+				Text("Failed Call : Assert(%s);") NewLine
 				Text("Function : %s") NewLine
 				Text("File : %s") NewLine
 				Text("Line : %d") NewLine,
