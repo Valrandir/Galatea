@@ -88,6 +88,11 @@ namespace Core
 		return 0;
 	}
 
+	UInt String::Split(CStr text, UInt charCount, CStr delimiter, DataStruct::Vector<String>& outList)
+	{
+		return 0U;
+	}
+
 	/******************************************************************************/
 	/* Constructors && Destructor *************************************************/
 	/******************************************************************************/
@@ -286,6 +291,11 @@ namespace Core
 			length = self_length;
 
 		return String(&_vctr[start], &_vctr[start + length]);
+	}
+
+	UInt String::Split(CStr delimiter, DataStruct::Vector<String>& list) const
+	{
+		return Split(GetTChar(), GetLength(), delimiter, list);
 	}
 
 	/******************************************************************************/

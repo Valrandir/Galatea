@@ -16,6 +16,7 @@ namespace Core
 		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
 		static String FormatToStr(CStr format, ...);
 		static Int Compare(CStr source, CStr target);
+		static UInt Split(CStr text, UInt charCount, CStr delimiter, DataStruct::Vector<String>& outList);
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt MaxSize = NoMatch - 1;
 
@@ -54,6 +55,7 @@ namespace Core
 		UInt IndexOf(TChar const chr, UInt position = 0) const;
 		UInt LastIndexOf(TChar const chr, UInt position = NoMatch) const;
 		String SubString(UInt start, UInt length) const;
+		UInt Split(CStr delimiter, DataStruct::Vector<String>& list) const;
 
 		/* Public Functions */
 		void Reserve(UInt capacity);

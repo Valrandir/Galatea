@@ -1022,7 +1022,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SubStringText()
+	Bool SubStringTest()
 	{
 		Bool result = true;
 		String empty;
@@ -1064,6 +1064,12 @@ namespace StringTestNamespace
 			CHECK s.Compare(_text) == 0;
 		}
 
+		return result;
+	}
+
+	Bool SplitTest()
+	{
+		Bool result = true;
 		return result;
 	}
 
@@ -1292,7 +1298,8 @@ Bool StringTest()
 	CHECK GetTCharTest();
 	CHECK IndexOfTest();
 	CHECK LastIndexOfTest();
-	CHECK SubStringText();
+	CHECK SubStringTest();
+	CHECK SplitTest();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();
