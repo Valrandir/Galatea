@@ -157,7 +157,7 @@ namespace Core
 		UInt count = 0;
 		StringPtrVector* vStr;
 
-		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Once);
+		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Pod);
 
 		if(!text || !charCount)
 			return vStr;
@@ -170,14 +170,14 @@ namespace Core
 		{
 			if(*it == delimiter)
 			{
-				if(*begin == delimiter)
-					++begin;
-				else
+				if(begin != it)
 				{
 					vStr->Add(new String(begin, it));
 					begin = it + 1;
 					++count;
 				}
+				else
+					++begin;
 			}
 			++it;
 		}
@@ -195,16 +195,42 @@ namespace Core
 	{
 		CStr begin, it, end;
 		UInt count = 0;
+		StringPtrVector* vStr;
+		UInt delimiterLength;
+
+		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Pod);
+
+		if(!text || !charCount)
+			return vStr;
 
 		begin = text;
 		it = text;
 		end = text + charCount;
+		delimiterLength = String::GetTCharLength(delimiter);
 
 		while(it < end)
 		{
+			if(String::IndexOf(delimiter, delimiterLength, *it) != String::NoMatch)
+			{
+				if(begin != it)
+				{
+					vStr->Add(new String(begin, it));
+					begin = it + 1;
+					++count;
+				}
+				else
+					++begin;
+			}
+			++it;
 		}
 
-		return 0;
+		if(begin != end)
+		{
+			vStr->Add(new String(begin, end));
+			++count;
+		}
+
+		return vStr;
 	}
 
 	/******************************************************************************/

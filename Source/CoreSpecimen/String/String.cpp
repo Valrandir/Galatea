@@ -1080,6 +1080,7 @@ namespace StringTestNamespace
 		CHECK 0 == String::Compare(*(*vStr)[2], Text(" ScrResY "));
 		CHECK 0 == String::Compare(*(*vStr)[3], Text(" 1024"));
 
+		for(auto it = vStr->Begin(); it < vStr->End(); ++it) delete (*it);
 		DeletePtr(vStr);
 
 		return result;
@@ -1107,9 +1108,41 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool SplitAnyTest(String text)
+	{
+		Bool result = true;
+		String::StringPtrVector* vStr;
+
+		vStr = text.SplitAny(Text("|;\t"));
+
+		CHECK vStr->GetLength() == 5;
+		CHECK 0 == String::Compare(*(*vStr)[0], Text("Word 1 "));
+		CHECK 0 == String::Compare(*(*vStr)[1], Text(" Word 2 "));
+		CHECK 0 == String::Compare(*(*vStr)[2], Text(" Word 3 "));
+		CHECK 0 == String::Compare(*(*vStr)[3], Text(" Word 4 "));
+		CHECK 0 == String::Compare(*(*vStr)[4], Text(" Word 5"));
+
+		for(auto it = vStr->Begin(); it < vStr->End(); ++it) delete (*it);
+		DeletePtr(vStr);
+
+		return result;
+	}
+
 	Bool SplitAnyTest()
 	{
 		Bool result = true;
+
+		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitAnyTest(Text("Word 1 ;| Word 2 |\t Word 3 \t\t Word 4 ;;;;;; Word 5"));
+		CHECK SplitAnyTest(Text(";Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5|"));
+		CHECK SplitAnyTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitAnyTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitAnyTest(Text(";|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5;|\t"));
+		CHECK SplitAnyTest(Text(";\t\t|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5\t;;;|"));
+
 		return result;
 	}
 
