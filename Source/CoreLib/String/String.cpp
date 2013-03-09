@@ -10,6 +10,29 @@ namespace Core
 	UInt String::NewLineLength = String::GetTCharLength(NewLine);
 
 	/******************************************************************************/
+	/* StrPtrVec internal class ***************************************************/
+	/******************************************************************************/
+
+	String::StrPtrVec::StrPtrVec() : DataStruct::Vector<String*>(Pod)
+	{
+	}
+
+	String::StrPtrVec::StrPtrVec(UInt capacity) : DataStruct::Vector<String*>(capacity, Pod)
+	{
+	}
+
+	String::StrPtrVec::~StrPtrVec()
+	{
+		auto it = Begin();
+		auto end = End();
+		while(it < end)
+		{
+			delete *it;
+			++it;
+		}
+	}
+
+	/******************************************************************************/
 	/* public static **************************************************************/
 	/******************************************************************************/
 
@@ -151,13 +174,13 @@ namespace Core
 		return String(text + start, text + start + length);
 	}
 
-	String::StringPtrVector* String::Split(CStr text, UInt charCount, TChar delimiter)
+	String::StrPtrVec* String::Split(CStr text, UInt charCount, TChar delimiter)
 	{
 		CStr begin, it, end;
 		UInt count = 0;
-		StringPtrVector* vStr;
+		StrPtrVec* vStr;
 
-		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Pod);
+		vStr = new StrPtrVec(2U);
 
 		if(!text || !charCount)
 			return vStr;
@@ -191,14 +214,14 @@ namespace Core
 		return vStr;
 	}
 
-	String::StringPtrVector* String::SplitAny(CStr text, UInt charCount, CStr delimiter)
+	String::StrPtrVec* String::SplitAny(CStr text, UInt charCount, CStr delimiter)
 	{
 		CStr begin, it, end;
 		UInt count = 0;
-		StringPtrVector* vStr;
+		StrPtrVec* vStr;
 		UInt delimiterLength;
 
-		vStr = new StringPtrVector(2U, StringPtrVector::CtorModeEnum::Pod);
+		vStr = new StrPtrVec(2U);
 
 		if(!text || !charCount)
 			return vStr;
@@ -404,12 +427,12 @@ namespace Core
 		return SubString(GetTChar(), GetLength(), start, length);
 	}
 
-	String::StringPtrVector* String::Split(TChar delimiter) const
+	String::StrPtrVec* String::Split(TChar delimiter) const
 	{
 		return Split(GetTChar(), GetLength(), delimiter);
 	}
 
-	String::StringPtrVector* String::SplitAny(CStr delimiter) const
+	String::StrPtrVec* String::SplitAny(CStr delimiter) const
 	{
 		return SplitAny(GetTChar(), GetLength(), delimiter);
 	}

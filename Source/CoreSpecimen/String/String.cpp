@@ -1070,7 +1070,7 @@ namespace StringTestNamespace
 	Bool SplitTest(String text)
 	{
 		Bool result = true;
-		String::StringPtrVector* vStr;
+		String::StrPtrVec* vStr;
 
 		vStr = text.Split(Text('='));
 
@@ -1080,7 +1080,6 @@ namespace StringTestNamespace
 		CHECK 0 == String::Compare(*(*vStr)[2], Text(" ScrResY "));
 		CHECK 0 == String::Compare(*(*vStr)[3], Text(" 1024"));
 
-		for(auto it = vStr->Begin(); it < vStr->End(); ++it) delete (*it);
 		DeletePtr(vStr);
 
 		return result;
@@ -1111,7 +1110,7 @@ namespace StringTestNamespace
 	Bool SplitAnyTest(String text)
 	{
 		Bool result = true;
-		String::StringPtrVector* vStr;
+		String::StrPtrVec* vStr;
 
 		vStr = text.SplitAny(Text("|;\t"));
 
@@ -1122,7 +1121,6 @@ namespace StringTestNamespace
 		CHECK 0 == String::Compare(*(*vStr)[3], Text(" Word 4 "));
 		CHECK 0 == String::Compare(*(*vStr)[4], Text(" Word 5"));
 
-		for(auto it = vStr->Begin(); it < vStr->End(); ++it) delete (*it);
 		DeletePtr(vStr);
 
 		return result;
