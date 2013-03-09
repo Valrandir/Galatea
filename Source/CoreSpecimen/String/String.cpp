@@ -1329,6 +1329,58 @@ namespace StringTestNamespace
 
 		return result;
 	}
+
+	Bool TrimLeftTest()
+	{
+		Bool result = true;
+		String text;
+
+		(text = Text("")).TrimLeft();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text(" ")).TrimLeft();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text("    ")).TrimLeft();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text("Trim")).TrimLeft();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text(" Trim")).TrimLeft();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text("  Trim")).TrimLeft();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text(" Trim ")).TrimLeft();
+		CHECK text.Length() == 5U;
+		CHECK text.Compare(Text("Trim ")) == 0;
+
+		(text = Text("  Trim  ")).TrimLeft();
+		CHECK text.Length() == 6U;
+		CHECK text.Compare(Text("Trim  ")) == 0;
+
+		return result;
+	}
+
+	Bool TrimRightTest()
+	{
+		Bool result = true;
+		return result;
+	}
+
+	Bool TrimTest()
+	{
+		Bool result = true;
+		return result;
+	}
 }
 
 Bool StringTest()
@@ -1372,6 +1424,9 @@ Bool StringTest()
 	CHECK SubStringTest();
 	CHECK SplitTCharTest();
 	CHECK SplitCStrTest();
+	CHECK TrimLeftTest();
+	CHECK TrimRightTest();
+	CHECK TrimTest();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();

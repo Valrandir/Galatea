@@ -440,4 +440,21 @@ namespace Core
 	{
 		return _vctr.DrivePointer(future_length + 1);
 	}
+
+	String& String::TrimLeft()
+	{
+		auto it = _vctr.Begin();
+		UInt size;
+
+		while(it < _vctr.End() && *it == 32)
+			++it;
+
+		if(it != _vctr.Begin())
+		{
+			size = _vctr.End() - it;
+			System::Memory::Move(it, _vctr.DrivePointer(size), size * sizeof(TChar));
+		}
+
+		return *this;
+	}
 }
