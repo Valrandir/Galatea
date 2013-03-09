@@ -31,8 +31,7 @@ namespace Core
 		static UInt LastIndexOf(CStr text, TChar const chr, UInt start = NoMatch);
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
-		static StrPtrVec* Split(CStr text, UInt charCount, TChar delimiter);
-		static StrPtrVec* SplitAny(CStr text, UInt charCount, CStr delimiter);
+		static StrPtrVec* Split(CStr text, UInt charCount, CStr delimiters);
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt MaxSize = NoMatch - 1;
 
@@ -71,8 +70,7 @@ namespace Core
 		UInt IndexOf(TChar const chr, UInt start = 0) const;
 		UInt LastIndexOf(TChar const chr, UInt start = NoMatch) const;
 		String SubString(UInt start, UInt length) const;
-		StrPtrVec* Split(TChar delimiter) const;
-		StrPtrVec* SplitAny(CStr delimiter) const;
+		StrPtrVec* Split(CStr delimiters) const;
 
 		/* Public Functions */
 		void Reserve(UInt capacity);

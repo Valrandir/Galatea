@@ -174,66 +174,32 @@ namespace Core
 		return String(text + start, text + start + length);
 	}
 
-	String::StrPtrVec* String::Split(CStr text, UInt charCount, TChar delimiter)
+	String::StrPtrVec* String::Split(CStr text, UInt charCount, CStr delimiters)
 	{
-		CStr begin, it, end;
-		UInt count = 0;
 		StrPtrVec* vStr;
+		UInt delimitersLength;
+		CStr begin, it, end;
+		UInt count;
 
-		vStr = new StrPtrVec(2U);
+		vStr = new StrPtrVec();
 
 		if(!text || !charCount)
 			return vStr;
 
-		begin = text;
-		it = text;
-		end = text + charCount;
-
-		while(it < end)
+		if(!delimiters || !(delimitersLength = GetTCharLength(delimiters)))
 		{
-			if(*it == delimiter)
-			{
-				if(begin != it)
-				{
-					vStr->Add(new String(begin, it));
-					begin = it + 1;
-					++count;
-				}
-				else
-					++begin;
-			}
-			++it;
-		}
-
-		if(begin != end)
-		{
-			vStr->Add(new String(begin, end));
-			++count;
-		}
-
-		return vStr;
-	}
-
-	String::StrPtrVec* String::SplitAny(CStr text, UInt charCount, CStr delimiter)
-	{
-		CStr begin, it, end;
-		UInt count = 0;
-		StrPtrVec* vStr;
-		UInt delimiterLength;
-
-		vStr = new StrPtrVec(2U);
-
-		if(!text || !charCount)
+			vStr->Add(new String(text));
 			return vStr;
+		}
 
 		begin = text;
 		it = text;
 		end = text + charCount;
-		delimiterLength = String::GetTCharLength(delimiter);
+		count = 0U;
 
 		while(it < end)
 		{
-			if(String::IndexOf(delimiter, delimiterLength, *it) != String::NoMatch)
+			if(delimitersLength == 1 ? *it == *delimiters : IndexOf(delimiters, delimitersLength, *it) != NoMatch)
 			{
 				if(begin != it)
 				{
@@ -427,14 +393,9 @@ namespace Core
 		return SubString(GetTChar(), GetLength(), start, length);
 	}
 
-	String::StrPtrVec* String::Split(TChar delimiter) const
+	String::StrPtrVec* String::Split(CStr delimiters) const
 	{
-		return Split(GetTChar(), GetLength(), delimiter);
-	}
-
-	String::StrPtrVec* String::SplitAny(CStr delimiter) const
-	{
-		return SplitAny(GetTChar(), GetLength(), delimiter);
+		return Split(GetTChar(), GetLength(), delimiters);
 	}
 
 	/******************************************************************************/

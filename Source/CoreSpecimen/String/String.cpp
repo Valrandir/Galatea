@@ -1067,12 +1067,12 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitTest(String text)
+	Bool SplitTCharTest(String text)
 	{
 		Bool result = true;
 		String::StrPtrVec* vStr;
 
-		vStr = text.Split(Text('='));
+		vStr = text.Split(Text("="));
 
 		CHECK vStr->GetLength() == 4;
 		CHECK 0 == String::Compare(*(*vStr)[0], Text("ScrResX "));
@@ -1085,34 +1085,34 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitTest()
+	Bool SplitTCharTest()
 	{
 		Bool result = true;
 
-		CHECK SplitTest(Text("ScrResX = 1280 = ScrResY = 1024"));
-		CHECK SplitTest(Text("ScrResX = 1280 = ScrResY = 1024="));
-		CHECK SplitTest(Text("=ScrResX = 1280 = ScrResY = 1024"));
-		CHECK SplitTest(Text("=ScrResX = 1280 = ScrResY = 1024="));
+		CHECK SplitTCharTest(Text("ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitTCharTest(Text("ScrResX = 1280 = ScrResY = 1024="));
+		CHECK SplitTCharTest(Text("=ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitTCharTest(Text("=ScrResX = 1280 = ScrResY = 1024="));
 
-		CHECK SplitTest(Text("ScrResX == 1280 == ScrResY == 1024"));
-		CHECK SplitTest(Text("ScrResX == 1280 == ScrResY == 1024=="));
-		CHECK SplitTest(Text("==ScrResX == 1280 == ScrResY == 1024"));
-		CHECK SplitTest(Text("==ScrResX == 1280 == ScrResY == 1024=="));
+		CHECK SplitTCharTest(Text("ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitTCharTest(Text("ScrResX == 1280 == ScrResY == 1024=="));
+		CHECK SplitTCharTest(Text("==ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitTCharTest(Text("==ScrResX == 1280 == ScrResY == 1024=="));
 
-		CHECK SplitTest(Text("ScrResX === 1280 === ScrResY === 1024"));
-		CHECK SplitTest(Text("ScrResX === 1280 === ScrResY === 1024==="));
-		CHECK SplitTest(Text("===ScrResX === 1280 === ScrResY === 1024"));
-		CHECK SplitTest(Text("===ScrResX === 1280 === ScrResY === 1024==="));
+		CHECK SplitTCharTest(Text("ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitTCharTest(Text("ScrResX === 1280 === ScrResY === 1024==="));
+		CHECK SplitTCharTest(Text("===ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitTCharTest(Text("===ScrResX === 1280 === ScrResY === 1024==="));
 
 		return result;
 	}
 
-	Bool SplitAnyTest(String text)
+	Bool SplitCStrTest(String text)
 	{
 		Bool result = true;
 		String::StrPtrVec* vStr;
 
-		vStr = text.SplitAny(Text("|;\t"));
+		vStr = text.Split(Text("|;\t"));
 
 		CHECK vStr->GetLength() == 5;
 		CHECK 0 == String::Compare(*(*vStr)[0], Text("Word 1 "));
@@ -1126,20 +1126,20 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitAnyTest()
+	Bool SplitCStrTest()
 	{
 		Bool result = true;
 
-		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitAnyTest(Text("Word 1 ;| Word 2 |\t Word 3 \t\t Word 4 ;;;;;; Word 5"));
-		CHECK SplitAnyTest(Text(";Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5|"));
-		CHECK SplitAnyTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
-		CHECK SplitAnyTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
-		CHECK SplitAnyTest(Text(";|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitAnyTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5;|\t"));
-		CHECK SplitAnyTest(Text(";\t\t|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5\t;;;|"));
+		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitCStrTest(Text("Word 1 ;| Word 2 |\t Word 3 \t\t Word 4 ;;;;;; Word 5"));
+		CHECK SplitCStrTest(Text(";Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5|"));
+		CHECK SplitCStrTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitCStrTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitCStrTest(Text(";|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5;|\t"));
+		CHECK SplitCStrTest(Text(";\t\t|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5\t;;;|"));
 
 		return result;
 	}
@@ -1370,8 +1370,8 @@ Bool StringTest()
 	CHECK IndexOfTest();
 	CHECK LastIndexOfTest();
 	CHECK SubStringTest();
-	CHECK SplitTest();
-	CHECK SplitAnyTest();
+	CHECK SplitTCharTest();
+	CHECK SplitCStrTest();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();
