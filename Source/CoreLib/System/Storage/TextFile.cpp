@@ -68,7 +68,7 @@ namespace Core
 			void TextFile::Write(CStr text) const
 			{
 				Assert(_file);
-				Write(text, ToUInt32(String::GetTCharLength(text)));
+				Write(text, ToUInt32(String::GetCStrLength(text)));
 			}
 
 			void TextFile::Write(String const & text) const

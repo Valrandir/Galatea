@@ -16,7 +16,7 @@ Bool ErrTest()
 	errText = System::GetErrText(errCode, buffer, 512U);
 
 	CHECK errCode == 10U;
-	CHECK String::GetTCharLength(errText) > 4;
+	CHECK String::GetCStrLength(errText) > 4;
 	
 	return result;
 }

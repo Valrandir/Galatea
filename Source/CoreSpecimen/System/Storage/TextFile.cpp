@@ -24,7 +24,7 @@ namespace TextFileTestNamespace
 		DeletePtr(textFile);
 
 		fileSize = File::GetFileSize(_fileName);
-		textSize = String::GetTCharLength(_Content) * sizeof(TChar);
+		textSize = String::GetCStrLength(_Content) * sizeof(TChar);
 		CHECK(fileSize == textSize);
 
 		return result;
@@ -41,7 +41,7 @@ namespace TextFileTestNamespace
 		content = textFile->ReadAll();
 		DeletePtr(textFile);
 
-		textSize = String::GetTCharLength(_Content) * sizeof(TChar);
+		textSize = String::GetCStrLength(_Content) * sizeof(TChar);
 		CHECK(content.GetLength() == textSize);
 
 		return result;

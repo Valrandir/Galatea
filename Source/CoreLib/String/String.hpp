@@ -21,7 +21,7 @@ namespace Core
 		};
 
 		/* public static */
-		static UInt GetTCharLength(CStr);
+		static UInt GetCStrLength(CStr);
 		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
 		static String FormatToStr(CStr format, ...);
 		static Int Compare(CStr source, CStr target);
@@ -65,7 +65,7 @@ namespace Core
 		Bool IsEmpty() const;
 		UInt GetCapacity() const;
 		UInt GetLength() const;
-		CStr GetTChar() const;
+		CStr GetCStr() const;
 		Int Compare(CStr target) const;
 		UInt IndexOf(TChar const chr, UInt start = 0) const;
 		UInt LastIndexOf(TChar const chr, UInt start = NoMatch) const;
