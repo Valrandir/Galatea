@@ -7,10 +7,10 @@ namespace Core
 	{
 		namespace Memory
 		{
-			VoidPtr Alloc(UInt Bytes);
-			void Free(VoidPtr MemoryPtr);
-			void Copy(VoidPtr Source, VoidPtr Target, UInt Size);
-			void Move(VoidPtr Source, VoidPtr Target, UInt Size);
+			VoidPtr Alloc(UInt bytes);
+			void Free(VoidPtr ptr);
+			void Copy(VoidPtr source, VoidPtr target, UInt size);
+			void Move(VoidPtr source, VoidPtr target, UInt size);
 		};
 	}
 }

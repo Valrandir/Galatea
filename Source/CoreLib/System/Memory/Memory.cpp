@@ -9,26 +9,26 @@ namespace Core
 	{
 		namespace Memory
 		{
-			VoidPtr Alloc(UInt Bytes)
+			VoidPtr Alloc(UInt bytes)
 			{
-				void *ptr = malloc(Bytes);
+				void *ptr = malloc(bytes);
 				Assert(ptr != 0);
 				return ptr;
 			}
 
-			void Free(VoidPtr MemoryPtr)
+			void Free(VoidPtr ptr)
 			{
-				free(MemoryPtr);
+				free(ptr);
 			}
 
-			void Copy(VoidPtr Source, VoidPtr Target, UInt Size)
+			void Copy(VoidPtr source, VoidPtr target, UInt size)
 			{
-				memcpy(Target, Source, Size);
+				memcpy(target, source, size);
 			}
 
-			void Move(VoidPtr Source, VoidPtr Target, UInt Size)
+			void Move(VoidPtr source, VoidPtr target, UInt size)
 			{
-				memmove(Target, Source, Size);
+				memmove(target, source, size);
 			}
 		}
 	}
