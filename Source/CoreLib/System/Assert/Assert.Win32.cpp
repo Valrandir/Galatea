@@ -33,7 +33,7 @@ void ShowAssertWindow(Core::String msg)
 {
 	AssertWnd wnd;
 
-	wnd.SetText(msg.GetCStr());
+	wnd.SetText(msg.CStrPtr());
 	wnd.ShowModal();
 
 	ExitProcess(1U);

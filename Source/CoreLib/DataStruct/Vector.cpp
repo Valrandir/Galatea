@@ -34,7 +34,7 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 	if(!IsEmpty())
 	{
 		if(_ctorMode != CtorModeEnum::Always)
-			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * GetLength());
+			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * Length());
 		else
 		{
 			MoveRange(newOrigin, _origin, _last);
@@ -53,7 +53,7 @@ template <class T> void Vector<T>::AutoAllocate()
 	if(_origin == NULL)
 		Allocate(2U);
 	else if(_last == _end)
-		Allocate(GetCapacity() << 1U);
+		Allocate(Capacity() << 1U);
 }
 
 template <class T> void Vector<T>::Construct(ConstElement* target, ConstElement *source) const
@@ -117,7 +117,7 @@ template <class T> void Vector<T>::CopyToSelf(Vector const & source)
 
 	if(!source.IsEmpty())
 	{
-		length = source.GetLength();
+		length = source.Length();
 		Allocate(length);
 
 		it = _origin;
@@ -235,14 +235,14 @@ template<class T> Vector<T>& Vector<T>::operator+=(Vector const & source)
 template<class T> typename Vector<T>::Element& Vector<T>::operator[](UInt offset)
 {
 	Assert(_origin);
-	Assert(offset >= 0U && offset < GetLength());
+	Assert(offset >= 0U && offset < Length());
 	return *(_origin + offset);
 }
 
 template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt offset) const
 {
 	Assert(_origin);
-	Assert(offset >= 0U && offset < GetLength());
+	Assert(offset >= 0U && offset < Length());
 	return *(_origin + offset);
 }
 
@@ -260,12 +260,12 @@ template<class T> Bool Vector<T>::IsEmpty() const
 	return _last == _origin;
 }
 
-template<class T> UInt Vector<T>::GetCapacity() const
+template<class T> UInt Vector<T>::Capacity() const
 {
 	return _end - _origin;
 }
 
-template<class T> UInt Vector<T>::GetLength() const
+template<class T> UInt Vector<T>::Length() const
 {
 	return _last - _origin;
 }
@@ -320,14 +320,14 @@ template<class T> typename Vector<T>::ConstElement* Vector<T>::REnd() const
 
 template<class T> void Vector<T>::Reserve(UInt capacity)
 {
-	if(capacity > GetCapacity())
+	if(capacity > Capacity())
 		Allocate(capacity);
 }
 
 template<class T> void Vector<T>::Shrink()
 {
 	if(_end > _last)
-		Allocate(GetLength());
+		Allocate(Length());
 }
 
 template<class T> void Vector<T>::Clear()
@@ -367,7 +367,7 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 	Assert(begin != end);
 
 	length = end - begin;
-	Reserve(GetLength() + length);
+	Reserve(Length() + length);
 
 	if(_ctorMode == CtorModeEnum::Pod)
 	{
@@ -399,7 +399,7 @@ template<class T> void Vector<T>::Insert(Element& at, ConstElement& value)
 
 template<class T> void Vector<T>::Insert(UInt offset, ConstElement& value)
 {
-	UInt length = GetLength();
+	UInt length = Length();
 	Element* element;
 
 	//If the offset is past the end, insert at end
@@ -443,7 +443,7 @@ template<class T> void Vector<T>::Remove(UInt offset)
 
 	if(!IsEmpty())
 	{
-		length = GetLength();
+		length = Length();
 
 		//If the offset is past the end, delete last
 		if(offset >= length)

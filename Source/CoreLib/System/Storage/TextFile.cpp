@@ -68,13 +68,13 @@ namespace Core
 			void TextFile::Write(CStr text) const
 			{
 				Assert(_file);
-				Write(text, ToUInt32(String::GetCStrLength(text)));
+				Write(text, ToUInt32(String::CStrLength(text)));
 			}
 
 			void TextFile::Write(String const & text) const
 			{
 				Assert(_file);
-				Write(text, ToUInt32(text.GetLength()));
+				Write(text, ToUInt32(text.Length()));
 			}
 
 			void TextFile::WriteLine(CStr text, UInt32 cchLength) const
@@ -94,7 +94,7 @@ namespace Core
 			void TextFile::WriteLine(String const & text) const
 			{
 				Assert(_file);
-				WriteLine(text, ToUInt32(text.GetLength()));
+				WriteLine(text, ToUInt32(text.Length()));
 			}
 
 			void TextFile::Close()

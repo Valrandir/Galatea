@@ -72,8 +72,8 @@ namespace Core
 			/* Accesors */
 			CtorModeEnum GetElementType() const;
 			Bool IsEmpty() const;
-			UInt GetCapacity() const;
-			UInt GetLength() const;
+			UInt Capacity() const;
+			UInt Length() const;
 
 			/* Iterators */
 			Element* Begin();

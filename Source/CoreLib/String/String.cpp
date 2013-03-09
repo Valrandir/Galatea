@@ -7,7 +7,7 @@ Core::UInt FormatImplGetRequiredSize(Core::CStr format, va_list args);
 
 namespace Core
 {
-	UInt String::NewLineLength = String::GetCStrLength(NewLine);
+	UInt String::NewLineLength = String::CStrLength(NewLine);
 
 	/******************************************************************************/
 	/* StrPtrVec internal class ***************************************************/
@@ -36,7 +36,7 @@ namespace Core
 	/* public static **************************************************************/
 	/******************************************************************************/
 
-	UInt String::GetCStrLength(CStr text)
+	UInt String::CStrLength(CStr text)
 	{
 		UInt length = 0U;
 
@@ -131,7 +131,7 @@ namespace Core
 
 	UInt String::IndexOf(CStr text, TChar const chr, UInt start)
 	{
-		return IndexOf(text, GetCStrLength(text), chr, start);
+		return IndexOf(text, CStrLength(text), chr, start);
 	}
 
 	UInt String::LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start)
@@ -156,7 +156,7 @@ namespace Core
 
 	UInt String::LastIndexOf(CStr text, TChar const chr, UInt start)
 	{
-		return LastIndexOf(text, GetCStrLength(text), chr, start);
+		return LastIndexOf(text, CStrLength(text), chr, start);
 	}
 
 	String String::SubString(CStr text, UInt textLength, UInt start, UInt length)
@@ -168,7 +168,7 @@ namespace Core
 
 	String String::SubString(CStr text, UInt start, UInt length)
 	{
-		UInt textLength =  GetCStrLength(text);
+		UInt textLength =  CStrLength(text);
 		if(length > textLength) length = textLength;
 		if(!text || !length || start + length > textLength) return String();
 		return String(text + start, text + start + length);
@@ -186,7 +186,7 @@ namespace Core
 		if(!text || !charCount)
 			return vStr;
 
-		if(!delimiters || !(delimitersLength = GetCStrLength(delimiters)))
+		if(!delimiters || !(delimitersLength = CStrLength(delimiters)))
 		{
 			vStr->Add(new String(text));
 			return vStr;
@@ -236,7 +236,7 @@ namespace Core
 
 	String::String(CStr text) : _vctr(Vector::CtorModeEnum::Pod)
 	{
-		UInt n = GetCStrLength(text);
+		UInt n = CStrLength(text);
 		if(n) _vctr.AddRange(text, text + n + 1);
 	}
 
@@ -265,12 +265,12 @@ namespace Core
 
 	String::operator CStr () const
 	{
-		return GetCStr();
+		return CStrPtr();
 	}
 
 	String& String::operator=(CStr text)
 	{
-		UInt n = GetCStrLength(text);
+		UInt n = CStrLength(text);
 		_vctr.Clear();
 		if(n) _vctr.AddRange(text, text + n + 1);
 		return *this;
@@ -283,7 +283,7 @@ namespace Core
 			if(text.IsEmpty())
 				_vctr.Clear();
 			else
-				*this = text.GetCStr();
+				*this = text.CStrPtr();
 		}
 	
 		return *this;
@@ -298,14 +298,14 @@ namespace Core
 	String& String::operator+=(CStr text)
 	{
 		Assert(text);
-		UInt length = GetCStrLength(text);
+		UInt length = CStrLength(text);
 		UInt current_length, new_length;
 		Bool MaxSizeOverflow;
 
 		if(length)
 		{
 			//Check for MaxSize overflow
-			current_length = _vctr.GetLength();
+			current_length = _vctr.Length();
 			new_length = current_length + length;
 			MaxSizeOverflow = !(new_length >= MaxSize || new_length < current_length);
 			Assert(MaxSizeOverflow);
@@ -320,7 +320,7 @@ namespace Core
 	{
 		if(!text.IsEmpty())
 		{
-			_vctr.Remove(_vctr.GetLength() - 1);
+			_vctr.Remove(_vctr.Length() - 1);
 			_vctr.operator+=(text._vctr);
 		}
 		return *this;
@@ -358,44 +358,44 @@ namespace Core
 		return _vctr.IsEmpty();
 	}
 
-	UInt String::GetCapacity() const
+	UInt String::Capacity() const
 	{
-		return _vctr.GetCapacity();
+		return _vctr.Capacity();
 	}
 
-	UInt String::GetLength() const
+	UInt String::Length() const
 	{
-		return _vctr.IsEmpty() ? 0U : _vctr.GetLength() - 1;
+		return _vctr.IsEmpty() ? 0U : _vctr.Length() - 1;
 	}
 
-	CStr String::GetCStr() const
+	CStr String::CStrPtr() const
 	{
 		return _vctr.Begin();
 	}
 
 	Int String::Compare(CStr target) const
 	{
-		return Compare(GetCStr(), target);
+		return Compare(CStrPtr(), target);
 	}
 
 	UInt String::IndexOf(TChar const chr, UInt start) const
 	{
-		return IndexOf(GetCStr(), chr, start);
+		return IndexOf(CStrPtr(), chr, start);
 	}
 
 	UInt String::LastIndexOf(TChar const chr, UInt start) const
 	{
-		return LastIndexOf(GetCStr(), chr, start);
+		return LastIndexOf(CStrPtr(), chr, start);
 	}
 
 	String String::SubString(UInt start, UInt length) const
 	{
-		return SubString(GetCStr(), GetLength(), start, length);
+		return SubString(CStrPtr(), Length(), start, length);
 	}
 
 	String::StrPtrVec* String::Split(CStr delimiters) const
 	{
-		return Split(GetCStr(), GetLength(), delimiters);
+		return Split(CStrPtr(), Length(), delimiters);
 	}
 
 	/******************************************************************************/

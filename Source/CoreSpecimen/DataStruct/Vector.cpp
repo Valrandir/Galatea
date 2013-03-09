@@ -25,7 +25,7 @@ namespace VectorTestNamespace
 
 	Bool AssertCapLen(VCntr& v, UInt capacity, UInt length)
 	{
-		return v.GetCapacity() == capacity && v.GetLength() == length;
+		return v.Capacity() == capacity && v.Length() == length;
 	}
 
 	Bool AssertCntrAlways(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
@@ -70,10 +70,10 @@ namespace VectorTestNamespace
 		Bool result = true;
 		VCntr const & c = v;
 
-		CHECK v.Begin() && v.End() == v.Begin() + v.GetLength();
-		CHECK c.Begin() && c.End() == c.Begin() + c.GetLength();
-		CHECK v.RBegin() && v.REnd() == v.RBegin() - v.GetLength();
-		CHECK c.RBegin() && c.REnd() == c.RBegin() - c.GetLength();
+		CHECK v.Begin() && v.End() == v.Begin() + v.Length();
+		CHECK c.Begin() && c.End() == c.Begin() + c.Length();
+		CHECK v.RBegin() && v.REnd() == v.RBegin() - v.Length();
+		CHECK c.RBegin() && c.REnd() == c.RBegin() - c.Length();
 
 		return result;
 	}
@@ -529,46 +529,46 @@ namespace VectorTestNamespace
 		return result;
 	}
 
-	Bool GetCapacityTest()
+	Bool CapacityTest()
 	{
 		Bool result = true;
 
 		//No Capacity Specified
 		{
 			VCntr v;
-			CHECK v.GetCapacity() == 0;
+			CHECK v.Capacity() == 0;
 		}
 
 		//Capacity Specified
 		{
 			VCntr v(10U);
-			CHECK v.GetCapacity() == 10U;
+			CHECK v.Capacity() == 10U;
 		}
 
 		return result;
 	}
 
-	Bool GetLengthTest()
+	Bool LengthTest()
 	{
 		Bool result = true;
 
 		//No Capacity
 		{
 			VCntr v;
-			CHECK v.GetLength() == 0;
+			CHECK v.Length() == 0;
 		}
 
 		//Capacity
 		{
 			VCntr v(10U);
-			CHECK v.GetLength() == 0U;
+			CHECK v.Length() == 0U;
 		}
 
 		//Length
 		{
 			VCntr v(10U);
 			v.Add(Counter());
-			CHECK v.GetLength() == 1U;
+			CHECK v.Length() == 1U;
 		}
 
 		return result;
@@ -621,14 +621,14 @@ namespace VectorTestNamespace
 		{
 			VCntr v;
 			v.Reserve(10U);
-			CHECK v.GetCapacity() == 10U;
+			CHECK v.Capacity() == 10U;
 		}
 
 		//Reserve 10 to a vector having 15
 		{
 			VCntr v(15U);
 			v.Reserve(10U);
-			CHECK v.GetCapacity() == 15U;
+			CHECK v.Capacity() == 15U;
 		}
 
 		return result;
@@ -642,7 +642,7 @@ namespace VectorTestNamespace
 		{
 			VCntr v(10U);
 			v.Shrink();
-			CHECK v.GetCapacity() == 0U;
+			CHECK v.Capacity() == 0U;
 		}
 
 		//Capacity 10 Length 5
@@ -1084,8 +1084,8 @@ Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 
 	CHECK GetElementTypeTest();
 	CHECK IsEmptyTest();
-	CHECK GetCapacityTest();
-	CHECK GetLengthTest();
+	CHECK CapacityTest();
+	CHECK LengthTest();
 
 	CHECK IteratorsTest();
 

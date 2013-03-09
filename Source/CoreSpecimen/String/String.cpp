@@ -19,25 +19,25 @@ namespace StringTestNamespace
 
 	Bool CheckCapLen(String const & s, UInt capacity, UInt length)
 	{
-		return s.GetCapacity() == capacity && s.GetLength() == length;
+		return s.Capacity() == capacity && s.Length() == length;
 	}
 
 	/******************************************************************************/
 	/* public static **************************************************************/
 	/******************************************************************************/
 
-	Bool GetCStrLenTest()
+	Bool CStrPtrLenTest()
 	{
 		Bool result = true;
 
 		//Null
-		CHECK String::GetCStrLength(NULL) == 0U;
+		CHECK String::CStrLength(NULL) == 0U;
 
 		//Empty string Len == 1 for terminating character
-		CHECK String::GetCStrLength(_empty) == 0U;
+		CHECK String::CStrLength(_empty) == 0U;
 
 		//Len == _textlen
-		CHECK String::GetCStrLength(_text) == _textlen;
+		CHECK String::CStrLength(_text) == _textlen;
 
 		return result;
 	}
@@ -79,9 +79,9 @@ namespace StringTestNamespace
 
 		String str = String::FormatToStr(format, 157, Text("Done"));
 
-		CHECK str.GetCapacity() == 37U + String::GetCStrLength(NewLine);
-		CHECK str.GetLength() == 36U;
-		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.GetCStr());
+		CHECK str.Capacity() == 37U + String::CStrLength(NewLine);
+		CHECK str.Length() == 36U;
+		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.CStrPtr());
 
 		return result;
 	}
@@ -273,7 +273,7 @@ namespace StringTestNamespace
 		//Assign Empty to not Empty
 		{
 			String t(_text);
-			capacity = t.GetCapacity();
+			capacity = t.Capacity();
 			t = _empty;
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, capacity, 0U);
@@ -290,7 +290,7 @@ namespace StringTestNamespace
 		{
 			String t(_text);
 			t = _textBigger;
-			capacity = String::GetCStrLength(_textBigger);
+			capacity = String::CStrLength(_textBigger);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, capacity + 1, capacity);
 		}
@@ -299,10 +299,10 @@ namespace StringTestNamespace
 		//Target capacity is same as before
 		{
 			String t(_text);
-			capacity = t.GetCapacity();
+			capacity = t.Capacity();
 			t = _textShorter;
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, capacity, String::GetCStrLength(_textShorter));
+			CHECK CheckCapLen(t, capacity, String::CStrLength(_textShorter));
 		}
 
 		return result;
@@ -325,7 +325,7 @@ namespace StringTestNamespace
 		{
 			String s;
 			String t(_text);
-			capacity = t.GetCapacity();
+			capacity = t.Capacity();
 			t = s;
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, capacity, 0U);
@@ -345,7 +345,7 @@ namespace StringTestNamespace
 			String t(_text);
 			t = s;
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, s.GetCapacity(), s.GetLength());
+			CHECK CheckCapLen(t, s.Capacity(), s.Length());
 		}
 
 		//Assign shorter string to bigger string
@@ -353,10 +353,10 @@ namespace StringTestNamespace
 		{
 			String s(_textShorter);
 			String t(_text);
-			capacity = t.GetCapacity();
+			capacity = t.Capacity();
 			t = s;
 			CHECK t.IsEmpty() == false;
-			CHECK CheckCapLen(t, capacity, s.GetLength());
+			CHECK CheckCapLen(t, capacity, s.Length());
 		}
 
 		return result;
@@ -419,7 +419,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
-			CHECK String::Compare(s.GetCStr(), _empty) == 0;
+			CHECK String::Compare(s.CStrPtr(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -428,7 +428,7 @@ namespace StringTestNamespace
 			s += _text;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.GetCStr(), _text) == 0;
+			CHECK String::Compare(s.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -437,7 +437,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.GetCStr(), _text) == 0;
+			CHECK String::Compare(s.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -463,7 +463,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, 0U, 0U);
-			CHECK String::Compare(t.GetCStr(), _empty) == 0;
+			CHECK String::Compare(t.CStrPtr(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -473,7 +473,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.GetCStr(), _text) == 0;
+			CHECK String::Compare(t.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -483,7 +483,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.GetCStr(), _text) == 0;
+			CHECK String::Compare(t.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -867,56 +867,56 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool GetCapacityTest()
+	Bool CapacityTest()
 	{
 		Bool result = true;
 
 		//Empty
 		{
 			String s;
-			CHECK s.GetCapacity() == 0U;
+			CHECK s.Capacity() == 0U;
 		}
 
 		//Capacity
 		{
 			String s(10U);
-			CHECK s.GetCapacity() == 10U;
+			CHECK s.Capacity() == 10U;
 		}
 
 		return result;
 	}
 
-	Bool GetLengthTest()
+	Bool LengthTest()
 	{
 		Bool result = true;
 
 		//Empty
 		{
 			String s;
-			CHECK s.GetLength() == 0U;
+			CHECK s.Length() == 0U;
 		}
 
 		//Empty with Capacity
 		{
 			String s(10U);
-			CHECK s.GetLength() == 0U;
+			CHECK s.Length() == 0U;
 		}
 
 		//Not Empty
 		{
 			String s(_text);
-			CHECK s.GetLength() == _textlen;
+			CHECK s.Length() == _textlen;
 		}
 
 		return result;
 	}
 
-	Bool GetCStrTest()
+	Bool CStrPtrTest()
 	{
 		Bool result = true;
 
 		String s(_text);
-		CStr tc = s.GetCStr();
+		CStr tc = s.CStrPtr();
 		CHECK String::Compare(_text, tc) == 0U;
 
 		return result;
@@ -1048,7 +1048,7 @@ namespace StringTestNamespace
 
 		//Return last 5 characters
 		{
-			String s = text.SubString(text.GetLength() - 5U, 5U);
+			String s = text.SubString(text.Length() - 5U, 5U);
 			CHECK s.Compare(Text("reLib")) == 0;
 		}
 
@@ -1074,7 +1074,7 @@ namespace StringTestNamespace
 
 		vStr = text.Split(Text("="));
 
-		CHECK vStr->GetLength() == 4;
+		CHECK vStr->Length() == 4;
 		CHECK 0 == String::Compare(*(*vStr)[0], Text("ScrResX "));
 		CHECK 0 == String::Compare(*(*vStr)[1], Text(" 1280 "));
 		CHECK 0 == String::Compare(*(*vStr)[2], Text(" ScrResY "));
@@ -1114,7 +1114,7 @@ namespace StringTestNamespace
 
 		vStr = text.Split(Text("|;\t"));
 
-		CHECK vStr->GetLength() == 5;
+		CHECK vStr->Length() == 5;
 		CHECK 0 == String::Compare(*(*vStr)[0], Text("Word 1 "));
 		CHECK 0 == String::Compare(*(*vStr)[1], Text(" Word 2 "));
 		CHECK 0 == String::Compare(*(*vStr)[2], Text(" Word 3 "));
@@ -1158,7 +1158,7 @@ namespace StringTestNamespace
 			s.Append(_empty);
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
-			CHECK String::Compare(s.GetCStr(), _empty) == 0;
+			CHECK String::Compare(s.CStrPtr(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -1167,7 +1167,7 @@ namespace StringTestNamespace
 			s.Append(_text);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.GetCStr(), _text) == 0;
+			CHECK String::Compare(s.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -1176,7 +1176,7 @@ namespace StringTestNamespace
 			s.Append(_empty);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.GetCStr(), _text) == 0;
+			CHECK String::Compare(s.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -1202,7 +1202,7 @@ namespace StringTestNamespace
 			t.Append(s);
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, 0U, 0U);
-			CHECK String::Compare(t.GetCStr(), _empty) == 0;
+			CHECK String::Compare(t.CStrPtr(), _empty) == 0;
 		}
 
 		//Empty += Not Empty
@@ -1212,7 +1212,7 @@ namespace StringTestNamespace
 			t.Append(s);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.GetCStr(), _text) == 0;
+			CHECK String::Compare(t.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Empty
@@ -1222,7 +1222,7 @@ namespace StringTestNamespace
 			t.Append(s);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.GetCStr(), _text) == 0;
+			CHECK String::Compare(t.CStrPtr(), _text) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -1241,7 +1241,7 @@ namespace StringTestNamespace
 	Bool AppendLineTCharTest()
 	{
 		Bool result = true;
-		UInt nlLength = String::GetCStrLength(NewLine);
+		UInt nlLength = String::CStrLength(NewLine);
 		
 		//Empty += Empty
 		{
@@ -1249,7 +1249,7 @@ namespace StringTestNamespace
 			s.AppendLine(_empty);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, 1U + nlLength, nlLength);
-			CHECK String::Compare(s.GetCStr(), NewLine) == 0;
+			CHECK String::Compare(s.CStrPtr(), NewLine) == 0;
 		}
 
 		//Empty += Not Empty
@@ -1258,7 +1258,7 @@ namespace StringTestNamespace
 			s.AppendLine(_text);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap + nlLength, _textlen + nlLength);
-			CHECK String::Compare(s.GetCStr(), String(_text) + NewLine) == 0;
+			CHECK String::Compare(s.CStrPtr(), String(_text) + NewLine) == 0;
 		}
 
 		//Not Empty += Empty
@@ -1267,7 +1267,7 @@ namespace StringTestNamespace
 			s.AppendLine(_empty);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap + nlLength, _textlen + nlLength);
-			CHECK String::Compare(s.GetCStr(), String(_text) + NewLine) == 0;
+			CHECK String::Compare(s.CStrPtr(), String(_text) + NewLine) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -1285,7 +1285,7 @@ namespace StringTestNamespace
 	Bool AppendLineStringTest()
 	{
 		Bool result = true;
-		UInt nlLength = String::GetCStrLength(NewLine);
+		UInt nlLength = String::CStrLength(NewLine);
 
 		//Empty += Empty
 		{
@@ -1294,7 +1294,7 @@ namespace StringTestNamespace
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, 1U + nlLength, nlLength);
-			CHECK String::Compare(t.GetCStr(), NewLine) == 0;
+			CHECK String::Compare(t.CStrPtr(), NewLine) == 0;
 		}
 
 		//Empty += Not Empty
@@ -1304,7 +1304,7 @@ namespace StringTestNamespace
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap + nlLength, _textlen + nlLength);
-			CHECK String::Compare(t.GetCStr(), String(_text) + NewLine) == 0;
+			CHECK String::Compare(t.CStrPtr(), String(_text) + NewLine) == 0;
 		}
 
 		//Not Empty += Empty
@@ -1314,7 +1314,7 @@ namespace StringTestNamespace
 			t.AppendLine(s);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap + nlLength, _textlen + nlLength);
-			CHECK String::Compare(t.GetCStr(), String(_text) + NewLine) == 0;
+			CHECK String::Compare(t.CStrPtr(), String(_text) + NewLine) == 0;
 		}
 
 		//Not Empty += Not Empty
@@ -1336,7 +1336,7 @@ Bool StringTest()
 	using namespace StringTestNamespace;
 	Bool result = true;
 
-	CHECK GetCStrLenTest();
+	CHECK CStrPtrLenTest();
 	CHECK FormatBufferTest();
 	CHECK FormatStringTest();
 	CHECK CompareTCharTest();
@@ -1364,9 +1364,9 @@ Bool StringTest()
 	CHECK OperatorSubscriptTest();
 
 	CHECK IsEmptyTest();
-	CHECK GetCapacityTest();
-	CHECK GetLengthTest();
-	CHECK GetCStrTest();
+	CHECK CapacityTest();
+	CHECK LengthTest();
+	CHECK CStrPtrTest();
 	CHECK IndexOfTest();
 	CHECK LastIndexOfTest();
 	CHECK SubStringTest();

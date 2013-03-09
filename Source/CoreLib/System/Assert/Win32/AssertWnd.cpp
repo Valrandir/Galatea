@@ -108,7 +108,7 @@ void AssertWnd::btnCopy_OnClick()
 	string.Reserve(cch_length + 1);
 	GetWindowText(_hText, string.DrivePointer(cch_length), cch_length + 1);
 
-	ClipBoardSetText(string.GetCStr());
+	ClipBoardSetText(string.CStrPtr());
 }
 
 void AssertWnd::btnClose_OnClick()
