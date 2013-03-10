@@ -3,6 +3,6 @@ using namespace Core;
 
 Bool TimeTest()
 {
-	System::Time::Sleep(25);
+	Time::Sleep(25);
 	return true;
 }

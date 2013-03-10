@@ -8,10 +8,10 @@ Bool MemoryTest()
 	void *pMem = NULL;
 	UInt32 const OneMegabytes = 1024U * 1024U * 16U;
 
-	pMem = System::Memory::Alloc(OneMegabytes);
+	pMem = Memory::Alloc(OneMegabytes);
 	CHECK pMem != 0;
 
-	System::Memory::Free(pMem);
+	Memory::Free(pMem);
 	pMem = NULL;
 
 	return result;

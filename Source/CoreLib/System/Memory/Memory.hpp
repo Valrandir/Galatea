@@ -3,14 +3,11 @@
 
 namespace Core
 {
-	namespace System
+	namespace Memory
 	{
-		namespace Memory
-		{
-			VoidPtr Alloc(UInt bytes);
-			void Free(VoidPtr ptr);
-			void Copy(VoidPtr source, VoidPtr target, UInt size);
-			void Move(VoidPtr source, VoidPtr target, UInt size);
-		};
-	}
+		VoidPtr Alloc(UInt bytes);
+		void Free(VoidPtr ptr);
+		void Copy(VoidPtr source, VoidPtr target, UInt size);
+		void Move(VoidPtr source, VoidPtr target, UInt size);
+	};
 }

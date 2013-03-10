@@ -3,11 +3,8 @@
 
 namespace Core
 {
-	namespace System
+	namespace Time
 	{
-		namespace Time
-		{
-			void Sleep(UInt32 milliseconds);
-		};
-	}
+		void Sleep(UInt32 milliseconds);
+	};
 }

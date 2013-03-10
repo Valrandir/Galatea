@@ -1,7 +1,7 @@
 #include "../../Core.hpp"
 
 using namespace Core;
-using namespace System::Storage;
+using namespace Storage;
 
 namespace TextFileTestNamespace
 {

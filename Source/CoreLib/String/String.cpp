@@ -452,7 +452,7 @@ namespace Core
 		if(it != _vctr.Begin())
 		{
 			size = _vctr.End() - it;
-			System::Memory::Move(it, _vctr.DrivePointer(size), size * sizeof(TChar));
+			Memory::Move(it, _vctr.DrivePointer(size), size * sizeof(TChar));
 		}
 
 		return *this;

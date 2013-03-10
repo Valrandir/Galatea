@@ -4,23 +4,20 @@
 
 namespace Core
 {
-	namespace System
+	UInt32 GetErrCode()
 	{
-		UInt32 GetErrCode()
-		{
-			return GetLastError();
-		}
+		return GetLastError();
+	}
 
-		void SetErrCode(UInt32 ErrCode)
-		{
-			SetLastError(ErrCode);
-		}
+	void SetErrCode(UInt32 ErrCode)
+	{
+		SetLastError(ErrCode);
+	}
 
-		CStr GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
-		{
-			if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, ErrCode, 0, Buffer, BufferSize, NULL))
-				*Buffer = 0;
-			return Buffer;
-		}
+	CStr GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
+	{
+		if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, ErrCode, 0, Buffer, BufferSize, NULL))
+			*Buffer = 0;
+		return Buffer;
 	}
 }

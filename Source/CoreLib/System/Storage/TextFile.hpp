@@ -4,33 +4,30 @@
 
 namespace Core
 {
-	namespace System
+	namespace Storage
 	{
-		namespace Storage
+		class TextFile
 		{
-			class TextFile
-			{
-				File* _file;
+			File* _file;
 
-				TextFile(File* file);
-				TextFile(TextFile const &);
-				TextFile& operator=(TextFile&);
+			TextFile(File* file);
+			TextFile(TextFile const &);
+			TextFile& operator=(TextFile&);
 
-				public:
-				static TextFile* Create(CStr fileName);
-				static TextFile* Open(CStr fileName);
-				static TextFile* OpenReadOnly(CStr fileName);
-				String ReadAll() const;
-				String ReadLine() const;
-				void Write(CStr text, UInt32 cchLength) const;
-				void Write(CStr text) const;
-				void Write(String const & text) const;
-				void WriteLine(CStr text, UInt32 cchLength) const;
-				void WriteLine(CStr text) const;
-				void WriteLine(String const & text) const;
-				void Close();
-				~TextFile();
-			};
-		}
+			public:
+			static TextFile* Create(CStr fileName);
+			static TextFile* Open(CStr fileName);
+			static TextFile* OpenReadOnly(CStr fileName);
+			String ReadAll() const;
+			String ReadLine() const;
+			void Write(CStr text, UInt32 cchLength) const;
+			void Write(CStr text) const;
+			void Write(String const & text) const;
+			void WriteLine(CStr text, UInt32 cchLength) const;
+			void WriteLine(CStr text) const;
+			void WriteLine(String const & text) const;
+			void Close();
+			~TextFile();
+		};
 	}
 }

@@ -5,24 +5,21 @@
 
 namespace Core
 {
-	namespace System
+	namespace Threading
 	{
-		namespace Threading
+		class ThreadImpl : public Thread
 		{
-			class ThreadImpl : public Thread
-			{
-				ThreadFonc _threadEntry;
-				VoidPtr _threadParam;
-				VoidPtr _returnValue;
-				pthread_t _threadID;
+			ThreadFonc _threadEntry;
+			VoidPtr _threadParam;
+			VoidPtr _returnValue;
+			pthread_t _threadID;
 
-				static void* NativeThreadEntry(void* threadParam);
-				ThreadImpl(ThreadFonc threadEntry, VoidPtr threadParam);
+			static void* NativeThreadEntry(void* threadParam);
+			ThreadImpl(ThreadFonc threadEntry, VoidPtr threadParam);
 
-				public:
-				static ThreadImpl* CreateInstance(ThreadFonc threadEntry, VoidPtr threadParam);
-				VoidPtr Join();
-			};
-		}
+			public:
+			static ThreadImpl* CreateInstance(ThreadFonc threadEntry, VoidPtr threadParam);
+			VoidPtr Join();
+		};
 	}
 }

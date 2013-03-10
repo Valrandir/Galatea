@@ -1,6 +1,5 @@
 #include "../Core.hpp"
 using namespace Core;
-using namespace System;
 using namespace Threading;
 
 Bool ErrTest()
@@ -11,9 +10,9 @@ Bool ErrTest()
 	TChar buffer[512];
 	CStr errText;
 
-	System::SetErrCode(10U);
-	errCode = System::GetErrCode();
-	errText = System::GetErrText(errCode, buffer, 512U);
+	SetErrCode(10U);
+	errCode = GetErrCode();
+	errText = GetErrText(errCode, buffer, 512U);
 
 	CHECK errCode == 10U;
 	CHECK String::CStrLength(errText) > 4;

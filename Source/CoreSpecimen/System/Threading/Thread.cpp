@@ -22,9 +22,9 @@ Bool ThreadTestByValue()
 	Int Param = 55U;
 	VoidPtr ThreadParam = (VoidPtr)Param;
 	VoidPtr ReturnValue;
-	System::Threading::Thread* Thread;
+	Threading::Thread* Thread;
 
-	Thread = System::Threading::CreateThread(ThreadEntryByValue, ThreadParam);
+	Thread = Threading::CreateThread(ThreadEntryByValue, ThreadParam);
 	CHECK Thread;
 
 	if(Thread)
@@ -44,9 +44,9 @@ Bool ThreadTestByRef()
 	UInt32 Param = 55U;
 	VoidPtr ThreadParam = (VoidPtr)&Param;
 	VoidPtr ReturnValue;
-	System::Threading::Thread* Thread;
+	Threading::Thread* Thread;
 
-	Thread = System::Threading::CreateThread(ThreadEntryByRef, ThreadParam);
+	Thread = Threading::CreateThread(ThreadEntryByRef, ThreadParam);
 	CHECK Thread != 0;
 
 	if(Thread)
