@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\File.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\IniFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\String\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System.cpp" />

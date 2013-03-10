@@ -58,6 +58,9 @@
       <Filter>Assert</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\IniFile.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreSpecimen\Core.hpp" />

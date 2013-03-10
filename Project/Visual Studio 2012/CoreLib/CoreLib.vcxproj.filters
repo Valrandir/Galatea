@@ -67,6 +67,9 @@
       <Filter>Time</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\System.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile.hpp">
+      <Filter>Storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
@@ -106,5 +109,8 @@
       <Filter>Time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
