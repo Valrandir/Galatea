@@ -1373,12 +1373,94 @@ namespace StringTestNamespace
 	Bool TrimRightTest()
 	{
 		Bool result = true;
+		String text;
+
+		(text = Text("")).TrimRight();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text(" ")).TrimRight();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text("    ")).TrimRight();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(Text("")) == 0;
+
+		(text = Text("Trim")).TrimRight();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text("Trim ")).TrimRight();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text("Trim  ")).TrimRight();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(Text("Trim")) == 0;
+
+		(text = Text(" Trim ")).TrimRight();
+		CHECK text.Length() == 5U;
+		CHECK text.Compare(Text(" Trim")) == 0;
+
+		(text = Text("  Trim  ")).TrimRight();
+		CHECK text.Length() == 6U;
+		CHECK text.Compare(Text("  Trim")) == 0;
+
 		return result;
 	}
 
 	Bool TrimTest()
 	{
 		Bool result = true;
+		String text;
+		CStr empty = Text("");
+		CStr trim = Text("Trim");
+
+		(text = Text("")).Trim();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(empty) == 0;
+
+		(text = Text(" ")).Trim();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(empty) == 0;
+
+		(text = Text("    ")).Trim();
+		CHECK text.Length() == 0U;
+		CHECK text.Compare(empty) == 0;
+
+		(text = Text("Trim")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text("Trim ")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text("Trim  ")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text(" Trim")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text("  Trim")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text(" Trim ")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text("  Trim  ")).Trim();
+		CHECK text.Length() == 4U;
+		CHECK text.Compare(trim) == 0;
+
+		(text = Text("  Ha Ha Ha  ")).Trim();
+		CHECK text.Length() == 8U;
+		CHECK text.Compare(Text("Ha Ha Ha")) == 0;
+
 		return result;
 	}
 }

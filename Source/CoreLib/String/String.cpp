@@ -457,4 +457,19 @@ namespace Core
 
 		return *this;
 	}
+
+	String& String::TrimRight()
+	{
+		Vector::Element* it;
+
+		while((it = _vctr.RBegin() - 1) > _vctr.REnd() && *it == 32)
+			_vctr.Remove(*it);
+
+		return *this;
+	}
+
+	String& String::Trim()
+	{
+		return TrimRight().TrimLeft();
+	}
 }

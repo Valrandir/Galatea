@@ -81,5 +81,7 @@ namespace Core
 		void AppendLine(String const & str);
 		TChar* DrivePointer(UInt future_length);
 		String& TrimLeft();
+		String& TrimRight();
+		String& Trim();
 	};
 }
