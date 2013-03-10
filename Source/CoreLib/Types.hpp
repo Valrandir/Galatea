@@ -59,4 +59,6 @@ namespace Core
 
 	Int32 ToInt32(Int64 value);
 	UInt32 ToUInt32(UInt64 value);
+	Int ToInt(Int64 value);
+	UInt ToUInt(UInt64 value);
 }

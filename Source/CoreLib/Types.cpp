@@ -15,4 +15,22 @@ namespace Core
 		Assert(value >> 32 == 0U);
 		return value & 0xffffffff;
 	}
+
+	Int ToInt(Int64 value)
+	{
+		#ifdef CoreTarget64Bits
+			return value;
+		#else
+			return ToInt32(value);
+		#endif
+	}
+
+	UInt ToUInt(UInt64 value)
+	{
+		#ifdef CoreTarget64Bits
+			return value;
+		#else
+			return ToUInt32(value);
+		#endif
+	}
 }

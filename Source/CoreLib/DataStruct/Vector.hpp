@@ -70,7 +70,7 @@ namespace Core
 			ConstElement& operator[](UInt offset) const;
 
 			/* Accesors */
-			CtorModeEnum GetElementType() const;
+			CtorModeEnum CtorMode() const;
 			Bool IsEmpty() const;
 			UInt Capacity() const;
 			UInt Length() const;

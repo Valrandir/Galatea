@@ -250,7 +250,7 @@ template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt o
 /* Accesors *******************************************************************/
 /******************************************************************************/
 
-template<class T> typename Vector<T>::CtorModeEnum Vector<T>::GetElementType() const
+template<class T> typename Vector<T>::CtorModeEnum Vector<T>::CtorMode() const
 {
 	return _ctorMode;
 }

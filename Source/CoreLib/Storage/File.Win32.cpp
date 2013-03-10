@@ -90,22 +90,22 @@ namespace Core
 			SetFilePointerEx(_hFile, li, 0, FILE_END);
 		}
 
-		void FileImpl::Read(VoidPtr buffer, UInt32 bufferSize) const
+		void FileImpl::Read(VoidPtr buffer, UInt bufferSize) const
 		{
 			Assert(buffer != 0);
 			Assert(_hFile != 0);
 			DWORD bytesRead;
-			BOOL readResult = ReadFile(_hFile, buffer, bufferSize, &bytesRead, 0);
+			BOOL readResult = ReadFile(_hFile, buffer, ToUInt32(bufferSize), &bytesRead, 0);
 			//Assert(readResult != FALSE);
 		}
 
-		void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize) const
+		void FileImpl::Write(VoidPtr const buffer, UInt bufferSize) const
 		{
 			Assert(_hFile != 0);
 			Assert(_isReadOnly == false);
 			Assert(buffer != 0);
 			DWORD bytesWritten;
-			BOOL writeResult = WriteFile(_hFile, buffer, bufferSize, &bytesWritten, 0);
+			BOOL writeResult = WriteFile(_hFile, buffer, ToUInt32(bufferSize), &bytesWritten, 0);
 			//Assert(writeResult != FALSE);
 		}
 

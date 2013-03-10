@@ -26,8 +26,8 @@ namespace Core
 			virtual UInt64 GetSeekPos() const = 0;
 			virtual void Seek(UInt64 position) const = 0;
 			virtual void SeekToEnd() const = 0;
-			virtual void Read(VoidPtr buffer, UInt32 bufferSize) const = 0;
-			virtual void Write(VoidPtr const buffer, UInt32 bufferSize) const = 0;
+			virtual void Read(VoidPtr buffer, UInt bufferSize) const = 0;
+			virtual void Write(VoidPtr const buffer, UInt bufferSize) const = 0;
 			virtual void Close() = 0;
 			virtual ~File();
 		};

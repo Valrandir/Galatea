@@ -112,7 +112,7 @@ namespace VectorTestNamespace
 		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
 
 		CHECK AssertCapLen(vc, 0U, 0U);
-		CHECK vc.GetElementType() == VCntr::DefaultMode;
+		CHECK vc.CtorMode() == VCntr::DefaultMode;
 		CHECK AssertBeginEndNull(vc);
 
 		return result;
@@ -123,7 +123,7 @@ namespace VectorTestNamespace
 		Bool result = true;
 		VCntr vc(VCntr::CtorModeEnum::Once);
 
-		CHECK vc.GetElementType() == VCntr::CtorModeEnum::Once;
+		CHECK vc.CtorMode() == VCntr::CtorModeEnum::Once;
 
 		return result;
 	}
@@ -189,7 +189,7 @@ namespace VectorTestNamespace
 		{
 			VCntr source(VCntr::CtorModeEnum::Pod);
 			VCntr target(source);
-			CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
+			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
 		}
 
 		return result;
@@ -242,7 +242,7 @@ namespace VectorTestNamespace
 		{
 			VCntr source(VCntr::CtorModeEnum::Pod);
 			VCntr target((VCntr&&)source);
-			CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
+			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
 		}
 
 		return result;
@@ -368,7 +368,7 @@ namespace VectorTestNamespace
 		{
 			VCntr source(VCntr::CtorModeEnum::Pod);
 			VCntr target = source;
-			CHECK target.GetElementType() == VCntr::CtorModeEnum::Pod;
+			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
 		}
 
 		return result;
@@ -419,7 +419,7 @@ namespace VectorTestNamespace
 		{
 			VCntr target(VCntr::CtorModeEnum::Pod);
 			VCntr source = (VCntr&&)target;
-			CHECK source.GetElementType() == VCntr::CtorModeEnum::Pod;
+			CHECK source.CtorMode() == VCntr::CtorModeEnum::Pod;
 		}
 
 		return result;
@@ -484,20 +484,20 @@ namespace VectorTestNamespace
 		return result;
 	}
 
-	Bool GetElementTypeTest()
+	Bool GetCtorModeTest()
 	{
 		Bool result = true;
 
 		//Specify mode obtain same mode
 		{
 			VCntr v(VCntr::CtorModeEnum::Pod);
-			CHECK v.GetElementType() == VCntr::CtorModeEnum::Pod;
+			CHECK v.CtorMode() == VCntr::CtorModeEnum::Pod;
 		}
 
 		//Don't specify mode obtain default
 		{
 			VCntr v;
-			CHECK v.GetElementType() == VCntr::DefaultMode;
+			CHECK v.CtorMode() == VCntr::DefaultMode;
 		}
 
 		return result;
@@ -1082,7 +1082,7 @@ Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 	CHECK OperatorMoveTest();
 	CHECK OperatorPlusEqualTest();
 
-	CHECK GetElementTypeTest();
+	CHECK GetCtorModeTest();
 	CHECK IsEmptyTest();
 	CHECK CapacityTest();
 	CHECK LengthTest();

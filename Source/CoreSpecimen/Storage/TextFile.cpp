@@ -25,7 +25,26 @@ namespace TextFileTestNamespace
 
 		fileSize = File::GetFileSize(_fileName);
 		textSize = String::CStrLength(_Content) * sizeof(TChar);
-		CHECK(fileSize == textSize);
+		CHECK fileSize == textSize;
+
+		return result;
+	}
+
+	Bool WriteLineAppendTest()
+	{
+		Bool result = true;
+		TextFile* textFile;
+		UInt64 fileSize, textSize;
+
+		textFile = TextFile::Append(_fileName);
+		textFile->WriteLine(_Content);
+		DeletePtr(textFile);
+
+		fileSize = File::GetFileSize(_fileName);
+		textSize = String::CStrLength(_Content) * sizeof(TChar);
+		textSize *= 2;
+		textSize += String::CStrLength(NewLine);
+		CHECK fileSize == textSize;
 
 		return result;
 	}
@@ -33,16 +52,110 @@ namespace TextFileTestNamespace
 	Bool ReadAllTest()
 	{
 		Bool result = true;
-		TextFile* textFile;
-		String content;
-		UInt64 textSize;
 
-		textFile = TextFile::OpenReadOnly(_fileName);
-		content = textFile->ReadAll();
-		DeletePtr(textFile);
+		String content = TextFile::ReadAll(_fileName);
+		UInt64 fileSize = File::GetFileSize(_fileName);
+		CHECK content.Length() == fileSize;
+		File::Delete(_fileName);
 
-		textSize = String::CStrLength(_Content) * sizeof(TChar);
-		CHECK(content.Length() == textSize);
+		return result;
+	}
+
+	Bool ReadLinesTest()
+	{
+		Bool result = true;
+		TextFile* file;
+		String::StrPtrVec* lines;
+
+		//File is empty -> no lines
+		file = TextFile::Create(_fileName);
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 0U;
+		DeletePtr(lines);
+
+		//File contains one space -> one line
+		file = TextFile::Create(_fileName);
+		file->Write(Text(" "));
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 1U;
+		CHECK *(*lines)[0] == Text(" ");
+		DeletePtr(lines);
+
+		//File: contains NewLine only
+		//Result: one line
+		file = TextFile::Create(_fileName);
+		file->Write(Text("\r\n"));
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 1U;
+		CHECK (*lines)[0]->IsEmpty();
+		DeletePtr(lines);
+
+		//File: contains one line
+		//Result: one line
+		file = TextFile::Create(_fileName);
+		file->Write(Text("Line 01"));
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 1U;
+		CHECK *(*lines)[0] == Text("Line 01");
+		DeletePtr(lines);
+
+		//File: contains one line with NewLine at end
+		//Result: one line
+		file = TextFile::Append(_fileName);
+		file->WriteLine();
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 1U;
+		CHECK *(*lines)[0] == Text("Line 01");
+		DeletePtr(lines);
+
+		//File: contains two lines without a NewLine at end of second line
+		//Result: two lines
+		file = TextFile::Append(_fileName);
+		file->Write(Text("Line 02"));
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 2U;
+		CHECK *(*lines)[0] == Text("Line 01");
+		CHECK *(*lines)[1] == Text("Line 02");
+		DeletePtr(lines);
+
+		//File: contains two lines with a NewLine at end of second line
+		//Result: two lines
+		file = TextFile::Append(_fileName);
+		file->WriteLine();
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 2U;
+		CHECK *(*lines)[0] == Text("Line 01");
+		CHECK *(*lines)[1] == Text("Line 02");
+		DeletePtr(lines);
+
+		//File: contains seven lines with varied mix of NewLine \r \n
+		//Result: seven lines
+		file = TextFile::Append(_fileName);
+		file->WriteLine(Text("Line 03\r"));
+		file->WriteLine(Text("Line 04\n"));
+		file->WriteLine(Text("Line 05\r\n"));
+		file->WriteLine(Text("Line 06\n\r"));
+		file->WriteLine(Text("Line 07"));
+		DeletePtr(file);
+		lines = TextFile::ReadLines(_fileName);
+		CHECK lines->Length() == 2U;
+		CHECK *(*lines)[0] == Text("Line 01");
+		CHECK *(*lines)[1] == Text("Line 02");
+		CHECK *(*lines)[2] == Text("Line 03");
+		CHECK *(*lines)[3] == Text("Line 04");
+		CHECK *(*lines)[4] == Text("Line 05");
+		CHECK *(*lines)[5] == Text("Line 06");
+		CHECK *(*lines)[6] == Text("Line 07");
+		DeletePtr(lines);
+
+		File::Delete(_fileName);
 
 		return result;
 	}
@@ -53,8 +166,10 @@ Bool TextFileTest()
 	Bool result = true;
 	using namespace TextFileTestNamespace;
 
-	CHECK(WriteTest());
-	CHECK(ReadAllTest());
+	CHECK WriteTest();
+	CHECK WriteLineAppendTest();
+	CHECK ReadAllTest();
+	CHECK ReadLinesTest();
 
 	File::Delete(_fileName);
 

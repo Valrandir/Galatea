@@ -26,59 +26,71 @@ namespace Core
 			return file ? new TextFile(file) : NULL;
 		}
 
-		TextFile* TextFile::Open(CStr fileName)
+		TextFile* TextFile::Append(CStr fileName)
 		{
 			Assert(fileName != NULL);
 			File* file = File::Open(fileName);
-			return file ? new TextFile(file) : NULL;
+
+			if(file)
+			{
+				file->SeekToEnd();
+				return new TextFile(file);
+			}
+
+			return 0;
 		}
 
-		TextFile* TextFile::OpenReadOnly(CStr fileName)
+		String TextFile::ReadAll(CStr fileName)
 		{
-			Assert(fileName != NULL);
-			File* file = File::OpenReadOnly(fileName);
-			return file ? new TextFile(file) : NULL;
-		}
+			Assert(fileName);
+			File* file;
+			String text;
+			UInt fileSize;
+			TChar* buffer;
 
-		String TextFile::ReadAll() const
-		{
-			Assert(_file);
-
-			UInt32 fileSize = ToUInt32(_file->GetFileSize());
-			String text(fileSize);
-			TChar* buffer = text.DrivePointer(fileSize);
-			_file->Read(buffer, fileSize);
+			file = File::OpenReadOnly(fileName);
+			if(file)
+			{
+				fileSize = ToUInt(file->GetFileSize());
+				text.Reserve(fileSize);
+				buffer = text.DrivePointer(fileSize);
+				file->Read(buffer, fileSize);
+				DeletePtr(file);
+			}
 
 			return text;
 		}
 
-		String TextFile::ReadLine() const
+		String::StrPtrVec* TextFile::ReadLines(CStr fileName)
 		{
-			return Text("");
+			Assert(fileName);
+			auto text = ReadAll(fileName);
+			auto lines = text.Split(text, text.Length(), NewLine);
+			return lines;
 		}
 
-		void TextFile::Write(CStr text, UInt32 cchLength) const
+		void TextFile::Write(CStr text, UInt cchLength) const
 		{
 			Assert(_file);
-			_file->Write((VoidPtr)text, cchLength * sizeof(TChar));
+			_file->Write((VoidPtr)text, ToUInt32(cchLength) * sizeof(TChar));
 		}
 
 		void TextFile::Write(CStr text) const
 		{
 			Assert(_file);
-			Write(text, ToUInt32(String::CStrLength(text)));
+			Write(text, String::CStrLength(text));
 		}
 
 		void TextFile::Write(String const & text) const
 		{
 			Assert(_file);
-			Write(text, ToUInt32(text.Length()));
+			Write(text, text.Length());
 		}
 
-		void TextFile::WriteLine(CStr text, UInt32 cchLength) const
+		void TextFile::WriteLine(CStr text, UInt cchLength) const
 		{
 			Assert(_file);
-			Write(text, cchLength);
+			Write(text, ToUInt32(cchLength));
 			Write(NewLine);
 		}
 
@@ -92,7 +104,13 @@ namespace Core
 		void TextFile::WriteLine(String const & text) const
 		{
 			Assert(_file);
-			WriteLine(text, ToUInt32(text.Length()));
+			WriteLine(text, text.Length());
+		}
+
+		void TextFile::WriteLine() const
+		{
+			Assert(_file);
+			Write(NewLine);
 		}
 
 		void TextFile::Close()

@@ -16,16 +16,17 @@ namespace Core
 
 			public:
 			static TextFile* Create(CStr fileName);
-			static TextFile* Open(CStr fileName);
-			static TextFile* OpenReadOnly(CStr fileName);
-			String ReadAll() const;
-			String ReadLine() const;
-			void Write(CStr text, UInt32 cchLength) const;
+			static TextFile* Append(CStr fileName);
+			static String ReadAll(CStr fileName);
+			static String::StrPtrVec* ReadLines(CStr fileName);
+
+			void Write(CStr text, UInt cchLength) const;
 			void Write(CStr text) const;
 			void Write(String const & text) const;
-			void WriteLine(CStr text, UInt32 cchLength) const;
+			void WriteLine(CStr text, UInt cchLength) const;
 			void WriteLine(CStr text) const;
 			void WriteLine(String const & text) const;
+			void WriteLine() const;
 			void Close();
 			~TextFile();
 		};
