@@ -9,35 +9,6 @@
   <Dependencies/>
   <VirtualDirectory Name="src">
     <File Name="../../../Source/CoreLib/Core.hpp"/>
-    <VirtualDirectory Name="System">
-      <VirtualDirectory Name="Time">
-        <File Name="../../../Source/CoreLib/System/Time/Time.hpp"/>
-        <File Name="../../../Source/CoreLib/System/Time/Time.Linux.cpp"/>
-      </VirtualDirectory>
-      <File Name="../../../Source/CoreLib/System/System.hpp"/>
-      <File Name="../../../Source/CoreLib/System/System.Linux.cpp"/>
-      <VirtualDirectory Name="Memory">
-        <File Name="../../../Source/CoreLib/System/Memory/Memory.cpp"/>
-        <File Name="../../../Source/CoreLib/System/Memory/Memory.hpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Threading">
-        <File Name="../../../Source/CoreLib/System/Threading/Thread.Linux.cpp"/>
-        <File Name="../../../Source/CoreLib/System/Threading/Thread.Linux.hpp"/>
-        <File Name="../../../Source/CoreLib/System/Threading/Thread.hpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Storage">
-        <File Name="../../../Source/CoreLib/System/Storage/File.cpp"/>
-        <File Name="../../../Source/CoreLib/System/Storage/File.hpp"/>
-        <File Name="../../../Source/CoreLib/System/Storage/File.Linux.cpp"/>
-        <File Name="../../../Source/CoreLib/System/Storage/File.Linux.hpp"/>
-        <File Name="../../../Source/CoreLib/System/Storage/TextFile.cpp"/>
-        <File Name="../../../Source/CoreLib/System/Storage/TextFile.hpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Assert">
-        <File Name="../../../Source/CoreLib/System/Assert/Assert.hpp"/>
-        <File Name="../../../Source/CoreLib/System/Assert/Assert.Linux.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
     <File Name="../../../Source/CoreLib/Types.hpp"/>
     <VirtualDirectory Name="DataStruct">
       <File Name="../../../Source/CoreLib/DataStruct/Vector.hpp"/>
@@ -48,6 +19,33 @@
       <File Name="../../../Source/CoreLib/String/String.Linux.cpp"/>
     </VirtualDirectory>
     <File Name="../../../Source/CoreLib/Types.cpp"/>
+    <VirtualDirectory Name="Assert">
+      <File Name="../../../Source/CoreLib/Assert/Assert.hpp"/>
+      <File Name="../../../Source/CoreLib/Assert/Assert.Linux.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Memory">
+      <File Name="../../../Source/CoreLib/Memory/Memory.cpp"/>
+      <File Name="../../../Source/CoreLib/Memory/Memory.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Storage">
+      <File Name="../../../Source/CoreLib/Storage/File.cpp"/>
+      <File Name="../../../Source/CoreLib/Storage/File.hpp"/>
+      <File Name="../../../Source/CoreLib/Storage/File.Linux.cpp"/>
+      <File Name="../../../Source/CoreLib/Storage/File.Linux.hpp"/>
+      <File Name="../../../Source/CoreLib/Storage/TextFile.cpp"/>
+      <File Name="../../../Source/CoreLib/Storage/TextFile.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Threading">
+      <File Name="../../../Source/CoreLib/Threading/Thread.hpp"/>
+      <File Name="../../../Source/CoreLib/Threading/Thread.Linux.cpp"/>
+      <File Name="../../../Source/CoreLib/Threading/Thread.Linux.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Time">
+      <File Name="../../../Source/CoreLib/Time/Time.hpp"/>
+      <File Name="../../../Source/CoreLib/Time/Time.Linux.cpp"/>
+    </VirtualDirectory>
+    <File Name="../../../Source/CoreLib/System.hpp"/>
+    <File Name="../../../Source/CoreLib/System.Linux.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Debug"/>
   <Dependencies Name="Debug-64"/>
@@ -72,6 +70,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -121,6 +120,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -160,6 +160,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -204,6 +205,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       

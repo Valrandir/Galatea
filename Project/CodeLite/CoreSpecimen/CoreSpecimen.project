@@ -10,25 +10,6 @@
   <VirtualDirectory Name="src">
     <File Name="../../../Source/CoreSpecimen/CoreSpecimen.cpp"/>
     <File Name="../../../Source/CoreSpecimen/Main.Linux.cpp"/>
-    <VirtualDirectory Name="System">
-      <VirtualDirectory Name="Time">
-        <File Name="../../../Source/CoreSpecimen/System/Time/Time.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Memory">
-        <File Name="../../../Source/CoreSpecimen/System/Memory/Memory.cpp"/>
-      </VirtualDirectory>
-      <File Name="../../../Source/CoreSpecimen/System/System.cpp"/>
-      <VirtualDirectory Name="Threading">
-        <File Name="../../../Source/CoreSpecimen/System/Threading/Thread.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Assert">
-        <File Name="../../../Source/CoreSpecimen/System/Assert/Assert.cpp"/>
-      </VirtualDirectory>
-      <VirtualDirectory Name="Storage">
-        <File Name="../../../Source/CoreSpecimen/System/Storage/File.cpp"/>
-        <File Name="../../../Source/CoreSpecimen/System/Storage/TextFile.cpp"/>
-      </VirtualDirectory>
-    </VirtualDirectory>
     <File Name="../../../Source/CoreSpecimen/Core.hpp"/>
     <VirtualDirectory Name="DataStruct">
       <File Name="../../../Source/CoreSpecimen/DataStruct/Vector.cpp"/>
@@ -39,6 +20,23 @@
       <File Name="../../../Source/CoreSpecimen/String/String.cpp"/>
     </VirtualDirectory>
     <File Name="../../../Source/CoreSpecimen/Types.cpp"/>
+    <VirtualDirectory Name="Assert">
+      <File Name="../../../Source/CoreSpecimen/Assert/Assert.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Memory">
+      <File Name="../../../Source/CoreSpecimen/Memory/Memory.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Storage">
+      <File Name="../../../Source/CoreSpecimen/Storage/File.cpp"/>
+      <File Name="../../../Source/CoreSpecimen/Storage/TextFile.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Threading">
+      <File Name="../../../Source/CoreSpecimen/Threading/Thread.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Time">
+      <File Name="../../../Source/CoreSpecimen/Time/Time.cpp"/>
+    </VirtualDirectory>
+    <File Name="../../../Source/CoreSpecimen/System.cpp"/>
   </VirtualDirectory>
   <Dependencies Name="Release">
     <Project Name="CoreLib"/>
@@ -80,6 +78,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       ]]>
       </Environment>
@@ -123,6 +122,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       ]]>
       </Environment>
@@ -168,6 +168,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -209,6 +210,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
