@@ -1,6 +1,6 @@
 #pragma once
 #include "File.hpp"
-#include "../../String/String.hpp"
+#include "../String/String.hpp"
 
 namespace Core
 {

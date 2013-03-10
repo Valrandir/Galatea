@@ -1,5 +1,5 @@
 #include "Types.hpp"
-#include "System/Assert/Assert.hpp"
+#include "Assert/Assert.hpp"
 
 namespace Core
 {

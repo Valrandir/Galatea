@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include "String.hpp"
-#include "../System/Assert/Assert.hpp"
+#include "../Assert/Assert.hpp"
 
 void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::CStr format, va_list args);
 Core::UInt FormatImplGetRequiredSize(Core::CStr format, va_list args);

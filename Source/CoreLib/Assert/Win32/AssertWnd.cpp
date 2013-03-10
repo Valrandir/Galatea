@@ -1,5 +1,5 @@
 #include "AssertWnd.hpp"
-#include "../../../String/String.hpp"
+#include "../../String/String.hpp"
 
 void ClipBoardSetText(LPCTSTR text);
 

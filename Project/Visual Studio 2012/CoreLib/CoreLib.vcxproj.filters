@@ -1,91 +1,74 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="System">
-      <UniqueIdentifier>{b9178ee1-ca45-46a8-a327-ca61044afbd0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Time">
-      <UniqueIdentifier>{614a9b84-8779-4643-99da-3b3faae8bb2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Memory">
-      <UniqueIdentifier>{28242e1e-4a58-4ea3-92b4-6c4504b9336f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="System\Threading">
-      <UniqueIdentifier>{c6b65025-e122-447f-a878-9cab15fec0e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DataStruct">
       <UniqueIdentifier>{e1c68bf5-273c-48c6-b182-038b177b3c50}</UniqueIdentifier>
     </Filter>
     <Filter Include="String">
       <UniqueIdentifier>{a52e4a78-c316-4d16-a7bb-cceba1e8ac89}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Assert">
-      <UniqueIdentifier>{6a9fd70d-bafa-432d-ac61-210bd2e49da7}</UniqueIdentifier>
+    <Filter Include="Assert">
+      <UniqueIdentifier>{86432a79-678d-4f50-9020-b3cddf59e1a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Assert\Win32">
-      <UniqueIdentifier>{1f46ec96-5519-4db0-bfbb-0fcb57464dce}</UniqueIdentifier>
+    <Filter Include="Assert\Win32">
+      <UniqueIdentifier>{7b60846e-4e63-45a6-a14f-9c9c7e620a8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Storage">
-      <UniqueIdentifier>{6fbc368a-3f12-4620-bb48-31fabe1fc38b}</UniqueIdentifier>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{b3a08378-3283-49ba-bd14-b9c03a288bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{482f0983-f1a2-492c-969e-8f1da59f00f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{fd07e526-bb84-418f-ba0e-7ded2f57368f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{80225880-7a5f-4885-9833-ebd677620f25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Types.cpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Time\Time.hpp">
-      <Filter>System\Time</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Memory\Memory.hpp">
-      <Filter>System\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\System.hpp">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.hpp">
-      <Filter>System\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Threading\Thread.hpp">
-      <Filter>System\Threading</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp">
       <Filter>String</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Assert.hpp">
-      <Filter>System\Assert</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp">
+      <Filter>Assert</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.hpp">
-      <Filter>System\Assert\Win32</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp">
+      <Filter>Assert\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.hpp">
-      <Filter>System\Assert\Win32</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp">
+      <Filter>Assert\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.hpp">
-      <Filter>System\Storage</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp">
+      <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\File.hpp">
-      <Filter>System\Storage</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.Win32.hpp">
+      <Filter>Storage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\System\Storage\TextFile.hpp">
-      <Filter>System\Storage</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile.hpp">
+      <Filter>Storage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Threading\Thread.Win32.hpp">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Threading\Thread.hpp">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Time\Time.hpp">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\System.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Time\Time.Win32.cpp">
-      <Filter>System\Time</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Memory\Memory.cpp">
-      <Filter>System\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\System.Win32.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Threading\Thread.Win32.cpp">
-      <Filter>System\Threading</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
@@ -95,23 +78,33 @@
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp">
       <Filter>String</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Assert.Win32.cpp">
-      <Filter>System\Assert</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp">
+      <Filter>Assert</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\Window.cpp">
-      <Filter>System\Assert\Win32</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp">
+      <Filter>Assert\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Assert\Win32\AssertWnd.cpp">
-      <Filter>System\Assert\Win32</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp">
+      <Filter>Assert\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.Win32.cpp">
-      <Filter>System\Storage</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp">
+      <Filter>Memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\File.cpp">
-      <Filter>System\Storage</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile.cpp">
+      <Filter>Storage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\System\Storage\TextFile.cpp">
-      <Filter>System\Storage</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.cpp">
+      <Filter>Storage</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.Win32.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Threading\Thread.Win32.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Time\Time.Win32.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\System.Win32.cpp" />
   </ItemGroup>
 </Project>
