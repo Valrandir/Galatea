@@ -25,6 +25,15 @@
     <Filter Include="Time">
       <UniqueIdentifier>{80225880-7a5f-4885-9833-ebd677620f25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Storage\IniFile">
+      <UniqueIdentifier>{9a850384-c4a2-4419-a164-6c69784fb36a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\File">
+      <UniqueIdentifier>{a0bd8d9d-ac41-4e81-8cf3-d0ede8eb6065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage\TextFIle">
+      <UniqueIdentifier>{f8a4ec46-0678-451b-abfc-0f13d7b43b2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -48,15 +57,6 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.Win32.hpp">
-      <Filter>Storage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile.hpp">
-      <Filter>Storage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp">
-      <Filter>Storage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Threading\Thread.Win32.hpp">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -69,6 +69,24 @@
     <ClInclude Include="..\..\..\Source\CoreLib\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile.hpp">
       <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile.hpp">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp">
+      <Filter>Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.hpp">
+      <Filter>Storage\TextFIle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.hpp">
+      <Filter>Storage\File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp">
+      <Filter>Storage\File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.hpp">
+      <Filter>Storage\IniFile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,15 +111,6 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.Win32.cpp">
-      <Filter>Storage</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Threading\Thread.Win32.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -109,8 +118,17 @@
       <Filter>Time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile.cpp">
-      <Filter>Storage</Filter>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.cpp">
+      <Filter>Storage\TextFIle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp">
+      <Filter>Storage\File</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp">
+      <Filter>Storage\File</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp">
+      <Filter>Storage\IniFile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

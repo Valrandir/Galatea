@@ -26,9 +26,12 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.Win32.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\String\String.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\System.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Threading\Thread.hpp" />
@@ -47,10 +50,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System.Win32.cpp" />
