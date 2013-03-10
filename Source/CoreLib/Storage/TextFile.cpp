@@ -46,14 +46,16 @@ namespace Core
 			File* file;
 			String text;
 			UInt fileSize;
+			UInt length;
 			TChar* buffer;
 
 			file = File::OpenReadOnly(fileName);
 			if(file)
 			{
 				fileSize = ToUInt(file->GetFileSize());
-				text.Reserve(fileSize);
-				buffer = text.DrivePointer(fileSize);
+				length = fileSize / 2;
+				text.Reserve(length);
+				buffer = text.DrivePointer(length);
 				file->Read(buffer, fileSize);
 				DeletePtr(file);
 			}

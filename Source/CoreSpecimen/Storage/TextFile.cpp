@@ -43,7 +43,7 @@ namespace TextFileTestNamespace
 		fileSize = File::GetFileSize(_fileName);
 		textSize = String::CStrLength(_Content) * sizeof(TChar);
 		textSize *= 2;
-		textSize += String::CStrLength(NewLine);
+		textSize += String::CStrLength(NewLine) * sizeof(TChar);
 		CHECK fileSize == textSize;
 
 		return result;
@@ -55,7 +55,7 @@ namespace TextFileTestNamespace
 
 		String content = TextFile::ReadAll(_fileName);
 		UInt64 fileSize = File::GetFileSize(_fileName);
-		CHECK content.Length() == fileSize;
+		CHECK content.Length() == fileSize / 2;
 		File::Delete(_fileName);
 
 		return result;
@@ -84,13 +84,12 @@ namespace TextFileTestNamespace
 		DeletePtr(lines);
 
 		//File: contains NewLine only
-		//Result: one line
+		//Result: no line
 		file = TextFile::Create(_fileName);
-		file->Write(Text("\r\n"));
+		file->Write(NewLine);
 		DeletePtr(file);
 		lines = TextFile::ReadLines(_fileName);
-		CHECK lines->Length() == 1U;
-		CHECK (*lines)[0]->IsEmpty();
+		CHECK lines->Length() == 0U;
 		DeletePtr(lines);
 
 		//File: contains one line
@@ -145,7 +144,7 @@ namespace TextFileTestNamespace
 		file->WriteLine(Text("Line 07"));
 		DeletePtr(file);
 		lines = TextFile::ReadLines(_fileName);
-		CHECK lines->Length() == 2U;
+		CHECK lines->Length() == 7U;
 		CHECK *(*lines)[0] == Text("Line 01");
 		CHECK *(*lines)[1] == Text("Line 02");
 		CHECK *(*lines)[2] == Text("Line 03");

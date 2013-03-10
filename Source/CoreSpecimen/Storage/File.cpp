@@ -55,6 +55,8 @@ namespace FileTestNamespace
 	{
 		Bool result = true;
 		File* file;
+		String text;
+		UInt fileSize;
 
 		//File does not exists, open it and it will fail
 		File::Delete(_fileName);
@@ -62,12 +64,15 @@ namespace FileTestNamespace
 		CHECK file == 0;
 
 		//File exists, open it and it will work, write to it and it will fail
-		//CHECK file = File::Create(_fileName);
-		//DeletePtr(file);
-		//CHECK file = File::OpenReadOnly(_fileName);
-		//file->Write((VoidPtr)_fileName, 5);
-		//CHECK file->GetFileSize() == 0;
-		//DeletePtr(file);
+		CHECK (file = File::Create(_fileName));
+		file->Write((VoidPtr)_fileName, String::CStrLength(_fileName) * sizeof(TChar));
+		DeletePtr(file);
+		CHECK (file = File::OpenReadOnly(_fileName));
+		fileSize = ToUInt(file->GetFileSize());
+		text.Reserve(fileSize / 2);
+		file->Read(text.DrivePointer(fileSize / 2), fileSize);
+		CHECK text == _fileName;
+		DeletePtr(file);
 
 		File::Delete(_fileName);
 
@@ -201,7 +206,7 @@ namespace FileTestNamespace
 	{
 		Bool result = true;
 		File* file;
-		UInt32 const bufferSize = 128;
+		UInt32 const bufferSize = 1024;
 		TChar buffer[bufferSize];
 
 		file = File::Create(_fileName);

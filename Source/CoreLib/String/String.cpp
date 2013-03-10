@@ -404,7 +404,7 @@ namespace Core
 
 	void String::Reserve(UInt capacity)
 	{
-		_vctr.Reserve(capacity + NewLineLength);
+		_vctr.Reserve(capacity + sizeof(TChar));
 	}
 
 	void String::Shrink()
@@ -438,7 +438,9 @@ namespace Core
 
 	TChar* String::DrivePointer(UInt future_length)
 	{
-		return _vctr.DrivePointer(future_length + 1);
+		auto buffer = _vctr.DrivePointer(future_length + 1);
+		buffer[future_length] = Text('\0');
+		return buffer;
 	}
 
 	String& String::TrimLeft()
