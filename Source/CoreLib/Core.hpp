@@ -6,13 +6,13 @@
 
 #include "Types.hpp"
 
-#include "System/System.hpp"
-#include "System/Memory/Memory.hpp"
-#include "System/Threading/Thread.hpp"
-#include "System/Time/Time.hpp"
+#include "System.hpp"
+#include "Memory/Memory.hpp"
+#include "Threading/Thread.hpp"
+#include "Time/Time.hpp"
 
-#include "System/Assert/Assert.hpp"
+#include "Assert/Assert.hpp"
 #include "DataStruct/Vector.hpp"
 #include "String/String.hpp"
-#include "System/Storage/File.hpp"
-#include "System/Storage/TextFile.hpp"
+#include "Storage/File.hpp"
+#include "Storage/TextFile.hpp"

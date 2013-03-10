@@ -2,8 +2,8 @@
 
 #pragma once
 #include "../Types.hpp"
-#include "../System/Assert/Assert.hpp"
-#include "../System/Memory/Memory.hpp"
+#include "../Assert/Assert.hpp"
+#include "../Memory/Memory.hpp"
 
 //Placement New
 #ifdef CoreTargetWin32

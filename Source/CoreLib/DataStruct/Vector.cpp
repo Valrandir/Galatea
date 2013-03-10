@@ -17,7 +17,7 @@ template<class T> void Vector<T>::Deallocate()
 		if(_ctorMode != CtorModeEnum::Pod)
 			Destroy(_origin, _last);
 
-		System::Memory::Free(_origin);
+		Memory::Free(_origin);
 
 		_origin = NULL;
 		_last = NULL;
@@ -29,18 +29,18 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 {
 	Element* newOrigin;
 
-	newOrigin = (Element*)System::Memory::Alloc(sizeof(Element) * capacity);
+	newOrigin = (Element*)Memory::Alloc(sizeof(Element) * capacity);
 
 	if(!IsEmpty())
 	{
 		if(_ctorMode != CtorModeEnum::Always)
-			System::Memory::Copy(_origin, newOrigin, sizeof(Element) * Length());
+			Memory::Copy(_origin, newOrigin, sizeof(Element) * Length());
 		else
 		{
 			MoveRange(newOrigin, _origin, _last);
 			Destroy(_origin, _last);
 		}
-		System::Memory::Free(_origin);
+		Memory::Free(_origin);
 	}
 
 	_last = newOrigin + (_last - _origin);
@@ -92,7 +92,7 @@ template <class T> void Vector<T>::MoveRange(Element* target, Element* begin, El
 	Assert(end);
 
 	if(_ctorMode != CtorModeEnum::Always)
-		System::Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
+		Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
 	else
 	{
 		if(target < begin)
@@ -126,7 +126,7 @@ template <class T> void Vector<T>::CopyToSelf(Vector const & source)
 
 		if(_ctorMode != CtorModeEnum::Always)
 		{
-			System::Memory::Move((VoidPtr)source_it, (VoidPtr)it, sizeof(Element) * length);
+			Memory::Move((VoidPtr)source_it, (VoidPtr)it, sizeof(Element) * length);
 			_last += length;
 		}
 		else
@@ -371,7 +371,7 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 
 	if(_ctorMode == CtorModeEnum::Pod)
 	{
-		System::Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
+		Memory::Move((VoidPtr)begin, (VoidPtr)_last, sizeof(Element) * length);
 		_last += length;
 	}
 	else
