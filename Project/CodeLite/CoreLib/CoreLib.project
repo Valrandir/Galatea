@@ -28,14 +28,23 @@
       <File Name="../../../Source/CoreLib/Memory/Memory.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Storage">
-      <File Name="../../../Source/CoreLib/Storage/File.cpp"/>
+      <VirtualDirectory Name="File">
+        <File Name="../../../Source/CoreLib/Storage/File/File.cpp"/>
+        <File Name="../../../Source/CoreLib/Storage/File/File.hpp"/>
+        <File Name="../../../Source/CoreLib/Storage/File/File.Linux.cpp"/>
+        <File Name="../../../Source/CoreLib/Storage/File/File.Linux.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="IniFile">
+        <File Name="../../../Source/CoreLib/Storage/IniFile/IniFile.cpp"/>
+        <File Name="../../../Source/CoreLib/Storage/IniFile/IniFile.hpp"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="TextFile">
+        <File Name="../../../Source/CoreLib/Storage/TextFile/TextFile.cpp"/>
+        <File Name="../../../Source/CoreLib/Storage/TextFile/TextFile.hpp"/>
+      </VirtualDirectory>
       <File Name="../../../Source/CoreLib/Storage/File.hpp"/>
-      <File Name="../../../Source/CoreLib/Storage/File.Linux.cpp"/>
-      <File Name="../../../Source/CoreLib/Storage/File.Linux.hpp"/>
-      <File Name="../../../Source/CoreLib/Storage/TextFile.cpp"/>
-      <File Name="../../../Source/CoreLib/Storage/TextFile.hpp"/>
-      <File Name="../../../Source/CoreLib/Storage/IniFile.cpp"/>
       <File Name="../../../Source/CoreLib/Storage/IniFile.hpp"/>
+      <File Name="../../../Source/CoreLib/Storage/TextFile.hpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Threading">
       <File Name="../../../Source/CoreLib/Threading/Thread.hpp"/>
@@ -72,6 +81,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -125,6 +135,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -164,6 +175,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -210,6 +222,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
