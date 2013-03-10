@@ -69,8 +69,8 @@ namespace FileTestNamespace
 		DeletePtr(file);
 		CHECK (file = File::OpenReadOnly(_fileName));
 		fileSize = ToUInt(file->GetFileSize());
-		text.Reserve(fileSize / 2);
-		file->Read(text.DrivePointer(fileSize / 2), fileSize);
+		text.Reserve(fileSize / sizeof(TChar));
+		file->Read(text.DrivePointer(fileSize / sizeof(TChar)), fileSize);
 		CHECK text == _fileName;
 		DeletePtr(file);
 

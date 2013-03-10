@@ -53,7 +53,7 @@ namespace Core
 			if(file)
 			{
 				fileSize = ToUInt(file->GetFileSize());
-				length = fileSize / 2;
+				length = fileSize / sizeof(TChar);
 				text.Reserve(length);
 				buffer = text.DrivePointer(length);
 				file->Read(buffer, fileSize);
@@ -65,9 +65,11 @@ namespace Core
 
 		String::StrPtrVec* TextFile::ReadLines(CStr fileName)
 		{
+			//Here \r\n is used instead of NewLine,
+			//so that Linux can see lines from a Windows text file
 			Assert(fileName);
 			auto text = ReadAll(fileName);
-			auto lines = text.Split(text, text.Length(), NewLine);
+			auto lines = text.Split(text, text.Length(), Text("\r\n"));
 			return lines;
 		}
 

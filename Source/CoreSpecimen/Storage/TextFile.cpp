@@ -55,7 +55,7 @@ namespace TextFileTestNamespace
 
 		String content = TextFile::ReadAll(_fileName);
 		UInt64 fileSize = File::GetFileSize(_fileName);
-		CHECK content.Length() == fileSize / 2;
+		CHECK content.Length() == fileSize / sizeof(TChar);
 		File::Delete(_fileName);
 
 		return result;

@@ -85,7 +85,7 @@ namespace Core
 			lseek64(_fileId, 0U, SEEK_END);
 		}
 
-		void FileImpl::Read(VoidPtr buffer, UInt32 bufferSize) const
+		void FileImpl::Read(VoidPtr buffer, UInt bufferSize) const
 		{
 			Assert(_fileId != 0);
 			Assert(buffer != 0);
@@ -94,7 +94,7 @@ namespace Core
 			//Assert(ret != -1);
 		}
 
-		void FileImpl::Write(VoidPtr const buffer, UInt32 bufferSize) const
+		void FileImpl::Write(VoidPtr const buffer, UInt bufferSize) const
 		{
 			Assert(_fileId != 0);
 			Assert(_isReadOnly == false);
