@@ -1022,6 +1022,68 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool StartsWithTest()
+	{
+		Bool result = true;
+		String text;
+
+		//text is empty, return false
+		CHECK text.StartsWith(Text(" ")) == false;
+
+		//text is empty, startText is empty, return true
+		CHECK text.StartsWith(Text("")) == true;
+
+		text = Text("[Hello]");
+
+		//text not empty, startText empty, return false
+		CHECK text.StartsWith(Text("")) == false;
+
+		//startText is unmatching single character, return false
+		CHECK text.StartsWith(Text("{")) == false;
+
+		//startText is unmatching multiple character, return false
+		CHECK text.StartsWith(Text("//")) == false;
+
+		//startText is matching single character, return true
+		CHECK text.StartsWith(Text("[")) == true;
+
+		//startText is matching multiple character, return true
+		CHECK text.StartsWith(Text("[Hello]")) == true;
+
+		return result;
+	}
+
+	Bool EndsWithTest()
+	{
+		Bool result = true;
+		String text;
+
+		//text is empty, return false
+		CHECK text.EndsWith(Text(" ")) == false;
+
+		//text is empty, endText is empty, return true
+		CHECK text.EndsWith(Text("")) == true;
+
+		text = Text("[Hello]");
+
+		//text not empty, endText empty, return false
+		CHECK text.EndsWith(Text("")) == false;
+
+		//endText is unmatching single character, return false
+		CHECK text.EndsWith(Text("}")) == false;
+
+		//endText is unmatching multiple character, return false
+		CHECK text.EndsWith(Text("*/")) == false;
+
+		//endText is matching single character, return true
+		CHECK text.EndsWith(Text("]")) == true;
+
+		//endText is matching multiple character, return true
+		CHECK text.EndsWith(Text("[Hello]")) == true;
+
+		return result;
+	}
+
 	Bool SubStringTest()
 	{
 		Bool result = true;
@@ -1503,6 +1565,8 @@ Bool StringTest()
 	CHECK CStrPtrTest();
 	CHECK IndexOfTest();
 	CHECK LastIndexOfTest();
+	CHECK StartsWithTest();
+	CHECK EndsWithTest();
 	CHECK SubStringTest();
 	CHECK SplitTCharTest();
 	CHECK SplitCStrTest();

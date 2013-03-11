@@ -159,6 +159,26 @@ namespace Core
 		return LastIndexOf(text, CStrLength(text), chr, start);
 	}
 
+	Bool String::StartsWith(CStr text, UInt textLength, CStr startText)
+	{
+		return false;
+	}
+
+	Bool String::StartsWith(CStr text, CStr startText)
+	{
+		return StartsWith(text, CStrLength(text), startText);
+	}
+
+	Bool String::EndsWith(CStr text, UInt textLength, CStr endText)
+	{
+		return false;
+	}
+
+	Bool String::EndsWith(CStr text, CStr endText)
+	{
+		return EndsWith(text, CStrLength(text), endText);
+	}
+
 	String String::SubString(CStr text, UInt textLength, UInt start, UInt length)
 	{
 		if(length > textLength) length = textLength;
@@ -386,6 +406,16 @@ namespace Core
 	UInt String::LastIndexOf(TChar const chr, UInt start) const
 	{
 		return LastIndexOf(CStrPtr(), chr, start);
+	}
+
+	Bool String::StartsWith(CStr startText)
+	{
+		return StartsWith(CStrPtr(), Length(), startText);
+	}
+
+	Bool String::EndsWith(CStr endText)
+	{
+		return EndsWith(CStrPtr(), Length(), endText);
 	}
 
 	String String::SubString(UInt start, UInt length) const

@@ -29,6 +29,10 @@ namespace Core
 		static UInt IndexOf(CStr text, TChar const chr, UInt start = 0);
 		static UInt LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start = NoMatch);
 		static UInt LastIndexOf(CStr text, TChar const chr, UInt start = NoMatch);
+		static Bool StartsWith(CStr text, UInt textLength, CStr startText);
+		static Bool StartsWith(CStr text, CStr startText);
+		static Bool EndsWith(CStr text, UInt textLength, CStr endText);
+		static Bool EndsWith(CStr text, CStr endText);
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
 		static StrPtrVec* Split(CStr text, UInt charCount, CStr delimiters);
@@ -69,6 +73,8 @@ namespace Core
 		Int Compare(CStr target) const;
 		UInt IndexOf(TChar const chr, UInt start = 0) const;
 		UInt LastIndexOf(TChar const chr, UInt start = NoMatch) const;
+		Bool StartsWith(CStr startText);
+		Bool EndsWith(CStr endText);
 		String SubString(UInt start, UInt length) const;
 		StrPtrVec* Split(CStr delimiters) const;
 
