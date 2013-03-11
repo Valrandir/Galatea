@@ -159,19 +159,26 @@ namespace Core
 		return LastIndexOf(text, CStrLength(text), chr, start);
 	}
 
-	Bool String::StartsWith(CStr text, UInt textLength, CStr startText)
-	{
-		return false;
-	}
-
 	Bool String::StartsWith(CStr text, CStr startText)
 	{
-		return StartsWith(text, CStrLength(text), startText);
+		auto src = text;
+		auto trg = startText;
+
+		if(!src || !trg)
+			return false;
+
+		while(*src && *trg && *src == *trg)
+		{
+			++src;
+			++trg;
+		}
+
+		return !*trg;
 	}
 
 	Bool String::EndsWith(CStr text, UInt textLength, CStr endText)
 	{
-		return false;
+		return text ? StartsWith(text + textLength - CStrLength(endText), endText) : false;
 	}
 
 	Bool String::EndsWith(CStr text, CStr endText)
@@ -410,7 +417,7 @@ namespace Core
 
 	Bool String::StartsWith(CStr startText)
 	{
-		return StartsWith(CStrPtr(), Length(), startText);
+		return StartsWith(CStrPtr(), startText);
 	}
 
 	Bool String::EndsWith(CStr endText)

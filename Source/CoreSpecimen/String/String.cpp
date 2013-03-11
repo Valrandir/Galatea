@@ -1030,13 +1030,13 @@ namespace StringTestNamespace
 		//text is empty, return false
 		CHECK text.StartsWith(Text(" ")) == false;
 
-		//text is empty, startText is empty, return true
-		CHECK text.StartsWith(Text("")) == true;
+		//text is empty, startText is empty, return false
+		CHECK text.StartsWith(Text("")) == false;
 
 		text = Text("[Hello]");
 
-		//text not empty, startText empty, return false
-		CHECK text.StartsWith(Text("")) == false;
+		//text not empty, startText empty, return true
+		CHECK text.StartsWith(Text("")) == true;
 
 		//startText is unmatching single character, return false
 		CHECK text.StartsWith(Text("{")) == false;
@@ -1061,13 +1061,13 @@ namespace StringTestNamespace
 		//text is empty, return false
 		CHECK text.EndsWith(Text(" ")) == false;
 
-		//text is empty, endText is empty, return true
-		CHECK text.EndsWith(Text("")) == true;
+		//text is empty, endText is empty, return false
+		CHECK text.EndsWith(Text("")) == false;
 
 		text = Text("[Hello]");
 
-		//text not empty, endText empty, return false
-		CHECK text.EndsWith(Text("")) == false;
+		//text not empty, endText empty, return true
+		CHECK text.EndsWith(Text("")) == true;
 
 		//endText is unmatching single character, return false
 		CHECK text.EndsWith(Text("}")) == false;

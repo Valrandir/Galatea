@@ -29,7 +29,6 @@ namespace Core
 		static UInt IndexOf(CStr text, TChar const chr, UInt start = 0);
 		static UInt LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start = NoMatch);
 		static UInt LastIndexOf(CStr text, TChar const chr, UInt start = NoMatch);
-		static Bool StartsWith(CStr text, UInt textLength, CStr startText);
 		static Bool StartsWith(CStr text, CStr startText);
 		static Bool EndsWith(CStr text, UInt textLength, CStr endText);
 		static Bool EndsWith(CStr text, CStr endText);
