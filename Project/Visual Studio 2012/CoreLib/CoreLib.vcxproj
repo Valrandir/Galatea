@@ -53,6 +53,8 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\KeyValue.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\Section.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp" />

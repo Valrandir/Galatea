@@ -130,5 +130,11 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp">
       <Filter>Storage\IniFile</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\Section.cpp">
+      <Filter>Storage\IniFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\KeyValue.cpp">
+      <Filter>Storage\IniFile</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
