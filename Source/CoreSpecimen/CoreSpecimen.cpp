@@ -13,6 +13,7 @@ extern Bool StdVectorTest();
 extern Bool StringTest();
 extern Bool FileTest();
 extern Bool TextFileTest();
+extern Bool IniFileTest();
 
 Bool CoreSpecimen()
 {
@@ -29,6 +30,7 @@ Bool CoreSpecimen()
 	CHECK StringTest();
 	CHECK FileTest();
 	CHECK TextFileTest();
+	CHECK IniFileTest();
 
 	return result;
 }

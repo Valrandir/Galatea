@@ -16,3 +16,4 @@
 #include "String/String.hpp"
 #include "Storage/File.hpp"
 #include "Storage/TextFile.hpp"
+#include "Storage/IniFile.hpp"
