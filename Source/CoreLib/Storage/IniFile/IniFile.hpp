@@ -18,6 +18,8 @@ namespace Core
 				public:
 				String Key;
 				String Value;
+
+				void Clear();
 			};
 
 			class Section
@@ -27,6 +29,9 @@ namespace Core
 
 				String Name;
 				KeyValueVec KeyValueList;
+				
+				void Clear();
+				Bool IsEmpty();
 			};
 
 			typedef DataStruct::Vector<Section> SectionVec;

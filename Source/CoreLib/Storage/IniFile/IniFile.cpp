@@ -15,10 +15,13 @@ namespace Core
 			Assert(fileName);
 			CStr braceOpen = Text("[");
 			CStr braceClose = Text("]");
+			CStr equal = Text("=");
 			IniFile iniFile;
 			String::StrPtrVec* lines;
 			String::StrPtrVec::Element* it;
 			Section section;
+			Int index;
+			KeyValue keyValue;
 
 			lines = TextFile::ReadLines(fileName);
 
@@ -27,13 +30,22 @@ namespace Core
 				String& line = **it;
 				if(line.TrimLeft().StartsWith(braceOpen))
 				{
-					if(!section.KeyValueList.IsEmpty())
+					if(!section.IsEmpty())
 					{
 						iniFile.SectionList.Add(section);
+						section.Clear();
+					}
+					section.Name = line;
+				}
+				else if((index = line.IndexOf(*equal)) != -1)
+				{
+					if(!section.Name.IsEmpty())
+					{
+						keyValue.Key = line.SubString(0U, index - 2).Trim();
+						keyValue.Value = line.SubString(index - 1, line.Length() - index - 1).Trim();
+						section.KeyValueList.Add(keyValue);
 					}
 				}
-				//if ltrim line startswith [ then add section and make it active
-				//if we have an active section and we can read an "=", split it in key value and add in current section
 			}
 
 			return iniFile;
