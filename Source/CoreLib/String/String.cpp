@@ -439,6 +439,15 @@ namespace Core
 	/* Public Functions ***********************************************************/
 	/******************************************************************************/
 
+	void String::Clear()
+	{
+		if(!IsEmpty())
+		{
+			_vctr.Clear();
+			*_vctr.Begin() = 0;
+		}
+	}
+
 	void String::Reserve(UInt capacity)
 	{
 		_vctr.Reserve(capacity + sizeof(TChar));

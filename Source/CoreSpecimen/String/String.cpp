@@ -922,6 +922,28 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool ClearTest()
+	{
+		Bool result = true;
+
+		//Clear on empty string
+		{
+			String s;
+			s.Clear();
+			CHECK CheckCapLen(s, 0U, 0U);
+		}
+
+		//Clear on non-empty string
+		{
+			String s = _text;
+			s.Clear();
+			CHECK CheckCapLen(s, _textcap, 0U);
+			CHECK s == _empty;
+		}
+
+		return result;
+	}
+
 	Bool IndexOfTest()
 	{
 		Bool result = true;
@@ -1563,6 +1585,7 @@ Bool StringTest()
 	CHECK CapacityTest();
 	CHECK LengthTest();
 	CHECK CStrPtrTest();
+	CHECK ClearTest();
 	CHECK IndexOfTest();
 	CHECK LastIndexOfTest();
 	CHECK StartsWithTest();

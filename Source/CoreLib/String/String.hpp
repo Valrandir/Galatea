@@ -78,6 +78,7 @@ namespace Core
 		StrPtrVec* Split(CStr delimiters) const;
 
 		/* Public Functions */
+		void Clear();
 		void Reserve(UInt capacity);
 		void Shrink();
 		void Append(CStr str);
