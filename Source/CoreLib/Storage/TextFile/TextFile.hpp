@@ -19,6 +19,12 @@ namespace Core
 			static TextFile* Append(CStr fileName);
 			static String ReadAll(CStr fileName);
 			static String::StrPtrVec* ReadLines(CStr fileName);
+			static void WriteAll(CStr fileName, CStr text, UInt textLength);
+			static void WriteAll(CStr fileName, CStr text);
+			static void WriteAll(CStr fileName, String text);
+			static void AppendAll(CStr fileName, CStr text, UInt textLength);
+			static void AppendAll(CStr fileName, CStr text);
+			static void AppendAll(CStr fileName, String text);
 
 			void Write(CStr text, UInt cchLength) const;
 			void Write(CStr text) const;

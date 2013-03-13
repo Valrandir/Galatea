@@ -73,6 +73,40 @@ namespace Core
 			return lines;
 		}
 
+		void TextFile::WriteAll(CStr fileName, CStr text, UInt textLength)
+		{
+			TextFile *textFile = TextFile::Create(fileName);
+			textFile->Write(text, textLength); 
+			DeletePtr(textFile);
+		}
+
+		void TextFile::WriteAll(CStr fileName, CStr text)
+		{
+			WriteAll(fileName, text, String::CStrLength(text));
+		}
+
+		void TextFile::WriteAll(CStr fileName, String text)
+		{
+			WriteAll(fileName, text, text.Length());
+		}
+
+		void TextFile::AppendAll(CStr fileName, CStr text, UInt textLength)
+		{
+			TextFile *textFile = TextFile::Append(fileName);
+			textFile->Write(text, textLength); 
+			DeletePtr(textFile);
+		}
+
+		void TextFile::AppendAll(CStr fileName, CStr text)
+		{
+			AppendAll(fileName, text, String::CStrLength(text));
+		}
+
+		void TextFile::AppendAll(CStr fileName, String text)
+		{
+			AppendAll(fileName, text, text.Length());
+		}
+
 		void TextFile::Write(CStr text, UInt cchLength) const
 		{
 			Assert(_file);

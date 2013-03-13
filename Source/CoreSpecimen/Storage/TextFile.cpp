@@ -6,7 +6,7 @@ using namespace Storage;
 namespace TextFileTestNamespace
 {
 	CStr _fileName = Text("TextFileTest.txt");
-	CStr _Content =
+	CStr _content =
 		Text("Polly Nomial and Curly Pi")
 		NewLine
 		NewLine
@@ -20,11 +20,11 @@ namespace TextFileTestNamespace
 		UInt64 fileSize, textSize;
 
 		textFile = TextFile::Create(_fileName);
-		textFile->Write(_Content);
+		textFile->Write(_content);
 		DeletePtr(textFile);
 
 		fileSize = File::GetFileSize(_fileName);
-		textSize = String::CStrLength(_Content) * sizeof(TChar);
+		textSize = String::CStrLength(_content) * sizeof(TChar);
 		CHECK fileSize == textSize;
 
 		return result;
@@ -37,11 +37,11 @@ namespace TextFileTestNamespace
 		UInt64 fileSize, textSize;
 
 		textFile = TextFile::Append(_fileName);
-		textFile->WriteLine(_Content);
+		textFile->WriteLine(_content);
 		DeletePtr(textFile);
 
 		fileSize = File::GetFileSize(_fileName);
-		textSize = String::CStrLength(_Content) * sizeof(TChar);
+		textSize = String::CStrLength(_content) * sizeof(TChar);
 		textSize *= 2;
 		textSize += String::CStrLength(NewLine) * sizeof(TChar);
 		CHECK fileSize == textSize;
@@ -158,6 +158,40 @@ namespace TextFileTestNamespace
 
 		return result;
 	}
+
+	Bool WriteAllTest()
+	{
+		Bool result = true;
+		String readBack;
+
+		File::Delete(_fileName);
+
+		TextFile::WriteAll(_fileName, _content);
+		readBack = TextFile::ReadAll(_fileName);
+		CHECK readBack == _content;
+
+		File::Delete(_fileName);
+
+		return result;
+	}
+
+	Bool AppendAllTest()
+	{
+		Bool result = true;
+		String readBack;
+		String expected(_content);
+
+		File::Delete(_fileName);
+
+		TextFile::WriteAll(_fileName, _content);
+		TextFile::AppendAll(_fileName, _content);
+		readBack = TextFile::ReadAll(_fileName);
+		CHECK readBack == expected + _content;
+
+		File::Delete(_fileName);
+
+		return result;
+	}
 }
 
 Bool TextFileTest()
@@ -169,6 +203,8 @@ Bool TextFileTest()
 	CHECK WriteLineAppendTest();
 	CHECK ReadAllTest();
 	CHECK ReadLinesTest();
+	CHECK WriteAllTest();
+	CHECK AppendAllTest();
 
 	File::Delete(_fileName);
 
