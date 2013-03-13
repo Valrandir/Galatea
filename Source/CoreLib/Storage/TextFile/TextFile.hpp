@@ -26,10 +26,10 @@ namespace Core
 			static void AppendAll(CStr fileName, CStr text);
 			static void AppendAll(CStr fileName, String text);
 
-			void Write(CStr text, UInt cchLength) const;
+			void Write(CStr text, UInt textLength) const;
 			void Write(CStr text) const;
 			void Write(String const & text) const;
-			void WriteLine(CStr text, UInt cchLength) const;
+			void WriteLine(CStr text, UInt textLength) const;
 			void WriteLine(CStr text) const;
 			void WriteLine(String const & text) const;
 			void WriteLine() const;

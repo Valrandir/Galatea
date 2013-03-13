@@ -107,10 +107,10 @@ namespace Core
 			AppendAll(fileName, text, text.Length());
 		}
 
-		void TextFile::Write(CStr text, UInt cchLength) const
+		void TextFile::Write(CStr text, UInt textLength) const
 		{
 			Assert(_file);
-			_file->Write((VoidPtr)text, ToUInt32(cchLength) * sizeof(TChar));
+			_file->Write((VoidPtr)text, ToUInt32(textLength) * sizeof(TChar));
 		}
 
 		void TextFile::Write(CStr text) const
@@ -125,10 +125,10 @@ namespace Core
 			Write(text, text.Length());
 		}
 
-		void TextFile::WriteLine(CStr text, UInt cchLength) const
+		void TextFile::WriteLine(CStr text, UInt textLength) const
 		{
 			Assert(_file);
-			Write(text, ToUInt32(cchLength));
+			Write(text, ToUInt32(textLength));
 			Write(NewLine);
 		}
 

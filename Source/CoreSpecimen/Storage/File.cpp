@@ -65,7 +65,7 @@ namespace FileTestNamespace
 
 		//File exists, open it and it will work, write to it and it will fail
 		CHECK (file = File::Create(_fileName));
-		file->Write((VoidPtr)_fileName, String::CStrLength(_fileName) * sizeof(TChar));
+		file->Write((VoidPtr)_fileName, String::CStrByteSize(_fileName));
 		DeletePtr(file);
 		CHECK (file = File::OpenReadOnly(_fileName));
 		fileSize = ToUInt(file->GetFileSize());
@@ -210,7 +210,7 @@ namespace FileTestNamespace
 		TChar buffer[bufferSize];
 
 		file = File::Create(_fileName);
-		file->Write((VoidPtr)_fileName, String::CStrLength(_fileName) * sizeof(TChar) + sizeof(TChar));
+		file->Write((VoidPtr)_fileName, String::CStrByteSize(_fileName) + sizeof(TChar));
 		file->Seek(0);
 		file->Read(buffer, bufferSize);
 		DeletePtr(file);

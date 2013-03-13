@@ -50,6 +50,11 @@ namespace Core
 		return length;
 	}
 
+	UInt String::CStrByteSize(CStr text)
+	{
+		return CStrLength(text) * sizeof(TChar);
+	}
+
 	void String::Format(TChar* buffer, UInt buffer_size, CStr format, ...)
 	{
 		Assert(buffer);
@@ -393,6 +398,11 @@ namespace Core
 	UInt String::Length() const
 	{
 		return _vctr.IsEmpty() ? 0U : _vctr.Length() - 1;
+	}
+
+	UInt String::ByteSize() const
+	{
+		return Length() * sizeof(TChar);
 	}
 
 	CStr String::CStrPtr() const

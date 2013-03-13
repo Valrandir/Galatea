@@ -22,6 +22,7 @@ namespace Core
 
 		/* public static */
 		static UInt CStrLength(CStr);
+		static UInt CStrByteSize(CStr);
 		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
 		static String FormatToStr(CStr format, ...);
 		static Int Compare(CStr source, CStr target);
@@ -68,6 +69,7 @@ namespace Core
 		Bool IsEmpty() const;
 		UInt Capacity() const;
 		UInt Length() const;
+		UInt ByteSize() const;
 		CStr CStrPtr() const;
 		Int Compare(CStr target) const;
 		UInt IndexOf(TChar const chr, UInt start = 0) const;
