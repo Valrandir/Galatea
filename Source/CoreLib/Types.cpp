@@ -33,4 +33,25 @@ namespace Core
 			return ToUInt32(value);
 		#endif
 	}
+
+	Bool WithinInt32Limit(Int value)
+	{
+		#ifdef CoreTarget64Bits
+			if(value & 0x8000000000000000)
+				value = ~value;
+			value &= 0xffffffff00000000;
+			return value == 0;
+		#else
+			return true;
+		#endif
+	}
+
+	Bool WithinUInt32Limit(UInt value)
+	{
+		#ifdef CoreTarget64Bits
+			return (value & 0xffffffff00000000) == 0U;
+		#else
+			return true;
+		#endif
+	}
 }

@@ -8,6 +8,9 @@
 
 namespace Core
 {
+	typedef bool Bool;
+	typedef float Float;
+	typedef void Void;
 	typedef void* VoidPtr;
 
 	#ifdef CoreTargetWin32
@@ -38,7 +41,12 @@ namespace Core
 		typedef UInt64* UIntPtr;
 	#endif
 
-	typedef bool Bool;
+	Int32 ToInt32(Int64 value);
+	UInt32 ToUInt32(UInt64 value);
+	Int ToInt(Int64 value);
+	UInt ToUInt(UInt64 value);
+	Bool WithinInt32Limit(Int value);
+	Bool WithinUInt32Limit(UInt value);
 
 	#if CoreTargetWin32 && UNICODE
 		#define _Text(quote)L##quote
@@ -56,9 +64,4 @@ namespace Core
 	#elif CoreTargetLinux
 		#define NewLine Text("\n")
 	#endif
-
-	Int32 ToInt32(Int64 value);
-	UInt32 ToUInt32(UInt64 value);
-	Int ToInt(Int64 value);
-	UInt ToUInt(UInt64 value);
 }

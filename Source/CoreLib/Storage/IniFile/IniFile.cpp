@@ -10,19 +10,20 @@ namespace Core
 		IniFile::IniFile(IniFile const & value){}
 		IniFile& IniFile::operator=(IniFile&){return *this;}
 
-		IniFile IniFile::ReadIniFile(CStr fileName)
+		IniFile* IniFile::ReadIniFile(CStr fileName)
 		{
 			Assert(fileName);
 			CStr braceOpen = Text("[");
-			CStr braceClose = Text("]");
+			//CStr braceClose = Text("]");
 			CStr equal = Text("=");
-			IniFile iniFile;
+			IniFile* iniFile;
 			String::StrPtrVec* lines;
 			String::StrPtrVec::Element* it;
 			Section section;
 			Int index;
 			KeyValue keyValue;
 
+			iniFile = new IniFile();
 			lines = TextFile::ReadLines(fileName);
 
 			for(it = lines->Begin(); it < lines->End(); ++it)
@@ -32,7 +33,7 @@ namespace Core
 				{
 					if(!section.IsEmpty())
 					{
-						iniFile.SectionList.Add(section);
+						iniFile->SectionList.Add(section);
 						section.Clear();
 					}
 					section.Name = line;

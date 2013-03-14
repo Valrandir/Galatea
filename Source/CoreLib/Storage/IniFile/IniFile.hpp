@@ -37,7 +37,7 @@ namespace Core
 			typedef DataStruct::Vector<Section> SectionVec;
 			SectionVec SectionList;
 
-			static IniFile ReadIniFile(CStr fileName);
+			static IniFile* ReadIniFile(CStr fileName);
 		};
 	}
 }

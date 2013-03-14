@@ -49,6 +49,43 @@ Bool ToUInt32Test()
 	return result;
 }
 
+Bool WithinInt32LimitTest()
+{
+	Bool result = true;
+
+	CHECK WithinInt32Limit(0);
+	CHECK WithinInt32Limit(100);
+	CHECK WithinInt32Limit(-1);
+	CHECK WithinInt32Limit(-100);
+	CHECK WithinInt32Limit(0x7fffffff);
+	CHECK WithinInt32Limit(0x80000000);
+
+	#if CoreTarget64Bits
+		CHECK WithinInt32Limit(0x7fffffff0) == false;
+		CHECK WithinInt32Limit(0x100000000000) == false;
+		CHECK WithinInt32Limit(0x8000000000000000) == false;
+	#endif
+
+	return result;
+}
+
+Bool WithinUInt32LimitTest()
+{
+	Bool result = true;
+
+	CHECK WithinInt32Limit(0);
+	CHECK WithinInt32Limit(100);
+	CHECK WithinInt32Limit(0x7fffffff);
+	CHECK WithinInt32Limit(0x80000000);
+
+	#if CoreTarget64Bits
+		CHECK WithinInt32Limit(0x100000000000) == false;
+		CHECK WithinInt32Limit(0x8000000000000000) == false;
+	#endif
+
+	return result;
+}
+
 Bool TypesTest()
 {
 	Bool result = true;
@@ -56,6 +93,8 @@ Bool TypesTest()
 	CHECK SizeOfTest();
 	CHECK ToInt32Test();
 	CHECK ToUInt32Test();
+	CHECK WithinInt32LimitTest();
+	CHECK WithinUInt32LimitTest();
 
 	return result;
 }

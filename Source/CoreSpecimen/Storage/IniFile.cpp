@@ -30,7 +30,8 @@ namespace IniFileTestNamespace
 		textFile->Write(text);
 		DeletePtr(textFile);
 
-		IniFile& iniFile = IniFile::ReadIniFile(iniFileName);
+		IniFile* iniFile = IniFile::ReadIniFile(iniFileName);
+		DeletePtr(iniFile);
 
 		File::Delete(iniFileName);
 
