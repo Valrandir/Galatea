@@ -36,6 +36,9 @@ namespace Core
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
 		static StrPtrVec* Split(CStr text, UInt charCount, CStr delimiters);
+		static Bool IsDigit(TChar chr);
+		static Bool IsDigit(CStr text, UInt textLength);
+		static Bool IsDigit(CStr text);
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt MaxSize = NoMatch - 1;
 
@@ -91,5 +94,6 @@ namespace Core
 		String& TrimLeft();
 		String& TrimRight();
 		String& Trim();
+		Bool IsDigit();
 	};
 }

@@ -1547,6 +1547,42 @@ namespace StringTestNamespace
 
 		return result;
 	}
+
+	Bool IsDigitTCharTest()
+	{
+		Bool result = true;
+
+		CHECK String::IsDigit(Text('0'));
+		CHECK String::IsDigit(Text('1'));
+		CHECK String::IsDigit(Text('2'));
+		CHECK String::IsDigit(Text('3'));
+		CHECK String::IsDigit(Text('4'));
+		CHECK String::IsDigit(Text('5'));
+		CHECK String::IsDigit(Text('6'));
+		CHECK String::IsDigit(Text('7'));
+		CHECK String::IsDigit(Text('8'));
+		CHECK String::IsDigit(Text('9'));
+		CHECK String::IsDigit(Text(' ')) == false;
+		CHECK String::IsDigit(Text('.')) == false;
+		CHECK String::IsDigit(Text('N')) == false;
+
+		return result;
+	}
+
+	Bool IsDigitTest()
+	{
+		Bool result = true;
+
+		CHECK String::IsDigit(Text("0123456789"));
+		CHECK String::IsDigit(Text("0"));
+		CHECK String::IsDigit(Text("29"));
+		CHECK String::IsDigit(Text(" ")) == false;
+		CHECK String::IsDigit(Text("haha")) == false;
+		CHECK String::IsDigit(Text("a10")) == false;
+		CHECK String::IsDigit(Text("10a")) == false;
+
+		return result;
+	}
 }
 
 Bool StringTest()
@@ -1593,14 +1629,17 @@ Bool StringTest()
 	CHECK SubStringTest();
 	CHECK SplitTCharTest();
 	CHECK SplitCStrTest();
-	CHECK TrimLeftTest();
-	CHECK TrimRightTest();
-	CHECK TrimTest();
 
 	CHECK AppendTCharTest();
 	CHECK AppendStringTest();
 	CHECK AppendLineTCharTest();
 	CHECK AppendLineStringTest();
+	CHECK TrimLeftTest();
+	CHECK TrimRightTest();
+	CHECK TrimTest();
+
+	CHECK IsDigitTCharTest();
+	CHECK IsDigitTest();
 
 	return result;
 }

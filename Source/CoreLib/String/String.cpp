@@ -254,6 +254,29 @@ namespace Core
 		return vStr;
 	}
 
+	//Digits are 0123456789
+	Bool String::IsDigit(TChar chr)
+	{
+		return String::IndexOf(Text("0123456789"), 10U, chr) != -1;
+	}
+
+	Bool String::IsDigit(CStr text, UInt textLength)
+	{
+		CStr it = text;
+		CStr end = text + textLength;
+
+		while(it < end)
+			if(!IsDigit(*it++))
+				return false;
+
+		return true;
+	}
+	
+	Bool String::IsDigit(CStr text)
+	{
+		return IsDigit(text, CStrLength(text));
+	}
+
 	/******************************************************************************/
 	/* Constructors && Destructor *************************************************/
 	/******************************************************************************/
@@ -529,5 +552,10 @@ namespace Core
 	String& String::Trim()
 	{
 		return TrimRight().TrimLeft();
+	}
+
+	Bool String::IsDigit()
+	{
+		return IsDigit(CStr(), Length());
 	}
 }
