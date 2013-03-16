@@ -38,7 +38,7 @@ namespace Core
 					}
 					section.Name = line;
 				}
-				else if((index = line.IndexOf(*equal)) != -1)
+				else if((index = line.IndexOf(equal)) != -1)
 				{
 					if(!section.Name.IsEmpty())
 					{

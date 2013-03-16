@@ -26,10 +26,10 @@ namespace Core
 		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
 		static String FormatToStr(CStr format, ...);
 		static Int Compare(CStr source, CStr target);
-		static UInt IndexOf(CStr text, UInt textLength, TChar const chr, UInt start = 0);
-		static UInt IndexOf(CStr text, TChar const chr, UInt start = 0);
-		static UInt LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start = NoMatch);
-		static UInt LastIndexOf(CStr text, TChar const chr, UInt start = NoMatch);
+		static UInt IndexOf(CStr text, UInt textLength, CStr of, UInt start = 0);
+		static UInt IndexOf(CStr text, CStr of, UInt start = 0);
+		static UInt LastIndexOf(CStr text, UInt textLength, CStr of, UInt start = NoMatch);
+		static UInt LastIndexOf(CStr text, CStr of, UInt start = NoMatch);
 		static Bool StartsWith(CStr text, CStr startText);
 		static Bool EndsWith(CStr text, UInt textLength, CStr endText);
 		static Bool EndsWith(CStr text, CStr endText);
@@ -75,8 +75,8 @@ namespace Core
 		UInt ByteSize() const;
 		CStr CStrPtr() const;
 		Int Compare(CStr target) const;
-		UInt IndexOf(TChar const chr, UInt start = 0) const;
-		UInt LastIndexOf(TChar const chr, UInt start = NoMatch) const;
+		UInt IndexOf(CStr of, UInt start = 0) const;
+		UInt LastIndexOf(CStr of, UInt start = NoMatch) const;
 		Bool StartsWith(CStr startText);
 		Bool EndsWith(CStr endText);
 		String SubString(UInt start, UInt length) const;

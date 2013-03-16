@@ -951,46 +951,46 @@ namespace StringTestNamespace
 
 		String empty;
 		String len[] = {Text("0"), Text("01"), Text("012")};
-		TChar chr[] = {Text('0'), Text('1'), Text('2')};
+		CStr of[] = {Text("0"), Text("1"), Text("2")};
 
 		//Empty string
-		CHECK empty.IndexOf(chr[0]) == String::NoMatch;
+		CHECK empty.IndexOf(of[0]) == String::NoMatch;
 
 		//Position too small
-		CHECK len[0].IndexOf(chr[0], -10) == String::NoMatch;
+		CHECK len[0].IndexOf(of[0], -10) == String::NoMatch;
 
 		//Position too big
-		CHECK len[0].IndexOf(chr[0], 10) == String::NoMatch;
+		CHECK len[0].IndexOf(of[0], 10) == String::NoMatch;
 
 		//Length 1 - Not Found
-		CHECK len[0].IndexOf(chr[1]) == String::NoMatch;
+		CHECK len[0].IndexOf(of[1]) == String::NoMatch;
 
 		//Length 1 - Found
-		CHECK len[0].IndexOf(chr[0]) == 0;
+		CHECK len[0].IndexOf(of[0]) == 0;
 
 		//Length 2 - Found at beginning
-		CHECK len[1].IndexOf(chr[0]) == 0;
+		CHECK len[1].IndexOf(of[0]) == 0;
 
 		//Length 2 - Found at end
-		CHECK len[1].IndexOf(chr[1]) == 1;
+		CHECK len[1].IndexOf(of[1]) == 1;
 
 		//Length 2 - Not Found because of Position
-		CHECK len[1].IndexOf(chr[0], 1) == String::NoMatch;
+		CHECK len[1].IndexOf(of[0], 1) == String::NoMatch;
 
 		//Length 2 - Found at Position
-		CHECK len[1].IndexOf(chr[1], 1) == 1;
+		CHECK len[1].IndexOf(of[1], 1) == 1;
 
 		//Length 3 - Found at beginning
-		CHECK len[2].IndexOf(chr[0]) == 0;
+		CHECK len[2].IndexOf(of[0]) == 0;
 
 		//Length 3 - Not Found because of Position
-		CHECK len[2].IndexOf(chr[0], 1) == String::NoMatch;
+		CHECK len[2].IndexOf(of[0], 1) == String::NoMatch;
 
 		//Length 3 - Found at Position
-		CHECK len[2].IndexOf(chr[1], 1) == 1;
+		CHECK len[2].IndexOf(of[1], 1) == 1;
 
 		//Length 3 - Found after Position
-		CHECK len[2].IndexOf(chr[2], 1) == 2;
+		CHECK len[2].IndexOf(of[2], 1) == 2;
 
 		return result;
 	}
@@ -1001,46 +1001,46 @@ namespace StringTestNamespace
 
 		String empty;
 		String len[] = {Text("0"), Text("01"), Text("012")};
-		TChar chr[] = {Text('0'), Text('1'), Text('2')};
+		CStr of[] = {Text("0"), Text("1"), Text("2")};
 
 		//Empty string
-		CHECK empty.LastIndexOf(chr[0]) == String::NoMatch;
+		CHECK empty.LastIndexOf(of[0]) == String::NoMatch;
 
 		//Position too small
-		CHECK len[0].LastIndexOf(chr[0], -10) == String::NoMatch;
+		CHECK len[0].LastIndexOf(of[0], -10) == String::NoMatch;
 
 		//Position too big
-		CHECK len[0].LastIndexOf(chr[0], 10) == String::NoMatch;
+		CHECK len[0].LastIndexOf(of[0], 10) == String::NoMatch;
 
 		//Length 1 - Not Found
-		CHECK len[0].LastIndexOf(chr[1]) == String::NoMatch;
+		CHECK len[0].LastIndexOf(of[1]) == String::NoMatch;
 
 		//Length 1 - Found
-		CHECK len[0].LastIndexOf(chr[0]) == 0;
+		CHECK len[0].LastIndexOf(of[0]) == 0;
 
 		//Length 2 - Found at beginning
-		CHECK len[1].LastIndexOf(chr[0]) == 0;
+		CHECK len[1].LastIndexOf(of[0]) == 0;
 
 		//Length 2 - Found at end
-		CHECK len[1].LastIndexOf(chr[1]) == 1;
+		CHECK len[1].LastIndexOf(of[1]) == 1;
 
 		//Length 2 - Not Found because of Position
-		CHECK len[1].LastIndexOf(chr[1], 0) == String::NoMatch;
+		CHECK len[1].LastIndexOf(of[1], (UInt)0) == String::NoMatch;
 
 		//Length 2 - Found at Position
-		CHECK len[1].LastIndexOf(chr[0], 0) == 0;
+		CHECK len[1].LastIndexOf(of[0], (UInt)0) == 0;
 
 		//Length 3 - Found at end
-		CHECK len[2].LastIndexOf(chr[2]) == 2;
+		CHECK len[2].LastIndexOf(of[2]) == 2;
 
 		//Length 3 - Not Found because of Position
-		CHECK len[2].LastIndexOf(chr[2], 1) == String::NoMatch;
+		CHECK len[2].LastIndexOf(of[2], 1) == String::NoMatch;
 
 		//Length 3 - Found at Position
-		CHECK len[2].LastIndexOf(chr[1], 1) == 1;
+		CHECK len[2].LastIndexOf(of[1], 1) == 1;
 
 		//Length 3 - Found before Position
-		CHECK len[2].LastIndexOf(chr[0], 1) == 0;
+		CHECK len[2].LastIndexOf(of[0], 1) == 0;
 
 		return result;
 	}

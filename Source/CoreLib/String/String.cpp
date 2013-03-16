@@ -114,7 +114,7 @@ namespace Core
 		return 0;
 	}
 
-	UInt String::IndexOf(CStr text, UInt textLength, TChar const chr, UInt start)
+	UInt String::IndexOf(CStr text, UInt textLength, CStr of, UInt start)
 	{
 		CStr it, end;
 
@@ -126,7 +126,7 @@ namespace Core
 
 		while(it < end)
 		{
-			if(*it == chr)
+			if(*it == *of)
 				return it - text;
 			++it;
 		}
@@ -134,12 +134,12 @@ namespace Core
 		return NoMatch;
 	}
 
-	UInt String::IndexOf(CStr text, TChar const chr, UInt start)
+	UInt String::IndexOf(CStr text, CStr of, UInt start)
 	{
-		return IndexOf(text, CStrLength(text), chr, start);
+		return IndexOf(text, CStrLength(text), of, start);
 	}
 
-	UInt String::LastIndexOf(CStr text, UInt textLength, TChar const chr, UInt start)
+	UInt String::LastIndexOf(CStr text, UInt textLength, CStr of, UInt start)
 	{
 		CStr rend, it;
 
@@ -151,7 +151,7 @@ namespace Core
 
 		while(rend < it)
 		{
-			if(*it == chr)
+			if(*it == *of)
 				return it - text;
 			--it;
 		}
@@ -159,9 +159,9 @@ namespace Core
 		return NoMatch;
 	}
 
-	UInt String::LastIndexOf(CStr text, TChar const chr, UInt start)
+	UInt String::LastIndexOf(CStr text, CStr of, UInt start)
 	{
-		return LastIndexOf(text, CStrLength(text), chr, start);
+		return LastIndexOf(text, CStrLength(text), of, start);
 	}
 
 	Bool String::StartsWith(CStr text, CStr startText)
@@ -231,7 +231,7 @@ namespace Core
 
 		while(it < end)
 		{
-			if(delimitersLength == 1 ? *it == *delimiters : IndexOf(delimiters, delimitersLength, *it) != NoMatch)
+			if(delimitersLength == 1 ? *it == *delimiters : IndexOf(delimiters, delimitersLength, it) != NoMatch)
 			{
 				if(begin != it)
 				{
@@ -257,7 +257,7 @@ namespace Core
 	//Digits are 0123456789
 	Bool String::IsDigit(TChar chr)
 	{
-		return String::IndexOf(Text("0123456789"), 10U, chr) != -1;
+		return String::IndexOf(Text("0123456789"), 10U, (CStr)&chr) != -1;
 	}
 
 	Bool String::IsDigit(CStr text, UInt textLength)
@@ -438,14 +438,14 @@ namespace Core
 		return Compare(CStrPtr(), target);
 	}
 
-	UInt String::IndexOf(TChar const chr, UInt start) const
+	UInt String::IndexOf(CStr of, UInt start) const
 	{
-		return IndexOf(CStrPtr(), chr, start);
+		return IndexOf(CStrPtr(), of, start);
 	}
 
-	UInt String::LastIndexOf(TChar const chr, UInt start) const
+	UInt String::LastIndexOf(CStr of, UInt start) const
 	{
-		return LastIndexOf(CStrPtr(), chr, start);
+		return LastIndexOf(CStrPtr(), of, start);
 	}
 
 	Bool String::StartsWith(CStr startText)
@@ -565,6 +565,15 @@ namespace Core
 
 	String& String::Replace(CStr replace, CStr by)
 	{
+		Assert(replace && by);
+
+		if(CStrLength(replace) > Length())
+			return *this;
+
+		if(IndexOf(replace) == -1)
+			return *this;
+
+
 		return *this;
 	}
 }
