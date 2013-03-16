@@ -86,10 +86,10 @@ namespace Core
 		void Clear();
 		void Reserve(UInt capacity);
 		void Shrink();
-		void Append(CStr str);
-		void Append(String const & str);
-		void AppendLine(CStr str);
-		void AppendLine(String const & str);
+		String& Append(CStr str);
+		String& Append(String const & str);
+		String& AppendLine(CStr str);
+		String& AppendLine(String const & str);
 		TChar* DrivePointer(UInt future_length);
 		String& TrimLeft();
 		String& TrimRight();

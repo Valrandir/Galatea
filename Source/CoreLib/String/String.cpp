@@ -491,28 +491,32 @@ namespace Core
 		_vctr.Shrink();
 	}
 
-	void String::Append(CStr str)
+	String& String::Append(CStr str)
 	{
 		Assert(str);
 		*this += str;
+		return *this;
 	}
 
-	void String::Append(String const & str)
+	String& String::Append(String const & str)
 	{
 		*this += str;
+		return *this;
 	}
 
-	void String::AppendLine(CStr str)
+	String& String::AppendLine(CStr str)
 	{
 		Assert(str);
 		*this += str;
 		*this += NewLine;
+		return *this;
 	}
 
-	void String::AppendLine(String const & str)
+	String& String::AppendLine(String const & str)
 	{
 		*this += str;
 		*this += NewLine;
+		return *this;
 	}
 
 	TChar* String::DrivePointer(UInt future_length)
