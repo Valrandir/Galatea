@@ -562,4 +562,9 @@ namespace Core
 	{
 		return IsDigit(CStr(), Length());
 	}
+
+	String& String::Replace(CStr replace, CStr by)
+	{
+		return *this;
+	}
 }

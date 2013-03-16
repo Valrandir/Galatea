@@ -95,5 +95,6 @@ namespace Core
 		String& TrimRight();
 		String& Trim();
 		Bool IsDigit();
+		String& Replace(CStr replace, CStr by);
 	};
 }

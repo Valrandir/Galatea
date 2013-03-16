@@ -5,11 +5,12 @@ using namespace Core;
 namespace StringTestNamespace
 {
 	CStr _empty = Text("");
+	CStr _space = Text(" ");
 	CStr _text = Text("This is CoreLib");
 	CStr _textSmaller = Text("A is smaller than T");
 	CStr _textGreater = Text("V is Greater than T");
 	CStr _textShorter = Text("Shorter");
-	CStr _textBigger = Text("Very much larger than _text");
+	CStr _textLonger = Text("Very much larger than _text");
 	UInt const _textcap = 16U;
 	UInt const _textlen = 15U;
 
@@ -289,8 +290,8 @@ namespace StringTestNamespace
 		//Assign bigger string to shorter string
 		{
 			String t(_text);
-			t = _textBigger;
-			capacity = String::CStrLength(_textBigger);
+			t = _textLonger;
+			capacity = String::CStrLength(_textLonger);
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, capacity + 1, capacity);
 		}
@@ -341,7 +342,7 @@ namespace StringTestNamespace
 
 		//Assign bigger string to shorter string
 		{
-			String s(_textBigger);
+			String s(_textLonger);
 			String t(_text);
 			t = s;
 			CHECK t.IsEmpty() == false;
@@ -1050,15 +1051,15 @@ namespace StringTestNamespace
 		String text;
 
 		//text is empty, return false
-		CHECK text.StartsWith(Text(" ")) == false;
+		CHECK text.StartsWith(_space) == false;
 
 		//text is empty, startText is empty, return false
-		CHECK text.StartsWith(Text("")) == false;
+		CHECK text.StartsWith(_empty) == false;
 
 		text = Text("[Hello]");
 
 		//text not empty, startText empty, return true
-		CHECK text.StartsWith(Text("")) == true;
+		CHECK text.StartsWith(_empty) == true;
 
 		//startText is unmatching single character, return false
 		CHECK text.StartsWith(Text("{")) == false;
@@ -1081,15 +1082,15 @@ namespace StringTestNamespace
 		String text;
 
 		//text is empty, return false
-		CHECK text.EndsWith(Text(" ")) == false;
+		CHECK text.EndsWith(_space) == false;
 
 		//text is empty, endText is empty, return false
-		CHECK text.EndsWith(Text("")) == false;
+		CHECK text.EndsWith(_empty) == false;
 
 		text = Text("[Hello]");
 
 		//text not empty, endText empty, return true
-		CHECK text.EndsWith(Text("")) == true;
+		CHECK text.EndsWith(_empty) == true;
 
 		//endText is unmatching single character, return false
 		CHECK text.EndsWith(Text("}")) == false;
@@ -1419,17 +1420,17 @@ namespace StringTestNamespace
 		Bool result = true;
 		String text;
 
-		(text = Text("")).TrimLeft();
+		(text = _empty).TrimLeft();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
-		(text = Text(" ")).TrimLeft();
+		(text = _space).TrimLeft();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
 		(text = Text("    ")).TrimLeft();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
 		(text = Text("Trim")).TrimLeft();
 		CHECK text.Length() == 4U;
@@ -1459,17 +1460,17 @@ namespace StringTestNamespace
 		Bool result = true;
 		String text;
 
-		(text = Text("")).TrimRight();
+		(text = _empty).TrimRight();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
-		(text = Text(" ")).TrimRight();
+		(text = _space).TrimRight();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
 		(text = Text("    ")).TrimRight();
 		CHECK text.Length() == 0U;
-		CHECK text.Compare(Text("")) == 0;
+		CHECK text.Compare(_empty) == 0;
 
 		(text = Text("Trim")).TrimRight();
 		CHECK text.Length() == 4U;
@@ -1498,14 +1499,14 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 		String text;
-		CStr empty = Text("");
+		CStr empty = _empty;
 		CStr trim = Text("Trim");
 
-		(text = Text("")).Trim();
+		(text = _empty).Trim();
 		CHECK text.Length() == 0U;
 		CHECK text.Compare(empty) == 0;
 
-		(text = Text(" ")).Trim();
+		(text = _space).Trim();
 		CHECK text.Length() == 0U;
 		CHECK text.Compare(empty) == 0;
 
@@ -1583,6 +1584,96 @@ namespace StringTestNamespace
 
 		return result;
 	}
+
+	Bool ReplaceTest()
+	{
+		Bool result = true;
+		CStr mark1 = Text("!");
+		CStr mark3 = Text("!!!");
+
+		//---------------- Generic ----------------
+		{
+			//String is empty, return itself
+			CHECK String().Replace(_space, _space).IsEmpty();
+
+			//param "replace" is null, Assert
+			//Well can't test assert, yet. tag_todo
+
+			//param "by" is null, Assert
+			//Well can't test assert, yet. tag_todo
+
+			//param "replace" has more characters than the string, return itself
+			CHECK String(_text).Replace(_textLonger, _space) == _text;
+
+			//replace by single char, not found
+			CHECK String(_text).Replace(Text("!"), _empty) == _text;
+
+			//replace by string, not found
+			CHECK String(_text).Replace(Text("DF is best"), _empty) == _text;
+		}
+
+		//---------------- single by single ----------------
+		{
+			//replace single by single char, found at beginning
+			CHECK String(_text).Replace(Text("T"), mark1) == Text("!his is CoreLib");
+
+			//replace single by single char, found in middle
+			CHECK String(_text).Replace(Text("C"), mark1) == Text("This is !oreLib");
+
+			//replace single by single char, found at end
+			CHECK String(_text).Replace(Text("b"), mark1) == Text("This is CoreLi!");
+
+			//replace single by single char, beginning, middle and end
+			CHECK String(Text("# DF # best #")).Replace(Text("#"), mark1) == Text("! DF ! best !");
+		}
+
+		//---------------- multi by single ----------------
+		{
+			//replace multi by single char, found at beginning
+			CHECK String(_text).Replace(Text("This"), mark1) == Text("! is CoreLib");
+
+			//replace multi by single char, found in middle
+			CHECK String(_text).Replace(Text("is"), mark1) == Text("This ! CoreLib");
+
+			//replace multi by single char, found at end
+			CHECK String(_text).Replace(Text("Lib"), mark1) == Text("This is Core!");
+
+			//replace multi by single char, beginning, middle and end
+			CHECK String(Text("### DF ### best ###")).Replace(Text("###"), mark1) == Text("! DF ! best !");
+		}
+
+		//---------------- single by multi ----------------
+		{
+			//replace single by multi char, found at beginning
+			CHECK String(_text).Replace(Text("T"), mark3) == Text("!!!his is CoreLib");
+
+			//replace single by multi char, found in middle
+			CHECK String(_text).Replace(Text("C"), mark3) == Text("This is !!!oreLib");
+
+			//replace single by multi char, found at end
+			CHECK String(_text).Replace(Text("b"), mark3) == Text("This is CoreLi!!!");
+
+			//replace single by multi char, beginning, middle and end
+			CHECK String(Text("# DF # best #")).Replace(Text("#"), mark3) == Text("!!! DF !!! best !!!");
+		}
+
+		//---------------- multi by multi ----------------
+		{
+			//replace multi by multi char, found at beginning
+			CHECK String(_text).Replace(Text("This"), mark3) == Text("!!! is CoreLib");
+
+			//replace multi by multi char, found in middle
+			CHECK String(_text).Replace(Text("is"), mark3) == Text("This !!! CoreLib");
+
+			//replace multi by multi char, found at end
+			CHECK String(_text).Replace(Text("Lib"), mark3) == Text("This is Core!!!");
+
+			//replace multi by multi char, beginning, middle and end
+			CHECK String(Text("### DF ### best ###")).Replace(Text("###"), mark3) == Text("!!! DF !!! best !!!");
+		}
+
+		return result;
+	}
 }
 
 Bool StringTest()
@@ -1637,9 +1728,9 @@ Bool StringTest()
 	CHECK TrimLeftTest();
 	CHECK TrimRightTest();
 	CHECK TrimTest();
-
 	CHECK IsDigitTCharTest();
 	CHECK IsDigitTest();
+	CHECK ReplaceTest();
 
 	return result;
 }
