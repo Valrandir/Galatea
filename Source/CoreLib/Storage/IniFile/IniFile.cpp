@@ -12,7 +12,7 @@ namespace Core
 
 		IniFile* IniFile::ReadIniFile(CStr fileName)
 		{
-			Assert(fileName);
+			ASSERT(fileName);
 			CStr braceOpen = Text("[");
 			//CStr braceClose = Text("]");
 			CStr equal = Text("=");

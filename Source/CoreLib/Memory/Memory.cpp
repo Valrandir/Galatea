@@ -10,7 +10,7 @@ namespace Core
 		VoidPtr Alloc(UInt bytes)
 		{
 			void *ptr = malloc(bytes);
-			Assert(ptr != 0);
+			ASSERT(ptr != 0);
 			return ptr;
 		}
 

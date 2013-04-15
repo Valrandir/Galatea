@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\CoreException.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
@@ -41,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\CoreException.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
@@ -141,8 +143,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>CoreTargetWin32;CoreDebug;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <ExceptionHandling>false</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

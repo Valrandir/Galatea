@@ -7,7 +7,7 @@ namespace Core
 	{
 		TextFile::TextFile(File* file) : _file(file)
 		{
-			Assert(file != NULL);
+			ASSERT(file != NULL);
 		}
 
 		TextFile::TextFile(TextFile const &)
@@ -21,14 +21,14 @@ namespace Core
 
 		TextFile* TextFile::Create(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT(fileName != NULL);
 			File* file = File::Create(fileName);
 			return file ? new TextFile(file) : NULL;
 		}
 
 		TextFile* TextFile::Append(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT(fileName != NULL);
 			File* file = File::Open(fileName);
 
 			if(file)
@@ -42,7 +42,7 @@ namespace Core
 
 		String TextFile::ReadAll(CStr fileName)
 		{
-			Assert(fileName);
+			ASSERT(fileName);
 			File* file;
 			String text;
 			UInt fileSize;
@@ -67,7 +67,7 @@ namespace Core
 		{
 			//Here \r\n is used instead of NewLine,
 			//so that Linux can see lines from a Windows text file
-			Assert(fileName);
+			ASSERT(fileName);
 			auto text = ReadAll(fileName);
 			auto lines = text.Split(text, text.Length(), Text("\r\n"));
 			return lines;
@@ -109,45 +109,45 @@ namespace Core
 
 		void TextFile::Write(CStr text, UInt textLength) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			_file->Write((VoidPtr)text, ToUInt32(textLength) * sizeof(TChar));
 		}
 
 		void TextFile::Write(CStr text) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			Write(text, String::CStrLength(text));
 		}
 
 		void TextFile::Write(String const & text) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			Write(text, text.Length());
 		}
 
 		void TextFile::WriteLine(CStr text, UInt textLength) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			Write(text, ToUInt32(textLength));
 			Write(NewLine);
 		}
 
 		void TextFile::WriteLine(CStr text) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			Write(text);
 			Write(NewLine);
 		}
 
 		void TextFile::WriteLine(String const & text) const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			WriteLine(text, text.Length());
 		}
 
 		void TextFile::WriteLine() const
 		{
-			Assert(_file);
+			ASSERT(_file);
 			Write(NewLine);
 		}
 

@@ -12,10 +12,10 @@ Bool AssertTest()
 	Bool result = true;
 
 	//Pass
-	Assert(ReturnTrue() == true);
+	ASSERT(ReturnTrue() == true);
 
 	//Fail
-	//Assert(ReturnTrue() == false);
+	CHECK_ASSERT(ASSERT(ReturnTrue() == false));
 
 	return result;
 }

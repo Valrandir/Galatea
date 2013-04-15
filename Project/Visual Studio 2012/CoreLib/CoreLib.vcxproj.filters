@@ -88,6 +88,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.hpp">
       <Filter>Storage\IniFile</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Assert\CoreException.hpp">
+      <Filter>Assert</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
@@ -135,6 +138,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\KeyValue.cpp">
       <Filter>Storage\IniFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\CoreException.cpp">
+      <Filter>Assert</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

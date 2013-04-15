@@ -15,9 +15,16 @@ extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
 
+Bool AssertOverride(Core::CoreException const & coreEx)
+{
+	throw coreEx;
+}
+
 Bool CoreSpecimen()
 {
 	Bool result = true;
+
+	Assert::SetAssertProc(AssertOverride);
 
 	CHECK TypesTest();
 	CHECK AssertTest();

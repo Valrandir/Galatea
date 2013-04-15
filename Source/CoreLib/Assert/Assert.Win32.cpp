@@ -6,26 +6,38 @@ void ShowAssertWindow(Core::String msg);
 
 namespace Core
 {
-	namespace Assert
+	Assert::AssertProc Assert::_assertProc = 0;
+
+	Assert::Assert(){}
+	Assert::Assert(Assert const &){}
+	Assert& Assert::operator=(Assert const &){return *this;}
+
+	void Assert::SetAssertProc(AssertProc assertProc)
 	{
-		void Fail(CStr failed_text, CStr function, CStr file, UInt line)
-		{
-			static Bool failing = false; if(failing) return; failing = true;
+		_assertProc = assertProc;
+	}
 
-			String msg = String::FormatToStr
-			(
-				Text("Failed Call : Assert(%s);") NewLine
-				Text("Function : %s") NewLine
-				Text("File : %s") NewLine
-				Text("Line : %d") NewLine,
-				failed_text,
-				function,
-				file,
-				line
-			);
+	void Assert::Abort(CoreException const & ex)
+	{
+		static Bool failing = false; if(failing) return; failing = true;
 
-			ShowAssertWindow(msg);
-		}
+		if(_assertProc)
+			if(_assertProc(ex))
+				return;
+
+		String msg = String::FormatToStr
+		(
+			Text("Failed Call : Assert(%s);") NewLine
+			Text("Function : %s") NewLine
+			Text("File : %s") NewLine
+			Text("Line : %d") NewLine,
+			ex.failed_text,
+			ex.function,
+			ex.file,
+			ex.line
+		);
+
+		ShowAssertWindow(msg);
 	}
 }
 

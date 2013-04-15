@@ -57,9 +57,9 @@ namespace Core
 
 	void String::Format(TChar* buffer, UInt buffer_size, CStr format, ...)
 	{
-		Assert(buffer);
-		Assert(buffer_size > 0);
-		Assert(format);
+		ASSERT(buffer);
+		ASSERT(buffer_size > 0);
+		ASSERT(format);
 
 		va_list args;
 		va_start(args, format);
@@ -69,7 +69,7 @@ namespace Core
 
 	String String::FormatToStr(CStr format, ...)
 	{
-		Assert(format);
+		ASSERT(format);
 
 		va_list args;
 		UInt size;
@@ -352,7 +352,7 @@ namespace Core
 
 	String& String::operator+=(CStr text)
 	{
-		Assert(text);
+		ASSERT(text);
 		UInt length = CStrLength(text);
 		UInt current_length, new_length;
 		Bool MaxSizeOverflow;
@@ -363,7 +363,7 @@ namespace Core
 			current_length = _vctr.Length();
 			new_length = current_length + length;
 			MaxSizeOverflow = !(new_length >= MaxSize || new_length < current_length);
-			Assert(MaxSizeOverflow);
+			ASSERT(MaxSizeOverflow);
 
 			_vctr.Remove(current_length - 1);
 			_vctr.AddRange(text, text + length + 1);
@@ -383,7 +383,7 @@ namespace Core
 
 	String String::operator+(CStr text) const
 	{
-		Assert(text);
+		ASSERT(text);
 		return String(*this) += text;
 	}
 
@@ -493,7 +493,7 @@ namespace Core
 
 	String& String::Append(CStr str)
 	{
-		Assert(str);
+		ASSERT(str);
 		*this += str;
 		return *this;
 	}
@@ -506,7 +506,7 @@ namespace Core
 
 	String& String::AppendLine(CStr str)
 	{
-		Assert(str);
+		ASSERT(str);
 		*this += str;
 		*this += NewLine;
 		return *this;
@@ -565,7 +565,7 @@ namespace Core
 
 	String& String::Replace(CStr replace, CStr by)
 	{
-		Assert(replace && by);
+		ASSERT(replace && by);
 
 		if(CStrLength(replace) > Length())
 			return *this;
