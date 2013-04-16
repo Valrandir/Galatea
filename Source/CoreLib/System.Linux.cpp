@@ -9,13 +9,13 @@ namespace Core
 		return errno;
 	}
 
-	void SetErrCode(UInt32 ErrCode)
+	void SetErrCode(UInt32 errCode)
 	{
-		errno = ErrCode;
+		errno = errCode;
 	}
 
-	CStr GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
+	CStr GetErrText(UInt32 errCode, TChar* buffer, UInt32 bufferSize)
 	{
-		return strerror_r(ErrCode, Buffer, BufferSize);
+		return strerror_r(errCode, buffer, bufferSize);
 	}
 }

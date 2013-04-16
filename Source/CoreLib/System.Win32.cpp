@@ -9,15 +9,15 @@ namespace Core
 		return GetLastError();
 	}
 
-	void SetErrCode(UInt32 ErrCode)
+	void SetErrCode(UInt32 errCode)
 	{
-		SetLastError(ErrCode);
+		SetLastError(errCode);
 	}
 
-	CStr GetErrText(UInt32 ErrCode, TChar* Buffer, UInt32 BufferSize)
+	CStr GetErrText(UInt32 errCode, TChar* buffer, UInt32 bufferSize)
 	{
-		if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, ErrCode, 0, Buffer, BufferSize, NULL))
-			*Buffer = 0;
-		return Buffer;
+		if(!FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, errCode, 0, buffer, bufferSize, NULL))
+			*buffer = 0;
+		return buffer;
 	}
 }

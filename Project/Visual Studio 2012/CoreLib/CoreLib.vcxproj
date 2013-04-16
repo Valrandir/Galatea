@@ -41,6 +41,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\CoreException.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp" />
@@ -60,6 +61,7 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\TextFile\TextFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\String\String.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Time\Time.Win32.cpp" />

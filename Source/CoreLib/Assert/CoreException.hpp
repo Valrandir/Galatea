@@ -5,11 +5,14 @@ namespace Core
 {
 	struct CoreException
 	{
-		CStr failed_text;
+		CStr source_code;
 		CStr function;
 		CStr file;
 		UInt line;
+		UInt32 err_code;
+		CStr err_msg;
 
-		CoreException(CStr failed_text, CStr function, CStr file, UInt line);
+		CoreException(CStr source_code, CStr function, CStr file, UInt line);
+		CoreException(CStr source_code, CStr function, CStr file, UInt line, UInt32 err_code, CStr err_msg);
 	};
 }

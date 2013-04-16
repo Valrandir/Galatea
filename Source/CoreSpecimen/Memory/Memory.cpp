@@ -1,7 +1,39 @@
 #include "../Core.hpp"
 using namespace Core;
 
-Bool MemoryTest()
+Bool FreeTest()
+{
+	Bool result = true;
+
+	CHECK_ASSERT(Memory::Free(0));
+
+	return result;
+}
+
+Bool CopyTest()
+{
+	Bool result = true;
+
+	CHECK_ASSERT(Memory::Copy((VoidPtr)0, (VoidPtr)0, 0));
+	CHECK_ASSERT(Memory::Copy((VoidPtr)0, (VoidPtr)1, 0));
+	CHECK_ASSERT(Memory::Copy((VoidPtr)1, (VoidPtr)0, 0));
+
+	return result;
+}
+
+
+Bool MoveTest()
+{
+	Bool result = true;
+
+	CHECK_ASSERT(Memory::Move((VoidPtr)0, (VoidPtr)0, 0));
+	CHECK_ASSERT(Memory::Move((VoidPtr)0, (VoidPtr)1, 0));
+	CHECK_ASSERT(Memory::Move((VoidPtr)1, (VoidPtr)0, 0));
+
+	return result;
+}
+
+Bool AllocFreeTest()
 {
 	Bool result = true;
 
@@ -13,6 +45,18 @@ Bool MemoryTest()
 
 	Memory::Free(pMem);
 	pMem = NULL;
+
+	return result;
+}
+
+Bool MemoryTest()
+{
+	Bool result = true;
+
+	CHECK FreeTest();
+	CHECK CopyTest();
+	CHECK MoveTest();
+	CHECK AllocFreeTest();
 
 	return result;
 }

@@ -6,35 +6,22 @@ void ShowAssertWindow(Core::String msg);
 
 namespace Core
 {
-	Assert::AssertProc Assert::_assertProc = 0;
-
-	Assert::Assert(){}
-	Assert::Assert(Assert const &){}
-	Assert& Assert::operator=(Assert const &){return *this;}
-
-	void Assert::SetAssertProc(AssertProc assertProc)
+	void Assert::SystemAbort(CoreException const & ex)
 	{
-		_assertProc = assertProc;
-	}
-
-	void Assert::Abort(CoreException const & ex)
-	{
-		static Bool failing = false; if(failing) return; failing = true;
-
-		if(_assertProc)
-			if(_assertProc(ex))
-				return;
-
 		String msg = String::FormatToStr
 		(
-			Text("Failed Call : Assert(%s);") NewLine
+			Text("Source Code : Assert(%s);") NewLine
 			Text("Function : %s") NewLine
 			Text("File : %s") NewLine
-			Text("Line : %d") NewLine,
-			ex.failed_text,
+			Text("Line : %u") NewLine
+			Text("Error Code : %u") NewLine
+			Text("Error Message : %s") NewLine,
+			ex.source_code,
 			ex.function,
 			ex.file,
-			ex.line
+			ex.line,
+			ex.err_code,
+			ex.err_msg
 		);
 
 		ShowAssertWindow(msg);

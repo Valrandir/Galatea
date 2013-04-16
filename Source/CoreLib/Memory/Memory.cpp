@@ -16,17 +16,28 @@ namespace Core
 
 		void Free(VoidPtr ptr)
 		{
-			free(ptr);
+			ASSERT_PARAMETER(ptr != NULL);
+
+			if(ptr)
+				free(ptr);
 		}
 
 		void Copy(VoidPtr source, VoidPtr target, UInt size)
 		{
-			memcpy(target, source, size);
+			ASSERT_PARAMETER(source != NULL);
+			ASSERT_PARAMETER(target != NULL);
+
+			if(size)
+				memcpy(target, source, size);
 		}
 
 		void Move(VoidPtr source, VoidPtr target, UInt size)
 		{
-			memmove(target, source, size);
+			ASSERT_PARAMETER(source != NULL);
+			ASSERT_PARAMETER(target != NULL);
+
+			if(size)
+				memmove(target, source, size);
 		}
 	}
 }
