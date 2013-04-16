@@ -252,20 +252,12 @@ namespace VectorTestNamespace
 	{
 		Bool result = true;
 
-		//Will Assert
-		/*
-			//Construct with zero element
-			{
-				VCntr source;
-				Counter::Clear();
-				VCntr target(source.Begin(), source.End());
-				CHECK AssertCntrPod();
-				CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCapLen(target, 0U, 0U);
-				CHECK AssertBeginEndNull(target);
-			}
-		*/
+		//Construct with zero element
+		{
+			VCntr source;
+			Counter::Clear();
+			CHECK_ASSERT(VCntr target(source.Begin(), source.End()));
+		}
 
 		//Construct with five elements
 		{
@@ -479,6 +471,64 @@ namespace VectorTestNamespace
 			CHECK AssertCntrAlways(0U, 5U, 5U, 0U, 0U, 5U);
 			CHECK AssertCapLen(target, 10U, 10U);
 			CHECK AssertBeginEndNotNull(target);
+		}
+
+		return result;
+	}
+
+	Bool OperatorSubscriptTest()
+	{
+		Bool result = true;
+
+		//Empty Vector, Assert
+		{
+			VCntr v;
+			CHECK_ASSERT(v[0]);
+		}
+
+		//Index Out of range, Assert
+		{
+			VCntr v;
+			AddFiveElements(v);
+			CHECK_ASSERT(v[10]);
+		}
+
+		//Return Element
+		{
+			VCntr v;
+			AddFiveElements(v);
+			CHECK v[0U]._id == 1U;
+			CHECK v[4U]._id == 5U;
+		}
+
+		return result;
+	}
+
+	Bool OperatorSubscriptConstTest()
+	{
+		Bool result = true;
+
+		//Empty Vector, Assert
+		{
+			const VCntr v;
+			CHECK_ASSERT(v[0]);
+		}
+
+		//Index Out of range, Assert
+		{
+			VCntr v;
+			AddFiveElements(v);
+			VCntr const vc(v);
+			CHECK_ASSERT(vc[10]);
+		}
+
+		//Return Element
+		{
+			VCntr v;
+			AddFiveElements(v);
+			VCntr const vc(v);
+			CHECK vc[0U]._id == 1U;
+			CHECK vc[4U]._id == 5U;
 		}
 
 		return result;
@@ -777,33 +827,20 @@ namespace VectorTestNamespace
 	{
 		Bool result = true;
 
-		//Will Assert
-		/*
-			//Append empty to empty
-			{
-				VCntr source, target;
-				Counter::Clear();
-				target.AddRange(source.Begin(), source.End());
-				CHECK AssertCntrPod();
-				CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCapLen(target, 0U, 0U);
-				CHECK AssertBeginEndNull(target);
-			}
+		//Append empty to empty
+		{
+			VCntr source, target;
+			Counter::Clear();
+			CHECK_ASSERT(target.AddRange(source.Begin(), source.End()));
+		}
 
-			//Append empty to not empty
-			{
-				VCntr source, target;
-				AddFiveElements(target);
-				Counter::Clear();
-				target.AddRange(source.Begin(), source.End());
-				CHECK AssertCntrPod();
-				CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-				CHECK AssertCapLen(target, 5U, 5U);
-				CHECK AssertBeginEndNotNull(target);
-			}
-		*/
+		//Append empty to not empty
+		{
+			VCntr source, target;
+			AddFiveElements(target);
+			Counter::Clear();
+			CHECK_ASSERT(target.AddRange(source.Begin(), source.End()));
+		}
 
 		//Append not empty to empty
 		{
@@ -1081,6 +1118,8 @@ Bool VectorTest(VCntr::CtorModeEnum defaultMode)
 	CHECK OperatorEqualTest();
 	CHECK OperatorMoveTest();
 	CHECK OperatorPlusEqualTest();
+	CHECK OperatorSubscriptTest();
+	CHECK OperatorSubscriptConstTest();
 
 	CHECK GetCtorModeTest();
 	CHECK IsEmptyTest();

@@ -58,28 +58,29 @@ template <class T> void Vector<T>::AutoAllocate()
 
 template <class T> void Vector<T>::Construct(ConstElement* target, ConstElement *source) const
 {
-	ASSERT(target);
-	ASSERT(source);
+	ASSERT_PARAMETER(target);
+	ASSERT_PARAMETER(source);
 	new((VoidPtr)target) Element(*source);
 }
 
 template <class T> void Vector<T>::Move(ConstElement* target, Element *source) const
 {
-	ASSERT(target);
-	ASSERT(source);
+	ASSERT_PARAMETER(target);
+	ASSERT_PARAMETER(source);
 	new((VoidPtr)target) Element((Element&&)(*source));
 }
 
 template <class T> void Vector<T>::Destroy(ConstElement* target) const
 {
-	ASSERT(target);
+	ASSERT_PARAMETER(target);
 	target->~Element();
 }
 
 template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* end) const
 {
-	ASSERT(begin);
-	ASSERT(end);
+	ASSERT_PARAMETER(begin);
+	ASSERT_PARAMETER(end);
+	ASSERT(begin <= end);
 
 	while(begin != end)
 		Destroy(begin++);
@@ -87,9 +88,10 @@ template <class T> void Vector<T>::Destroy(ConstElement* begin, ConstElement* en
 
 template <class T> void Vector<T>::MoveRange(Element* target, Element* begin, Element* end) const
 {
-	ASSERT(target);
-	ASSERT(begin);
-	ASSERT(end);
+	ASSERT_PARAMETER(target);
+	ASSERT_PARAMETER(begin);
+	ASSERT_PARAMETER(end);
+	ASSERT(begin <= end);
 
 	if(_ctorMode != CtorModeEnum::Always)
 		Memory::Move((VoidPtr)begin, (VoidPtr)target, sizeof(Element) * (end - begin));
@@ -234,15 +236,15 @@ template<class T> Vector<T>& Vector<T>::operator+=(Vector const & source)
 
 template<class T> typename Vector<T>::Element& Vector<T>::operator[](UInt offset)
 {
-	ASSERT(_origin);
-	ASSERT(offset >= 0U && offset < Length());
+	ASSERT_MSG(_origin, Text("The Vector is empty."));
+	ASSERT_RANGE(offset >= 0U && offset < Length());
 	return *(_origin + offset);
 }
 
 template<class T> typename Vector<T>::ConstElement& Vector<T>::operator[](UInt offset) const
 {
-	ASSERT(_origin);
-	ASSERT(offset >= 0U && offset < Length());
+	ASSERT_MSG(_origin, Text("The Vector is empty."));
+	ASSERT_RANGE(offset >= 0U && offset < Length());
 	return *(_origin + offset);
 }
 
@@ -362,8 +364,8 @@ template<class T> void Vector<T>::AddRange(ConstElement* begin, ConstElement* en
 {
 	UInt length;
 
-	ASSERT(begin);
-	ASSERT(end);
+	ASSERT_PARAMETER(begin);
+	ASSERT_PARAMETER(end);
 	ASSERT(begin != end);
 
 	length = end - begin;
