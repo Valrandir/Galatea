@@ -29,6 +29,12 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 {
 	Element* newOrigin;
 
+	if(capacity == 0)
+	{
+		Deallocate();
+		return;
+	}
+
 	newOrigin = (Element*)Memory::Alloc(sizeof(Element) * capacity);
 
 	if(!IsEmpty())
@@ -38,7 +44,7 @@ template<class T> void Vector<T>::Allocate(UInt capacity)
 		else
 		{
 			MoveRange(newOrigin, _origin, _last);
-			Destroy(_origin, _last);
+			Destroy(_origin, _last); //2013-04-19 is Destroy really needed since Move was just used? What if C++11 is not enabled?
 		}
 		Memory::Free(_origin);
 	}

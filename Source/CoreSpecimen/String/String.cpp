@@ -27,18 +27,34 @@ namespace StringTestNamespace
 	/* public static **************************************************************/
 	/******************************************************************************/
 
-	Bool CStrPtrLenTest()
+	Bool CStrLengthTest()
 	{
 		Bool result = true;
 
 		//Null
-		CHECK String::CStrLength(NULL) == 0U;
+		CHECK_ASSERT(CHECK String::CStrLength(NULL) == 0U);
 
-		//Empty string Len == 1 for terminating character
+		//Empty
 		CHECK String::CStrLength(_empty) == 0U;
 
 		//Len == _textlen
 		CHECK String::CStrLength(_text) == _textlen;
+
+		return result;
+	}
+
+	Bool CStrByteSizeTest()
+	{
+		Bool result = true;
+
+		//Null
+		CHECK_ASSERT(CHECK String::CStrByteSize(NULL) == 0U);
+
+		//Empty
+		CHECK String::CStrByteSize(_empty) == 0U;
+
+		//Len == _textlen
+		CHECK String::CStrByteSize(_text) == _textlen * sizeof(TChar);
 
 		return result;
 	}
@@ -49,12 +65,15 @@ namespace StringTestNamespace
 
 		CStr format = Text("One hundred fifty seven : %d - %s");
 
+		//Invalid Parameters
+		CHECK_ASSERT(String::FormatToBuffer(NULL, 0, NULL));
+
 		//Buffer is large enough
 		{
 			UInt const buffer_size = 128U;
 			TChar buffer[buffer_size];
 
-			String::Format(buffer, buffer_size, format, 157, Text("Done"));
+			String::FormatToBuffer(buffer, buffer_size, format, 157, Text("Done"));
 
 			CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), buffer);
 		}
@@ -64,7 +83,7 @@ namespace StringTestNamespace
 			UInt const buffer_size = 24U;
 			TChar buffer[buffer_size];
 
-			String::Format(buffer, buffer_size, format, 157, Text("Done"));
+			String::FormatToBuffer(buffer, buffer_size, format, 157, Text("Done"));
 
 			CHECK 0 == String::Compare(Text("One hundred fifty seven"), buffer);
 		}
@@ -76,25 +95,47 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 
-		CStr format = Text("One hundred fifty seven : %d - %s");
+		//Invalid Parameters
+		CHECK_ASSERT(String::FormatToString(NULL));
 
-		String str = String::FormatToStr(format, 157, Text("Done"));
+		//All is good
+		{
+			CStr format = Text("One hundred fifty seven : %d - %s");
 
-		CHECK str.Capacity() == 37U + String::CStrLength(NewLine);
-		CHECK str.Length() == 36U;
-		CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.CStrPtr());
+			String str = String::FormatToString(format, 157, Text("Done"));
+
+			CHECK str.Capacity() == 37U + String::CStrLength(NewLine);
+			CHECK str.Length() == 36U;
+			CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.CStrPtr());
+		}
 
 		return result;
 	}
 
-	Bool CompareTCharTest()
+	Bool CompareTest()
 	{
 		Bool result = true;
 
+		//static Compare -> source is null
+		{
+			CHECK_ASSERT(String::Compare(NULL, _empty));
+		}
+
+		//static Compare -> target is null
+		{
+			CHECK_ASSERT(String::Compare(_empty, NULL));
+		}
+
+		//instance Compare -> target is null
+		{
+			String s;
+			CHECK_ASSERT(s.Compare(NULL));
+		}
+
 		//Empty to empty
 		{
-		String s;
-		CHECK 0 == s.Compare(_empty);
+			String s;
+			CHECK 0 == s.Compare(_empty);
 		}
 
 		//Empty to not empty
@@ -153,6 +194,8 @@ namespace StringTestNamespace
 		String s;
 		CHECK s.IsEmpty() == true;
 		CHECK CheckCapLen(s, 0U, 0U);
+		CHECK s.CStrPtr() == String::Empty;
+		CHECK s == _empty;
 
 		return result;
 	}
@@ -166,6 +209,8 @@ namespace StringTestNamespace
 			String s((UInt)0U);
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK s.CStrPtr() == String::Empty;
+			CHECK s == _empty;
 		}
 
 		//Capacity
@@ -173,35 +218,89 @@ namespace StringTestNamespace
 			String s(10U);
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 10U, 0U);
+			CHECK s.CStrPtr() != 0;
+			CHECK String::Compare(s, _empty) == 0;
 		}
 
 		return result;
 	}
 
-	Bool CtorTCharTest()
+	Bool CtorCStrTest()
 	{
 		Bool result = true;
-		CStr nullTChar = NULL;
 
-		//TChar NULL
+		//CStr Null
 		{
-			String s(nullTChar);
-			CHECK s.IsEmpty() == true;
-			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK_ASSERT(String s((CStr)NULL));
 		}
 
-		//TChar Empty
+		//CStr Empty
 		{
 			String s(_empty);
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK s.CStrPtr() == String::Empty;
 		}
 
-		//TChar not Empty
+		//CStr not Empty
 		{
 			String s(_text);
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK s == _text;
+		}
+
+		return result;
+	}
+
+	Bool CtorCStrLengthTest()
+	{
+		Bool result = true;
+
+		//value null and length 10
+		{
+			CHECK_ASSERT(String s((CStr)NULL, 10U));
+		}
+
+		//CStr Null and Length 0
+		{
+			String s((CStr)NULL, 0U);
+			CHECK s.IsEmpty() == true;
+			CHECK CheckCapLen(s, 0U, 0U);
+			CHECK s.CStrPtr() == String::Empty;
+		}
+
+		//CStr not Empty
+		{
+			String s(_text, _textlen);
+			CHECK s.IsEmpty() == false;
+			CHECK CheckCapLen(s, _textcap, _textlen);
+			CHECK s == _text;
+		}
+
+		return result;
+	}
+
+	Bool CtorRangeTest()
+	{
+		Bool result = true;
+
+		//Invalid Parameters
+		{
+			CHECK_ASSERT(String s((CStr)0, (CStr)0));
+			CHECK_ASSERT(String s((CStr)16, (CStr)8));
+		}
+
+		//Range makes empty string
+		{
+			String s(_text + 5, _text + 5);
+			CHECK s == _empty;
+		}
+
+		//Range makes string
+		{
+			String s(_text + 5, _text + 7);
+			CHECK s == Text("is");
 		}
 
 		return result;
@@ -259,10 +358,26 @@ namespace StringTestNamespace
 	/* Operators ******************************************************************/
 	/******************************************************************************/
 
-	Bool OperatorAssignTCharTest()
+	Bool OperatorCastToCStrTest()
+	{
+		Bool result = true;
+
+		String s(_text);
+		CStr cstr = s;
+		CHECK s.Compare(cstr) == 0;
+
+		return result;
+	}
+
+	Bool OperatorAssignCStrTest()
 	{
 		Bool result = true;
 		UInt capacity;
+
+		//Assign Null
+		{
+			CHECK_ASSERT(String t = (CStr)NULL);
+		}
 
 		//Assign Empty to Empty
 		{
@@ -410,9 +525,15 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorPlusEqualTCharTest()
+	Bool OperatorPlusEqualCStrTest()
 	{
 		Bool result = true;
+
+		//Empty += NULL
+		{
+			String s;
+			CHECK_ASSERT(s += (CStr)NULL);
+		}
 
 		//Empty += Empty
 		{
@@ -420,7 +541,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
-			CHECK String::Compare(s.CStrPtr(), _empty) == 0;
+			CHECK s == _empty;
 		}
 
 		//Empty += Not Empty
@@ -429,7 +550,7 @@ namespace StringTestNamespace
 			s += _text;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.CStrPtr(), _text) == 0;
+			CHECK s == _text;
 		}
 
 		//Not Empty += Empty
@@ -438,7 +559,7 @@ namespace StringTestNamespace
 			s += _empty;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap, _textlen);
-			CHECK String::Compare(s.CStrPtr(), _text) == 0;
+			CHECK s == _text;
 		}
 
 		//Not Empty += Not Empty
@@ -447,7 +568,7 @@ namespace StringTestNamespace
 			s += _text;
 			CHECK s.IsEmpty() == false;
 			CHECK CheckCapLen(s, _textcap + _textcap - 1, _textlen + _textlen);
-			CHECK String::Compare(s, String(_text) + _text) == 0;
+			CHECK s == String(_text) + _text;
 		}
 
 		return result;
@@ -464,7 +585,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == true;
 			CHECK CheckCapLen(t, 0U, 0U);
-			CHECK String::Compare(t.CStrPtr(), _empty) == 0;
+			CHECK t == _empty;
 		}
 
 		//Empty += Not Empty
@@ -474,7 +595,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.CStrPtr(), _text) == 0;
+			CHECK t == _text;
 		}
 
 		//Not Empty += Empty
@@ -484,7 +605,7 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap, _textlen);
-			CHECK String::Compare(t.CStrPtr(), _text) == 0;
+			CHECK t == _text;
 		}
 
 		//Not Empty += Not Empty
@@ -494,15 +615,21 @@ namespace StringTestNamespace
 			t += s;
 			CHECK t.IsEmpty() == false;
 			CHECK CheckCapLen(t, _textcap + _textcap - 1, _textlen + _textlen);
-			CHECK String::Compare(t, String(_text) + _text) == 0;
+			CHECK t == String(_text) + _text;
 		}
 
 		return result;
 	}
 
-	Bool OperatorPlusTCharTest()
+	Bool OperatorPlusCStrTest()
 	{
 		Bool result = true;
+
+		//Empty += NULL
+		{
+			String s;
+			CHECK_ASSERT(String const & ref = s + (CStr)NULL);
+		}
 
 		//Empty + Empty
 		{
@@ -582,7 +709,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorEqualTCharTest()
+	Bool OperatorEqualCStrTest()
 	{
 		Bool result = true;
 
@@ -619,7 +746,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorNotEqualTCharTest()
+	Bool OperatorNotEqualCStrTest()
 	{
 		Bool result = true;
 
@@ -656,7 +783,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorGreaterTCharTest()
+	Bool OperatorGreaterCStrTest()
 	{
 		Bool result = true;
 
@@ -699,7 +826,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorSmallerTCharTest()
+	Bool OperatorSmallerCStrTest()
 	{
 		Bool result = true;
 
@@ -742,7 +869,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorGreaterOrEqualTCharTest()
+	Bool OperatorGreaterOrEqualCStrTest()
 	{
 		Bool result = true;
 
@@ -785,7 +912,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OperatorSmallerOrEqualTCharTest()
+	Bool OperatorSmallerOrEqualCStrTest()
 	{
 		Bool result = true;
 
@@ -832,9 +959,24 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 
-		String s(_text);
-		CHECK s[0U] == Text('T');
-		CHECK s[10U] == Text('r');
+		//Empty String, Assert
+		{
+			String s;
+			CHECK_ASSERT(s[0U]);
+		}
+
+		//Index Out of Range, Assert
+		{
+			String s(_text);
+			CHECK_ASSERT(s[512U]);
+		}
+
+		//Return Element
+		{
+			String s(_text);
+			CHECK s[0U] == Text('T');
+			CHECK s[10U] == Text('r');
+		}
 
 		return result;
 	}
@@ -916,9 +1058,17 @@ namespace StringTestNamespace
 	{
 		Bool result = true;
 
-		String s(_text);
-		CStr tc = s.CStrPtr();
-		CHECK String::Compare(_text, tc) == 0U;
+		//String Empty
+		{
+			String s;
+			CHECK String::Compare(s.CStrPtr(), String::Empty) == 0;
+		}
+
+		//String Not Empty
+		{
+			String s(_text);
+			CHECK String::Compare(s.CStrPtr(), _text) == 0;
+		}
 
 		return result;
 	}
@@ -945,13 +1095,114 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool IndexOfTest()
+	Bool StartsWithLengthTest()
+	{
+		Bool result = true;
+		String text;
+		UInt length;
+
+		//text is empty
+		CHECK String::StartsWith(_empty, 0U, _space) == false;
+
+		//text is empty, startText is empty
+		CHECK String::StartsWith(_empty, 0U, _empty) == true;
+
+		text = Text("[Hello]");
+		length = 7U;
+
+		//text not empty, startText empty
+		CHECK String::StartsWith(text, length, _empty) == true;
+
+		//startText is unmatching single character
+		CHECK String::StartsWith(text, length, Text("{")) == false;
+
+		//startText is unmatching multiple character
+		CHECK String::StartsWith(text, length, Text("//")) == false;
+
+		//startText is matching single character
+		CHECK String::StartsWith(text, length, Text("[")) == true;
+
+		//startText is matching multiple character
+		CHECK String::StartsWith(text, length, Text("[Hello]")) == true;
+
+		return result;
+	}
+
+	Bool StartsWithTest()
+	{
+		Bool result = true;
+		String text;
+
+		//text is empty
+		CHECK text.StartsWith(_space) == false;
+
+		//text is empty, startText is empty
+		CHECK text.StartsWith(_empty) == true;
+
+		text = Text("[Hello]");
+
+		//text not empty, startText empty
+		CHECK text.StartsWith(_empty) == true;
+
+		//startText is unmatching single character
+		CHECK text.StartsWith(Text("{")) == false;
+
+		//startText is unmatching multiple character
+		CHECK text.StartsWith(Text("//")) == false;
+
+		//startText is matching single character
+		CHECK text.StartsWith(Text("[")) == true;
+
+		//startText is matching multiple character
+		CHECK text.StartsWith(Text("[Hello]")) == true;
+
+		return result;
+	}
+
+	Bool EndsWithTest()
+	{
+		Bool result = true;
+		String text;
+
+		//text is empty, return false
+		CHECK text.EndsWith(_space) == false;
+
+		//text is empty, endText is empty
+		CHECK text.EndsWith(_empty) == true;
+
+		text = Text("[Hello]");
+
+		//text not empty, endText empty
+		CHECK text.EndsWith(_empty) == true;
+
+		//endText is unmatching single character
+		CHECK text.EndsWith(Text("}")) == false;
+
+		//endText is unmatching multiple character
+		CHECK text.EndsWith(Text("*/")) == false;
+
+		//endText is matching single character
+		CHECK text.EndsWith(Text("]")) == true;
+
+		//endText is matching multiple character
+		CHECK text.EndsWith(Text("[Hello]")) == true;
+
+		//endText is longer than start text
+		CHECK text.EndsWith(Text("oh![Hello]")) == false;
+
+		return result;
+	}
+
+	Bool IndexOfSingleTest()
 	{
 		Bool result = true;
 
 		String empty;
 		String len[] = {Text("0"), Text("01"), Text("012")};
 		CStr of[] = {Text("0"), Text("1"), Text("2")};
+
+		//Null string
+		CHECK_ASSERT(empty.IndexOf((CStr)NULL));
 
 		//Empty string
 		CHECK empty.IndexOf(of[0]) == String::NoMatch;
@@ -995,7 +1246,38 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool LastIndexOfTest()
+	Bool IndexOfMultiTest()
+	{
+		Bool result = true;
+		String text = _text;
+
+		//value > text
+		CHECK text.IndexOf(_textLonger) == String::NoMatch;
+		CHECK text.IndexOf(text + _text) == String::NoMatch;
+
+		//value + start > text
+		CHECK text.IndexOf(_text, 5U) == String::NoMatch;
+
+		//value == text
+		CHECK text.IndexOf(_text) == 0U;
+		CHECK text.IndexOf(_text, 1U) == String::NoMatch;
+
+		//found at beginning
+		CHECK text.IndexOf(Text("This is")) == 0U;
+		CHECK text.IndexOf(Text("This is"), 1U) == String::NoMatch;
+
+		//found in middle
+		CHECK text.IndexOf(Text("is Core")) == 5U;
+		CHECK text.IndexOf(Text("is Core"), 2U) == 5U;
+
+		//found at end
+		CHECK text.IndexOf(Text("Lib")) == 12U;
+		CHECK text.IndexOf(Text("Lib"), 2U) == 12U;
+
+		return result;
+	}
+
+	Bool LastIndexOfSingleTest()
 	{
 		Bool result = true;
 
@@ -1028,7 +1310,7 @@ namespace StringTestNamespace
 		CHECK len[1].LastIndexOf(of[1], (UInt)0) == String::NoMatch;
 
 		//Length 2 - Found at Position
-		CHECK len[1].LastIndexOf(of[0], (UInt)0) == 0;
+		CHECK len[1].LastIndexOf(of[0], (UInt)1) == 0;
 
 		//Length 3 - Found at end
 		CHECK len[2].LastIndexOf(of[2]) == 2;
@@ -1037,7 +1319,7 @@ namespace StringTestNamespace
 		CHECK len[2].LastIndexOf(of[2], 1) == String::NoMatch;
 
 		//Length 3 - Found at Position
-		CHECK len[2].LastIndexOf(of[1], 1) == 1;
+		CHECK len[2].LastIndexOf(of[1], 2) == 1;
 
 		//Length 3 - Found before Position
 		CHECK len[2].LastIndexOf(of[0], 1) == 0;
@@ -1045,64 +1327,34 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool StartsWithTest()
+	Bool LastIndexOfMultiTest()
 	{
 		Bool result = true;
-		String text;
+		String text = _text;
 
-		//text is empty, return false
-		CHECK text.StartsWith(_space) == false;
+		//value > text
+		CHECK text.LastIndexOf(_textLonger) == String::NoMatch;
+		CHECK text.LastIndexOf(text + _text) == String::NoMatch;
 
-		//text is empty, startText is empty, return false
-		CHECK text.StartsWith(_empty) == false;
+		//value + start > text
+		CHECK text.LastIndexOf(_text, 5U) == String::NoMatch;
 
-		text = Text("[Hello]");
+		//value == text
+		CHECK text.LastIndexOf(_text) == 0U;
+		CHECK text.LastIndexOf(_text, 1U) == String::NoMatch;
 
-		//text not empty, startText empty, return true
-		CHECK text.StartsWith(_empty) == true;
+		//found at beginning
+		CHECK text.LastIndexOf(Text("This is")) == 0U;
+		CHECK text.LastIndexOf(Text("This is"), 1U) == String::NoMatch;
 
-		//startText is unmatching single character, return false
-		CHECK text.StartsWith(Text("{")) == false;
+		//found in middle
+		CHECK text.LastIndexOf(Text("is Core")) == 5U;
+		CHECK text.LastIndexOf(Text("is Core"), _textlen - 2U) == 5U;
 
-		//startText is unmatching multiple character, return false
-		CHECK text.StartsWith(Text("//")) == false;
-
-		//startText is matching single character, return true
-		CHECK text.StartsWith(Text("[")) == true;
-
-		//startText is matching multiple character, return true
-		CHECK text.StartsWith(Text("[Hello]")) == true;
-
-		return result;
-	}
-
-	Bool EndsWithTest()
-	{
-		Bool result = true;
-		String text;
-
-		//text is empty, return false
-		CHECK text.EndsWith(_space) == false;
-
-		//text is empty, endText is empty, return false
-		CHECK text.EndsWith(_empty) == false;
-
-		text = Text("[Hello]");
-
-		//text not empty, endText empty, return true
-		CHECK text.EndsWith(_empty) == true;
-
-		//endText is unmatching single character, return false
-		CHECK text.EndsWith(Text("}")) == false;
-
-		//endText is unmatching multiple character, return false
-		CHECK text.EndsWith(Text("*/")) == false;
-
-		//endText is matching single character, return true
-		CHECK text.EndsWith(Text("]")) == true;
-
-		//endText is matching multiple character, return true
-		CHECK text.EndsWith(Text("[Hello]")) == true;
+		//found at end
+		CHECK text.LastIndexOf(Text("Lib")) == 12U;
+		CHECK text.LastIndexOf(Text("Lib"), _textlen - 2U) == String::NoMatch;
+		CHECK text.LastIndexOf(Text("Core"), _textlen - 2U) == 8U;
 
 		return result;
 	}
@@ -1152,7 +1404,7 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitTCharTest(String text)
+	Bool SplitSingleTest(String text)
 	{
 		Bool result = true;
 		String::StrPtrVec* vStr;
@@ -1170,29 +1422,29 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitTCharTest()
+	Bool SplitSingleTest()
 	{
 		Bool result = true;
 
-		CHECK SplitTCharTest(Text("ScrResX = 1280 = ScrResY = 1024"));
-		CHECK SplitTCharTest(Text("ScrResX = 1280 = ScrResY = 1024="));
-		CHECK SplitTCharTest(Text("=ScrResX = 1280 = ScrResY = 1024"));
-		CHECK SplitTCharTest(Text("=ScrResX = 1280 = ScrResY = 1024="));
+		CHECK SplitSingleTest(Text("ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitSingleTest(Text("ScrResX = 1280 = ScrResY = 1024="));
+		CHECK SplitSingleTest(Text("=ScrResX = 1280 = ScrResY = 1024"));
+		CHECK SplitSingleTest(Text("=ScrResX = 1280 = ScrResY = 1024="));
 
-		CHECK SplitTCharTest(Text("ScrResX == 1280 == ScrResY == 1024"));
-		CHECK SplitTCharTest(Text("ScrResX == 1280 == ScrResY == 1024=="));
-		CHECK SplitTCharTest(Text("==ScrResX == 1280 == ScrResY == 1024"));
-		CHECK SplitTCharTest(Text("==ScrResX == 1280 == ScrResY == 1024=="));
+		CHECK SplitSingleTest(Text("ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitSingleTest(Text("ScrResX == 1280 == ScrResY == 1024=="));
+		CHECK SplitSingleTest(Text("==ScrResX == 1280 == ScrResY == 1024"));
+		CHECK SplitSingleTest(Text("==ScrResX == 1280 == ScrResY == 1024=="));
 
-		CHECK SplitTCharTest(Text("ScrResX === 1280 === ScrResY === 1024"));
-		CHECK SplitTCharTest(Text("ScrResX === 1280 === ScrResY === 1024==="));
-		CHECK SplitTCharTest(Text("===ScrResX === 1280 === ScrResY === 1024"));
-		CHECK SplitTCharTest(Text("===ScrResX === 1280 === ScrResY === 1024==="));
+		CHECK SplitSingleTest(Text("ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitSingleTest(Text("ScrResX === 1280 === ScrResY === 1024==="));
+		CHECK SplitSingleTest(Text("===ScrResX === 1280 === ScrResY === 1024"));
+		CHECK SplitSingleTest(Text("===ScrResX === 1280 === ScrResY === 1024==="));
 
 		return result;
 	}
 
-	Bool SplitCStrTest(String text)
+	Bool SplitMultiTest(String text)
 	{
 		Bool result = true;
 		String::StrPtrVec* vStr;
@@ -1211,20 +1463,20 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool SplitCStrTest()
+	Bool SplitMultiTest()
 	{
 		Bool result = true;
 
-		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitCStrTest(Text("Word 1 ;| Word 2 |\t Word 3 \t\t Word 4 ;;;;;; Word 5"));
-		CHECK SplitCStrTest(Text(";Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5|"));
-		CHECK SplitCStrTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
-		CHECK SplitCStrTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
-		CHECK SplitCStrTest(Text(";|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
-		CHECK SplitCStrTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5;|\t"));
-		CHECK SplitCStrTest(Text(";\t\t|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5\t;;;|"));
+		CHECK SplitMultiTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitMultiTest(Text("Word 1 ;| Word 2 |\t Word 3 \t\t Word 4 ;;;;;; Word 5"));
+		CHECK SplitMultiTest(Text(";Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitMultiTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5|"));
+		CHECK SplitMultiTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitMultiTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitMultiTest(Text("||Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5||"));
+		CHECK SplitMultiTest(Text(";|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5"));
+		CHECK SplitMultiTest(Text("Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5;|\t"));
+		CHECK SplitMultiTest(Text(";\t\t|Word 1 | Word 2 | Word 3 ; Word 4 \t Word 5\t;;;|"));
 
 		return result;
 	}
@@ -1233,9 +1485,15 @@ namespace StringTestNamespace
 	/* Public Functions ***********************************************************/
 	/******************************************************************************/
 
-	Bool AppendTCharTest()
+	Bool AppendCStrTest()
 	{
 		Bool result = true;
+
+		//Append Null
+		{
+			String s;
+			CHECK_ASSERT(s.Append((CStr)NULL));
+		}
 
 		//Empty += Empty
 		{
@@ -1323,11 +1581,17 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool AppendLineTCharTest()
+	Bool AppendLineCStrTest()
 	{
 		Bool result = true;
 		UInt nlLength = String::CStrLength(NewLine);
-		
+
+		//Append Null
+		{
+			String s;
+			CHECK_ASSERT(s.AppendLine((CStr)NULL));
+		}
+
 		//Empty += Empty
 		{
 			String s;
@@ -1596,13 +1860,13 @@ namespace StringTestNamespace
 			//String is empty, return itself
 			CHECK String().Replace(_space, _space).IsEmpty();
 
-			//param "replace" is null, Assert
-			//Well can't test assert, yet. tag_todo
+			//param "oldValue" is null, Assert
+			CHECK_ASSERT(String().Replace((CStr)NULL, _empty));
 
-			//param "by" is null, Assert
-			//Well can't test assert, yet. tag_todo
+			//param "newValue" is null, Assert
+			CHECK_ASSERT(String().Replace(_empty, (CStr)NULL));
 
-			//param "replace" has more characters than the string, return itself
+			//param "oldValue" has more characters than the string, return itself
 			CHECK String(_text).Replace(_textLonger, _space) == _text;
 
 			//replace by single char, not found
@@ -1681,31 +1945,35 @@ Bool StringTest()
 	using namespace StringTestNamespace;
 	Bool result = true;
 
-	CHECK CStrPtrLenTest();
+	CHECK CStrLengthTest();
+	CHECK CStrByteSizeTest();
 	CHECK FormatBufferTest();
 	CHECK FormatStringTest();
-	CHECK CompareTCharTest();
+	CHECK CompareTest();
 	CHECK MaxLengthTest();
 
 	CHECK CtorEmptyTest();
 	CHECK CtorCapacityTest();
-	CHECK CtorTCharTest();
+	CHECK CtorCStrTest();
+	CHECK CtorCStrLengthTest();
+	CHECK CtorRangeTest();
 	CHECK CtorCopyTest();
 	CHECK CtorMoveTest();
 
-	CHECK OperatorAssignTCharTest();
+	CHECK OperatorCastToCStrTest();
+	CHECK OperatorAssignCStrTest();
 	CHECK OperatorAssignStringTest();
 	CHECK OperatorMoveStringTest();
-	CHECK OperatorPlusEqualTCharTest();
+	CHECK OperatorPlusEqualCStrTest();
 	CHECK OperatorPlusEqualStringTest();
-	CHECK OperatorPlusTCharTest();
+	CHECK OperatorPlusCStrTest();
 	CHECK OperatorPlusStringTest();
-	CHECK OperatorEqualTCharTest();
-	CHECK OperatorNotEqualTCharTest();
-	CHECK OperatorGreaterTCharTest();
-	CHECK OperatorSmallerTCharTest();
-	CHECK OperatorGreaterOrEqualTCharTest();
-	CHECK OperatorSmallerOrEqualTCharTest();
+	CHECK OperatorEqualCStrTest();
+	CHECK OperatorNotEqualCStrTest();
+	CHECK OperatorGreaterCStrTest();
+	CHECK OperatorSmallerCStrTest();
+	CHECK OperatorGreaterOrEqualCStrTest();
+	CHECK OperatorSmallerOrEqualCStrTest();
 	CHECK OperatorSubscriptTest();
 
 	CHECK IsEmptyTest();
@@ -1713,17 +1981,20 @@ Bool StringTest()
 	CHECK LengthTest();
 	CHECK CStrPtrTest();
 	CHECK ClearTest();
-	CHECK IndexOfTest();
-	CHECK LastIndexOfTest();
+	CHECK StartsWithLengthTest();
 	CHECK StartsWithTest();
 	CHECK EndsWithTest();
+	CHECK IndexOfSingleTest();
+	CHECK IndexOfMultiTest();
+	CHECK LastIndexOfSingleTest();
+	CHECK LastIndexOfMultiTest();
 	CHECK SubStringTest();
-	CHECK SplitTCharTest();
-	CHECK SplitCStrTest();
+	CHECK SplitSingleTest();
+	CHECK SplitMultiTest();
 
-	CHECK AppendTCharTest();
+	CHECK AppendCStrTest();
 	CHECK AppendStringTest();
-	CHECK AppendLineTCharTest();
+	CHECK AppendLineCStrTest();
 	CHECK AppendLineStringTest();
 	CHECK TrimLeftTest();
 	CHECK TrimRightTest();

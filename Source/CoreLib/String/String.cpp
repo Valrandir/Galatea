@@ -8,6 +8,7 @@ Core::UInt FormatImplGetRequiredSize(Core::CStr format, va_list args);
 namespace Core
 {
 	UInt String::NewLineLength = String::CStrLength(NewLine);
+	CStr const String::Empty = Text("");
 
 	/******************************************************************************/
 	/* StrPtrVec internal class ***************************************************/
@@ -38,6 +39,8 @@ namespace Core
 
 	UInt String::CStrLength(CStr text)
 	{
+		ASSERT_PARAMETER(text);
+
 		UInt length = 0U;
 
 		if(text)
@@ -52,10 +55,11 @@ namespace Core
 
 	UInt String::CStrByteSize(CStr text)
 	{
+		ASSERT_PARAMETER(text);
 		return CStrLength(text) * sizeof(TChar);
 	}
 
-	void String::Format(TChar* buffer, UInt buffer_size, CStr format, ...)
+	void String::FormatToBuffer(TChar* buffer, UInt buffer_size, CStr format, ...)
 	{
 		ASSERT_PARAMETER(buffer);
 		ASSERT_PARAMETER(format);
@@ -66,25 +70,25 @@ namespace Core
 		va_end(args);
 	}
 
-	String String::FormatToStr(CStr format, ...)
+	String String::FormatToString(CStr format, ...)
 	{
 		ASSERT_PARAMETER(format);
 
 		va_list args;
 		UInt size;
-		String str;
+		String value;
 
 		va_start(args, format);
 		size = FormatImplGetRequiredSize(format, args);
 		va_end(args);
 
-		str.Reserve(size);
+		value.Reserve(size);
 
 		va_start(args, format);
-		FormatImpl(str._vctr.DrivePointer(size), size, format, args);
+		FormatImpl(value._vctr.DrivePointer(size), size, format, args);
 		va_end(args);
 
-		return str;
+		return value;
 	}
 
 	Int String::Compare(CStr source, CStr target)
@@ -94,10 +98,8 @@ namespace Core
 		//	 1 when source >  target
 		//	-1 when source <  target
 
-		CStr empty = Text("");
-
-		if(source == NULL) source = empty;
-		if(target == NULL) target = empty;
+		ASSERT_PARAMETER(source);
+		ASSERT_PARAMETER(target);
 
 		while(true)
 		{
@@ -113,11 +115,59 @@ namespace Core
 		return 0;
 	}
 
-	UInt String::IndexOf(CStr text, UInt textLength, CStr of, UInt start)
+	Bool String::StartsWith(CStr text, UInt textLength, CStr value)
 	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+
+		CStr end = text + textLength;
+
+		while(text < end && *value && *text == *value)
+		{
+			++text;
+			++value;
+		}
+
+		return !*value;
+	}
+
+	Bool String::StartsWith(CStr text, CStr value)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+
+		while(*text && *value && *text == *value)
+		{
+			++text;
+			++value;
+		}
+
+		return !*value;
+	}
+
+	Bool String::EndsWith(CStr text, UInt textLength, CStr value)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		CStr it = text + textLength - CStrLength(value);
+		return it >= text ? StartsWith(it, value) : false;
+	}
+
+	Bool String::EndsWith(CStr text, CStr value)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		return EndsWith(text, CStrLength(text), value);
+	}
+
+	UInt String::IndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+
 		CStr it, end;
 
-		if(start >= textLength)
+		if(start >= textLength || textLength < valueLength)
 			return NoMatch;
 
 		it = text + start;
@@ -125,7 +175,7 @@ namespace Core
 
 		while(it < end)
 		{
-			if(*it == *of)
+			if(valueLength == 1 ? *it == *value : StartsWith(it, value))
 				return it - text;
 			++it;
 		}
@@ -133,24 +183,42 @@ namespace Core
 		return NoMatch;
 	}
 
-	UInt String::IndexOf(CStr text, CStr of, UInt start)
+	UInt String::IndexOf(CStr text, UInt textLength, CStr value, UInt start)
 	{
-		return IndexOf(text, CStrLength(text), of, start);
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		return IndexOf(text, textLength, value, CStrLength(value), start);
 	}
 
-	UInt String::LastIndexOf(CStr text, UInt textLength, CStr of, UInt start)
+	UInt String::IndexOf(CStr text, CStr value, UInt start)
 	{
-		CStr rend, it;
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		return IndexOf(text, CStrLength(text), value, CStrLength(value), start);
+	}
 
-		if(start >= textLength && start != NoMatch)
+	UInt String::LastIndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+
+		if(start != Default)
+		{
+			if(start > textLength)
+				return NoMatch;
+			else
+				textLength = start;
+		}
+
+		if(valueLength > textLength)
 			return NoMatch;
 
-		rend = text - 1;
-		it = start == NoMatch ? text + textLength - 1 : text + start;
+		CStr rend = text - 1;
+		CStr it = text + textLength - valueLength;
 
 		while(rend < it)
 		{
-			if(*it == *of)
+			if(valueLength == 1 ? *it == *value : StartsWith(it, valueLength, value))
 				return it - text;
 			--it;
 		}
@@ -158,40 +226,55 @@ namespace Core
 		return NoMatch;
 	}
 
-	UInt String::LastIndexOf(CStr text, CStr of, UInt start)
+	//UInt String::LastIndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start)
+	//{
+	//	ASSERT_PARAMETER(text);
+	//	ASSERT_PARAMETER(value);
+
+	//	CStr rend, it;
+
+	//	if(start >= textLength && start != NoMatch)
+	//		return NoMatch;
+
+	//	if(start == NoMatch)
+	//		start = textLength - valueLength;
+
+	//	if(start < 0)
+	//		return NoMatch;
+
+	//	rend = text - 1;
+	//	it = text + start;
+
+	//	//it = start == NoMatch ? text + textLength - valueLength : text + start;
+
+	//	while(rend < it)
+	//	{
+	//		if(valueLength == 1 ? *it == *value : StartsWith(it, value))
+	//			return it - text;
+	//		--it;
+	//	}
+
+	//	return NoMatch;
+	//}
+
+	UInt String::LastIndexOf(CStr text, UInt textLength, CStr value, UInt start)
 	{
-		return LastIndexOf(text, CStrLength(text), of, start);
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		return LastIndexOf(text, textLength, value, CStrLength(value), start);
 	}
 
-	Bool String::StartsWith(CStr text, CStr startText)
+	UInt String::LastIndexOf(CStr text, CStr value, UInt start)
 	{
-		auto src = text;
-		auto trg = startText;
-
-		if(!src || !trg)
-			return false;
-
-		while(*src && *trg && *src == *trg)
-		{
-			++src;
-			++trg;
-		}
-
-		return !*trg;
-	}
-
-	Bool String::EndsWith(CStr text, UInt textLength, CStr endText)
-	{
-		return text ? StartsWith(text + textLength - CStrLength(endText), endText) : false;
-	}
-
-	Bool String::EndsWith(CStr text, CStr endText)
-	{
-		return EndsWith(text, CStrLength(text), endText);
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(value);
+		return LastIndexOf(text, CStrLength(text), value, CStrLength(value), start);
 	}
 
 	String String::SubString(CStr text, UInt textLength, UInt start, UInt length)
 	{
+		ASSERT_PARAMETER(text);
+
 		if(length > textLength) length = textLength;
 		if(!text || !length || start + length > textLength) return String();
 		return String(text + start, text + start + length);
@@ -199,25 +282,25 @@ namespace Core
 
 	String String::SubString(CStr text, UInt start, UInt length)
 	{
-		UInt textLength =  CStrLength(text);
-		if(length > textLength) length = textLength;
-		if(!text || !length || start + length > textLength) return String();
-		return String(text + start, text + start + length);
+		ASSERT_PARAMETER(text);
+		return SubString(text, CStrLength(text), start, length);
 	}
 
-	String::StrPtrVec* String::Split(CStr text, UInt charCount, CStr delimiters)
+	String::StrPtrVec* String::Split(CStr text, UInt textLength, CStr delimiters, UInt delimitersLength)
 	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(delimiters);
+
 		StrPtrVec* vStr;
-		UInt delimitersLength;
 		CStr begin, it, end;
 		UInt count;
 
 		vStr = new StrPtrVec();
 
-		if(!text || !charCount)
+		if(!textLength)
 			return vStr;
 
-		if(!delimiters || !(delimitersLength = CStrLength(delimiters)))
+		if(!delimitersLength)
 		{
 			vStr->Add(new String(text));
 			return vStr;
@@ -225,12 +308,12 @@ namespace Core
 
 		begin = text;
 		it = text;
-		end = text + charCount;
+		end = text + textLength;
 		count = 0U;
 
 		while(it < end)
 		{
-			if(delimitersLength == 1 ? *it == *delimiters : IndexOf(delimiters, delimitersLength, it) != NoMatch)
+			if(delimitersLength == 1 ? *it == *delimiters : IndexOf(delimiters, delimitersLength, it, 1U, 0U) != NoMatch)
 			{
 				if(begin != it)
 				{
@@ -253,6 +336,20 @@ namespace Core
 		return vStr;
 	}
 
+	String::StrPtrVec* String::Split(CStr text, UInt textLength, CStr delimiters)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(delimiters);
+		return Split(text, textLength, delimiters, CStrLength(delimiters));
+	}
+
+	String::StrPtrVec* String::Split(CStr text, CStr delimiters)
+	{
+		ASSERT_PARAMETER(text);
+		ASSERT_PARAMETER(delimiters);
+		return Split(text, CStrLength(text), delimiters, CStrLength(delimiters));
+	}
+
 	//Digits are 0123456789
 	Bool String::IsDigit(TChar chr)
 	{
@@ -261,6 +358,7 @@ namespace Core
 
 	Bool String::IsDigit(CStr text, UInt textLength)
 	{
+		ASSERT_PARAMETER(text);
 		CStr it = text;
 		CStr end = text + textLength;
 
@@ -273,6 +371,7 @@ namespace Core
 	
 	Bool String::IsDigit(CStr text)
 	{
+		ASSERT_PARAMETER(text);
 		return IsDigit(text, CStrLength(text));
 	}
 
@@ -288,24 +387,40 @@ namespace Core
 	{
 	}
 
-	String::String(CStr text) : _vctr(Vector::CtorModeEnum::Pod)
+	//value must be null terminated
+	String::String(CStr value) : _vctr(Vector::CtorModeEnum::Pod)
 	{
-		UInt n = CStrLength(text);
-		if(n) _vctr.AddRange(text, text + n + 1);
+		ASSERT_PARAMETER(value);
+		UInt length = CStrLength(value);
+		if(length)
+			_vctr.AddRange(value, value + length + 1);
+	}
+
+	//if length > 0 value must not be null
+	String::String(CStr value, UInt length) : _vctr(Vector::CtorModeEnum::Pod)
+	{
+		ASSERT_PARAMETER(length == 0 || value);
+		if(length)
+			_vctr.AddRange(value, value + length + 1);
 	}
 
 	String::String(CStr begin, CStr end) : _vctr(Vector::CtorModeEnum::Pod)
 	{
-		_vctr.Reserve(end - begin + 1);
-		_vctr.AddRange(begin, end);
+		ASSERT_PARAMETER(begin);
+		ASSERT_PARAMETER(end);
+		ASSERT(begin <= end);
+
+		if(begin != end)
+			_vctr.AddRange(begin, end);
+
 		_vctr.Add(Text('\0'));
 	}
 
-	String::String(String const & text) : _vctr(text._vctr)
+	String::String(String const & value) : _vctr(value._vctr)
 	{
 	}
 
-	String::String(String && text) : _vctr((Vector&&)text)
+	String::String(String && value) : _vctr((Vector&&)value)
 	{
 	}
 
@@ -324,9 +439,14 @@ namespace Core
 
 	String& String::operator=(CStr text)
 	{
+		ASSERT_PARAMETER(text);
+
 		UInt n = CStrLength(text);
 		_vctr.Clear();
-		if(n) _vctr.AddRange(text, text + n + 1);
+
+		if(n)
+			_vctr.AddRange(text, text + n + 1);
+
 		return *this;
 	}
 
@@ -351,7 +471,7 @@ namespace Core
 
 	String& String::operator+=(CStr text)
 	{
-		ASSERT_PARAMETER(text);
+		//ASSERT_PARAMETER(text);
 		UInt length = CStrLength(text);
 		UInt current_length, new_length;
 		Bool MaxSizeOverflow;
@@ -391,12 +511,12 @@ namespace Core
 		return String(*this) += text;
 	}
 
-	Bool String::operator==(TChar  const * text) const { return Compare(text) ==  0; }
-	Bool String::operator!=(TChar  const * text) const { return Compare(text) !=  0; }
-	Bool String::operator> (TChar  const * text) const { return Compare(text) ==  1; }
-	Bool String::operator< (TChar  const * text) const { return Compare(text) == -1; }
-	Bool String::operator>=(TChar  const * text) const { return Compare(text) >=  0; }
-	Bool String::operator<=(TChar  const * text) const { return Compare(text) <=  0; }
+	Bool String::operator==(CStr text) const { ASSERT_PARAMETER(text); return Compare(text) ==  0; }
+	Bool String::operator!=(CStr text) const { ASSERT_PARAMETER(text); return Compare(text) !=  0; }
+	Bool String::operator> (CStr text) const { ASSERT_PARAMETER(text); return Compare(text) ==  1; }
+	Bool String::operator< (CStr text) const { ASSERT_PARAMETER(text); return Compare(text) == -1; }
+	Bool String::operator>=(CStr text) const { ASSERT_PARAMETER(text); return Compare(text) >=  0; }
+	Bool String::operator<=(CStr text) const { ASSERT_PARAMETER(text); return Compare(text) <=  0; }
 
 	TChar String::operator[](UInt index) const
 	{
@@ -429,32 +549,37 @@ namespace Core
 
 	CStr String::CStrPtr() const
 	{
-		return _vctr.Begin();
+		return IsEmpty() ? String::Empty : _vctr.Begin();
 	}
 
-	Int String::Compare(CStr target) const
+	Int String::Compare(CStr value) const
 	{
-		return Compare(CStrPtr(), target);
+		ASSERT_PARAMETER(value);
+		return Compare(CStrPtr(), value);
 	}
 
-	UInt String::IndexOf(CStr of, UInt start) const
+	Bool String::StartsWith(CStr value)
 	{
-		return IndexOf(CStrPtr(), of, start);
+		ASSERT_PARAMETER(value);
+		return StartsWith(CStrPtr(), value);
 	}
 
-	UInt String::LastIndexOf(CStr of, UInt start) const
+	Bool String::EndsWith(CStr value)
 	{
-		return LastIndexOf(CStrPtr(), of, start);
+		ASSERT_PARAMETER(value);
+		return EndsWith(CStrPtr(), Length(), value);
 	}
 
-	Bool String::StartsWith(CStr startText)
+	UInt String::IndexOf(CStr value, UInt start) const
 	{
-		return StartsWith(CStrPtr(), startText);
+		ASSERT_PARAMETER(value);
+		return IndexOf(CStrPtr(), Length(), value, CStrLength(value), start);
 	}
 
-	Bool String::EndsWith(CStr endText)
+	UInt String::LastIndexOf(CStr value, UInt start) const
 	{
-		return EndsWith(CStrPtr(), Length(), endText);
+		ASSERT_PARAMETER(value);
+		return LastIndexOf(CStrPtr(), Length(), value, CStrLength(value), start);
 	}
 
 	String String::SubString(UInt start, UInt length) const
@@ -464,6 +589,7 @@ namespace Core
 
 	String::StrPtrVec* String::Split(CStr delimiters) const
 	{
+		ASSERT_PARAMETER(delimiters);
 		return Split(CStrPtr(), Length(), delimiters);
 	}
 
@@ -471,13 +597,10 @@ namespace Core
 	/* Public Functions ***********************************************************/
 	/******************************************************************************/
 
+	//Clear does not deallocate memorys
 	void String::Clear()
 	{
-		if(!IsEmpty())
-		{
-			_vctr.Clear();
-			*_vctr.Begin() = 0;
-		}
+		_vctr.Clear();
 	}
 
 	void String::Reserve(UInt capacity)
@@ -490,30 +613,30 @@ namespace Core
 		_vctr.Shrink();
 	}
 
-	String& String::Append(CStr str)
+	String& String::Append(CStr value)
 	{
-		ASSERT_PARAMETER(str);
-		*this += str;
+		ASSERT_PARAMETER(value);
+		*this += value;
 		return *this;
 	}
 
-	String& String::Append(String const & str)
+	String& String::Append(String const & value)
 	{
-		*this += str;
+		*this += value;
 		return *this;
 	}
 
-	String& String::AppendLine(CStr str)
+	String& String::AppendLine(CStr value)
 	{
-		ASSERT_PARAMETER(str);
-		*this += str;
+		ASSERT_PARAMETER(value);
+		*this += value;
 		*this += NewLine;
 		return *this;
 	}
 
-	String& String::AppendLine(String const & str)
+	String& String::AppendLine(String const & value)
 	{
-		*this += str;
+		*this += value;
 		*this += NewLine;
 		return *this;
 	}
@@ -562,17 +685,16 @@ namespace Core
 		return IsDigit(CStr(), Length());
 	}
 
-	String& String::Replace(CStr replace, CStr by)
+	String& String::Replace(CStr oldValue, CStr newValue)
 	{
-		ASSERT_PARAMETER(replace);
-		ASSERT_PARAMETER(by);
+		ASSERT_PARAMETER(oldValue);
+		ASSERT_PARAMETER(newValue);
 
-		if(CStrLength(replace) > Length())
+		if(CStrLength(oldValue) > Length())
 			return *this;
 
-		if(IndexOf(replace) == -1)
+		if(IndexOf(oldValue) == NoMatch)
 			return *this;
-
 
 		return *this;
 	}

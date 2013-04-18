@@ -8,7 +8,7 @@ namespace Core
 {
 	void Assert::SystemAbort(CoreException const & ex)
 	{
-		String msg = String::FormatToStr
+		String msg = String::FormatToString
 		(
 			Text("Source Code : Assert(%s);") NewLine
 			Text("Function : %s") NewLine

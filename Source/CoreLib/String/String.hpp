@@ -1,3 +1,7 @@
+/*
+	String defaults to String::Empty
+*/
+
 #pragma once
 #include "../Types.hpp"
 #include "../DataStruct/Vector.hpp"
@@ -7,6 +11,11 @@ namespace Core
 	class String
 	{
 		static UInt NewLineLength;
+
+		public:
+		static CStr const Empty;
+
+		private:
 		typedef DataStruct::Vector<TChar> Vector;
 		Vector _vctr;
 
@@ -23,49 +32,56 @@ namespace Core
 		/* public static */
 		static UInt CStrLength(CStr);
 		static UInt CStrByteSize(CStr);
-		static void Format(TChar* buffer, UInt buffer_size, CStr format, ...);
-		static String FormatToStr(CStr format, ...);
+		static void FormatToBuffer(TChar* buffer, UInt buffer_size, CStr format, ...);
+		static String FormatToString(CStr format, ...);
 		static Int Compare(CStr source, CStr target);
-		static UInt IndexOf(CStr text, UInt textLength, CStr of, UInt start = 0);
-		static UInt IndexOf(CStr text, CStr of, UInt start = 0);
-		static UInt LastIndexOf(CStr text, UInt textLength, CStr of, UInt start = NoMatch);
-		static UInt LastIndexOf(CStr text, CStr of, UInt start = NoMatch);
-		static Bool StartsWith(CStr text, CStr startText);
-		static Bool EndsWith(CStr text, UInt textLength, CStr endText);
-		static Bool EndsWith(CStr text, CStr endText);
+		static Bool StartsWith(CStr text, UInt textLength, CStr value);
+		static Bool StartsWith(CStr text, CStr value);
+		static Bool EndsWith(CStr text, UInt textLength, CStr value);
+		static Bool EndsWith(CStr text, CStr value);
+		static UInt IndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start = 0);
+		static UInt IndexOf(CStr text, UInt textLength, CStr value, UInt start = 0);
+		static UInt IndexOf(CStr text, CStr value, UInt start = 0);
+		static UInt LastIndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start = Default);
+		static UInt LastIndexOf(CStr text, UInt textLength, CStr value, UInt start = Default);
+		static UInt LastIndexOf(CStr text, CStr value, UInt start = Default);
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
-		static StrPtrVec* Split(CStr text, UInt charCount, CStr delimiters);
+		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters, UInt delimitersLength);
+		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters);
+		static StrPtrVec* Split(CStr text, CStr delimiters);
 		static Bool IsDigit(TChar chr);
 		static Bool IsDigit(CStr text, UInt textLength);
 		static Bool IsDigit(CStr text);
 		static const UInt NoMatch = (UInt)-1;
+		static const UInt Default = NoMatch;
 		static const UInt MaxSize = NoMatch - 1;
 
 		/* Constructors && Destructor */
 		String();
 		String(UInt capacity);
-		String(CStr);
+		String(CStr value);
+		String(CStr value, UInt length);
 		String(CStr begin, CStr end);
-		String(String const &);
-		String(String &&);
+		String(String const & value);
+		String(String && value);
 		~String();
 
 		/* Operators */
 		operator CStr () const;
-		String& operator=(CStr);
-		String& operator=(String const &);
-		String& operator=(String &&);
-		String& operator+=(CStr);
-		String& operator+=(String const &);
-		String operator+(CStr) const;
-		String operator+(String const &) const;
-		Bool operator==(CStr) const;
-		Bool operator!=(CStr) const;
-		Bool operator>(CStr) const;
-		Bool operator<(CStr) const;
-		Bool operator>=(CStr) const;
-		Bool operator<=(CStr) const;
+		String& operator=(CStr text);
+		String& operator=(String const &text);
+		String& operator=(String && text);
+		String& operator+=(CStr text);
+		String& operator+=(String const & text);
+		String operator+(CStr text) const;
+		String operator+(String const & text) const;
+		Bool operator==(CStr text) const;
+		Bool operator!=(CStr text) const;
+		Bool operator>(CStr text) const;
+		Bool operator<(CStr text) const;
+		Bool operator>=(CStr text) const;
+		Bool operator<=(CStr text) const;
 		TChar operator[](UInt index) const;
 
 		/* Public Const Functions */
@@ -74,27 +90,27 @@ namespace Core
 		UInt Length() const;
 		UInt ByteSize() const;
 		CStr CStrPtr() const;
-		Int Compare(CStr target) const;
-		UInt IndexOf(CStr of, UInt start = 0) const;
-		UInt LastIndexOf(CStr of, UInt start = NoMatch) const;
-		Bool StartsWith(CStr startText);
-		Bool EndsWith(CStr endText);
+		Int Compare(CStr value) const;
+		Bool StartsWith(CStr value);
+		Bool EndsWith(CStr value);
+		UInt IndexOf(CStr value, UInt start = 0) const;
+		UInt LastIndexOf(CStr value, UInt start = Default) const;
 		String SubString(UInt start, UInt length) const;
 		StrPtrVec* Split(CStr delimiters) const;
 
-		/* Public Functions */
+		/* Public No-Const Functions */
 		void Clear();
 		void Reserve(UInt capacity);
 		void Shrink();
-		String& Append(CStr str);
-		String& Append(String const & str);
-		String& AppendLine(CStr str);
-		String& AppendLine(String const & str);
+		String& Append(CStr value);
+		String& Append(String const & value);
+		String& AppendLine(CStr value = String::Empty);
+		String& AppendLine(String const & value);
 		TChar* DrivePointer(UInt future_length);
 		String& TrimLeft();
 		String& TrimRight();
 		String& Trim();
 		Bool IsDigit();
-		String& Replace(CStr replace, CStr by);
+		String& Replace(CStr oldValue, CStr newValue);
 	};
 }

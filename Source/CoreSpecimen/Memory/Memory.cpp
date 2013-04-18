@@ -21,7 +21,6 @@ Bool CopyTest()
 	return result;
 }
 
-
 Bool MoveTest()
 {
 	Bool result = true;
@@ -49,6 +48,13 @@ Bool AllocFreeTest()
 	return result;
 }
 
+Bool AllocZeroTest()
+{
+	Bool result = true;
+	CHECK_ASSERT(Memory::Alloc(0U));
+	return result;
+}
+
 Bool MemoryTest()
 {
 	Bool result = true;
@@ -57,6 +63,7 @@ Bool MemoryTest()
 	CHECK CopyTest();
 	CHECK MoveTest();
 	CHECK AllocFreeTest();
+	CHECK AllocZeroTest();
 
 	return result;
 }

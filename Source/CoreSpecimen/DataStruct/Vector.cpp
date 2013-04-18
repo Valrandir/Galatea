@@ -28,7 +28,7 @@ namespace VectorTestNamespace
 		return v.Capacity() == capacity && v.Length() == length;
 	}
 
-	Bool AssertCntrAlways(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
+	Bool AssertCntrAlways(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
 		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Always)
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
@@ -36,7 +36,7 @@ namespace VectorTestNamespace
 			return true;
 	}
 
-	Bool AssertCntrOnce(UInt construct, UInt copyConstruct, UInt moveConstruct, UInt operatorEqual, UInt operatorMove, UInt destruct)
+	Bool AssertCntrOnce(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
 		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Once)
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
@@ -50,6 +50,15 @@ namespace VectorTestNamespace
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
+	}
+
+	Bool AssertCntrZero()
+	{
+		Bool result = true;
+		CHECK AssertCntrPod();
+		CHECK AssertCntrOnce();
+		CHECK AssertCntrAlways();
+		return result;
 	}
 
 	Bool AssertBeginEndNull(VCntr& v)
@@ -107,10 +116,7 @@ namespace VectorTestNamespace
 		Bool result = true;
 		VCntr vc;
 
-		CHECK AssertCntrPod();
-		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
-
+		CHECK AssertCntrZero();
 		CHECK AssertCapLen(vc, 0U, 0U);
 		CHECK vc.CtorMode() == VCntr::DefaultMode;
 		CHECK AssertBeginEndNull(vc);
@@ -135,9 +141,7 @@ namespace VectorTestNamespace
 		Bool result = true;
 		VCntr vc(10U);
 
-		CHECK AssertCntrPod();
-		CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-		CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+		CHECK AssertCntrZero();
 		CHECK AssertCapLen(vc, 10U, 0U);
 		CHECK AssertBeginEndNotNull(vc);
 
@@ -153,9 +157,7 @@ namespace VectorTestNamespace
 			VCntr source;
 			Counter::Clear();
 			VCntr target(source);
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -165,9 +167,7 @@ namespace VectorTestNamespace
 			VCntr source(5U);
 			Counter::Clear();
 			VCntr target(source);
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -179,7 +179,7 @@ namespace VectorTestNamespace
 			Counter::Clear();
 			VCntr target(source);
 			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrOnce();
 			CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
 			CHECK AssertCapLen(target, 5U, 5U);
 			CHECK AssertBeginEndNotNull(target);
@@ -204,9 +204,7 @@ namespace VectorTestNamespace
 			VCntr source;
 			Counter::Clear();
 			VCntr target((VCntr&&)source);
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 	}
@@ -216,9 +214,7 @@ namespace VectorTestNamespace
 			VCntr source(5U);
 			Counter::Clear();
 			VCntr target((VCntr&&)source);
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -229,9 +225,7 @@ namespace VectorTestNamespace
 			AddFiveElements(source);
 			Counter::Clear();
 			VCntr target((VCntr&&)source);
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 5U, 5U);
 			CHECK AssertBeginEndNotNull(target);
 			CHECK AssertCapLen(source, 0U, 0U);
@@ -284,9 +278,7 @@ namespace VectorTestNamespace
 			VCntr source;
 			Counter::Clear();
 			VCntr target = source;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -296,9 +288,7 @@ namespace VectorTestNamespace
 			VCntr source(5U);
 			Counter::Clear();
 			VCntr target = source;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -310,7 +300,7 @@ namespace VectorTestNamespace
 			Counter::Clear();
 			VCntr target = source;
 			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrOnce();
 			CHECK AssertCntrAlways(0U, 5U, 0U, 0U, 0U, 0U);
 			CHECK AssertCapLen(target, 5U, 5U);
 			CHECK AssertBeginEndNotNull(target);
@@ -375,9 +365,7 @@ namespace VectorTestNamespace
 			VCntr target;
 			Counter::Clear();
 			VCntr source = (VCntr&&)target;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(source, 0U, 0U);
 			CHECK AssertBeginEndNull(source);
 		}
@@ -387,9 +375,7 @@ namespace VectorTestNamespace
 			VCntr target(5U);
 			Counter::Clear();
 			VCntr source = (VCntr&&)target;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(source, 0U, 0U);
 			CHECK AssertBeginEndNull(source);
 		}
@@ -400,9 +386,7 @@ namespace VectorTestNamespace
 			AddFiveElements(target);
 			Counter::Clear();
 			VCntr source = (VCntr&&)target;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(source, 5U, 5U);
 			CHECK AssertBeginEndNotNull(source);
 		}
@@ -426,9 +410,7 @@ namespace VectorTestNamespace
 			VCntr source, target;
 			Counter::Clear();
 			target += source;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 0U, 0U);
 			CHECK AssertBeginEndNull(target);
 		}
@@ -439,9 +421,7 @@ namespace VectorTestNamespace
 			AddFiveElements(target);
 			Counter::Clear();
 			target += source;
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(target, 5U, 5U);
 			CHECK AssertBeginEndNotNull(target);
 		}
@@ -486,7 +466,7 @@ namespace VectorTestNamespace
 			CHECK_ASSERT(v[0]);
 		}
 
-		//Index Out of range, Assert
+		//Index Out of Range, Assert
 		{
 			VCntr v;
 			AddFiveElements(v);
@@ -691,16 +671,23 @@ namespace VectorTestNamespace
 		//Capacity 10 Length 0
 		{
 			VCntr v(10U);
+			Counter::Clear();
 			v.Shrink();
-			CHECK v.Capacity() == 0U;
+			CHECK v.IsEmpty();
+			CHECK AssertCapLen(v, 0U, 0U);
+			CHECK AssertCntrZero();
 		}
 
 		//Capacity 10 Length 5
 		{
 			VCntr v(10U);
 			AddFiveElements(v);
+			Counter::Clear();
 			v.Shrink();
 			CHECK AssertCapLen(v, 5U, 5U);
+			CHECK AssertCntrPod();
+			CHECK AssertCntrOnce();
+			CHECK AssertCntrAlways(0U, 0U, 5U, 0U, 0U, 5U);
 		}
 
 		return result;
@@ -715,9 +702,7 @@ namespace VectorTestNamespace
 			VCntr v;
 			Counter::Clear();
 			v.Clear();
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(v, 0U, 0U);
 		}
 
@@ -726,9 +711,7 @@ namespace VectorTestNamespace
 			VCntr v(10U);
 			Counter::Clear();
 			v.Clear();
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(v, 10U, 0U);
 		}
 
@@ -756,9 +739,7 @@ namespace VectorTestNamespace
 			VCntr v;
 			Counter::Clear();
 			v.Free();
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(v, 0U, 0U);
 		}
 
@@ -767,9 +748,7 @@ namespace VectorTestNamespace
 			VCntr v(10U);
 			Counter::Clear();
 			v.Free();
-			CHECK AssertCntrPod();
-			CHECK AssertCntrOnce(0U, 0U, 0U, 0U, 0U, 0U);
-			CHECK AssertCntrAlways(0U, 0U, 0U, 0U, 0U, 0U);
+			CHECK AssertCntrZero();
 			CHECK AssertCapLen(v, 0U, 0U);
 		}
 

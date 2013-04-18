@@ -9,6 +9,7 @@ namespace Core
 	{
 		VoidPtr Alloc(UInt bytes)
 		{
+			ASSERT_PARAMETER(bytes);
 			void *ptr = malloc(bytes);
 			ASSERT(ptr != 0);
 			return ptr;
