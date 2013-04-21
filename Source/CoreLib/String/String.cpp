@@ -685,6 +685,36 @@ namespace Core
 		return IsDigit(CStr(), Length());
 	}
 
+	UInt HowManyThereIs(CStr text, UInt textLength, CStr value, UInt valueLength)
+	{
+		UInt it = 0U, idx;
+		UInt count = 0U;
+
+		while(it < textLength)
+		{
+			idx = String::IndexOf(text, textLength, value, valueLength, it);
+			if(idx != String::NoMatch)
+			{
+				it = idx + valueLength;
+				++count;
+			}
+			else
+				break;
+		}
+
+		return count;
+	}
+
+	String& String::Overwrite(UInt start, CStr begin, CStr end)
+	{
+		ASSERT_PARAMETER(begin);
+		ASSERT_PARAMETER(end);
+		ASSERT_RANGE(begin <= end);
+		ASSERT_RANGE(start + (end - begin) < Length());
+		Memory::Move((VoidPtr)begin, _vctr.Begin() + start, end - begin);
+		return *this;
+	}
+
 	String& String::Replace(CStr oldValue, CStr newValue)
 	{
 		ASSERT_PARAMETER(oldValue);
@@ -695,6 +725,13 @@ namespace Core
 
 		if(IndexOf(oldValue) == NoMatch)
 			return *this;
+
+		UInt oldValueLength = CStrLength(oldValue);
+		UInt newValueLength = CStrLength(newValue);
+		UInt count = HowManyThereIs(CStrPtr(), Length(), oldValue, oldValueLength);
+		UInt newSize = (newValueLength - oldValueLength) * count;
+
+		Reserve(newSize);
 
 		return *this;
 	}

@@ -111,6 +111,7 @@ namespace Core
 		String& TrimRight();
 		String& Trim();
 		Bool IsDigit();
+		String& Overwrite(UInt start, CStr begin, CStr end);
 		String& Replace(CStr oldValue, CStr newValue);
 	};
 }

@@ -1849,6 +1849,30 @@ namespace StringTestNamespace
 		return result;
 	}
 
+	Bool OverwriteTest()
+	{
+		Bool result = true;
+		String s(_text);
+
+		//Null Parameters
+		CHECK_ASSERT(s.Overwrite(0U, (CStr)NULL, (CStr)NULL));
+
+		//begin > end
+		CHECK_ASSERT(s.Overwrite(0U, _textLonger + 1, _textLonger));
+
+		//Start is greather than Length
+		CHECK_ASSERT(s.Overwrite(100U, _textLonger, _textLonger + 1));
+
+		//Start + Range is greather than Length
+		CHECK_ASSERT(s.Overwrite(10U, _textLonger, _textLonger + 100U));
+
+		//Overwrite
+		CStr ov = Text("da");
+		CHECK s.Overwrite(5U, ov, ov + 3) == Text("This da CoreLib");
+
+		return result;
+	}
+
 	Bool ReplaceTest()
 	{
 		Bool result = true;
@@ -2001,6 +2025,7 @@ Bool StringTest()
 	CHECK TrimTest();
 	CHECK IsDigitTCharTest();
 	CHECK IsDigitTest();
+	CHECK OverwriteTest();
 	CHECK ReplaceTest();
 
 	return result;
