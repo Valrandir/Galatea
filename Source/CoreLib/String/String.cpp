@@ -226,37 +226,6 @@ namespace Core
 		return NoMatch;
 	}
 
-	//UInt String::LastIndexOf(CStr text, UInt textLength, CStr value, UInt valueLength, UInt start)
-	//{
-	//	ASSERT_PARAMETER(text);
-	//	ASSERT_PARAMETER(value);
-
-	//	CStr rend, it;
-
-	//	if(start >= textLength && start != NoMatch)
-	//		return NoMatch;
-
-	//	if(start == NoMatch)
-	//		start = textLength - valueLength;
-
-	//	if(start < 0)
-	//		return NoMatch;
-
-	//	rend = text - 1;
-	//	it = text + start;
-
-	//	//it = start == NoMatch ? text + textLength - valueLength : text + start;
-
-	//	while(rend < it)
-	//	{
-	//		if(valueLength == 1 ? *it == *value : StartsWith(it, value))
-	//			return it - text;
-	//		--it;
-	//	}
-
-	//	return NoMatch;
-	//}
-
 	UInt String::LastIndexOf(CStr text, UInt textLength, CStr value, UInt start)
 	{
 		ASSERT_PARAMETER(text);
@@ -705,14 +674,103 @@ namespace Core
 		return count;
 	}
 
-	String& String::Overwrite(UInt start, CStr begin, CStr end)
+	String& _ReplaceRightToLeft(String& stringRef, UInt length, CStr oldValue, UInt oldValueLength, CStr newValue, UInt newValueLength)
 	{
-		ASSERT_PARAMETER(begin);
-		ASSERT_PARAMETER(end);
-		ASSERT_RANGE(begin <= end);
-		ASSERT_RANGE(start + (end - begin) < Length());
-		Memory::Move((VoidPtr)begin, _vctr.Begin() + start, end - begin);
-		return *this;
+		Int diff = Int(newValueLength - oldValueLength);
+		Int offset = diff ? diff * HowManyThereIs(stringRef.CStrPtr(), length, oldValue, oldValueLength) : 0;
+
+		UInt newLength = length + offset;
+		stringRef.Reserve(newLength);
+
+		CStr text = stringRef.CStrPtr();
+		CStr tail = text + length;
+
+		UInt idx;
+		UInt lengthToMove;
+		VoidPtr source, target;
+
+		while(length && String::NoMatch != (idx = String::LastIndexOf(text, length, oldValue, oldValueLength, String::Default)))
+		{
+			lengthToMove = length - (idx + oldValueLength);
+
+			if(lengthToMove)
+			{
+				source = VoidPtr(text + idx + oldValueLength);
+				target = VoidPtr(tail - lengthToMove + offset);
+				Memory::Move(source, target, lengthToMove * sizeof(TChar));
+			}
+
+			offset -= diff;
+			source = VoidPtr(newValue);
+			target = VoidPtr(text + idx + offset);
+			Memory::Move(source, target, newValueLength * sizeof(TChar));
+
+			tail -= lengthToMove + oldValueLength;
+			length = tail - text;
+		}
+
+		stringRef.DrivePointer(newLength);
+		return stringRef;
+	}
+
+	String& _ReplaceLeftToRight(String& stringRef, UInt length, CStr oldValue, UInt oldValueLength, CStr newValue, UInt newValueLength)
+	{
+		/*
+		### DF ### best ###
+		!## DF ### best ###
+		! DF F ### best ###
+		! DF ! ### best ###
+		! DF ! best est ###
+		! DF ! best !st ###
+		! DF ! best !
+		*/
+
+		CStr text = stringRef.CStrPtr();
+		CStr it_source = text;
+		CStr it_target = text;
+		UInt idx;
+
+		while(String::NoMatch != (idx = String::IndexOf(it_source, length, oldValue, oldValueLength, 0U)))
+		{
+			if(idx)
+			{
+				Memory::Move((VoidPtr)it_source, (VoidPtr)it_target, idx * sizeof(TChar));
+				it_source += idx;
+				it_target += idx;
+			}
+
+			Memory::Move(VoidPtr(newValue), VoidPtr(it_target), newValueLength * sizeof(TChar));
+			it_source += oldValueLength; // 3
+			it_target += newValueLength; // 1
+		}
+
+		idx = text + length - it_source;
+		if(idx)
+		{
+			Memory::Move((VoidPtr)it_source, (VoidPtr)it_target, idx * sizeof(TChar));
+			it_source += idx;
+			it_target += idx;
+		}
+
+		stringRef.DrivePointer(it_target - text);
+		return stringRef;
+	}
+
+	//TASK TODO Switch Memory::Move by Memory::Copy when applicable
+	//TASK TODO The start param of IndexOf default to 0 and not to String::Default, unlike LastIndexOf.
+	//          I called IndexOf with start = String::Default while meaning 0
+	//          Maybe the start param should default to String::Default instead of 0
+	//TASK TODO Minimise and Optimise String::Replace
+	//          consider a function for oldValueLength == newValueLength
+	//          reconsider one function for all cases
+
+	String& _Replace(String& stringRef, UInt length, CStr oldValue, UInt oldValueLength, CStr newValue, UInt newValueLength)
+	{
+		Int diff = Int(newValueLength - oldValueLength);
+		if(diff >= 0)
+			return _ReplaceRightToLeft(stringRef, length, oldValue, oldValueLength, newValue, newValueLength);
+		else
+			return _ReplaceLeftToRight(stringRef, length, oldValue, oldValueLength, newValue, newValueLength);
 	}
 
 	String& String::Replace(CStr oldValue, CStr newValue)
@@ -720,19 +778,17 @@ namespace Core
 		ASSERT_PARAMETER(oldValue);
 		ASSERT_PARAMETER(newValue);
 
-		if(CStrLength(oldValue) > Length())
-			return *this;
+		UInt oldValueLength, length;
 
 		if(IndexOf(oldValue) == NoMatch)
 			return *this;
 
-		UInt oldValueLength = CStrLength(oldValue);
-		UInt newValueLength = CStrLength(newValue);
-		UInt count = HowManyThereIs(CStrPtr(), Length(), oldValue, oldValueLength);
-		UInt newSize = (newValueLength - oldValueLength) * count;
+		oldValueLength = CStrLength(oldValue);
+		length = Length();
 
-		Reserve(newSize);
+		if(oldValueLength > length)
+			return *this;
 
-		return *this;
+		return _Replace(*this, length, oldValue, oldValueLength, newValue, CStrLength(newValue));
 	}
 }

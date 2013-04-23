@@ -1849,35 +1849,27 @@ namespace StringTestNamespace
 		return result;
 	}
 
-	Bool OverwriteTest()
-	{
-		Bool result = true;
-		String s(_text);
-
-		//Null Parameters
-		CHECK_ASSERT(s.Overwrite(0U, (CStr)NULL, (CStr)NULL));
-
-		//begin > end
-		CHECK_ASSERT(s.Overwrite(0U, _textLonger + 1, _textLonger));
-
-		//Start is greather than Length
-		CHECK_ASSERT(s.Overwrite(100U, _textLonger, _textLonger + 1));
-
-		//Start + Range is greather than Length
-		CHECK_ASSERT(s.Overwrite(10U, _textLonger, _textLonger + 100U));
-
-		//Overwrite
-		CStr ov = Text("da");
-		CHECK s.Overwrite(5U, ov, ov + 3) == Text("This da CoreLib");
-
-		return result;
-	}
-
 	Bool ReplaceTest()
 	{
 		Bool result = true;
 		CStr mark1 = Text("!");
 		CStr mark3 = Text("!!!");
+
+		//---------------- Concept LeftToRight ----------------
+		{
+			String s = Text("123 CoreLib 123-End");
+			s.Replace(Text("123"), Text("AB"));
+			CHECK s.Length() == 17U;
+			CHECK s == Text("AB CoreLib AB-End");
+		}
+
+		//---------------- Concept RightToLeft ----------------
+		{
+			String s = Text("AB CoreLib AB-End");
+			s.Replace(Text("AB"), Text("123"));
+			CHECK s.Length() == 19U;
+			CHECK s == Text("123 CoreLib 123-End");
+		}
 
 		//---------------- Generic ----------------
 		{
@@ -1921,7 +1913,7 @@ namespace StringTestNamespace
 			CHECK String(_text).Replace(Text("This"), mark1) == Text("! is CoreLib");
 
 			//replace multi by single char, found in middle
-			CHECK String(_text).Replace(Text("is"), mark1) == Text("This ! CoreLib");
+			CHECK String(_text).Replace(Text(" is "), mark1) == Text("This!CoreLib");
 
 			//replace multi by single char, found at end
 			CHECK String(_text).Replace(Text("Lib"), mark1) == Text("This is Core!");
@@ -1951,7 +1943,7 @@ namespace StringTestNamespace
 			CHECK String(_text).Replace(Text("This"), mark3) == Text("!!! is CoreLib");
 
 			//replace multi by multi char, found in middle
-			CHECK String(_text).Replace(Text("is"), mark3) == Text("This !!! CoreLib");
+			CHECK String(_text).Replace(Text(" is "), mark3) == Text("This!!!CoreLib");
 
 			//replace multi by multi char, found at end
 			CHECK String(_text).Replace(Text("Lib"), mark3) == Text("This is Core!!!");
@@ -2025,7 +2017,6 @@ Bool StringTest()
 	CHECK TrimTest();
 	CHECK IsDigitTCharTest();
 	CHECK IsDigitTest();
-	CHECK OverwriteTest();
 	CHECK ReplaceTest();
 
 	return result;
