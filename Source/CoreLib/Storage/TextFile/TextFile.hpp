@@ -15,16 +15,16 @@ namespace Core
 			TextFile& operator=(TextFile&);
 
 			public:
-			static TextFile* Create(CStr fileName);
-			static TextFile* Append(CStr fileName);
-			static String ReadAll(CStr fileName);
-			static String::StrPtrVec* ReadLines(CStr fileName);
-			static void WriteAll(CStr fileName, CStr text, UInt textLength);
-			static void WriteAll(CStr fileName, CStr text);
-			static void WriteAll(CStr fileName, String text);
-			static void AppendAll(CStr fileName, CStr text, UInt textLength);
-			static void AppendAll(CStr fileName, CStr text);
-			static void AppendAll(CStr fileName, String text);
+			static TextFile* Create(CStr fileName, CoreException* corex = NULL);
+			static TextFile* Append(CStr fileName, CoreException* corex = NULL);
+			static String ReadAll(CStr fileName, CoreException* corex = NULL);
+			static String::StrPtrVec* ReadLines(CStr fileName, CoreException* corex = NULL);
+			static void WriteText(CStr fileName, CStr text, UInt textLength);
+			static void WriteText(CStr fileName, CStr text);
+			static void WriteText(CStr fileName, String text);
+			static void AppendText(CStr fileName, CStr text, UInt textLength);
+			static void AppendText(CStr fileName, CStr text);
+			static void AppendText(CStr fileName, String text);
 
 			void Write(CStr text, UInt textLength) const;
 			void Write(CStr text) const;

@@ -6,11 +6,22 @@ using namespace Storage;
 namespace FileTestNamespace
 {
 	CStr _fileName = Text("FileTest.txt");
+	CStr _badFileName = Text("<MiG-25M>\\X-15:Rocket.");
 
 	Bool CreateTest()
 	{
 		Bool result = true;
 		File* file;
+		CoreException corex;
+
+		//Create fail because _fileName is NULL
+		CHECK_ASSERT(File::Create((CStr)0));
+
+		//Create fail because _fileName is bogus path
+		CHECK File::Create(_badFileName) == NULL;
+		CHECK File::Create(_badFileName, &corex) == NULL;
+		CHECK corex.err_code != 0U;
+		CHECK corex.err_msg != 0U;
 
 		//File does not exists, create it and size will be 0 and SeekPos will be 0
 		File::Delete(_fileName);
@@ -34,6 +45,16 @@ namespace FileTestNamespace
 	{
 		Bool result = true;
 		File* file;
+		CoreException corex;
+
+		//Create fail because _fileName is NULL
+		CHECK_ASSERT(File::Open((CStr)0));
+
+		//Create fail because _fileName is bogus path
+		CHECK File::Open(_badFileName) == NULL;
+		CHECK File::Open(_badFileName, &corex) == NULL;
+		CHECK corex.err_code != 0U;
+		CHECK corex.err_msg != 0U;
 
 		//File does not exists, open it and it will fail
 		File::Delete(_fileName);
@@ -57,6 +78,16 @@ namespace FileTestNamespace
 		File* file;
 		String text;
 		UInt fileSize;
+		CoreException corex;
+
+		//Create fail because _fileName is NULL
+		CHECK_ASSERT(File::OpenReadOnly((CStr)0));
+
+		//Create fail because _fileName is bogus path
+		CHECK File::OpenReadOnly(_badFileName) == NULL;
+		CHECK File::OpenReadOnly(_badFileName, &corex) == NULL;
+		CHECK corex.err_code != 0U;
+		CHECK corex.err_msg != 0U;
 
 		//File does not exists, open it and it will fail
 		File::Delete(_fileName);
@@ -202,6 +233,20 @@ namespace FileTestNamespace
 		return result;
 	}
 
+	Bool ReadTest()
+	{
+		Bool result = true;
+		//How to make Read fails?
+		return result;
+	}
+
+	Bool WriteTest()
+	{
+		Bool result = true;
+		//How to make Write fails?
+		return result;
+	}
+
 	Bool ReadWriteTest()
 	{
 		Bool result = true;
@@ -237,6 +282,8 @@ Bool FileTest()
 	CHECK GetSeekPosTest();
 	CHECK SeekTest();
 	CHECK SeekToEndTest();
+	CHECK ReadTest();
+	CHECK WriteTest();
 	CHECK ReadWriteTest();
 
 	return result;

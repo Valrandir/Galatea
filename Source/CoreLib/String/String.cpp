@@ -255,6 +255,7 @@ namespace Core
 		return SubString(text, CStrLength(text), start, length);
 	}
 
+	//delimiters is a list of TChar separators and not a single string separator
 	String::StrPtrVec* String::Split(CStr text, UInt textLength, CStr delimiters, UInt delimitersLength)
 	{
 		ASSERT_PARAMETER(text);

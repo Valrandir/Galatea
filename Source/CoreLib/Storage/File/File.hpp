@@ -3,6 +3,8 @@
 
 namespace Core
 {
+	class CoreException;
+
 	namespace Storage
 	{
 		class File
@@ -15,9 +17,25 @@ namespace Core
 			File& operator=(File&);
 
 			public:
-			static File* Create(CStr fileName);
-			static File* Open(CStr fileName);
+			enum CacheMode
+			{
+				Default = 0,
+				Random = 1,
+				Sequential = 2
+			};
+
+			//Overwrite Existing, ReadWrite, NoShare
+			static File* Create(CStr fileName, CoreException* corex = NULL);
+
+			//FileMustExist, ReadWrite, NoShare
+			static File* Open(CStr fileName, CoreException* corex = NULL);
+
+			//FileMustExist, ReadOnly, Share
 			static File* OpenReadOnly(CStr fileName);
+			static File* OpenReadOnly(CStr fileName, CoreException* corex);
+			static File* OpenReadOnly(CStr fileName, CacheMode cacheMode);
+			static File* OpenReadOnly(CStr fileName, CacheMode cacheMode, CoreException* corex);
+
 			static Bool Exists(CStr fileName);
 			static Bool Delete(CStr fileName);
 			static UInt64 GetFileSize(CStr fileName);
@@ -26,8 +44,8 @@ namespace Core
 			virtual UInt64 GetSeekPos() const = 0;
 			virtual void Seek(UInt64 position) const = 0;
 			virtual void SeekToEnd() const = 0;
-			virtual void Read(VoidPtr buffer, UInt bufferSize) const = 0;
-			virtual void Write(VoidPtr const buffer, UInt bufferSize) const = 0;
+			virtual Bool Read(VoidPtr buffer, UInt bufferSize, CoreException* corex = NULL) const = 0;
+			virtual Bool Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex = NULL) const = 0;
 			virtual void Close() = 0;
 			virtual ~File();
 		};

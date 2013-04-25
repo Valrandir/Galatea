@@ -18,8 +18,8 @@ namespace Core
 			UInt64 GetSeekPos() const;
 			void Seek(UInt64 position) const;
 			void SeekToEnd() const;
-			void Read(VoidPtr buffer, UInt bufferSize) const;
-			void Write(VoidPtr const buffer, UInt bufferSize) const;
+			Bool Read(VoidPtr buffer, UInt bufferSize, CoreException* corex = NULL) const;
+			Bool Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex = NULL) const;
 			void Close();
 			~FileImpl();
 		};

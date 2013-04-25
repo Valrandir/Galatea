@@ -7,7 +7,7 @@ namespace Core
 	{
 		TextFile::TextFile(File* file) : _file(file)
 		{
-			ASSERT(file != NULL);
+			ASSERT_PARAMETER(file != NULL);
 		}
 
 		TextFile::TextFile(TextFile const &)
@@ -19,17 +19,17 @@ namespace Core
 			return *this;
 		}
 
-		TextFile* TextFile::Create(CStr fileName)
+		TextFile* TextFile::Create(CStr fileName, CoreException* corex)
 		{
-			ASSERT(fileName != NULL);
-			File* file = File::Create(fileName);
+			ASSERT_PARAMETER(fileName != NULL);
+			File* file = File::Create(fileName, corex);
 			return file ? new TextFile(file) : NULL;
 		}
 
-		TextFile* TextFile::Append(CStr fileName)
+		TextFile* TextFile::Append(CStr fileName, CoreException* corex)
 		{
-			ASSERT(fileName != NULL);
-			File* file = File::Open(fileName);
+			ASSERT_PARAMETER(fileName != NULL);
+			File* file = File::Open(fileName, corex);
 
 			if(file)
 			{
@@ -37,19 +37,19 @@ namespace Core
 				return new TextFile(file);
 			}
 
-			return 0;
+			return NULL;
 		}
 
-		String TextFile::ReadAll(CStr fileName)
+		String TextFile::ReadAll(CStr fileName, CoreException* corex)
 		{
-			ASSERT(fileName);
+			ASSERT_PARAMETER(fileName);
 			File* file;
 			String text;
 			UInt fileSize;
 			UInt length;
 			TChar* buffer;
 
-			file = File::OpenReadOnly(fileName);
+			file = File::OpenReadOnly(fileName, corex);
 			if(file)
 			{
 				fileSize = ToUInt(file->GetFileSize());
@@ -63,70 +63,84 @@ namespace Core
 			return text;
 		}
 
-		String::StrPtrVec* TextFile::ReadLines(CStr fileName)
+		String::StrPtrVec* TextFile::ReadLines(CStr fileName, CoreException* corex)
 		{
 			//Here \r\n is used instead of NewLine,
 			//so that Linux can see lines from a Windows text file
-			ASSERT(fileName);
-			auto text = ReadAll(fileName);
+			ASSERT_PARAMETER(fileName);
+			auto text = ReadAll(fileName, corex);
 			auto lines = text.Split(text, text.Length(), Text("\r\n"));
 			return lines;
 		}
 
-		void TextFile::WriteAll(CStr fileName, CStr text, UInt textLength)
+		void TextFile::WriteText(CStr fileName, CStr text, UInt textLength)
 		{
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(text);
 			TextFile *textFile = TextFile::Create(fileName);
 			textFile->Write(text, textLength); 
 			DeletePtr(textFile);
 		}
 
-		void TextFile::WriteAll(CStr fileName, CStr text)
+		void TextFile::WriteText(CStr fileName, CStr text)
 		{
-			WriteAll(fileName, text, String::CStrLength(text));
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(text);
+			WriteText(fileName, text, String::CStrLength(text));
 		}
 
-		void TextFile::WriteAll(CStr fileName, String text)
+		void TextFile::WriteText(CStr fileName, String text)
 		{
-			WriteAll(fileName, text, text.Length());
+			ASSERT_PARAMETER(fileName);
+			WriteText(fileName, text, text.Length());
 		}
 
-		void TextFile::AppendAll(CStr fileName, CStr text, UInt textLength)
+		void TextFile::AppendText(CStr fileName, CStr text, UInt textLength)
 		{
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(text);
 			TextFile *textFile = TextFile::Append(fileName);
 			textFile->Write(text, textLength); 
 			DeletePtr(textFile);
 		}
 
-		void TextFile::AppendAll(CStr fileName, CStr text)
+		void TextFile::AppendText(CStr fileName, CStr text)
 		{
-			AppendAll(fileName, text, String::CStrLength(text));
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(text);
+			AppendText(fileName, text, String::CStrLength(text));
 		}
 
-		void TextFile::AppendAll(CStr fileName, String text)
+		void TextFile::AppendText(CStr fileName, String text)
 		{
-			AppendAll(fileName, text, text.Length());
+			ASSERT_PARAMETER(fileName);
+			AppendText(fileName, text, text.Length());
 		}
 
 		void TextFile::Write(CStr text, UInt textLength) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			_file->Write((VoidPtr)text, ToUInt32(textLength) * sizeof(TChar));
 		}
 
 		void TextFile::Write(CStr text) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			Write(text, String::CStrLength(text));
 		}
 
 		void TextFile::Write(String const & text) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			Write(text, text.Length());
 		}
 
 		void TextFile::WriteLine(CStr text, UInt textLength) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			Write(text, ToUInt32(textLength));
 			Write(NewLine);
@@ -134,6 +148,7 @@ namespace Core
 
 		void TextFile::WriteLine(CStr text) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			Write(text);
 			Write(NewLine);
@@ -141,6 +156,7 @@ namespace Core
 
 		void TextFile::WriteLine(String const & text) const
 		{
+			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			WriteLine(text, text.Length());
 		}

@@ -26,8 +26,8 @@ Bool CoreSpecimen()
 
 	Assert::SetAssertProc(AssertOverride);
 
-	CHECK TypesTest();
 	CHECK AssertTest();
+	CHECK TypesTest();
 	CHECK ErrTest();
 	CHECK MemoryTest();
 	CHECK ThreadTest();

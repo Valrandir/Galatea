@@ -15,28 +15,29 @@ namespace Core
 
 		File* File::Create(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
 			Int32 fileId = open(fileName, O_CREAT | O_RDWR | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			return fileId == -1 ? NULL : new FileImpl(fileId, false);
 		}
 			
 		File* File::Open(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
 			Int32 fileId = open(fileName, O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			return fileId == -1 ? NULL : new FileImpl(fileId, false);
 		}
 
-		File* File::OpenReadOnly(CStr fileName)
+		File* File::OpenReadOnly(CStr fileName, CacheMode cacheMode)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
+			ASSERT(cacheMode == CacheMode::Default);
 			Int32 fileId = open(fileName, O_RDONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 			return fileId == -1 ? NULL : new FileImpl(fileId, true);
 		}
 
 		Bool File::Exists(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
 			struct stat st = {0};
 			int ret = stat(fileName, &st);
 			return ret != -1;
@@ -44,64 +45,64 @@ namespace Core
 
 		Bool File::Delete(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
 			return unlink(fileName) == 0;
 		}
 
 		UInt64 File::GetFileSize(CStr fileName)
 		{
-			Assert(fileName != NULL);
+			ASSERT_PARAMETER(fileName);
 			struct stat st = {0};
 			int ret = stat(fileName, &st);
-			Assert(ret != -1);
+			ASSERT(ret != -1);
 			return st.st_size;
 		}
 
 		UInt64 FileImpl::GetFileSize() const
 		{
-			Assert(_fileId != 0);
+			ASSERT(_fileId);
 			struct stat st = {0};
 			int ret = fstat(_fileId, &st);
-			Assert(ret != -1);
+			ASSERT(ret != -1);
 			return st.st_size;
 		}
 
 		UInt64 FileImpl::GetSeekPos() const
 		{
-			Assert(_fileId != 0);
+			ASSERT(_fileId);
 			return lseek64(_fileId, 0, SEEK_CUR);
 			return 0U;
 		}
 
 		void FileImpl::Seek(UInt64 position) const
 		{
-			Assert(_fileId != 0);
+			ASSERT(_fileId);
 			lseek64(_fileId, position, SEEK_SET);
 		}
 
 		void FileImpl::SeekToEnd() const
 		{
-			Assert(_fileId != 0);
+			ASSERT(_fileId);
 			lseek64(_fileId, 0U, SEEK_END);
 		}
 
 		void FileImpl::Read(VoidPtr buffer, UInt bufferSize) const
 		{
-			Assert(_fileId != 0);
-			Assert(buffer != 0);
+			ASSERT(_fileId);
+			ASSERT(buffer != 0);
 			read(_fileId, buffer, bufferSize);
 			//size_t ret = read(_fileId, buffer, bufferSize);
-			//Assert(ret != -1);
+			//ASSERT(ret != -1);
 		}
 
 		void FileImpl::Write(VoidPtr const buffer, UInt bufferSize) const
 		{
-			Assert(_fileId != 0);
-			Assert(_isReadOnly == false);
-			Assert(buffer != 0);
+			ASSERT(_fileId);
+			ASSERT(_isReadOnly == false);
+			ASSERT(buffer != 0);
 			write(_fileId, buffer, bufferSize);
 			//size_t ret = write(_fileId, buffer, bufferSize);
-			//Assert(ret != -1);
+			//ASSERT(ret != -1);
 		}
 
 		void FileImpl::Close()

@@ -13,6 +13,26 @@ namespace TextFileTestNamespace
 		Text("If you want to keep your expressions convergent, never allow them a single degree of freedom.")
 		NewLine;
 
+	Bool CreateTest()
+	{
+		Bool result = true;
+
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::Create((CStr)0));
+
+		return result;
+	}
+
+	Bool AppendTest()
+	{
+		Bool result = true;
+
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::Append((CStr)0));
+
+		return result;
+	}
+
 	Bool WriteTest()
 	{
 		Bool result = true;
@@ -20,6 +40,7 @@ namespace TextFileTestNamespace
 		UInt64 fileSize, textSize;
 
 		textFile = TextFile::Create(_fileName);
+		CHECK_ASSERT(textFile->Write((CStr)0));
 		textFile->Write(_content);
 		DeletePtr(textFile);
 
@@ -37,6 +58,7 @@ namespace TextFileTestNamespace
 		UInt64 fileSize, textSize;
 
 		textFile = TextFile::Append(_fileName);
+		CHECK_ASSERT(textFile->WriteLine((CStr)0));
 		textFile->WriteLine(_content);
 		DeletePtr(textFile);
 
@@ -53,6 +75,8 @@ namespace TextFileTestNamespace
 	{
 		Bool result = true;
 
+		CHECK_ASSERT(TextFile::ReadAll((CStr)0));
+
 		String content = TextFile::ReadAll(_fileName);
 		UInt64 fileSize = File::GetFileSize(_fileName);
 		CHECK content.Length() == fileSize / sizeof(TChar);
@@ -66,6 +90,8 @@ namespace TextFileTestNamespace
 		Bool result = true;
 		TextFile* file;
 		String::StrPtrVec* lines;
+
+		CHECK_ASSERT(TextFile::ReadLines((CStr)0));
 
 		//File is empty -> no lines
 		file = TextFile::Create(_fileName);
@@ -159,14 +185,14 @@ namespace TextFileTestNamespace
 		return result;
 	}
 
-	Bool WriteAllTest()
+	Bool WriteTextTest()
 	{
 		Bool result = true;
 		String readBack;
 
 		File::Delete(_fileName);
 
-		TextFile::WriteAll(_fileName, _content);
+		TextFile::WriteText(_fileName, _content);
 		readBack = TextFile::ReadAll(_fileName);
 		CHECK readBack == _content;
 
@@ -175,7 +201,7 @@ namespace TextFileTestNamespace
 		return result;
 	}
 
-	Bool AppendAllTest()
+	Bool AppendTextTest()
 	{
 		Bool result = true;
 		String readBack;
@@ -183,8 +209,8 @@ namespace TextFileTestNamespace
 
 		File::Delete(_fileName);
 
-		TextFile::WriteAll(_fileName, _content);
-		TextFile::AppendAll(_fileName, _content);
+		TextFile::WriteText(_fileName, _content);
+		TextFile::AppendText(_fileName, _content);
 		readBack = TextFile::ReadAll(_fileName);
 		CHECK readBack == expected + _content;
 
@@ -199,12 +225,15 @@ Bool TextFileTest()
 	Bool result = true;
 	using namespace TextFileTestNamespace;
 
+	CHECK CreateTest();
+	CHECK AppendTest();
+
 	CHECK WriteTest();
 	CHECK WriteLineAppendTest();
 	CHECK ReadAllTest();
 	CHECK ReadLinesTest();
-	CHECK WriteAllTest();
-	CHECK AppendAllTest();
+	CHECK WriteTextTest();
+	CHECK AppendTextTest();
 
 	File::Delete(_fileName);
 

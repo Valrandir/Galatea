@@ -1,0 +1,20 @@
+File, TextFile
+	Some function returns a pointer to an instance, which much then be Free/Delete later on.
+	This is a memory leak risk as it assume the use will remember to clear it.
+	Consider creating AutoPtr classes instead, like maybe FilePtr and TextFilePtr, to contains the pointer
+	and automatically destroy it in the destructor.
+
+Unix, Win32, UTF-8, Ansi, NewLine, ReadText, WriteText
+
+Clean Up TextFile Tests
+
+String
+	TASK TODO Switch Memory::Move by Memory::Copy when applicable
+	TASK TODO The start param of IndexOf default to 0 and not to String::Default, unlike LastIndexOf.
+	          I called IndexOf with start = String::Default while meaning 0
+	          Maybe the start param should default to String::Default instead of 0
+	TASK TODO Minimise and Optimise String::Replace
+	          consider a function for oldValueLength == newValueLength
+	          reconsider one function for all cases
+
+String.hpp cannot be included before Assert in some combinaison becaus Vector.hpp includes Vector.cpp for template definitions and it circulate back to macros in Assert.hpp.
