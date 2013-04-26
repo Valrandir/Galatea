@@ -323,7 +323,8 @@ namespace Core
 	//Digits are 0123456789
 	Bool String::IsDigit(TChar chr)
 	{
-		return String::IndexOf(Text("0123456789"), 10U, (CStr)&chr) != -1;
+		TChar const value[2] = {chr, 0};
+		return String::IndexOf(Text("0123456789"), 10U, value) != -1;
 	}
 
 	Bool String::IsDigit(CStr text, UInt textLength)
