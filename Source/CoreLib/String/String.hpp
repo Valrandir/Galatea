@@ -47,9 +47,12 @@ namespace Core
 		static UInt LastIndexOf(CStr text, CStr value, UInt start = Default);
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
+
+		//StrPtrVec* must be manually deleted to avoir leaks
 		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters, UInt delimitersLength);
 		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters);
 		static StrPtrVec* Split(CStr text, CStr delimiters);
+
 		static Bool IsDigit(TChar chr);
 		static Bool IsDigit(CStr text, UInt textLength);
 		static Bool IsDigit(CStr text);

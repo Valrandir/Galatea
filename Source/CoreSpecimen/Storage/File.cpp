@@ -5,6 +5,7 @@ using namespace Storage;
 
 namespace FileTestNamespace
 {
+	CStr _nullFileName = (CStr)0;
 	CStr _fileName = Text("FileTest.txt");
 	CStr _badFileName = Text("<MiG-25M>\\X-15:Rocket.");
 
@@ -15,7 +16,7 @@ namespace FileTestNamespace
 		CoreException corex;
 
 		//Create fail because _fileName is NULL
-		CHECK_ASSERT(File::Create((CStr)0));
+		CHECK_ASSERT(File::Create(_nullFileName));
 
 		//Create fail because _fileName is bogus path
 		CHECK File::Create(_badFileName) == NULL;
@@ -48,7 +49,7 @@ namespace FileTestNamespace
 		CoreException corex;
 
 		//Create fail because _fileName is NULL
-		CHECK_ASSERT(File::Open((CStr)0));
+		CHECK_ASSERT(File::Open(_nullFileName));
 
 		//Create fail because _fileName is bogus path
 		CHECK File::Open(_badFileName) == NULL;
@@ -81,7 +82,7 @@ namespace FileTestNamespace
 		CoreException corex;
 
 		//Create fail because _fileName is NULL
-		CHECK_ASSERT(File::OpenReadOnly((CStr)0));
+		CHECK_ASSERT(File::OpenReadOnly(_nullFileName));
 
 		//Create fail because _fileName is bogus path
 		CHECK File::OpenReadOnly(_badFileName) == NULL;

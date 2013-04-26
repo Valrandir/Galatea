@@ -25,12 +25,18 @@ namespace Core
 			};
 
 			//Overwrite Existing, ReadWrite, NoShare
+			//Returns a File pointer which must be manually deleted after use.
+			//On failure, returns a NULL pointer and initialize corex if it is set.
 			static File* Create(CStr fileName, CoreException* corex = NULL);
 
 			//FileMustExist, ReadWrite, NoShare
+			//Returns a File pointer which must be manually deleted after use.
+			//On failure, returns a NULL pointer and initialize corex if it is set.
 			static File* Open(CStr fileName, CoreException* corex = NULL);
 
 			//FileMustExist, ReadOnly, Share
+			//Returns a File pointer which must be manually deleted after use.
+			//On failure, returns a NULL pointer and initialize corex if it is set.s
 			static File* OpenReadOnly(CStr fileName);
 			static File* OpenReadOnly(CStr fileName, CoreException* corex);
 			static File* OpenReadOnly(CStr fileName, CacheMode cacheMode);

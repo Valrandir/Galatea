@@ -32,7 +32,7 @@ Bool CoreExceptionTest()
 	CStr source_code = Text("source_code");
 	CStr function = Text("function");
 	CStr file = Text("file");
-	UInt line = 50U;
+	UInt32 line = 50U;
 	CStr err_msg = Text("err_msg");
 
 	//Constructor 1
@@ -70,7 +70,7 @@ Bool CoreExceptionTest()
 	//InitErr
 	{
 		CoreException ex(source_code, function, file, line);
-		UInt errCode = 5U;
+		UInt32 errCode = 5U;
 
 		SetErrCode(errCode);
 		String errText = GetErrText(GetErrCode());
@@ -90,6 +90,15 @@ Bool CoreExceptionTest()
 			CoreException ex2 = ex;
 			CHECK CheckException(ex2, source_code, function, file, line, errCode, errText);
 		}
+	}
+
+	//Clear
+	{
+		CoreException ex(source_code, function, file, line);
+		SetErrCode(5U);
+		ex.InitErr();
+		ex.Clear();
+		CHECK CheckException(ex, String::Empty, String::Empty, String::Empty, 0U, 0U, String::Empty);
 	}
 
 	return result;

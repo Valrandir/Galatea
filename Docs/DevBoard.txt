@@ -18,3 +18,5 @@ String
 	          reconsider one function for all cases
 
 String.hpp cannot be included before Assert in some combinaison becaus Vector.hpp includes Vector.cpp for template definitions and it circulate back to macros in Assert.hpp.
+
+Research correct syntax between "Return" and "Returns" for comments

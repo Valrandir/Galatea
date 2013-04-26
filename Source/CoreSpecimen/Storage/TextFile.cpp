@@ -5,20 +5,47 @@ using namespace Storage;
 
 namespace TextFileTestNamespace
 {
+	CStr _nullCStr = (CStr)0;
 	CStr _fileName = Text("TextFileTest.txt");
+	CStr _badFileName = Text("<MiG-25M>\\X-15:Rocket.");
+
 	CStr _content =
-		Text("Polly Nomial and Curly Pi")
+		Text("First line followed by two NewLine")
 		NewLine
 		NewLine
-		Text("If you want to keep your expressions convergent, never allow them a single degree of freedom.")
+		Text("Fourth line followed by one NewLine")
 		NewLine;
+
+	void MakeFile()
+	{
+		auto file = TextFile::Create(_fileName);
+		if(file) file->Write(_content);
+		DeletePtr(file);
+	}
+
+	void DeleteFile()
+	{
+		File::Delete(_fileName);
+	}
 
 	Bool CreateTest()
 	{
 		Bool result = true;
 
 		//Assert when fileName is null
-		CHECK_ASSERT(TextFile::Create((CStr)0));
+		CHECK_ASSERT(TextFile::Create(_nullCStr));
+
+		//Return null with bad filename
+		CHECK TextFile::Create(_badFileName) == NULL;
+
+		//Return ptr on success
+		{
+			TextFile *ptr = TextFile::Create(_fileName);
+			CHECK ptr != NULL;
+			DeletePtr(ptr);
+		}
+
+		DeleteFile();
 
 		return result;
 	}
@@ -28,59 +55,23 @@ namespace TextFileTestNamespace
 		Bool result = true;
 
 		//Assert when fileName is null
-		CHECK_ASSERT(TextFile::Append((CStr)0));
+		CHECK_ASSERT(TextFile::Append(_nullCStr));
 
-		return result;
-	}
+		//Return null with bad filename
+		CHECK TextFile::Append(_badFileName) == NULL;
 
-	Bool WriteTest()
-	{
-		Bool result = true;
-		TextFile* textFile;
-		UInt64 fileSize, textSize;
+		MakeFile();
 
-		textFile = TextFile::Create(_fileName);
-		CHECK_ASSERT(textFile->Write((CStr)0));
-		textFile->Write(_content);
-		DeletePtr(textFile);
+		//Return ptr on success
+		//File position is at end
+		{
+			TextFile *ptr = TextFile::Append(_fileName);
+			CHECK ptr != NULL;
+			CHECK ptr->FileRef().GetSeekPos() == ptr->FileRef().GetFileSize();
+			DeletePtr(ptr);
+		}
 
-		fileSize = File::GetFileSize(_fileName);
-		textSize = String::CStrLength(_content) * sizeof(TChar);
-		CHECK fileSize == textSize;
-
-		return result;
-	}
-
-	Bool WriteLineAppendTest()
-	{
-		Bool result = true;
-		TextFile* textFile;
-		UInt64 fileSize, textSize;
-
-		textFile = TextFile::Append(_fileName);
-		CHECK_ASSERT(textFile->WriteLine((CStr)0));
-		textFile->WriteLine(_content);
-		DeletePtr(textFile);
-
-		fileSize = File::GetFileSize(_fileName);
-		textSize = String::CStrLength(_content) * sizeof(TChar);
-		textSize *= 2;
-		textSize += String::CStrLength(NewLine) * sizeof(TChar);
-		CHECK fileSize == textSize;
-
-		return result;
-	}
-
-	Bool ReadAllTest()
-	{
-		Bool result = true;
-
-		CHECK_ASSERT(TextFile::ReadAll((CStr)0));
-
-		String content = TextFile::ReadAll(_fileName);
-		UInt64 fileSize = File::GetFileSize(_fileName);
-		CHECK content.Length() == fileSize / sizeof(TChar);
-		File::Delete(_fileName);
+		DeleteFile();
 
 		return result;
 	}
@@ -90,8 +81,16 @@ namespace TextFileTestNamespace
 		Bool result = true;
 		TextFile* file;
 		String::StrPtrVec* lines;
+		CoreException corex;
 
-		CHECK_ASSERT(TextFile::ReadLines((CStr)0));
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::ReadLines(_nullCStr));
+
+		//Fail with bad filename
+		lines = TextFile::ReadLines(_badFileName, &corex);
+		CHECK lines != NULL;
+		CHECK lines->Length() == 0U;
+		CHECK String::Compare(String::Empty, corex.file) != 0;
 
 		//File is empty -> no lines
 		file = TextFile::Create(_fileName);
@@ -180,7 +179,29 @@ namespace TextFileTestNamespace
 		CHECK *(*lines)[6] == Text("Line 07");
 		DeletePtr(lines);
 
-		File::Delete(_fileName);
+		DeleteFile();
+
+		return result;
+	}
+
+	Bool ReadAllTest()
+	{
+		Bool result = true;
+		String text;
+
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::ReadAll(_nullCStr, text));
+
+		//Fail with bad filename
+		CHECK TextFile::ReadAll(_badFileName, text) == false;
+
+		//Read file, read text size == file size
+		MakeFile();
+		CHECK TextFile::ReadAll(_fileName, text);
+		UInt64 fileSize = File::GetFileSize(_fileName);
+		if(fileSize % 2) ++fileSize;
+		CHECK text.Length() == fileSize / sizeof(TChar);
+		DeleteFile();
 
 		return result;
 	}
@@ -190,13 +211,23 @@ namespace TextFileTestNamespace
 		Bool result = true;
 		String readBack;
 
-		File::Delete(_fileName);
+		DeleteFile();
 
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::WriteText(_nullCStr, readBack));
+
+		//Assert when text is null
+		CHECK_ASSERT(TextFile::WriteText(_fileName, _nullCStr));
+
+		//Fail with bad filename
+		CHECK TextFile::WriteText(_badFileName, readBack) == false;
+
+		//Write then read back the same text
 		TextFile::WriteText(_fileName, _content);
-		readBack = TextFile::ReadAll(_fileName);
+		CHECK TextFile::ReadAll(_fileName, readBack);
 		CHECK readBack == _content;
 
-		File::Delete(_fileName);
+		DeleteFile();
 
 		return result;
 	}
@@ -207,14 +238,85 @@ namespace TextFileTestNamespace
 		String readBack;
 		String expected(_content);
 
-		File::Delete(_fileName);
+		DeleteFile();
 
+		//Assert when fileName is null
+		CHECK_ASSERT(TextFile::AppendText(_nullCStr, readBack));
+
+		//Assert when text is null
+		CHECK_ASSERT(TextFile::AppendText(_fileName, _nullCStr));
+
+		//Fail with bad filename
+		CHECK TextFile::AppendText(_badFileName, readBack) == false;
+
+		//Write and Append then reacd back the same text
 		TextFile::WriteText(_fileName, _content);
 		TextFile::AppendText(_fileName, _content);
-		readBack = TextFile::ReadAll(_fileName);
+		CHECK TextFile::ReadAll(_fileName, readBack);
 		CHECK readBack == expected + _content;
 
-		File::Delete(_fileName);
+		DeleteFile();
+
+		return result;
+	}
+
+	Bool WriteTest()
+	{
+		Bool result = true;
+		TextFile* textFile;
+		UInt64 fileSize, textSize;
+
+		//Assert when file is not open
+		textFile = TextFile::Create(_fileName);
+		textFile->Close();
+		CHECK_ASSERT(textFile->Write(_content));
+		DeletePtr(textFile);
+
+		//Assert when text is null
+		textFile = TextFile::Create(_fileName);
+		CHECK_ASSERT(textFile->Write(_nullCStr));
+		DeletePtr(textFile);
+
+		//Write, read back same length
+		textFile = TextFile::Create(_fileName);
+		textFile->Write(_content);
+		DeletePtr(textFile);
+		fileSize = File::GetFileSize(_fileName);
+		textSize = String::CStrLength(_content) * sizeof(TChar);
+		CHECK fileSize == textSize;
+
+		return result;
+	}
+
+	Bool WriteLineAppendTest()
+	{
+		Bool result = true;
+		TextFile* textFile;
+		UInt64 fileSize, textSize;
+
+		//Assert when file is not open
+		textFile = TextFile::Create(_fileName);
+		textFile->Close();
+		CHECK_ASSERT(textFile->WriteLine(_content));
+		DeletePtr(textFile);
+
+		//Assert when text is null
+		textFile = TextFile::Create(_fileName);
+		CHECK_ASSERT(textFile->WriteLine(_nullCStr));
+		DeletePtr(textFile);
+
+		//Write, read back same length + length of NewLine
+		MakeFile();
+		textFile = TextFile::Append(_fileName);
+		textFile->WriteLine(_content);
+		DeletePtr(textFile);
+		fileSize = File::GetFileSize(_fileName);
+		textSize = String::CStrLength(_content) * sizeof(TChar);
+		textSize *= 2;
+		textSize += String::CStrLength(NewLine) * sizeof(TChar);
+		CHECK fileSize == textSize;
+
+		DeleteFile();
 
 		return result;
 	}
@@ -227,15 +329,14 @@ Bool TextFileTest()
 
 	CHECK CreateTest();
 	CHECK AppendTest();
-
-	CHECK WriteTest();
-	CHECK WriteLineAppendTest();
 	CHECK ReadAllTest();
 	CHECK ReadLinesTest();
 	CHECK WriteTextTest();
 	CHECK AppendTextTest();
+	CHECK WriteTest();
+	CHECK WriteLineAppendTest();
 
-	File::Delete(_fileName);
+	DeleteFile();
 
 	return result;
 }

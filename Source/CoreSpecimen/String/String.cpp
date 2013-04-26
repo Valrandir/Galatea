@@ -264,7 +264,7 @@ namespace StringTestNamespace
 
 		//CStr Null and Length 0
 		{
-			String s((CStr)NULL, 0U);
+			String s((CStr)NULL, (UInt)0U);
 			CHECK s.IsEmpty() == true;
 			CHECK CheckCapLen(s, 0U, 0U);
 			CHECK s.CStrPtr() == String::Empty;

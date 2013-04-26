@@ -75,4 +75,15 @@ namespace Core
 		_holder = new String(GetErrText(err_code));
 		err_msg = _holder->CStrPtr();
 	}
+
+	void CoreException::Clear()
+	{
+		DeletePtr(_holder);
+		source_code = String::Empty;
+		function = String::Empty;
+		file = String::Empty;
+		line = 0U;
+		err_code = 0U;
+		err_msg = String::Empty;
+	}
 }
