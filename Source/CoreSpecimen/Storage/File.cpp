@@ -22,7 +22,7 @@ namespace FileTestNamespace
 		CHECK File::Create(_badFileName) == NULL;
 		CHECK File::Create(_badFileName, &corex) == NULL;
 		CHECK corex.err_code != 0U;
-		CHECK corex.err_msg != 0U;
+		CHECK corex.err_msg != String::Empty;
 
 		//File does not exists, create it and size will be 0 and SeekPos will be 0
 		File::Delete(_fileName);
@@ -55,7 +55,7 @@ namespace FileTestNamespace
 		CHECK File::Open(_badFileName) == NULL;
 		CHECK File::Open(_badFileName, &corex) == NULL;
 		CHECK corex.err_code != 0U;
-		CHECK corex.err_msg != 0U;
+		CHECK corex.err_msg != String::Empty;
 
 		//File does not exists, open it and it will fail
 		File::Delete(_fileName);
@@ -88,7 +88,7 @@ namespace FileTestNamespace
 		CHECK File::OpenReadOnly(_badFileName) == NULL;
 		CHECK File::OpenReadOnly(_badFileName, &corex) == NULL;
 		CHECK corex.err_code != 0U;
-		CHECK corex.err_msg != 0U;
+		CHECK corex.err_msg != String::Empty;
 
 		//File does not exists, open it and it will fail
 		File::Delete(_fileName);

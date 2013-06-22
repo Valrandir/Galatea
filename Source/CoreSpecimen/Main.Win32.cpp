@@ -5,6 +5,6 @@ extern bool CoreSpecimen();
 
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR,  _In_ int)
 {
-	CoreSpecimen();
-	return 0;
+	auto result = CoreSpecimen();
+	return result ? 0 : 1;
 }

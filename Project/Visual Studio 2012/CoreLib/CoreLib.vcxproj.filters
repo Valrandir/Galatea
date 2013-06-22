@@ -91,6 +91,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\CoreException.hpp">
       <Filter>Assert</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
@@ -146,5 +149,8 @@
       <Filter>Assert</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\System.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp">
+      <Filter>DataStruct</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,24 +5,15 @@ namespace Core
 {
 	void CoreException::CopyToSelf(CoreException const & ex)
 	{
-		DeletePtr(_holder);
-
 		source_code = ex.source_code;
 		function = ex.function;
 		file = ex.file;
 		line = ex.line;
 		err_code = ex.err_code;
-
-		if(ex._holder)
-		{
-			_holder = new String(*ex._holder);
-			err_msg = _holder->CStrPtr();
-		}
-		else
-			err_msg = String::Empty;
+		err_msg = ex.err_msg;
 	}
 
-	CoreException::CoreException(CoreException const & ex) : _holder(0)
+	CoreException::CoreException(CoreException const & ex)
 	{
 		CopyToSelf(ex);
 	}
@@ -34,33 +25,23 @@ namespace Core
 		return *this;
 	}
 
-	CoreException::~CoreException()
-	{
-		DeletePtr(_holder);
-	}
-
 	CoreException::CoreException() :
-		_holder(0),
 		source_code(String::Empty),
 		function(String::Empty),
 		file(String::Empty),
 		line(0U),
-		err_code(0U),
-		err_msg(String::Empty)
+		err_code(0U)
 	{}
 
 	CoreException::CoreException(CStr source_code, CStr function, CStr file, UInt32 line) :
-		_holder(0),
 		source_code(source_code),
 		function(function),
 		file(file),
 		line(line),
-		err_code(0U),
-		err_msg(String::Empty)
+		err_code(0U)
 	{}
 
 	CoreException::CoreException(CStr source_code, CStr function, CStr file, UInt32 line, CStr err_msg) :
-		_holder(0),
 		source_code(source_code),
 		function(function),
 		file(file),
@@ -72,13 +53,11 @@ namespace Core
 	void CoreException::InitErr()
 	{
 		err_code = GetErrCode();
-		_holder = new String(GetErrText(err_code));
-		err_msg = _holder->CStrPtr();
+		err_msg = GetErrText(err_code);
 	}
 
 	void CoreException::Clear()
 	{
-		DeletePtr(_holder);
 		source_code = String::Empty;
 		function = String::Empty;
 		file = String::Empty;

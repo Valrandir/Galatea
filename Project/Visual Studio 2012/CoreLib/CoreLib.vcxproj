@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
@@ -52,6 +53,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />

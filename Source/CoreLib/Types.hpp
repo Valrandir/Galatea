@@ -14,16 +14,20 @@ namespace Core
 	typedef void* VoidPtr;
 
 	#ifdef CoreTargetWin32
+		typedef signed __int8 Int8;
 		typedef signed __int16 Int16;
 		typedef signed __int32 Int32;
 		typedef signed __int64 Int64;
+		typedef unsigned __int8 UInt8;
 		typedef unsigned __int16 UInt16;
 		typedef unsigned __int32 UInt32;
 		typedef unsigned __int64 UInt64;
 	#elif CoreTargetLinux
+		typedef signed char Int8;
 		typedef signed short Int16;
 		typedef signed int Int32;
 		typedef signed long long Int64;
+		typedef unsigned char UInt8;
 		typedef unsigned short UInt16;
 		typedef unsigned int UInt32;
 		typedef unsigned long long UInt64;
