@@ -50,7 +50,7 @@ namespace Core
 		err_msg(err_msg)
 	{}
 
-	void CoreException::InitErr()
+	void CoreException::InitFromLastErr()
 	{
 		err_code = GetErrCode();
 		err_msg = GetErrText(err_code);

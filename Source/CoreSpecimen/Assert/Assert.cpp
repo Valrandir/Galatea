@@ -67,7 +67,7 @@ Bool CoreExceptionTest()
 		CHECK CheckException(ex, source_code, function, file, line, 0U, err_msg);
 	}
 
-	//InitErr
+	//InitFromLastErr
 	{
 		CoreException ex(source_code, function, file, line);
 		UInt32 errCode = 5U;
@@ -75,7 +75,7 @@ Bool CoreExceptionTest()
 		SetErrCode(errCode);
 		String errText = GetErrText(GetErrCode());
 
-		ex.InitErr();
+		ex.InitFromLastErr();
 
 		CHECK CheckException(ex, source_code, function, file, line, errCode, errText);
 
@@ -96,7 +96,7 @@ Bool CoreExceptionTest()
 	{
 		CoreException ex(source_code, function, file, line);
 		SetErrCode(5U);
-		ex.InitErr();
+		ex.InitFromLastErr();
 		ex.Clear();
 		CHECK CheckException(ex, String::Empty, String::Empty, String::Empty, 0U, 0U, String::Empty);
 	}

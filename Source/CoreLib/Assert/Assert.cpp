@@ -21,7 +21,7 @@ namespace Core
 		_assertProc = assertProc;
 	}
 
-	CStr Assert::AssertTypeCStr(AssertTypeEnum assertType)
+	CStr Assert::AssertTypeToCStr(AssertTypeEnum assertType)
 	{
 		CStr msg;
 

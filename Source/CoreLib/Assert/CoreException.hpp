@@ -22,7 +22,7 @@ namespace Core
 		CoreException();
 		CoreException(CStr source_code, CStr function, CStr file, UInt32 line);
 		CoreException(CStr source_code, CStr function, CStr file, UInt32 line, CStr err_msg);
-		void InitErr();
+		void InitFromLastErr();
 		void Clear();
 	};
 }
