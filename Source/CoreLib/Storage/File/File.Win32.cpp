@@ -65,6 +65,13 @@ namespace Core
 			return DeleteFile(fileName) != 0;
 		}
 
+		Bool File::Move(CStr fileName, CStr newName)
+		{
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(newName);
+ 			return MoveFile(fileName, newName) != 0;
+		}
+
 		UInt64 File::GetFileSize(CStr fileName)
 		{
 			ASSERT_PARAMETER(fileName);

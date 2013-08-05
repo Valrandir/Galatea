@@ -44,6 +44,7 @@ namespace Core
 
 			static Bool Exists(CStr fileName);
 			static Bool Delete(CStr fileName);
+			static Bool Move(CStr fileName, CStr newName);
 			static UInt64 GetFileSize(CStr fileName);
 
 			virtual UInt64 GetFileSize() const = 0;

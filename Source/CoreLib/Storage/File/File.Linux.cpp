@@ -49,6 +49,12 @@ namespace Core
 			return unlink(fileName) == 0;
 		}
 
+		Bool File::Move(CStr fileName, CStr newName)
+		{
+			//return -1 != rename(fileName, newName);
+			return true;
+		}
+
 		UInt64 File::GetFileSize(CStr fileName)
 		{
 			ASSERT_PARAMETER(fileName);

@@ -147,6 +147,34 @@ namespace FileTestNamespace
 		return result;
 	}
 
+	Bool MoveTest()
+	{
+		Bool result = true;
+		CStr nop = Text("NoFileName.txt");
+
+		//File does not exists, Move returns false
+		{
+			CHECK false == File::Move(nop, _fileName);
+			CHECK false == File::Exists(nop);
+			CHECK false == File::Exists(_fileName);
+		}
+
+		//File exists, Move returns true
+		{
+			File* file = File::Create(_fileName);
+			DeletePtr(file);
+
+			CHECK true == File::Move(_fileName, nop);
+			CHECK true == File::Exists(nop);
+			CHECK false == File::Exists(_fileName);
+
+			File::Delete(_fileName);
+			File::Delete(nop);
+		}
+
+		return result;
+	}
+
 	Bool GetFileSizeTest()
 	{
 		Bool result = true;
@@ -279,6 +307,7 @@ Bool FileTest()
 	CHECK OpenReadOnlyTest();
 	CHECK ExistsTest();
 	CHECK DeleteTest();
+	CHECK MoveTest();
 	CHECK GetFileSizeTest();
 	CHECK GetSeekPosTest();
 	CHECK SeekTest();
