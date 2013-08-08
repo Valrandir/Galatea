@@ -324,7 +324,7 @@ namespace Core
 	Bool String::IsDigit(TChar chr)
 	{
 		TChar const value[2] = {chr, 0};
-		return String::IndexOf(Text("0123456789"), 10U, value) != -1;
+		return String::IndexOf(Text("0123456789"), 10U, value) != String::NoMatch;
 	}
 
 	Bool String::IsDigit(CStr text, UInt textLength)

@@ -22,6 +22,9 @@
     <VirtualDirectory Name="Assert">
       <File Name="../../../Source/CoreLib/Assert/Assert.hpp"/>
       <File Name="../../../Source/CoreLib/Assert/Assert.Linux.cpp"/>
+      <File Name="../../../Source/CoreLib/Assert/Assert.cpp"/>
+      <File Name="../../../Source/CoreLib/Assert/CoreException.hpp"/>
+      <File Name="../../../Source/CoreLib/Assert/CoreException.cpp"/>
     </VirtualDirectory>
     <VirtualDirectory Name="Memory">
       <File Name="../../../Source/CoreLib/Memory/Memory.cpp"/>
@@ -91,6 +94,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -132,6 +136,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Debug" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       
@@ -187,6 +192,7 @@
       
       
       
+      
       ]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
@@ -227,6 +233,7 @@
       <General OutputFile="../../../Build/Linux/$(ProjectName).lib" IntermediateDirectory="./Release" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
         <![CDATA[
+      
       
       
       

@@ -2,10 +2,25 @@
 
 namespace Core
 {
-	namespace Assert
+	void Assert::SystemAbort(CoreException const & ex)
 	{
-		void Fail(CStr failed_text, CStr function, CStr file, UInt line)
-		{
-		}
+		String msg = String::FormatToString
+		(
+			Text("Source Code : Assert(%s);") NewLine
+			Text("Function : %s") NewLine
+			Text("File : %s") NewLine
+			Text("Line : %u") NewLine
+			Text("Error Code : %u") NewLine
+			Text("Error Message : %s") NewLine,
+			ex.source_code,
+			ex.function,
+			ex.file,
+			ex.line,
+			ex.err_code,
+			ex.err_msg.CStrPtr()
+		);
+
+		//Do something for Linux here
+		//ShowAssertWindow(msg);
 	}
 }
