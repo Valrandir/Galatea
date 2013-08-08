@@ -7,7 +7,7 @@ namespace FileTestNamespace
 {
 	CStr _nullFileName = (CStr)0;
 	CStr _fileName = Text("FileTest.txt");
-	CStr _badFileName = Text("<MiG-25M>\\X-15:Rocket.");
+	CStr _badFileName = Text("<MiG-25M>\\X-15//:Rocket.");
 
 	Bool CreateTest()
 	{
@@ -151,6 +151,12 @@ namespace FileTestNamespace
 	{
 		Bool result = true;
 		CStr nop = Text("NoFileName.txt");
+
+		//Null Parameters
+		{
+			CHECK_ASSERT(File::Move(NULL, _fileName));
+			CHECK_ASSERT(File::Move(_fileName, NULL));
+		}
 
 		//File does not exists, Move returns false
 		{

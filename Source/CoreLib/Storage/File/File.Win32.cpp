@@ -9,6 +9,11 @@ namespace Core
 		{
 		}
 
+		FileImpl::~FileImpl()
+		{
+			Close();
+		}
+
 		//Return NULL on failure, and initialize corex when specified.
 		File* File::Create(CStr fileName, CoreException* corex)
 		{
@@ -90,7 +95,7 @@ namespace Core
 		{
 			ASSERT(_hFile);
 			LARGE_INTEGER fileSize = {0};
-			ASSERT(GetFileSizeEx(_hFile, &fileSize));
+			//ASSERT(GetFileSizeEx(_hFile, &fileSize));
 			return fileSize.QuadPart;
 		}
 
@@ -124,8 +129,8 @@ namespace Core
 		//Return true on success
 		Bool FileImpl::Read(VoidPtr buffer, UInt bufferSize, CoreException* corex) const
 		{
-			ASSERT_PARAMETER(buffer != 0);
 			ASSERT(_hFile);
+			ASSERT_PARAMETER(buffer != 0);
 			DWORD bytesRead;
 			Bool result = ReadFile(_hFile, buffer, ToUInt32(bufferSize), &bytesRead, 0) != FALSE;
 			ASSERT_COREX(result, corex);
@@ -138,8 +143,8 @@ namespace Core
 		//Return true on success
 		Bool FileImpl::Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex) const
 		{
-			ASSERT_PARAMETER(buffer != 0);
 			ASSERT(_hFile);
+			ASSERT_PARAMETER(buffer != 0);
 			ASSERT(_isReadOnly == false);
 			DWORD bytesWritten;
 			Bool result = WriteFile(_hFile, buffer, ToUInt32(bufferSize), &bytesWritten, 0) != FALSE;
@@ -155,11 +160,6 @@ namespace Core
 				CloseHandle(_hFile);
 				_hFile = 0;
 			}
-		}
-
-		FileImpl::~FileImpl()
-		{
-			Close();
 		}
 	}
 }

@@ -7,7 +7,7 @@ namespace TextFileTestNamespace
 {
 	CStr _nullCStr = (CStr)0;
 	CStr _fileName = Text("TextFileTest.txt");
-	CStr _badFileName = Text("<MiG-25M>\\X-15:Rocket.");
+	CStr _badFileName = Text("<MiG-25M>\\X-15//:Rocket.");
 
 	CStr _content =
 		Text("First line followed by two NewLine")
