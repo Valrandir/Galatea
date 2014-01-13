@@ -95,7 +95,7 @@ namespace Core
 		{
 			ASSERT(_hFile);
 			LARGE_INTEGER fileSize = {0};
-			//ASSERT(GetFileSizeEx(_hFile, &fileSize));
+			ASSERT(GetFileSizeEx(_hFile, &fileSize));
 			return fileSize.QuadPart;
 		}
 
