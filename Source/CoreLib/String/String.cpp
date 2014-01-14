@@ -445,15 +445,15 @@ namespace Core
 		//ASSERT_PARAMETER(text);
 		UInt length = CStrLength(text);
 		UInt current_length, new_length;
-		Bool MaxSizeOverflow;
+		Bool max_size_overflowing;
 
 		if(length)
 		{
 			//Check for MaxSize overflow
 			current_length = _vctr.Length();
 			new_length = current_length + length;
-			MaxSizeOverflow = !(new_length >= MaxSize || new_length < current_length);
-			ASSERT(MaxSizeOverflow);
+			max_size_overflowing = new_length >= MaxSize || new_length < current_length;
+			ASSERT(!max_size_overflowing);
 
 			_vctr.Remove(current_length - 1);
 			_vctr.AddRange(text, text + length + 1);
