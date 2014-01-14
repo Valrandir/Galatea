@@ -1,5 +1,6 @@
 #include <stdarg.h>
 #include <tchar.h>
+#include "../Assert/Assert.hpp"
 #include "../Types.hpp"
 #include "../String/String.hpp"
 
@@ -8,8 +9,6 @@ using namespace Core;
 void FormatImpl(TChar* buffer, UInt buffer_size, CStr format, va_list args)
 {
 	_vsntprintf_s(buffer, buffer_size, _TRUNCATE, format, args);
-	//int r = _vsntprintf_s(buffer, buffer_size, _TRUNCATE, format, args);
-	//if(r == -1) Assert / Log about buffer being too short and truncated
 }
 
 UInt FormatImplGetRequiredSize(CStr format, va_list args)
