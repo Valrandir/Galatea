@@ -17,3 +17,8 @@
 #############
 Thumbs.db
 Desktop.ini
+
+##########
+## Core ##
+##########
+CoreLog.log

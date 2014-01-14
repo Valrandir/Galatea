@@ -9,6 +9,7 @@ namespace Core
 	CStr AssertTypeEnum_Undefined = Text("Undefined Assert Type");
 
 	Assert::AssertProc Assert::_assertProc = 0;
+	CStr Assert::_logFileName = LOG_FILENAME;
 
 	Assert::Assert(){}
 	Assert::Assert(Assert const &){}
@@ -19,6 +20,16 @@ namespace Core
 	void Assert::SetAssertProc(AssertProc assertProc)
 	{
 		_assertProc = assertProc;
+	}
+	
+	CStr Assert::GetLogFileName()
+	{
+		return _logFileName;
+	}
+
+	void Assert::SetLogFileName(CStr logFileName)
+	{
+		_logFileName = logFileName;
 	}
 
 	CStr Assert::AssertTypeToCStr(AssertTypeEnum assertType)

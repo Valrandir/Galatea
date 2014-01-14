@@ -2,6 +2,7 @@
 #include "../Types.hpp"
 #include "CoreException.hpp"
 
+#define LOG_FILENAME Text("CoreLog.log")
 #define ASSERT_COREX(func, corex) if(!(func) && corex) (*corex = CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__)).InitFromLastErr()
 
 #ifdef CoreDebug
@@ -36,6 +37,7 @@ namespace Core
 
 		private:
 		static AssertProc _assertProc;
+		static CStr _logFileName;
 
 		Assert();
 		Assert(Assert const &);
@@ -46,6 +48,8 @@ namespace Core
 		public:
 		static Bool Failing;
 		static void SetAssertProc(AssertProc assertProc);
+		static CStr GetLogFileName();
+		static void SetLogFileName(CStr logFileName);
 		static CStr AssertTypeToCStr(AssertTypeEnum assertType);
 		static void Abort(CoreException const & ex);
 	};

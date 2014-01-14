@@ -1,11 +1,13 @@
 #include "Assert.hpp"
 #include "Win32/AssertWnd.hpp"
 #include "../String/String.hpp"
-
-void ShowAssertWindow(Core::String msg);
+#include "../Storage/TextFile.hpp"
 
 namespace Core
 {
+	void LogToFile(String const& msg);
+	void ShowAssertWindow(String const& msg);
+
 	void Assert::SystemAbort(CoreException const & ex)
 	{
 		String msg = String::FormatToString
@@ -21,19 +23,38 @@ namespace Core
 			ex.file,
 			ex.line,
 			ex.err_code,
-			ex.err_msg
+			ex.err_msg.CStrPtr()
 		);
 
+		LogToFile(msg);
 		ShowAssertWindow(msg);
 	}
-}
 
-void ShowAssertWindow(Core::String msg)
-{
-	AssertWnd wnd;
+	void LogToFile(String const& msg)
+	{
+		using namespace Storage;
+		CStr logFileName = Assert::GetLogFileName();
+		String log_msg;
 
-	wnd.SetText(msg.CStrPtr());
-	wnd.ShowModal();
+		if(!File::Exists(logFileName))
+		{
+			File* logFile = File::Create(logFileName);
+			DeletePtr(logFile);
+			log_msg = msg;
+		}
+		else
+			log_msg = String(Text("\r\n")) + msg;
 
-	ExitProcess(1U);
+		TextFile::AppendText(logFileName, log_msg);
+	}
+
+	void ShowAssertWindow(String const& msg)
+	{
+		AssertWnd wnd;
+
+		wnd.SetText(msg.CStrPtr());
+		wnd.ShowModal();
+
+		ExitProcess(1U);
+	}
 }
