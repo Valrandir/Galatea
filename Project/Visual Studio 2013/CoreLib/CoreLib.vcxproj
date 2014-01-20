@@ -25,8 +25,9 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Display\Display.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\Window.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Window.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Window.Win32.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\WindowBase.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
@@ -54,7 +55,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\Window.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Window.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Window.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\WindowBase.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />

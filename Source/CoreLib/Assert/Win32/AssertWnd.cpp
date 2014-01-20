@@ -3,7 +3,7 @@
 
 void ClipBoardSetText(LPCTSTR text);
 
-AssertWnd::AssertWnd() : Window(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS_SYSMENU)
+AssertWnd::AssertWnd() : WindowBase(TEXT("Assert Window"), 480, 360, WS_CAPTION | WS_SYSMENU)
 {
 	//Create Edit Control
 	_hText = CreateWindowEx

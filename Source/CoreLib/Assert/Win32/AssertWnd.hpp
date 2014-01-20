@@ -1,7 +1,7 @@
 #pragma once
-#include "../../Display/Win32/Window.hpp"
+#include "../../Display/Win32/WindowBase.hpp"
 
-class AssertWnd : public Window
+class AssertWnd : public WindowBase
 {
 	static int const TEXTBOX_ID = 1;
 	static int const BTN_COPY_ID = 2;

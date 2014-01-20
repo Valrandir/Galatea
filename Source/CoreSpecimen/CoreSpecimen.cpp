@@ -14,6 +14,7 @@ extern Bool StringTest();
 extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
+extern Bool DisplayTest();
 
 Bool AssertOverride(Core::CoreException const & coreEx)
 {
@@ -26,6 +27,7 @@ Bool CoreSpecimen()
 
 	Assert::SetAssertProc(AssertOverride);
 
+#ifdef this_is_not_defined
 	CHECK AssertTest();
 	CHECK TypesTest();
 	CHECK ErrTest();
@@ -38,6 +40,9 @@ Bool CoreSpecimen()
 	CHECK FileTest();
 	CHECK TextFileTest();
 	CHECK IniFileTest();
+#endif
+
+	CHECK DisplayTest();
 
 	return result;
 }

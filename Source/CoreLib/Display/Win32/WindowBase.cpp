@@ -1,6 +1,6 @@
-#include "Window.hpp"
+#include "WindowBase.hpp"
 
-void Window::AdjustWindowRect(DWORD style, int& width, int& height)
+void WindowBase::AdjustWindowRect(DWORD style, int& width, int& height)
 {
 	RECT rect = {0, 0, width, height};
 	::AdjustWindowRect(&rect, style, FALSE);
@@ -8,21 +8,21 @@ void Window::AdjustWindowRect(DWORD style, int& width, int& height)
 	height = rect.bottom - rect.top;
 }
 
-void Window::CenterWindowPos(int &x, int &y, int width, int height)
+void WindowBase::CenterWindowPos(int &x, int &y, int width, int height)
 {
 	x = (GetSystemMetrics(SM_CXSCREEN) - width) >> 1;
 	y = (GetSystemMetrics(SM_CYSCREEN) - height) >> 1;
 }
 
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowBase::WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if(auto self = (Window*)GetWindowLongPtr(hWnd, GWLP_USERDATA))
+	if(auto self = (WindowBase*)GetWindowLongPtr(hWnd, GWLP_USERDATA))
 		return self->WindowProc(hWnd, msg, wParam, lParam);
 	else
 		return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-LRESULT Window::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT WindowBase::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch(msg)
 	{
@@ -35,7 +35,7 @@ LRESULT Window::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void Window::Initialize(LPCTSTR title, int width, int height, DWORD style)
+void WindowBase::Initialize(LPCTSTR title, int width, int height, DWORD style)
 {
 	WNDCLASSEX wc;
 	int x, y;
@@ -66,22 +66,22 @@ void Window::Initialize(LPCTSTR title, int width, int height, DWORD style)
 	SetWindowLongPtr(_hWnd, GWLP_USERDATA, (LONG)this);
 }
 
-Window::Window(LPCTSTR title, int width, int height, DWORD style)
+WindowBase::WindowBase(LPCTSTR title, int width, int height, DWORD style)
 {
 	Initialize(title, width, height, style);
 }
 
-Window::Window(LPCTSTR title, int width, int height)
+WindowBase::WindowBase(LPCTSTR title, int width, int height)
 {
 	Initialize(title, width, height, WS_OVERLAPPEDWINDOW);
 }
 
-void Window::Show()
+void WindowBase::Show()
 {
 	ShowWindow(_hWnd, SW_SHOW);
 }
 
-bool Window::Update()
+bool WindowBase::Update()
 {
 	MSG msg;
 
@@ -97,7 +97,7 @@ bool Window::Update()
 	return true;
 }
 
-void Window::Close()
+void WindowBase::Close()
 {
 	PostQuitMessage(0);
 }

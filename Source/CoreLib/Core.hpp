@@ -17,3 +17,4 @@
 #include "Storage/File.hpp"
 #include "Storage/TextFile.hpp"
 #include "Storage/IniFile.hpp"
+#include "Display/Window.hpp"

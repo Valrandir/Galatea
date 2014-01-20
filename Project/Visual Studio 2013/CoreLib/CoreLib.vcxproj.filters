@@ -97,11 +97,14 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Display\Display.hpp">
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\WindowBase.hpp">
+      <Filter>Display\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Window.hpp">
       <Filter>Display</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\Window.hpp">
-      <Filter>Display\Win32</Filter>
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Window.Win32.hpp">
+      <Filter>Display</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +161,14 @@
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp">
       <Filter>DataStruct</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\Window.cpp">
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\WindowBase.cpp">
       <Filter>Display\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Window.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Window.Win32.cpp">
+      <Filter>Display</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

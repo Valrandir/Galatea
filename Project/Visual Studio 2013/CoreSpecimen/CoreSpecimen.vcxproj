@@ -24,6 +24,7 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Counter.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\StdVector.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\DataStruct\Vector.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Display\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\File.cpp" />

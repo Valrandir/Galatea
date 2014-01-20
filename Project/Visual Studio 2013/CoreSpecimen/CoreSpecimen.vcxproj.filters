@@ -22,6 +22,9 @@
     <Filter Include="Time">
       <UniqueIdentifier>{edf0da89-777d-420a-831a-84670eb2bcdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Display">
+      <UniqueIdentifier>{7116b8dc-79fa-425e-b74d-b1dfb5bcaf88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreSpecimen\CoreSpecimen.cpp" />
@@ -60,6 +63,9 @@
     <ClCompile Include="..\..\..\Source\CoreSpecimen\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreSpecimen\Storage\IniFile.cpp">
       <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreSpecimen\Display\Window.cpp">
+      <Filter>Display</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
