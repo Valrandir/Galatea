@@ -22,10 +22,11 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\CoreException.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Core.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Display.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\Window.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
@@ -46,7 +47,6 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\CoreException.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -54,6 +54,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\Window.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />

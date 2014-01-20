@@ -34,6 +34,12 @@
     <Filter Include="Storage\TextFIle">
       <UniqueIdentifier>{f8a4ec46-0678-451b-abfc-0f13d7b43b2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Display">
+      <UniqueIdentifier>{4bac0c50-de40-4e89-aafa-2976e36b37d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Display\Win32">
+      <UniqueIdentifier>{bd2b00f4-303b-494f-be61-17eb6c329fb4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Source\CoreLib\Types.hpp" />
@@ -47,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Assert.hpp">
       <Filter>Assert</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\Window.hpp">
-      <Filter>Assert\Win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.hpp">
       <Filter>Assert\Win32</Filter>
@@ -94,6 +97,12 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Display.hpp">
+      <Filter>Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Display\Win32\Window.hpp">
+      <Filter>Display\Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\Vector.cpp">
@@ -107,9 +116,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Assert.Win32.cpp">
       <Filter>Assert</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\Window.cpp">
-      <Filter>Assert\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Assert\Win32\AssertWnd.cpp">
       <Filter>Assert\Win32</Filter>
@@ -151,6 +157,9 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp">
       <Filter>DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Display\Win32\Window.cpp">
+      <Filter>Display\Win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

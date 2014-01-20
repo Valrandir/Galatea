@@ -1,5 +1,5 @@
 #pragma once
-#include "Window.hpp"
+#include "../../Display/Win32/Window.hpp"
 
 class AssertWnd : public Window
 {
