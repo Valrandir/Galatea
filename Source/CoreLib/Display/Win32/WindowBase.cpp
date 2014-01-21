@@ -26,13 +26,19 @@ LRESULT WindowBase::WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 {
 	switch(msg)
 	{
+		case WM_KEYDOWN:
+			if(_on_keydown_proc)
+			{
+				_on_keydown_proc(wParam, _on_keydown_param);
+				return 0;
+			}
+			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);
 			break;
-		default:
-			return DefWindowProc(hWnd, msg, wParam, lParam);
 	}
-	return 0;
+
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 void WindowBase::Initialize(LPCTSTR title, int width, int height, DWORD style)
@@ -48,7 +54,7 @@ void WindowBase::Initialize(LPCTSTR title, int width, int height, DWORD style)
 	wc.style = 0U;
 	wc.lpfnWndProc = WndProc;
 	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
+	wc.cbWndExtra = sizeof(this);
 	wc.hInstance = _hInst;
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -62,16 +68,15 @@ void WindowBase::Initialize(LPCTSTR title, int width, int height, DWORD style)
 	CenterWindowPos(x, y, width, height);
 	AdjustWindowRect(style, width, height);
 	_hWnd = CreateWindow(wc.lpszClassName, title, style, x, y, width, height, HWND_DESKTOP, NULL, _hInst, NULL);
-
 	SetWindowLongPtr(_hWnd, GWLP_USERDATA, (LONG)this);
 }
 
-WindowBase::WindowBase(LPCTSTR title, int width, int height, DWORD style)
+WindowBase::WindowBase(LPCTSTR title, int width, int height, DWORD style) : _on_keydown_proc(0)
 {
 	Initialize(title, width, height, style);
 }
 
-WindowBase::WindowBase(LPCTSTR title, int width, int height)
+WindowBase::WindowBase(LPCTSTR title, int width, int height) : _on_keydown_proc(0)
 {
 	Initialize(title, width, height, WS_OVERLAPPEDWINDOW);
 }
@@ -100,4 +105,10 @@ bool WindowBase::Update()
 void WindowBase::Close()
 {
 	PostQuitMessage(0);
+}
+
+void WindowBase::SetOnKeyDownCallback(OnKeydownCallback proc, void* param)
+{
+	_on_keydown_proc = proc;
+	_on_keydown_param = param;
 }

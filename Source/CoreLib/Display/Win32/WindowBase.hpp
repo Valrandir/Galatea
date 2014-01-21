@@ -20,9 +20,16 @@ class WindowBase
 	void Initialize(LPCTSTR title, int width, int height, DWORD style);
 
 	public:
+	typedef void(*OnKeydownCallback)(unsigned int key_code, void* param);
+
+	OnKeydownCallback _on_keydown_proc;
+	void* _on_keydown_param;
+
 	WindowBase(LPCTSTR title, int width, int height, DWORD style);
 	WindowBase(LPCTSTR title, int width, int height);
 	void Show();
 	bool Update();
 	void Close();
+
+	void SetOnKeyDownCallback(OnKeydownCallback proc, void* param);
 };

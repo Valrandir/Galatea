@@ -4,7 +4,19 @@ namespace Core
 {
 	namespace Display
 	{
-		WindowImpl::WindowImpl()
+		#undef CreateWindow
+		Window* CreateWindow()
+		{
+			return new WindowImpl();
+		}
+
+		void WindowImpl::OnKeydown(unsigned int key_code, void* param)
+		{
+			WindowImpl& impl = *(WindowImpl*)param;
+			impl._on_keydown_proc(key_code, impl._on_keydown_param);
+		}
+
+		WindowImpl::WindowImpl() : _on_keydown_proc(0)
 		{
 			_window = new WindowBase(TEXT("Title"), 640, 480);
 		}
@@ -24,10 +36,11 @@ namespace Core
 			DeletePtr(_window);
 		}
 
-		#undef CreateWindow
-		Window* CreateWindow()
+		void WindowImpl::SetOnKeydownCallback(OnKeydownCallback proc, VoidPtr param)
 		{
-			return new WindowImpl();
+			_on_keydown_proc = proc;
+			_on_keydown_param = param;
+			_window->SetOnKeyDownCallback(proc ? OnKeydown : proc, this);
 		}
 	}
 }
