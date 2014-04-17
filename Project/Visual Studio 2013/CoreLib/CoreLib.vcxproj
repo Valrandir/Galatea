@@ -28,8 +28,8 @@
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File.hpp" />
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.hpp" />
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.hpp" />
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\TextFile.hpp" />
@@ -55,8 +55,8 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Memory\Memory.cpp" />
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\KeyValue.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\Section.cpp" />

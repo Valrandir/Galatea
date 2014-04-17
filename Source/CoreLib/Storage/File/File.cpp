@@ -1,4 +1,5 @@
 #include "File.hpp"
+
 namespace Core
 {
 	namespace Storage

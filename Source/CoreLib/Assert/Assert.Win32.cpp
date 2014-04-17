@@ -34,17 +34,7 @@ namespace Core
 	{
 		using namespace Storage;
 		CStr logFileName = Assert::GetLogFileName();
-		String log_msg;
-
-		if(!File::Exists(logFileName))
-		{
-			File* logFile = File::Create(logFileName);
-			DeletePtr(logFile);
-			log_msg = msg;
-		}
-		else
-			log_msg = String(Text("\r\n")) + msg;
-
+		String log_msg = File::Exists(logFileName) ? String(Text("\r\n")) + msg : msg;
 		TextFile::AppendText(logFileName, log_msg);
 	}
 

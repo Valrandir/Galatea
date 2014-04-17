@@ -15,46 +15,38 @@ namespace Core
 		}
 
 		//Return NULL on failure, and initialize corex when specified.
-		File* File::Create(CStr fileName, CoreException* corex)
+		File* File::Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, CoreException* corex)
 		{
 			ASSERT_PARAMETER(fileName);
-			HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+			DWORD desiredAccess = 0;
+			switch(access)
+			{
+				case AccessEnum::AccessRead: desiredAccess = GENERIC_READ; break;
+				case AccessEnum::AccessWrite: desiredAccess = GENERIC_WRITE; break;
+				case AccessEnum::AccessReadWrite: desiredAccess = GENERIC_READ | GENERIC_WRITE; break;
+			}
+
+			DWORD shareMode = 0;
+			if(flags && FlagsEnum::ShareRead) shareMode |= FILE_SHARE_READ;
+			if(flags && FlagsEnum::ShareWrite) shareMode |= FILE_SHARE_WRITE;
+
+			DWORD creationDisposition;
+			switch(behavior)
+			{
+				case DispositionEnum::CreateAlways : creationDisposition = CREATE_ALWAYS; break;
+				case DispositionEnum::CreateNew : creationDisposition = CREATE_NEW; break;
+				case DispositionEnum::OpenAlways : creationDisposition = OPEN_ALWAYS; break;
+				case DispositionEnum::OpenExisting : creationDisposition = OPEN_EXISTING; break;
+				case DispositionEnum::TruncateExisting : creationDisposition = TRUNCATE_EXISTING; break;
+				default: creationDisposition = 0;
+			}
+
+			DWORD flagsAndAttributes = FILE_ATTRIBUTE_NORMAL | (flags & FlagsEnum::OptimizeForSequentialAccess ? FILE_FLAG_SEQUENTIAL_SCAN : FILE_FLAG_RANDOM_ACCESS);
+
+			HANDLE hFile = CreateFile(fileName, desiredAccess, shareMode, NULL, creationDisposition, flagsAndAttributes, NULL);
 			ASSERT_COREX(hFile != INVALID_HANDLE_VALUE, corex);
 			return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, false);
-		}
-
-		//Return NULL on failure, and initialize corex when specified.
-		File* File::Open(CStr fileName, CoreException* corex)
-		{
-			ASSERT_PARAMETER(fileName);
-			HANDLE hFile = CreateFile(fileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-			ASSERT_COREX(hFile != INVALID_HANDLE_VALUE, corex);
-			return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, false);
-		}
-
-		File* File::OpenReadOnly(CStr fileName)
-		{
-			return OpenReadOnly(fileName, CacheMode::Default, NULL);
-		}
-
-		File* File::OpenReadOnly(CStr fileName, CoreException* corex)
-		{
-			return OpenReadOnly(fileName, CacheMode::Default, corex);
-		}
-
-		File* File::OpenReadOnly(CStr fileName, CacheMode cacheMode)
-		{
-			return OpenReadOnly(fileName, cacheMode, NULL);
-		}
-
-		//Return NULL on failure, and initialize corex when specified.
-		File* File::OpenReadOnly(CStr fileName, CacheMode cacheMode, CoreException* corex)
-		{
-			ASSERT_PARAMETER(fileName);
-			UInt32 flags = cacheMode == CacheMode::Random ? FILE_FLAG_RANDOM_ACCESS : cacheMode == CacheMode::Sequential ? FILE_FLAG_SEQUENTIAL_SCAN : 0U;
-			HANDLE hFile = CreateFile(fileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL || flags, NULL);
-			ASSERT_COREX(hFile != INVALID_HANDLE_VALUE, corex);
-			return hFile == INVALID_HANDLE_VALUE ? NULL : new FileImpl(hFile, true);
 		}
 
 		Bool File::Exists(CStr fileName)
@@ -83,7 +75,6 @@ namespace Core
 			WIN32_FILE_ATTRIBUTE_DATA attr = {0};
 			LARGE_INTEGER li = {0};
 
-			//ASSERT(GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr));
 			GetFileAttributesEx(fileName, GetFileExInfoStandard, &attr);
 			li.LowPart = attr.nFileSizeLow;
 			li.HighPart = attr.nFileSizeHigh;

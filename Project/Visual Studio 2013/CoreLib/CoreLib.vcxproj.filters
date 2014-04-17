@@ -82,9 +82,6 @@
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.hpp">
       <Filter>Storage\File</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp">
-      <Filter>Storage\File</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.hpp">
       <Filter>Storage\IniFile</Filter>
     </ClInclude>
@@ -93,6 +90,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.hpp">
       <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\CoreLib\Storage\File\File.hpp">
+      <Filter>Storage\File</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.Win32.cpp">
       <Filter>Storage\File</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp">
-      <Filter>Storage\File</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\CoreLib\Storage\IniFile\IniFile.cpp">
       <Filter>Storage\IniFile</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
     <ClCompile Include="..\..\..\Source\CoreLib\System.cpp" />
     <ClCompile Include="..\..\..\Source\CoreLib\DataStruct\VectorAssert.cpp">
       <Filter>DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\CoreLib\Storage\File\File.cpp">
+      <Filter>Storage\File</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

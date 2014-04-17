@@ -22,14 +22,14 @@ namespace Core
 		TextFile* TextFile::Create(CStr fileName, CoreException* corex)
 		{
 			ASSERT_PARAMETER(fileName != NULL);
-			File* file = File::Create(fileName, corex);
+			File* file = File::Open(fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessWrite, File::FlagsEnum::OptimizeForSequentialAccess, corex);
 			return file ? new TextFile(file) : NULL;
 		}
 
 		TextFile* TextFile::Append(CStr fileName, CoreException* corex)
 		{
 			ASSERT_PARAMETER(fileName != NULL);
-			File* file = File::Open(fileName, corex);
+			File* file = File::Open(fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessWrite, File::FlagsEnum::OptimizeForSequentialAccess, corex);
 
 			if(file)
 			{
@@ -43,17 +43,13 @@ namespace Core
 		Bool TextFile::ReadAll(CStr fileName, String& text, CoreException* corex)
 		{
 			ASSERT_PARAMETER(fileName);
-			File* file;
-			UInt fileSize;
-			UInt length;
-			TChar* buffer;
 			Bool result = false;
 
-			file = File::OpenReadOnly(fileName, corex);
+			File* file = File::Open(fileName, File::DispositionEnum::OpenExisting, File::AccessEnum::AccessRead, File::FlagsEnum::ShareRead | File::FlagsEnum::OptimizeForSequentialAccess, corex);
 			if(file)
 			{
-				fileSize = ToUInt(file->GetFileSize());
-				length = fileSize / sizeof(TChar);
+				UInt fileSize = ToUInt(file->GetFileSize());
+				UInt length = fileSize / sizeof(TChar);
 
 				//If fileSize is odd then +1 will compensate the division rounding
 				if(fileSize % 2)
@@ -61,7 +57,7 @@ namespace Core
 
 				text.Reserve(length);
 
-				buffer = text.DrivePointer(length);
+				TChar* buffer = text.DrivePointer(length);
 				result = file->Read(buffer, fileSize);
 				DeletePtr(file);
 

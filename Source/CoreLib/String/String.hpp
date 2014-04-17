@@ -48,7 +48,7 @@ namespace Core
 		static String SubString(CStr text, UInt textLength, UInt start, UInt length);
 		static String SubString(CStr text, UInt start, UInt length);
 
-		//StrPtrVec* must be manually deleted to avoir leaks
+		//StrPtrVec* must be manually deleted to avoid leaks
 		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters, UInt delimitersLength);
 		static StrPtrVec* Split(CStr text, UInt textLength, CStr delimiters);
 		static StrPtrVec* Split(CStr text, CStr delimiters);
