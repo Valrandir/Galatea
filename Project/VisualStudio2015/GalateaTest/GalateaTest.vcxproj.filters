@@ -19,8 +19,11 @@
     <Filter Include="Threading">
       <UniqueIdentifier>{1394e24f-a74d-40cf-93c3-ca7bcaedd239}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Time">
+    <Filter Include="Timing">
       <UniqueIdentifier>{b6fb6c36-8bf0-4ef5-ac85-5c0e6cfa107b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Display">
+      <UniqueIdentifier>{4db15d63-0a41-455d-8ceb-8afe5b6c929f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,13 +57,16 @@
     <ClCompile Include="..\..\..\Test\Threading\Thread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Test\Time\Time.cpp">
-      <Filter>Time</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Test\GalateaTest.cpp" />
     <ClCompile Include="..\..\..\Test\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Test\System.cpp" />
     <ClCompile Include="..\..\..\Test\Types.cpp" />
+    <ClCompile Include="..\..\..\Test\Timing\Timing.cpp">
+      <Filter>Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Display\Display.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Test\DataStruct\Counter.hpp">

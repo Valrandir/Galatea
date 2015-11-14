@@ -7,9 +7,6 @@
     <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp">
       <Filter>Source\Assert\Win32</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Assert\Win32\Window.hpp">
-      <Filter>Source\Assert\Win32</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp">
       <Filter>Source\DataStruct</Filter>
     </ClInclude>
@@ -18,9 +15,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Memory\Memory.hpp">
       <Filter>Source\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Time\Time.hpp">
-      <Filter>Source\Time</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\String\String.hpp">
       <Filter>Source\String</Filter>
@@ -67,6 +61,72 @@
     <ClInclude Include="..\..\..\Source\Assert\Exception.hpp">
       <Filter>Source\Assert</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Geometry.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Motion.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Point.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Rectangle.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Vector.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Timing\Timing.hpp">
+      <Filter>Source\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Timing\Clock.hpp">
+      <Filter>Source\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Timing\Rate.hpp">
+      <Filter>Source\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\SDL\ImageSDL.hpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\SDL\InputSDL.hpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\SDL\WindowSDL.hpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Color.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Display.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Image.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\ImageLoader.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Renderer.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Sprite.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Window.hpp">
+      <Filter>Source\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Math\Math.hpp">
+      <Filter>Source\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Input\Input.hpp">
+      <Filter>Source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Input\Keys.hpp">
+      <Filter>Source\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Assert\Win32\BaseWindow.hpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -78,17 +138,11 @@
     <ClCompile Include="..\..\..\Source\Assert\Win32\AssertWnd.cpp">
       <Filter>Source\Assert\Win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Assert\Win32\Window.cpp">
-      <Filter>Source\Assert\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp">
       <Filter>Source\DataStruct</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Memory\Memory.cpp">
       <Filter>Source\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Time\Time.Win32.cpp">
-      <Filter>Source\Time</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\String\String.cpp">
       <Filter>Source\String</Filter>
@@ -129,6 +183,57 @@
     <ClCompile Include="..\..\..\Source\Assert\Exception.cpp">
       <Filter>Source\Assert</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Geometry\Motion.cpp">
+      <Filter>Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Geometry\Point.cpp">
+      <Filter>Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Geometry\Vector.cpp">
+      <Filter>Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Geometry\Rectangle.cpp">
+      <Filter>Source\Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Timing\Timing.Win32.cpp">
+      <Filter>Source\Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Timing\Clock.cpp">
+      <Filter>Source\Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Timing\Rate.cpp">
+      <Filter>Source\Timing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Color.cpp">
+      <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Image.cpp">
+      <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Sprite.cpp">
+      <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Window.cpp">
+      <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Math\Math.cpp">
+      <Filter>Source\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Input\Keys.Win32.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\Win32\BaseWindow.cpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -145,9 +250,6 @@
     </Filter>
     <Filter Include="Source\Memory">
       <UniqueIdentifier>{1e0dd43d-c2de-4866-b44a-eec0d46bfbc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Time">
-      <UniqueIdentifier>{b2f0ed0f-24ac-47a6-8531-8117ea57159d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Storage">
       <UniqueIdentifier>{cdc7bb8a-bf35-4a7a-82be-f9144b8230e0}</UniqueIdentifier>
@@ -169,6 +271,24 @@
     </Filter>
     <Filter Include="Include">
       <UniqueIdentifier>{4f0bb6a1-973a-4c21-80a0-138681f8eea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Timing">
+      <UniqueIdentifier>{b2f0ed0f-24ac-47a6-8531-8117ea57159d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Display">
+      <UniqueIdentifier>{02133abb-e797-4c9c-b065-5a5a508a0403}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Display\SDL">
+      <UniqueIdentifier>{6dc5a91e-f508-4065-af17-8e48bbabe694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Math">
+      <UniqueIdentifier>{22be90d4-dcd1-4e4c-840d-302db1cd56bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Input">
+      <UniqueIdentifier>{395b894f-f9e9-4940-a84b-7954c291f725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Geometry">
+      <UniqueIdentifier>{497b0b35-197f-4d7f-aebb-57e8e473a630}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

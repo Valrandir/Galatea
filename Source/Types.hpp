@@ -10,6 +10,7 @@ namespace Galatea
 {
 	typedef bool Bool;
 	typedef float Float;
+	typedef double Double;
 	typedef void Void;
 	typedef void* VoidPtr;
 

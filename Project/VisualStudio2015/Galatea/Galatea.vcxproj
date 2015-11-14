@@ -23,10 +23,28 @@
     <ClInclude Include="..\..\..\Source\Assert\Assert.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Exception.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp" />
-    <ClInclude Include="..\..\..\Source\Assert\Win32\Window.hpp" />
+    <ClInclude Include="..\..\..\Source\Assert\Win32\BaseWindow.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Image.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\ImageLoader.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Renderer.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\SDL\ImageSDL.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\SDL\InputSDL.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\SDL\WindowSDL.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Sprite.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\Window.hpp" />
     <ClInclude Include="..\..\..\Source\Galatea.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\VectorAssert.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Geometry.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Motion.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Point.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Rectangle.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Vector.hpp" />
+    <ClInclude Include="..\..\..\Source\Input\Input.hpp" />
+    <ClInclude Include="..\..\..\Source\Input\Keys.hpp" />
+    <ClInclude Include="..\..\..\Source\Math\Math.hpp" />
     <ClInclude Include="..\..\..\Source\Memory\Memory.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File\File.hpp" />
@@ -39,7 +57,9 @@
     <ClInclude Include="..\..\..\Source\System.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.Win32.hpp" />
-    <ClInclude Include="..\..\..\Source\Time\Time.hpp" />
+    <ClInclude Include="..\..\..\Source\Timing\Clock.hpp" />
+    <ClInclude Include="..\..\..\Source\Timing\Rate.hpp" />
+    <ClInclude Include="..\..\..\Source\Timing\Timing.hpp" />
     <ClInclude Include="..\..\..\Source\Types.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +67,24 @@
     <ClCompile Include="..\..\..\Source\Assert\Assert.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Assert\Exception.cpp" />
     <ClCompile Include="..\..\..\Source\Assert\Win32\AssertWnd.cpp" />
-    <ClCompile Include="..\..\..\Source\Assert\Win32\Window.cpp" />
+    <ClCompile Include="..\..\..\Source\Assert\Win32\BaseWindow.cpp" />
     <None Include="..\..\..\Source\DataStruct\Vector.tpp">
       <FileType>CppCode</FileType>
     </None>
     <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\Sprite.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\Window.cpp" />
+    <ClCompile Include="..\..\..\Source\Geometry\Motion.cpp" />
+    <ClCompile Include="..\..\..\Source\Geometry\Point.cpp" />
+    <ClCompile Include="..\..\..\Source\Geometry\Rectangle.cpp" />
+    <ClCompile Include="..\..\..\Source\Geometry\Vector.cpp" />
+    <ClCompile Include="..\..\..\Source\Input\Keys.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\Math\Math.cpp" />
     <ClCompile Include="..\..\..\Source\Memory\Memory.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.Win32.cpp" />
@@ -64,7 +97,9 @@
     <ClCompile Include="..\..\..\Source\System.cpp" />
     <ClCompile Include="..\..\..\Source\System.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Threading\Thread.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\Time\Time.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\Timing\Clock.cpp" />
+    <ClCompile Include="..\..\..\Source\Timing\Rate.cpp" />
+    <ClCompile Include="..\..\..\Source\Timing\Timing.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Types.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -119,7 +154,18 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)..\..\..\SDL2\include;$(SolutionDir)..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)..\..\..\SDL2\include;$(SolutionDir)..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)..\..\..\SDL2\include;$(SolutionDir)..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)..\..\..\SDL2\include;$(SolutionDir)..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -132,6 +178,10 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -145,6 +195,10 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -164,6 +218,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -183,6 +241,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

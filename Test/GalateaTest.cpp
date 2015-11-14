@@ -14,6 +14,7 @@ extern Bool StringTest();
 extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
+extern Bool DisplayTest();
 
 Bool AssertOverride(Galatea::Exception const & coreEx)
 {
@@ -25,6 +26,8 @@ Bool TestMain()
 	Bool result = true;
 
 	Assert::SetAssertProc(AssertOverride);
+
+	CHECK DisplayTest();
 
 	CHECK AssertTest();
 	CHECK TypesTest();

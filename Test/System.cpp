@@ -24,7 +24,7 @@ VoidPtr ThreadA(VoidPtr Param)
 {
 	UInt32* errCode = (UInt32*)Param;
 	SetErrCode(*errCode);
-	Time::Sleep(20);
+	Timing::Sleep(20);
 	*errCode = GetErrCode() + 100;
 	return (VoidPtr)errCode;
 }
@@ -32,7 +32,7 @@ VoidPtr ThreadA(VoidPtr Param)
 VoidPtr ThreadB(VoidPtr Param)
 {
 	UInt32* errCode = (UInt32*)Param;
-	Time::Sleep(10);
+	Timing::Sleep(10);
 	SetErrCode(*errCode);
 	*errCode = GetErrCode() + 1;
 	return (VoidPtr)errCode;

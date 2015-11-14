@@ -3,8 +3,8 @@
 
 namespace Galatea
 {
-	namespace Time
+	namespace Math
 	{
-		void Sleep(UInt32 milliseconds);
-	};
+		Int32 Random(Int32 min, Int32 max);
+	}
 }

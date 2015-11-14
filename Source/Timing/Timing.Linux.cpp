@@ -3,7 +3,7 @@
 
 namespace Core
 {
-	namespace Time
+	namespace Timing
 	{
 		void Sleep(UInt32 Milliseconds)
 		{

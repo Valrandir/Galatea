@@ -2,7 +2,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-class Window
+class BaseWindow
 {
 	private:
 	static void AdjustWindowRect(DWORD style, int& width, int& height);
@@ -20,8 +20,8 @@ class Window
 	void Initialize(LPCTSTR title, int width, int height, DWORD style);
 
 	public:
-	Window(LPCTSTR title, int width, int height, DWORD style);
-	Window(LPCTSTR title, int width, int height);
+	BaseWindow(LPCTSTR title, int width, int height, DWORD style);
+	BaseWindow(LPCTSTR title, int width, int height);
 	void Show();
 	bool Update();
 	void Close();
