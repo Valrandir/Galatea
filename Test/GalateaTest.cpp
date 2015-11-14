@@ -20,7 +20,7 @@ Bool AssertOverride(Core::CoreException const & coreEx)
 	throw coreEx;
 }
 
-Bool CoreSpecimen()
+Bool TestMain()
 {
 	Bool result = true;
 

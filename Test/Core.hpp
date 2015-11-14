@@ -1,5 +1,5 @@
 #pragma once
-#include <Core.hpp>
+#include "../Include/Core.hpp"
 
 #define CHECK result = result && 
 #define CHECK_ASSERT(func) \

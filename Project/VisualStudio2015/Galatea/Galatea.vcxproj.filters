@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Source\Assert\Assert.hpp">
+      <Filter>Source\Assert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Assert\CoreException.hpp">
+      <Filter>Source\Assert</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Assert\Win32\Window.hpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp">
+      <Filter>Source\DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\DataStruct\VectorAssert.hpp">
+      <Filter>Source\DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Memory\Memory.hpp">
+      <Filter>Source\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Time\Time.hpp">
+      <Filter>Source\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\String\String.hpp">
+      <Filter>Source\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Threading\Thread.hpp">
+      <Filter>Source\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Threading\Thread.Win32.hpp">
+      <Filter>Source\Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Core.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\System.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Types.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\File\File.hpp">
+      <Filter>Source\Storage\File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\File\File.Win32.hpp">
+      <Filter>Source\Storage\File</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\IniFile\IniFile.hpp">
+      <Filter>Source\Storage\InitFile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\TextFile\TextFile.hpp">
+      <Filter>Source\Storage\TextFile</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\File.hpp">
+      <Filter>Source\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\IniFile.hpp">
+      <Filter>Source\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\TextFile.hpp">
+      <Filter>Source\Storage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Include\Core.hpp">
+      <Filter>Include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
+      <Filter>Source\Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\Assert.Win32.cpp">
+      <Filter>Source\Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\CoreException.cpp">
+      <Filter>Source\Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\Win32\AssertWnd.cpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\Win32\Window.cpp">
+      <Filter>Source\Assert\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp">
+      <Filter>Source\DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Memory\Memory.cpp">
+      <Filter>Source\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Time\Time.Win32.cpp">
+      <Filter>Source\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\String\String.cpp">
+      <Filter>Source\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\String\String.Win32.cpp">
+      <Filter>Source\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Threading\Thread.Win32.cpp">
+      <Filter>Source\Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\System.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\System.Win32.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Types.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\File\File.cpp">
+      <Filter>Source\Storage\File</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\File\File.Win32.cpp">
+      <Filter>Source\Storage\File</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\IniFile\IniFile.cpp">
+      <Filter>Source\Storage\InitFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\IniFile\KeyValue.cpp">
+      <Filter>Source\Storage\InitFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\IniFile\Section.cpp">
+      <Filter>Source\Storage\InitFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\TextFile\TextFile.cpp">
+      <Filter>Source\Storage\TextFile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{ad2c260b-dc6f-4902-ba1e-1130733399da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Assert">
+      <UniqueIdentifier>{a924027d-1025-47d5-817d-4c3014fd1b23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Assert\Win32">
+      <UniqueIdentifier>{5ffe7d27-821d-41c6-8294-07cc0d8f57b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DataStruct">
+      <UniqueIdentifier>{772e8a85-0b2c-4d6f-bf02-0d38922a40e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Memory">
+      <UniqueIdentifier>{1e0dd43d-c2de-4866-b44a-eec0d46bfbc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Time">
+      <UniqueIdentifier>{b2f0ed0f-24ac-47a6-8531-8117ea57159d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Storage">
+      <UniqueIdentifier>{cdc7bb8a-bf35-4a7a-82be-f9144b8230e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Storage\File">
+      <UniqueIdentifier>{7a88f812-298a-452d-8390-a3051e0e6bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Storage\InitFile">
+      <UniqueIdentifier>{f344bbe3-e21b-4145-80b1-c7a1ad04e402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Storage\TextFile">
+      <UniqueIdentifier>{8628b660-076c-4458-aae4-80b803f7d63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\String">
+      <UniqueIdentifier>{944c9b13-f275-4ca7-825a-e9f07ebc8ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Threading">
+      <UniqueIdentifier>{2b154fea-ba91-42cf-847b-ece5d199d071}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{4f0bb6a1-973a-4c21-80a0-138681f8eea6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Source\DataStruct\Vector.tpp">
+      <Filter>Source\DataStruct</Filter>
+    </None>
+  </ItemGroup>
+</Project>

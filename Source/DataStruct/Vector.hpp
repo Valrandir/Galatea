@@ -99,6 +99,6 @@ namespace Core
 			Element* DrivePointer(UInt future_length);
 		};
 
-		#include "Vector.cpp"
+		#include "Vector.tpp"
 	}
 }

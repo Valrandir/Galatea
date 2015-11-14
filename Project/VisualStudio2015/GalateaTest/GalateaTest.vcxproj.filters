@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assert">
+      <UniqueIdentifier>{3e7dd762-7536-45ee-92de-ef268047b66c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStruct">
+      <UniqueIdentifier>{b0579598-688c-4304-9957-c08dbbfacd37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{a91840e5-d32b-4115-8a4b-9208df2d06a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Storage">
+      <UniqueIdentifier>{47d64df2-9296-453d-b33e-0ed75ce39ec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{f806628a-a749-4ae8-841d-5820505c2d51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{1394e24f-a74d-40cf-93c3-ca7bcaedd239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{b6fb6c36-8bf0-4ef5-ac85-5c0e6cfa107b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Test\Assert\Assert.cpp">
+      <Filter>Assert</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\DataStruct\Counter.cpp">
+      <Filter>DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\DataStruct\StdVector.cpp">
+      <Filter>DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\DataStruct\Vector.cpp">
+      <Filter>DataStruct</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Memory\Memory.cpp">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Storage\File.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Storage\IniFile.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Storage\TextFile.cpp">
+      <Filter>Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\String\String.cpp">
+      <Filter>String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Threading\Thread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\Time\Time.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Test\GalateaTest.cpp" />
+    <ClCompile Include="..\..\..\Test\Main.Win32.cpp" />
+    <ClCompile Include="..\..\..\Test\System.cpp" />
+    <ClCompile Include="..\..\..\Test\Types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Test\DataStruct\Counter.hpp">
+      <Filter>DataStruct</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Test\Core.hpp" />
+  </ItemGroup>
+</Project>
