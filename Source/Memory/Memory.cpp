@@ -3,7 +3,7 @@
 #include "Memory.hpp"
 #include "../Assert/Assert.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Memory
 	{

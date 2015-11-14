@@ -1,9 +1,9 @@
 #pragma once
 #include "../../Types.hpp"
 
-namespace Core
+namespace Galatea
 {
-	class CoreException;
+	class Exception;
 
 	namespace Storage
 	{
@@ -48,7 +48,7 @@ namespace Core
 
 			//Returns a File pointer which must be manually deleted after use.
 			//On failure, returns a NULL pointer and initialize corex if it is set.
-			static File* Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, CoreException* corex = NULL);
+			static File* Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, Exception* corex = NULL);
 
 			static Bool Exists(CStr fileName);
 			static Bool Delete(CStr fileName);
@@ -60,8 +60,8 @@ namespace Core
 			virtual UInt64 GetSeekPos() const = 0;
 			virtual void Seek(UInt64 position) const = 0;
 			virtual void SeekToEnd() const = 0;
-			virtual Bool Read(VoidPtr buffer, UInt bufferSize, CoreException* corex = NULL) const = 0;
-			virtual Bool Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex = NULL) const = 0;
+			virtual Bool Read(VoidPtr buffer, UInt bufferSize, Exception* corex = NULL) const = 0;
+			virtual Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* corex = NULL) const = 0;
 			virtual void Close() = 0;
 			virtual ~File();
 		};

@@ -6,7 +6,7 @@
 #include "../Types.hpp"
 #include "../DataStruct/Vector.hpp"
 
-namespace Core
+namespace Galatea
 {
 	class String
 	{

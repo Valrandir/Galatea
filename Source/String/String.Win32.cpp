@@ -4,7 +4,7 @@
 #include "../Types.hpp"
 #include "../String/String.hpp"
 
-using namespace Core;
+using namespace Galatea;
 
 void FormatImpl(TChar* buffer, UInt buffer_size, CStr format, va_list args)
 {

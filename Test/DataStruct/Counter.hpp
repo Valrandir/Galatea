@@ -1,6 +1,6 @@
 #pragma once
-#include "../Core.hpp"
-using namespace Core;
+#include "../Galatea.hpp"
+using namespace Galatea;
 
 struct Counter
 {

@@ -1,7 +1,7 @@
 #include "File.Win32.hpp"
 #include "../../Assert/Assert.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{
@@ -15,7 +15,7 @@ namespace Core
 		}
 
 		//Return NULL on failure, and initialize corex when specified.
-		File* File::Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, CoreException* corex)
+		File* File::Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 
@@ -118,7 +118,7 @@ namespace Core
 		//When corex is NULL, ASSERT on failure.
 		//When corex is not NULL, return false on failure.
 		//Return true on success
-		Bool FileImpl::Read(VoidPtr buffer, UInt bufferSize, CoreException* corex) const
+		Bool FileImpl::Read(VoidPtr buffer, UInt bufferSize, Exception* corex) const
 		{
 			ASSERT(_hFile);
 			ASSERT_PARAMETER(buffer != 0);
@@ -132,7 +132,7 @@ namespace Core
 		//When corex is NULL, ASSERT on failure.
 		//When corex is not NULL, return false on failure.
 		//Return true on success
-		Bool FileImpl::Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex) const
+		Bool FileImpl::Write(VoidPtr const buffer, UInt bufferSize, Exception* corex) const
 		{
 			ASSERT(_hFile);
 			ASSERT_PARAMETER(buffer != 0);

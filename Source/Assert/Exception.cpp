@@ -1,9 +1,9 @@
-#include "CoreException.hpp"
+#include "Exception.hpp"
 #include "../System.hpp"
 
-namespace Core
+namespace Galatea
 {
-	void CoreException::CopyToSelf(CoreException const & ex)
+	void Exception::CopyToSelf(Exception const & ex)
 	{
 		source_code = ex.source_code;
 		function = ex.function;
@@ -13,19 +13,19 @@ namespace Core
 		err_msg = ex.err_msg;
 	}
 
-	CoreException::CoreException(CoreException const & ex)
+	Exception::Exception(Exception const & ex)
 	{
 		CopyToSelf(ex);
 	}
 
-	CoreException& CoreException::operator=(CoreException const & ex)
+	Exception& Exception::operator=(Exception const & ex)
 	{
 		if(&ex != this)
 			CopyToSelf(ex);
 		return *this;
 	}
 
-	CoreException::CoreException() :
+	Exception::Exception() :
 		source_code(String::Empty),
 		function(String::Empty),
 		file(String::Empty),
@@ -33,7 +33,7 @@ namespace Core
 		err_code(0U)
 	{}
 
-	CoreException::CoreException(CStr source_code, CStr function, CStr file, UInt32 line) :
+	Exception::Exception(CStr source_code, CStr function, CStr file, UInt32 line) :
 		source_code(source_code),
 		function(function),
 		file(file),
@@ -41,7 +41,7 @@ namespace Core
 		err_code(0U)
 	{}
 
-	CoreException::CoreException(CStr source_code, CStr function, CStr file, UInt32 line, CStr err_msg) :
+	Exception::Exception(CStr source_code, CStr function, CStr file, UInt32 line, CStr err_msg) :
 		source_code(source_code),
 		function(function),
 		file(file),
@@ -50,13 +50,13 @@ namespace Core
 		err_msg(err_msg)
 	{}
 
-	void CoreException::InitFromLastErr()
+	void Exception::InitFromLastErr()
 	{
 		err_code = GetErrCode();
 		err_msg = GetErrText(err_code);
 	}
 
-	void CoreException::Clear()
+	void Exception::Clear()
 	{
 		source_code = String::Empty;
 		function = String::Empty;

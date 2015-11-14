@@ -1,6 +1,6 @@
-#include "Core.hpp"
+#include "Galatea.hpp"
 
-using namespace Core;
+using namespace Galatea;
 
 Bool SizeOfTest()
 {

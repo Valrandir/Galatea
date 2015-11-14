@@ -1,5 +1,5 @@
-#include "Core.hpp"
-using namespace Core;
+#include "Galatea.hpp"
+using namespace Galatea;
 
 extern Bool TypesTest();
 extern Bool AssertTest();
@@ -15,7 +15,7 @@ extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
 
-Bool AssertOverride(Core::CoreException const & coreEx)
+Bool AssertOverride(Galatea::Exception const & coreEx)
 {
 	throw coreEx;
 }

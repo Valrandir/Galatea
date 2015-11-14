@@ -6,14 +6,14 @@
 
 #define DeletePtr(ptr) if(ptr) { delete(ptr); (ptr) = NULL; }
 
-namespace Core
+namespace Galatea
 {
 	typedef bool Bool;
 	typedef float Float;
 	typedef void Void;
 	typedef void* VoidPtr;
 
-	#ifdef CoreTargetWin32
+	#ifdef BuildTargetWin32
 		typedef signed __int8 Int8;
 		typedef signed __int16 Int16;
 		typedef signed __int32 Int32;
@@ -33,7 +33,7 @@ namespace Core
 		typedef unsigned long long UInt64;
 	#endif
 
-	#ifndef CoreTarget64Bits
+	#ifndef BuildTarget64Bit
 		typedef Int32 Int;
 		typedef UInt32 UInt;
 		typedef Int32* IntPtr;
@@ -52,7 +52,7 @@ namespace Core
 	Bool WithinInt32Limit(Int value);
 	Bool WithinUInt32Limit(UInt value);
 
-	#if CoreTargetWin32 && UNICODE
+	#if BuildTargetWin32 && UNICODE
 		#define _Text(quote)L##quote
 		#define Text(quote)_Text(quote)
 		typedef wchar_t TChar;
@@ -63,7 +63,7 @@ namespace Core
 
 	typedef TChar const * CStr;
 
-	#ifdef CoreTargetWin32
+	#ifdef BuildTargetWin32
 		#define NewLine Text("\r\n")
 	#elif CoreTargetLinux
 		#define NewLine Text("\n")

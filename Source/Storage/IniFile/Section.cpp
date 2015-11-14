@@ -1,6 +1,6 @@
 #include "IniFile.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{

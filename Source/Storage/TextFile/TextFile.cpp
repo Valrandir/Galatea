@@ -1,7 +1,7 @@
 #include "TextFile.hpp"
 #include "../../Assert/Assert.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{
@@ -19,14 +19,14 @@ namespace Core
 			return *this;
 		}
 
-		TextFile* TextFile::Create(CStr fileName, CoreException* corex)
+		TextFile* TextFile::Create(CStr fileName, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName != NULL);
 			File* file = File::Open(fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessWrite, File::FlagsEnum::OptimizeForSequentialAccess, corex);
 			return file ? new TextFile(file) : NULL;
 		}
 
-		TextFile* TextFile::Append(CStr fileName, CoreException* corex)
+		TextFile* TextFile::Append(CStr fileName, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName != NULL);
 			File* file = File::Open(fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessWrite, File::FlagsEnum::OptimizeForSequentialAccess, corex);
@@ -40,7 +40,7 @@ namespace Core
 			return NULL;
 		}
 
-		Bool TextFile::ReadAll(CStr fileName, String& text, CoreException* corex)
+		Bool TextFile::ReadAll(CStr fileName, String& text, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			Bool result = false;
@@ -71,7 +71,7 @@ namespace Core
 			return result;
 		}
 
-		String::StrPtrVec* TextFile::ReadLines(CStr fileName, CoreException* corex)
+		String::StrPtrVec* TextFile::ReadLines(CStr fileName, Exception* corex)
 		{
 			//Here \r\n is used instead of NewLine so that Linux can see lines from a Windows text file
 			ASSERT_PARAMETER(fileName);
@@ -82,7 +82,7 @@ namespace Core
 				return new String::StrPtrVec();
 		}
 
-		Bool TextFile::WriteText(CStr fileName, CStr text, UInt textLength, CoreException* corex)
+		Bool TextFile::WriteText(CStr fileName, CStr text, UInt textLength, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			ASSERT_PARAMETER(text);
@@ -99,20 +99,20 @@ namespace Core
 			return result;
 		}
 
-		Bool TextFile::WriteText(CStr fileName, CStr text, CoreException* corex)
+		Bool TextFile::WriteText(CStr fileName, CStr text, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			ASSERT_PARAMETER(text);
 			return WriteText(fileName, text, String::CStrLength(text), corex);
 		}
 
-		Bool TextFile::WriteText(CStr fileName, String const & text, CoreException* corex)
+		Bool TextFile::WriteText(CStr fileName, String const & text, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			return WriteText(fileName, text, text.Length(), corex);
 		}
 
-		Bool TextFile::AppendText(CStr fileName, CStr text, UInt textLength, CoreException* corex)
+		Bool TextFile::AppendText(CStr fileName, CStr text, UInt textLength, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			ASSERT_PARAMETER(text);
@@ -129,14 +129,14 @@ namespace Core
 			return result;
 		}
 
-		Bool TextFile::AppendText(CStr fileName, CStr text, CoreException* corex)
+		Bool TextFile::AppendText(CStr fileName, CStr text, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			ASSERT_PARAMETER(text);
 			return AppendText(fileName, text, String::CStrLength(text), corex);
 		}
 
-		Bool TextFile::AppendText(CStr fileName, String const & text, CoreException* corex)
+		Bool TextFile::AppendText(CStr fileName, String const & text, Exception* corex)
 		{
 			ASSERT_PARAMETER(fileName);
 			return AppendText(fileName, text, text.Length(), corex);
@@ -147,49 +147,49 @@ namespace Core
 			return *_file;
 		}
 
-		Bool TextFile::Write(CStr text, UInt textLength, CoreException* corex) const
+		Bool TextFile::Write(CStr text, UInt textLength, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return _file->Write((VoidPtr)text, ToUInt32(textLength) * sizeof(TChar), corex);
 		}
 
-		Bool TextFile::Write(CStr text, CoreException* corex) const
+		Bool TextFile::Write(CStr text, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return Write(text, String::CStrLength(text), corex);
 		}
 
-		Bool TextFile::Write(String const & text, CoreException* corex) const
+		Bool TextFile::Write(String const & text, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return Write(text, text.Length(), corex);
 		}
 
-		Bool TextFile::WriteLine(CStr text, UInt textLength, CoreException* corex) const
+		Bool TextFile::WriteLine(CStr text, UInt textLength, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return Write(text, ToUInt32(textLength), corex) && Write(NewLine, corex);
 		}
 
-		Bool TextFile::WriteLine(CStr text, CoreException* corex) const
+		Bool TextFile::WriteLine(CStr text, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return Write(text, corex) && Write(NewLine, corex);
 		}
 
-		Bool TextFile::WriteLine(String const & text, CoreException* corex) const
+		Bool TextFile::WriteLine(String const & text, Exception* corex) const
 		{
 			ASSERT_PARAMETER(text);
 			ASSERT(_file);
 			return WriteLine(text, text.Length(), corex);
 		}
 
-		Bool TextFile::WriteLine(CoreException* corex) const
+		Bool TextFile::WriteLine(Exception* corex) const
 		{
 			ASSERT(_file);
 			return Write(NewLine, corex);

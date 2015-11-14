@@ -1,6 +1,6 @@
 #include "Thread.Win32.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Threading
 	{

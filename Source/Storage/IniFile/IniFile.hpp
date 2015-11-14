@@ -2,7 +2,7 @@
 #include "../../DataStruct/Vector.hpp"
 #include "../../String/String.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{

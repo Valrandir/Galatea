@@ -6,11 +6,11 @@
 #include "VectorAssert.hpp"
 
 //Placement New
-#ifdef CoreTargetWin32
-	inline void* operator new(Core::UInt, void* address){return address;}
+#ifdef BuildTargetWin32
+	inline void* operator new(Galatea::UInt, void* address){return address;}
 	inline void operator delete(void*, void*){}
 #elif CoreTargetLinux
-	#ifdef CoreTarget64Bits
+	#ifdef BuildTarget64Bit
 		inline void* operator new(long unsigned int, void* address){return address;}
 	#else
 		inline void* operator new(unsigned int, void* address){return address;}
@@ -18,7 +18,7 @@
 	inline void operator delete(void*, void*){}
 #endif
 
-namespace Core
+namespace Galatea
 {
 	namespace DataStruct
 	{

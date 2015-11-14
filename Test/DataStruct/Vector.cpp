@@ -1,9 +1,9 @@
 #define VectorUnitTest
 
-#include "../Core.hpp"
+#include "../Galatea.hpp"
 #include "Counter.hpp"
 
-using namespace Core;
+using namespace Galatea;
 using namespace DataStruct;
 
 typedef Vector<Counter> VCntr;

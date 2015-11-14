@@ -1,6 +1,6 @@
-#include "../Core.hpp"
+#include "../Galatea.hpp"
 
-using namespace Core;
+using namespace Galatea;
 using namespace Storage;
 
 namespace TextFileTestNamespace
@@ -81,7 +81,7 @@ namespace TextFileTestNamespace
 		Bool result = true;
 		TextFile* file;
 		String::StrPtrVec* lines;
-		CoreException corex;
+		Exception corex;
 
 		//Assert when fileName is null
 		CHECK_ASSERT(TextFile::ReadLines(_nullCStr));

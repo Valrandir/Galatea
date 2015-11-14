@@ -1,6 +1,6 @@
-#include "../Core.hpp"
+#include "../Galatea.hpp"
 
-using namespace Core;
+using namespace Galatea;
 
 Bool ReturnTrue()
 {
@@ -12,7 +12,7 @@ Bool ReturnFalse()
 	return false;
 }
 
-Bool CheckException(CoreException const & ex, CStr source_code, CStr function, CStr file, UInt line, UInt err_code, CStr err_msg)
+Bool CheckException(Exception const & ex, CStr source_code, CStr function, CStr file, UInt line, UInt err_code, CStr err_msg)
 {
 	Bool result = true;
 
@@ -26,7 +26,7 @@ Bool CheckException(CoreException const & ex, CStr source_code, CStr function, C
 	return result;
 }
 
-Bool CoreExceptionTest()
+Bool ExceptionTest()
 {
 	Bool result = true;
 	CStr source_code = Text("source_code");
@@ -37,39 +37,39 @@ Bool CoreExceptionTest()
 
 	//Constructor 1
 	{
-		CoreException ex;
+		Exception ex;
 		CHECK CheckException(ex, String::Empty, String::Empty, String::Empty, 0U, 0U, String::Empty);
 	}
 
 	//Constructor 2
 	{
-		CoreException ex(source_code, function, file, line);
+		Exception ex(source_code, function, file, line);
 		CHECK CheckException(ex, source_code, function, file, line, 0U, String::Empty);
 	}
 
 	//Constructor 3
 	{
-		CoreException ex(source_code, function, file, line, err_msg);
+		Exception ex(source_code, function, file, line, err_msg);
 		CHECK CheckException(ex, source_code, function, file, line, 0U, err_msg);
 	}
 
 	//Copy Constructor
 	{
-		CoreException ex(source_code, function, file, line, err_msg);
-		CoreException ex2(ex);
+		Exception ex(source_code, function, file, line, err_msg);
+		Exception ex2(ex);
 		CHECK CheckException(ex, source_code, function, file, line, 0U, err_msg);
 	}
 
 	//operator =
 	{
-		CoreException ex(source_code, function, file, line, err_msg);
-		CoreException ex2 = ex;
+		Exception ex(source_code, function, file, line, err_msg);
+		Exception ex2 = ex;
 		CHECK CheckException(ex, source_code, function, file, line, 0U, err_msg);
 	}
 
 	//InitFromLastErr
 	{
-		CoreException ex(source_code, function, file, line);
+		Exception ex(source_code, function, file, line);
 		UInt32 errCode = 5U;
 
 		SetErrCode(errCode);
@@ -81,20 +81,20 @@ Bool CoreExceptionTest()
 
 		//Copy Constructor
 		{
-			CoreException ex2(ex);
+			Exception ex2(ex);
 			CHECK CheckException(ex2, source_code, function, file, line, errCode, errText);
 		}
 
 		//operator =
 		{
-			CoreException ex2 = ex;
+			Exception ex2 = ex;
 			CHECK CheckException(ex2, source_code, function, file, line, errCode, errText);
 		}
 	}
 
 	//Clear
 	{
-		CoreException ex(source_code, function, file, line);
+		Exception ex(source_code, function, file, line);
 		SetErrCode(5U);
 		ex.InitFromLastErr();
 		ex.Clear();
@@ -108,7 +108,7 @@ Bool AssertTest()
 {
 	Bool result = true;
 
-	CHECK CoreExceptionTest();
+	CHECK ExceptionTest();
 
 	//ASSERT OK
 	ASSERT(ReturnTrue() == true);

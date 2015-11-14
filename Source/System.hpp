@@ -2,7 +2,7 @@
 #include "Types.hpp"
 #include "String/String.hpp"
 
-namespace Core
+namespace Galatea
 {
 	UInt32 GetErrCode();
 	void SetErrCode(UInt32 errCode);

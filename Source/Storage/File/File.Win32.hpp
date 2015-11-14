@@ -3,7 +3,7 @@
 #include <windows.h>
 #include "File.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{
@@ -18,8 +18,8 @@ namespace Core
 			UInt64 GetSeekPos() const;
 			void Seek(UInt64 position) const;
 			void SeekToEnd() const;
-			Bool Read(VoidPtr buffer, UInt bufferSize, CoreException* corex = NULL) const;
-			Bool Write(VoidPtr const buffer, UInt bufferSize, CoreException* corex = NULL) const;
+			Bool Read(VoidPtr buffer, UInt bufferSize, Exception* corex = NULL) const;
+			Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* corex = NULL) const;
 			void Close();
 			~FileImpl();
 		};

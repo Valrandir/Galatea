@@ -2,10 +2,10 @@
 #define _HAS_EXCEPTIONS 0
 #include <vector>
 
-#include "../Core.hpp"
+#include "../Galatea.hpp"
 #include "Counter.hpp"
 
-using namespace Core;
+using namespace Galatea;
 using std::vector;
 
 Bool StdConstructEmptyTest()

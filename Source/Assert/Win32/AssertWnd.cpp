@@ -101,7 +101,7 @@ void AssertWnd::ShowModal()
 
 void AssertWnd::btnCopy_OnClick()
 {
-	Core::String string;
+	Galatea::String string;
 	int cch_length;
 
 	cch_length = GetWindowTextLength(_hText);

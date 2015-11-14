@@ -1,6 +1,6 @@
 #include "Assert.hpp"
 
-namespace Core
+namespace Galatea
 {
 	CStr AssertTypeEnum_Default = Text("Default Assert Type");
 	CStr AssertTypeEnum_IndexOutOfRange = Text("Index Out Of Range");
@@ -48,7 +48,7 @@ namespace Core
 		return msg;
 	}
 
-	void Assert::Abort(CoreException const & ex)
+	void Assert::Abort(Exception const & ex)
 	{
 		if(Failing)
 			return;

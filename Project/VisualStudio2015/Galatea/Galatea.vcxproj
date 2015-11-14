@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Include\Core.hpp" />
+    <ClInclude Include="..\..\..\Include\Galatea.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Assert.hpp" />
-    <ClInclude Include="..\..\..\Source\Assert\CoreException.hpp" />
+    <ClInclude Include="..\..\..\Source\Assert\Exception.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Win32\Window.hpp" />
-    <ClInclude Include="..\..\..\Source\Core.hpp" />
+    <ClInclude Include="..\..\..\Source\Galatea.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\VectorAssert.hpp" />
     <ClInclude Include="..\..\..\Source\Memory\Memory.hpp" />
@@ -45,7 +45,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp" />
     <ClCompile Include="..\..\..\Source\Assert\Assert.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\Assert\CoreException.cpp" />
+    <ClCompile Include="..\..\..\Source\Assert\Exception.cpp" />
     <ClCompile Include="..\..\..\Source\Assert\Win32\AssertWnd.cpp" />
     <ClCompile Include="..\..\..\Source\Assert\Win32\Window.cpp" />
     <None Include="..\..\..\Source\DataStruct\Vector.tpp">
@@ -126,7 +126,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>CoreTargetWin32;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BuildTargetWin32;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -139,7 +139,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>CoreTargetWin32;CoreTarget64Bits;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BuildTargetWin32;BuildTarget64Bit;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -154,7 +154,7 @@
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>CoreTargetWin32;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BuildTargetWin32;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <StringPooling>true</StringPooling>
     </ClCompile>
@@ -173,7 +173,7 @@
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>CoreTargetWin32;CoreTarget64Bits;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BuildTargetWin32;BuildTarget64Bit;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>None</DebugInformationFormat>
       <StringPooling>true</StringPooling>
     </ClCompile>

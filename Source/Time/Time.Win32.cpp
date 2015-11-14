@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "Time.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Time
 	{

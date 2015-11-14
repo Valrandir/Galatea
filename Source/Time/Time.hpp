@@ -1,7 +1,7 @@
 #pragma once
 #include "../Types.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Time
 	{

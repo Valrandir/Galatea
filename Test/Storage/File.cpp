@@ -1,6 +1,6 @@
-#include "../Core.hpp"
+#include "../Galatea.hpp"
 
-using namespace Core;
+using namespace Galatea;
 using namespace Storage;
 
 namespace FileTestNamespace
@@ -24,7 +24,7 @@ namespace FileTestNamespace
 	{
 		Bool result = true;
 		//File* file;
-		//CoreException corex;
+		//Exception corex;
 
 		////Create fail because _fileName is NULL
 		//CHECK_ASSERT(File::Open(_nullFileName, File::DispositionEnum::CreateAlways, File::Flags::));

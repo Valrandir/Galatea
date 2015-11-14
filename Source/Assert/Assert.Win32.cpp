@@ -3,12 +3,12 @@
 #include "../String/String.hpp"
 #include "../Storage/TextFile.hpp"
 
-namespace Core
+namespace Galatea
 {
 	void LogToFile(String const& msg);
 	void ShowAssertWindow(String const& msg);
 
-	void Assert::SystemAbort(CoreException const & ex)
+	void Assert::SystemAbort(Exception const & ex)
 	{
 		String msg = String::FormatToString
 		(

@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "System.hpp"
 
-namespace Core
+namespace Galatea
 {
 	UInt32 GetErrCode()
 	{

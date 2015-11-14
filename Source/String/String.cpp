@@ -2,10 +2,10 @@
 #include "String.hpp"
 #include "../Assert/Assert.hpp"
 
-void FormatImpl(Core::TChar* buffer, Core::UInt buffer_size, Core::CStr format, va_list args);
-Core::UInt FormatImplGetRequiredSize(Core::CStr format, va_list args);
+void FormatImpl(Galatea::TChar* buffer, Galatea::UInt buffer_size, Galatea::CStr format, va_list args);
+Galatea::UInt FormatImplGetRequiredSize(Galatea::CStr format, va_list args);
 
-namespace Core
+namespace Galatea
 {
 	UInt String::NewLineLength = String::CStrLength(NewLine);
 	CStr const String::Empty = Text("");

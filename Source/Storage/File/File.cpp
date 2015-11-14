@@ -1,6 +1,6 @@
 #include "File.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{

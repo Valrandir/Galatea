@@ -2,7 +2,7 @@
 #include "../../Assert/Assert.hpp"
 #include "../TextFile.hpp"
 
-namespace Core
+namespace Galatea
 {
 	namespace Storage
 	{

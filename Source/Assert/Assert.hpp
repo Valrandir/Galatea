@@ -1,16 +1,16 @@
 #pragma once
 #include "../Types.hpp"
-#include "CoreException.hpp"
+#include "Exception.hpp"
 
 #define LOG_FILENAME Text("CoreLog.log")
-#define ASSERT_COREX(func, corex) if(!(func) && corex) (*corex = CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__)).InitFromLastErr()
+#define ASSERT_COREX(func, corex) if(!(func) && corex) (*corex = Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__)).InitFromLastErr()
 
 #ifdef CoreDebug
-	#define ASSERT(func) if(!(func)) Core::Assert::Abort(CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__))
-	#define ASSERT_RANGE(func) if(!(func)) Core::Assert::Abort(CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::IndexOutOfRange)))
-	#define ASSERT_PARAMETER(func) if(!(func)) Core::Assert::Abort(CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::NullParameter)))
-	#define ASSERT_SYSTEMCALL(func) if(!(func)) { CoreException ex(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__); ex.InitFromLastErr(); Core::Assert::Abort(ex); }
-	#define ASSERT_MSG(func, msg) if(!(func)) Core::Assert::Abort(CoreException(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, msg))
+	#define ASSERT(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__))
+	#define ASSERT_RANGE(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::IndexOutOfRange)))
+	#define ASSERT_PARAMETER(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::NullParameter)))
+	#define ASSERT_SYSTEMCALL(func) if(!(func)) { Exception ex(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__); ex.InitFromLastErr(); Galatea::Assert::Abort(ex); }
+	#define ASSERT_MSG(func, msg) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, msg))
 #else
 	#define ASSERT
 	#define ASSERT_RANGE
@@ -19,13 +19,13 @@
 	#define ASSERT_MSG
 #endif
 
-namespace Core
+namespace Galatea
 {
 	class Assert
 	{
 		public:
 		//Return true to continue with Abort, false to cancel Abort.
-		typedef Bool (*AssertProc)(CoreException const &);
+		typedef Bool (*AssertProc)(Exception const &);
 
 		enum AssertTypeEnum
 		{
@@ -43,7 +43,7 @@ namespace Core
 		Assert(Assert const &);
 		Assert& operator=(Assert const &);
 
-		static void SystemAbort(CoreException const & ex);
+		static void SystemAbort(Exception const & ex);
 
 		public:
 		static Bool Failing;
@@ -51,6 +51,6 @@ namespace Core
 		static CStr GetLogFileName();
 		static void SetLogFileName(CStr logFileName);
 		static CStr AssertTypeToCStr(AssertTypeEnum assertType);
-		static void Abort(CoreException const & ex);
+		static void Abort(Exception const & ex);
 	};
 }

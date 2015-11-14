@@ -2,7 +2,7 @@
 
 #define BUFFER_SIZE 0x200U
 
-namespace Core
+namespace Galatea
 {
 	String GetErrText(UInt32 errCode)
 	{

@@ -1,7 +1,7 @@
 #include "Types.hpp"
 #include "Assert/Assert.hpp"
 
-namespace Core
+namespace Galatea
 {
 	Int32 ToInt32(Int64 value)
 	{

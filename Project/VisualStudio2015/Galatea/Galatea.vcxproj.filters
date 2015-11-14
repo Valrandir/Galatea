@@ -4,9 +4,6 @@
     <ClInclude Include="..\..\..\Source\Assert\Assert.hpp">
       <Filter>Source\Assert</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Assert\CoreException.hpp">
-      <Filter>Source\Assert</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp">
       <Filter>Source\Assert\Win32</Filter>
     </ClInclude>
@@ -33,9 +30,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Threading\Thread.Win32.hpp">
       <Filter>Source\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Core.hpp">
-      <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Source\System.hpp">
       <Filter>Source</Filter>
@@ -64,8 +58,14 @@
     <ClInclude Include="..\..\..\Source\Storage\TextFile.hpp">
       <Filter>Source\Storage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Include\Core.hpp">
+    <ClInclude Include="..\..\..\Include\Galatea.hpp">
       <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Galatea.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Assert\Exception.hpp">
+      <Filter>Source\Assert</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,9 +73,6 @@
       <Filter>Source\Assert</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Assert\Assert.Win32.cpp">
-      <Filter>Source\Assert</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Assert\CoreException.cpp">
       <Filter>Source\Assert</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Assert\Win32\AssertWnd.cpp">
@@ -128,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Storage\TextFile\TextFile.cpp">
       <Filter>Source\Storage\TextFile</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Assert\Exception.cpp">
+      <Filter>Source\Assert</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

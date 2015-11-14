@@ -66,6 +66,6 @@
     <ClInclude Include="..\..\..\Test\DataStruct\Counter.hpp">
       <Filter>DataStruct</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Test\Core.hpp" />
+    <ClInclude Include="..\..\..\Test\Galatea.hpp" />
   </ItemGroup>
 </Project>
