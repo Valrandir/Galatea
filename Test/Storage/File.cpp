@@ -11,42 +11,42 @@ namespace FileTestNamespace
 
 	void CreateAndClose()
 	{
-		File* file = File::Open(_fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessReadWrite, 0);
-		DeletePtr(file);
+		File* file = File::Open(_fileName, File::Disposition::CreateAlways, File::Access::AccessReadWrite, 0);
+		GALATEA_DELETE_PTR(file);
 	}
 
 	File* Create()
 	{
-		return File::Open(_fileName, File::DispositionEnum::CreateAlways, File::AccessEnum::AccessReadWrite, 0);
+		return File::Open(_fileName, File::Disposition::CreateAlways, File::Access::AccessReadWrite, 0);
 	}
 
 	Bool OpenTest()
 	{
 		Bool result = true;
 		//File* file;
-		//Exception corex;
+		//Exception out_ex;
 
 		////Create fail because _fileName is NULL
-		//CHECK_ASSERT(File::Open(_nullFileName, File::DispositionEnum::CreateAlways, File::Flags::));
+		//CHECK_ASSERT(File::Open(_nullFileName, File::Disposition::CreateAlways, File::Flags::));
 
 		////Create fail because _fileName is bogus path
 		//CHECK File::Open(_badFileName) == NULL;
-		//CHECK File::Open(_badFileName, &corex) == NULL;
-		//CHECK corex.err_code != 0U;
-		//CHECK corex.err_msg != String::Empty;
+		//CHECK File::Open(_badFileName, &out_ex) == NULL;
+		//CHECK out_ex.err_code != 0U;
+		//CHECK out_ex.err_msg != String::Empty;
 
 		////File does not exists, create it and size will be 0 and SeekPos will be 0
 		//File::Delete(_fileName);
 		//CHECK (file = File::Open(_fileName));
 		//CHECK file->GetFileSize() == 0;
 		//CHECK file->GetSeekPos() == 0;
-		//DeletePtr(file);
+		//GALATEA_DELETE_PTR(file);
 
 		////File exists, create it and it will be truncated and SeekPos will be 0
 		//CHECK (file = File::Open(_fileName));
 		//CHECK file->GetFileSize() == 0;
 		//CHECK file->GetSeekPos() == 0;
-		//DeletePtr(file);
+		//GALATEA_DELETE_PTR(file);
 
 		//File::Delete(_fileName);
 
@@ -130,14 +130,14 @@ namespace FileTestNamespace
 		//File exists, but is empty, GetFileSize returns 0
 		file = Create();
 		CHECK file->GetFileSize() == 0;
-		DeletePtr(file)
+		GALATEA_DELETE_PTR(file)
 		CHECK File::GetFileSize(_fileName) == 0;
 
 		//File exists, and is not empty, GetFileSize returns size
 		file = Create();
 		file->Write((VoidPtr)_fileName, 5);
 		CHECK file->GetFileSize() == 5;
-		DeletePtr(file)
+		GALATEA_DELETE_PTR(file)
 		CHECK File::GetFileSize(_fileName) == 5;
 
 		File::Delete(_fileName);
@@ -158,7 +158,7 @@ namespace FileTestNamespace
 		file->Write((VoidPtr)_fileName, 5);
 		CHECK file->GetSeekPos() == 5;
 
-		DeletePtr(file)
+		GALATEA_DELETE_PTR(file)
 		File::Delete(_fileName);
 
 		return result;
@@ -177,7 +177,7 @@ namespace FileTestNamespace
 		file->Write((VoidPtr)_fileName, 3);
 		CHECK file->GetSeekPos() == 3;
 
-		DeletePtr(file)
+		GALATEA_DELETE_PTR(file)
 		File::Delete(_fileName);
 
 		return result;
@@ -191,15 +191,15 @@ namespace FileTestNamespace
 		//Create, write 6 bytes and close
 		file = Create();
 		file->Write((VoidPtr)_fileName, 6);
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 
 		//Create, GetSeekPos returns 0, SeekToEnd, GetSeekPos returns 6
-		file = Create();
+		file = File::Open(_fileName, File::Disposition::OpenExisting, File::Access::AccessReadWrite, 0);
 		CHECK file->GetSeekPos() == 0;
 		file->SeekToEnd();
 		CHECK file->GetSeekPos() == 6;
 
-		DeletePtr(file)
+		GALATEA_DELETE_PTR(file)
 		File::Delete(_fileName);
 
 		return result;
@@ -230,7 +230,7 @@ namespace FileTestNamespace
 		file->Write((VoidPtr)_fileName, String::CStrByteSize(_fileName) + sizeof(TChar));
 		file->Seek(0);
 		file->Read(buffer, bufferSize);
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		File::Delete(_fileName);
 
 		String read = buffer;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Image.hpp"
+#include "../Color.hpp"
 #include <SDL.h>
 
 namespace Galatea
@@ -13,6 +14,7 @@ namespace Galatea
 			SDL_Texture* _texture;
 
 			public:
+			ImageSDL(int width, int height, SDL_Renderer* renderer);
 			ImageSDL(const char* file, SDL_Renderer* renderer);
 			ImageSDL(const ImageSDL&) = delete;
 			ImageSDL& operator=(const ImageSDL&) = delete;

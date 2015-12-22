@@ -14,7 +14,7 @@ Bool SizeOfTest()
 	CHECK sizeof(UInt32) == 4U;
 	CHECK sizeof(UInt64) == 8U;
 
-	#ifndef CoreTarget64Bits
+	#ifndef GALATEA_BUILD_X64
 		CHECK sizeof(Int) == 4U;
 		CHECK sizeof(UInt) == 4U;
 	#else
@@ -59,7 +59,7 @@ Bool WithinInt32LimitTest()
 	CHECK WithinInt32Limit(0x7fffffff);
 	CHECK WithinInt32Limit(0x80000000);
 
-	#if CoreTarget64Bits
+	#if defined(GALATEA_BUILD_X64)
 		CHECK WithinInt32Limit(0x7fffffff0) == false;
 		CHECK WithinInt32Limit(0x100000000000) == false;
 		CHECK WithinInt32Limit(0x8000000000000000) == false;
@@ -77,7 +77,7 @@ Bool WithinUInt32LimitTest()
 	CHECK WithinInt32Limit(0x7fffffff);
 	CHECK WithinInt32Limit(0x80000000);
 
-	#if CoreTarget64Bits
+	#if defined(GALATEA_BUILD_X64)
 		CHECK WithinInt32Limit(0x100000000000) == false;
 		CHECK WithinInt32Limit(0x8000000000000000) == false;
 	#endif

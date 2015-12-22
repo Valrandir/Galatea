@@ -6,11 +6,11 @@
 #include "VectorAssert.hpp"
 
 //Placement New
-#ifdef BuildTargetWin32
+#ifdef GALATEA_BUILD_SYS_WINDOWS
 	inline void* operator new(Galatea::UInt, void* address){return address;}
 	inline void operator delete(void*, void*){}
-#elif CoreTargetLinux
-	#ifdef BuildTarget64Bit
+#elif GALATEA_BUILD_SYS_LINUX
+	#ifdef GALATEA_BUILD_X64
 		inline void* operator new(long unsigned int, void* address){return address;}
 	#else
 		inline void* operator new(unsigned int, void* address){return address;}
@@ -25,7 +25,7 @@ namespace Galatea
 		template<class T> class Vector
 		{
 			public:
-			enum CtorModeEnum{Always, Once, Pod};
+			enum CtorMode{Always, Once, Pod};
 			typedef T Element;
 			typedef T const ConstElement;
 
@@ -33,10 +33,10 @@ namespace Galatea
 			#ifndef VectorUnitTest
 				private:
 			#endif
-			static CtorModeEnum DefaultMode;
+			static CtorMode DefaultMode;
 
 			private:
-			CtorModeEnum _ctorMode;
+			CtorMode _ctorMode;
 			Element* _origin; //Array Start
 			Element* _last; //Sequence End
 			Element* _end; //Array End
@@ -55,9 +55,9 @@ namespace Galatea
 
 			public:
 			/* Constructors && Destructor */
-			Vector(CtorModeEnum ctorMode = DefaultMode);
-			Vector(UInt capacity, CtorModeEnum ctorMode = DefaultMode);
-			Vector(ConstElement* begin, ConstElement* end, CtorModeEnum ctorMode = DefaultMode);
+			Vector(CtorMode ctorMode = DefaultMode);
+			Vector(UInt capacity, CtorMode ctorMode = DefaultMode);
+			Vector(ConstElement* begin, ConstElement* end, CtorMode ctorMode = DefaultMode);
 			Vector(Vector const & source);
 			Vector(Vector&& Source);
 			virtual ~Vector();
@@ -70,7 +70,7 @@ namespace Galatea
 			ConstElement& operator[](UInt offset) const;
 
 			/* Accesors */
-			CtorModeEnum CtorMode() const;
+			CtorMode GetCtorMode() const;
 			Bool IsEmpty() const;
 			UInt Capacity() const;
 			UInt Length() const;

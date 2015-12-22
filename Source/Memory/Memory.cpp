@@ -17,7 +17,7 @@ namespace Galatea
 
 		void Free(VoidPtr ptr)
 		{
-			ASSERT_PARAMETER(ptr != NULL);
+			ASSERT_PARAMETER(ptr != nullptr);
 
 			if(ptr)
 				free(ptr);
@@ -25,8 +25,8 @@ namespace Galatea
 
 		void Copy(VoidPtr source, VoidPtr target, UInt size)
 		{
-			ASSERT_PARAMETER(source != NULL);
-			ASSERT_PARAMETER(target != NULL);
+			ASSERT_PARAMETER(source != nullptr);
+			ASSERT_PARAMETER(target != nullptr);
 
 			if(size)
 				memcpy(target, source, size);
@@ -34,8 +34,8 @@ namespace Galatea
 
 		void Move(VoidPtr source, VoidPtr target, UInt size)
 		{
-			ASSERT_PARAMETER(source != NULL);
-			ASSERT_PARAMETER(target != NULL);
+			ASSERT_PARAMETER(source != nullptr);
+			ASSERT_PARAMETER(target != nullptr);
 
 			if(size)
 				memmove(target, source, size);

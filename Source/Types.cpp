@@ -18,7 +18,7 @@ namespace Galatea
 
 	Int ToInt(Int64 value)
 	{
-		#ifdef CoreTarget64Bits
+		#ifdef GALATEA_BUILD_X64
 			return value;
 		#else
 			return ToInt32(value);
@@ -27,7 +27,7 @@ namespace Galatea
 
 	UInt ToUInt(UInt64 value)
 	{
-		#ifdef CoreTarget64Bits
+		#ifdef GALATEA_BUILD_X64
 			return value;
 		#else
 			return ToUInt32(value);
@@ -36,7 +36,7 @@ namespace Galatea
 
 	Bool WithinInt32Limit(Int value)
 	{
-		#ifdef CoreTarget64Bits
+		#ifdef GALATEA_BUILD_X64
 			if(value & 0x8000000000000000)
 				value = ~value;
 			value &= 0xffffffff00000000;
@@ -48,7 +48,7 @@ namespace Galatea
 
 	Bool WithinUInt32Limit(UInt value)
 	{
-		#ifdef CoreTarget64Bits
+		#ifdef GALATEA_BUILD_X64
 			return (value & 0xffffffff00000000) == 0U;
 		#else
 			return true;

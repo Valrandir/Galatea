@@ -5,7 +5,7 @@ namespace Galatea
 {
 	namespace Display
 	{
-		Color::Color() : red{}, green{}, blue{}, alpha{} {}
+		Color::Color() : red{}, green{}, blue{}, alpha{0xff} {}
 		Color::Color(UInt8 red, UInt8 green, UInt8 blue) : red{red}, green{green}, blue{blue}, alpha{0xff} {}
 		Color::Color(UInt8 red, UInt8 green, UInt8 blue, UInt8 alpha) : red{red}, green{green}, blue{blue}, alpha{alpha} {}
 

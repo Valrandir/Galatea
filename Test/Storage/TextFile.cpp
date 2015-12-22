@@ -20,7 +20,7 @@ namespace TextFileTestNamespace
 	{
 		auto file = TextFile::Create(_fileName);
 		if(file) file->Write(_content);
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 	}
 
 	void DeleteFile()
@@ -42,7 +42,7 @@ namespace TextFileTestNamespace
 		{
 			TextFile *ptr = TextFile::Create(_fileName);
 			CHECK ptr != NULL;
-			DeletePtr(ptr);
+			GALATEA_DELETE_PTR(ptr);
 		}
 
 		DeleteFile();
@@ -68,7 +68,7 @@ namespace TextFileTestNamespace
 			TextFile *ptr = TextFile::Append(_fileName);
 			CHECK ptr != NULL;
 			CHECK ptr->FileRef().GetSeekPos() == ptr->FileRef().GetFileSize();
-			DeletePtr(ptr);
+			GALATEA_DELETE_PTR(ptr);
 		}
 
 		DeleteFile();
@@ -81,83 +81,83 @@ namespace TextFileTestNamespace
 		Bool result = true;
 		TextFile* file;
 		String::StrPtrVec* lines;
-		Exception corex;
+		Exception out_ex;
 
 		//Assert when fileName is null
 		CHECK_ASSERT(TextFile::ReadLines(_nullCStr));
 
 		//Fail with bad filename
-		lines = TextFile::ReadLines(_badFileName, &corex);
+		lines = TextFile::ReadLines(_badFileName, &out_ex);
 		CHECK lines != NULL;
 		CHECK lines->Length() == 0U;
-		CHECK String::Compare(String::Empty, corex.file) != 0;
+		CHECK String::Compare(String::Empty, out_ex.file) != 0;
 
 		//File is empty -> no lines
 		file = TextFile::Create(_fileName);
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 0U;
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File contains one space -> one line
 		file = TextFile::Create(_fileName);
 		file->Write(Text(" "));
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 1U;
 		CHECK *(*lines)[0] == Text(" ");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains NewLine only
 		//Result: no line
 		file = TextFile::Create(_fileName);
 		file->Write(NewLine);
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 0U;
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains one line
 		//Result: one line
 		file = TextFile::Create(_fileName);
 		file->Write(Text("Line 01"));
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 1U;
 		CHECK *(*lines)[0] == Text("Line 01");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains one line with NewLine at end
 		//Result: one line
 		file = TextFile::Append(_fileName);
 		file->WriteLine();
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 1U;
 		CHECK *(*lines)[0] == Text("Line 01");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains two lines without a NewLine at end of second line
 		//Result: two lines
 		file = TextFile::Append(_fileName);
 		file->Write(Text("Line 02"));
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 2U;
 		CHECK *(*lines)[0] == Text("Line 01");
 		CHECK *(*lines)[1] == Text("Line 02");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains two lines with a NewLine at end of second line
 		//Result: two lines
 		file = TextFile::Append(_fileName);
 		file->WriteLine();
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 2U;
 		CHECK *(*lines)[0] == Text("Line 01");
 		CHECK *(*lines)[1] == Text("Line 02");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		//File: contains seven lines with varied mix of NewLine \r \n
 		//Result: seven lines
@@ -167,7 +167,7 @@ namespace TextFileTestNamespace
 		file->WriteLine(Text("Line 05\r\n"));
 		file->WriteLine(Text("Line 06\n\r"));
 		file->WriteLine(Text("Line 07"));
-		DeletePtr(file);
+		GALATEA_DELETE_PTR(file);
 		lines = TextFile::ReadLines(_fileName);
 		CHECK lines->Length() == 7U;
 		CHECK *(*lines)[0] == Text("Line 01");
@@ -177,7 +177,7 @@ namespace TextFileTestNamespace
 		CHECK *(*lines)[4] == Text("Line 05");
 		CHECK *(*lines)[5] == Text("Line 06");
 		CHECK *(*lines)[6] == Text("Line 07");
-		DeletePtr(lines);
+		GALATEA_DELETE_PTR(lines);
 
 		DeleteFile();
 
@@ -199,8 +199,8 @@ namespace TextFileTestNamespace
 		MakeFile();
 		CHECK TextFile::ReadAll(_fileName, text);
 		UInt64 fileSize = File::GetFileSize(_fileName);
-		if(fileSize % 2) ++fileSize;
-		CHECK text.Length() == fileSize / sizeof(TChar);
+
+		CHECK text.Length() * sizeof(TChar) == fileSize;
 		DeleteFile();
 
 		return result;
@@ -270,17 +270,17 @@ namespace TextFileTestNamespace
 		textFile = TextFile::Create(_fileName);
 		textFile->Close();
 		CHECK_ASSERT(textFile->Write(_content));
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 
 		//Assert when text is null
 		textFile = TextFile::Create(_fileName);
 		CHECK_ASSERT(textFile->Write(_nullCStr));
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 
 		//Write, read back same length
 		textFile = TextFile::Create(_fileName);
 		textFile->Write(_content);
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 		fileSize = File::GetFileSize(_fileName);
 		textSize = String::CStrLength(_content) * sizeof(TChar);
 		CHECK fileSize == textSize;
@@ -298,18 +298,18 @@ namespace TextFileTestNamespace
 		textFile = TextFile::Create(_fileName);
 		textFile->Close();
 		CHECK_ASSERT(textFile->WriteLine(_content));
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 
 		//Assert when text is null
 		textFile = TextFile::Create(_fileName);
 		CHECK_ASSERT(textFile->WriteLine(_nullCStr));
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 
 		//Write, read back same length + length of NewLine
 		MakeFile();
 		textFile = TextFile::Append(_fileName);
 		textFile->WriteLine(_content);
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 		fileSize = File::GetFileSize(_fileName);
 		textSize = String::CStrLength(_content) * sizeof(TChar);
 		textSize *= 2;

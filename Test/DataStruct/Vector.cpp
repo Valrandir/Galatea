@@ -30,7 +30,7 @@ namespace VectorTestNamespace
 
 	Bool AssertCntrAlways(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
-		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Always)
+		if(VCntr::DefaultMode == VCntr::CtorMode::Always)
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
@@ -38,7 +38,7 @@ namespace VectorTestNamespace
 
 	Bool AssertCntrOnce(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
-		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Once)
+		if(VCntr::DefaultMode == VCntr::CtorMode::Once)
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
@@ -46,7 +46,7 @@ namespace VectorTestNamespace
 
 	Bool AssertCntrPod(UInt construct = 0U, UInt copyConstruct = 0U, UInt moveConstruct = 0U, UInt operatorEqual = 0U, UInt operatorMove = 0U, UInt destruct = 0U)
 	{
-		if(VCntr::DefaultMode == VCntr::CtorModeEnum::Pod)
+		if(VCntr::DefaultMode == VCntr::CtorMode::Pod)
 			return Counter::Compare(construct, copyConstruct, moveConstruct, operatorEqual, operatorMove, destruct);
 		else
 			return true;
@@ -118,7 +118,7 @@ namespace VectorTestNamespace
 
 		CHECK AssertCntrZero();
 		CHECK AssertCapLen(vc, 0U, 0U);
-		CHECK vc.CtorMode() == VCntr::DefaultMode;
+		CHECK vc.GetCtorMode() == VCntr::DefaultMode;
 		CHECK AssertBeginEndNull(vc);
 
 		return result;
@@ -127,9 +127,9 @@ namespace VectorTestNamespace
 	Bool CtorModeTest()
 	{
 		Bool result = true;
-		VCntr vc(VCntr::CtorModeEnum::Once);
+		VCntr vc(VCntr::CtorMode::Once);
 
-		CHECK vc.CtorMode() == VCntr::CtorModeEnum::Once;
+		CHECK vc.GetCtorMode() == VCntr::CtorMode::Once;
 
 		return result;
 	}
@@ -187,9 +187,9 @@ namespace VectorTestNamespace
 
 		//Copy Pod vector
 		{
-			VCntr source(VCntr::CtorModeEnum::Pod);
+			VCntr source(VCntr::CtorMode::Pod);
 			VCntr target(source);
-			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
+			CHECK target.GetCtorMode() == VCntr::CtorMode::Pod;
 		}
 
 		return result;
@@ -234,9 +234,9 @@ namespace VectorTestNamespace
 
 		//Move Pod vector
 		{
-			VCntr source(VCntr::CtorModeEnum::Pod);
+			VCntr source(VCntr::CtorMode::Pod);
 			VCntr target((VCntr&&)source);
-			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
+			CHECK target.GetCtorMode() == VCntr::CtorMode::Pod;
 		}
 
 		return result;
@@ -348,9 +348,9 @@ namespace VectorTestNamespace
 
 		//Assign Pod vector
 		{
-			VCntr source(VCntr::CtorModeEnum::Pod);
+			VCntr source(VCntr::CtorMode::Pod);
 			VCntr target = source;
-			CHECK target.CtorMode() == VCntr::CtorModeEnum::Pod;
+			CHECK target.GetCtorMode() == VCntr::CtorMode::Pod;
 		}
 
 		return result;
@@ -393,9 +393,9 @@ namespace VectorTestNamespace
 
 		//Assign Pod vector
 		{
-			VCntr target(VCntr::CtorModeEnum::Pod);
+			VCntr target(VCntr::CtorMode::Pod);
 			VCntr source = (VCntr&&)target;
-			CHECK source.CtorMode() == VCntr::CtorModeEnum::Pod;
+			CHECK source.GetCtorMode() == VCntr::CtorMode::Pod;
 		}
 
 		return result;
@@ -520,14 +520,14 @@ namespace VectorTestNamespace
 
 		//Specify mode obtain same mode
 		{
-			VCntr v(VCntr::CtorModeEnum::Pod);
-			CHECK v.CtorMode() == VCntr::CtorModeEnum::Pod;
+			VCntr v(VCntr::CtorMode::Pod);
+			CHECK v.GetCtorMode() == VCntr::CtorMode::Pod;
 		}
 
 		//Don't specify mode obtain default
 		{
 			VCntr v;
-			CHECK v.CtorMode() == VCntr::DefaultMode;
+			CHECK v.GetCtorMode() == VCntr::DefaultMode;
 		}
 
 		return result;
@@ -1080,7 +1080,7 @@ namespace VectorTestNamespace
 	}
 }
 
-Bool VectorTest(VCntr::CtorModeEnum defaultMode)
+Bool VectorTest(VCntr::CtorMode defaultMode)
 {
 	using namespace VectorTestNamespace;
 	Bool result = true;

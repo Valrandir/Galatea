@@ -32,7 +32,7 @@ namespace Galatea
 			}
 			else
 			{
-				DeletePtr(Thread);
+				GALATEA_DELETE_PTR(Thread);
 				return NULL;
 			}
 		}

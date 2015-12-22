@@ -31,7 +31,8 @@ namespace Galatea
 			bool Update();
 			void Close();
 
-			Image* LoadImage(const char* file) const;
+			Image* CreateImage(int width, int height) const;
+			Image* CreateImage(const char* file) const;
 
 			int Width() const;
 			int Height() const;

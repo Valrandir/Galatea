@@ -1,11 +1,12 @@
 #pragma once
 #include "BaseWindow.hpp"
+#include "../../Types.hpp"
 
 class AssertWnd : public BaseWindow
 {
-	static int const TEXTBOX_ID = 1;
-	static int const BTN_COPY_ID = 2;
-	static int const BTN_CLOSE_ID = 3;
+	static Galatea::Int const TEXTBOX_ID = 1;
+	static Galatea::Int const BTN_COPY_ID = 2;
+	static Galatea::Int const BTN_CLOSE_ID = 3;
 	HWND _hText;
 	HFONT _hFont;
 

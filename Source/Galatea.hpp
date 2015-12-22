@@ -1,9 +1,5 @@
 #pragma once
 
-#if !BuildTargetWin32 && !CoreTargetLinux
-	#error No target defined.
-#endif
-
 #include "Types.hpp"
 
 #include "System.hpp"

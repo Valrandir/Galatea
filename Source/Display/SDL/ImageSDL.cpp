@@ -5,6 +5,13 @@ namespace Galatea
 {
 	namespace Display
 	{
+		ImageSDL::ImageSDL(int width, int height, SDL_Renderer* renderer)
+		{
+			this->_width = width;
+			this->_height = height;
+			_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, width, height);
+		}
+
 		ImageSDL::ImageSDL(const char* file, SDL_Renderer* renderer)
 		{
 			SDL_Surface* surface = IMG_Load(file);

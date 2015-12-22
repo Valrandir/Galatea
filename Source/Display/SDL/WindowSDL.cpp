@@ -112,7 +112,12 @@ namespace Galatea
 			_is_destroyed = true;
 		}
 
-		Image* WindowSDL::LoadImage(const char* file) const
+		Image* WindowSDL::CreateImage(int width, int height) const
+		{
+			return new ImageSDL(width, height, _renderer);
+		}
+
+		Image* WindowSDL::CreateImage(const char* file) const
 		{
 			return new ImageSDL(file, _renderer);
 		}

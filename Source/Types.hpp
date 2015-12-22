@@ -1,10 +1,28 @@
 #pragma once
 
-#ifndef NULL
-	#define NULL 0
+#define GALATEA_DELETE_PTR(ptr) if(ptr) { delete(ptr); (ptr) = nullptr; }
+
+#if !defined(GALATEA_BUILD_SYS_WINDOWS) && !defined(GALATEA_BUILD_SYS_LINUX)
+	#ifdef __linux__
+		#define GALATEA_BUILD_SYS_LINUX
+		#define GALATEA_BUILD_X64
+	#else
+		#define GALATEA_BUILD_SYS_WINDOWS
+		#if _WIN64
+			#define GALATEA_BUILD_X64
+		#elif defined(_WIN32)
+			#define GALATEA_BUILD_X86
+		#endif
+	#endif
 #endif
 
-#define DeletePtr(ptr) if(ptr) { delete(ptr); (ptr) = NULL; }
+#if !defined(GALATEA_BUILD_DEBUG) && !defined(GALATEA_BUILD_RELEASE)
+	#ifdef _DEBUG
+		#define GALATEA_BUILD_DEBUG
+	#else
+		#define GALATEA_BUILD_RELEASE
+	#endif
+#endif
 
 namespace Galatea
 {
@@ -14,7 +32,7 @@ namespace Galatea
 	typedef void Void;
 	typedef void* VoidPtr;
 
-	#ifdef BuildTargetWin32
+	#ifdef GALATEA_BUILD_SYS_WINDOWS
 		typedef signed __int8 Int8;
 		typedef signed __int16 Int16;
 		typedef signed __int32 Int32;
@@ -23,7 +41,7 @@ namespace Galatea
 		typedef unsigned __int16 UInt16;
 		typedef unsigned __int32 UInt32;
 		typedef unsigned __int64 UInt64;
-	#elif CoreTargetLinux
+	#elif GALATEA_BUILD_SYS_LINUX
 		typedef signed char Int8;
 		typedef signed short Int16;
 		typedef signed int Int32;
@@ -34,7 +52,7 @@ namespace Galatea
 		typedef unsigned long long UInt64;
 	#endif
 
-	#ifndef BuildTarget64Bit
+	#ifndef GALATEA_BUILD_X64
 		typedef Int32 Int;
 		typedef UInt32 UInt;
 		typedef Int32* IntPtr;
@@ -53,7 +71,7 @@ namespace Galatea
 	Bool WithinInt32Limit(Int value);
 	Bool WithinUInt32Limit(UInt value);
 
-	#if BuildTargetWin32 && UNICODE
+	#if defined(GALATEA_BUILD_SYS_WINDOWS) && defined(UNICODE)
 		#define _Text(quote)L##quote
 		#define Text(quote)_Text(quote)
 		typedef wchar_t TChar;
@@ -64,9 +82,9 @@ namespace Galatea
 
 	typedef TChar const * CStr;
 
-	#ifdef BuildTargetWin32
+	#ifdef GALATEA_BUILD_SYS_WINDOWS
 		#define NewLine Text("\r\n")
-	#elif CoreTargetLinux
+	#elif GALATEA_BUILD_SYS_LINUX
 		#define NewLine Text("\n")
 	#endif
 }

@@ -54,8 +54,8 @@ Bool ThreadedErrTest()
 	UInt32 aOut = *(UInt32*)aThread->Join();
 	UInt32 bOut = *(UInt32*)bThread->Join();
 
-	DeletePtr(aThread);
-	DeletePtr(bThread);
+	GALATEA_DELETE_PTR(aThread);
+	GALATEA_DELETE_PTR(bThread);
 
 	CHECK aOut == 110U;
 	CHECK bOut == 16U;

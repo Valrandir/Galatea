@@ -18,8 +18,8 @@ namespace Galatea
 			UInt64 GetSeekPos() const;
 			void Seek(UInt64 position) const;
 			void SeekToEnd() const;
-			Bool Read(VoidPtr buffer, UInt bufferSize, Exception* corex = NULL) const;
-			Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* corex = NULL) const;
+			Bool Read(VoidPtr buffer, UInt bufferSize, Exception* out_ex = NULL) const;
+			Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* out_ex = NULL) const;
 			void Close();
 			~FileImpl();
 		};

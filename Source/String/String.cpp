@@ -350,16 +350,16 @@ namespace Galatea
 	/* Constructors && Destructor *************************************************/
 	/******************************************************************************/
 
-	String::String() : _vctr(Vector::CtorModeEnum::Pod)
+	String::String() : _vctr(Vector::CtorMode::Pod)
 	{
 	}
 
-	String::String(UInt capacity) : _vctr(capacity, Vector::CtorModeEnum::Pod)
+	String::String(UInt capacity) : _vctr(capacity, Vector::CtorMode::Pod)
 	{
 	}
 
 	//value must be null terminated
-	String::String(CStr value) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr value) : _vctr(Vector::CtorMode::Pod)
 	{
 		ASSERT_PARAMETER(value);
 		UInt length = CStrLength(value);
@@ -368,14 +368,14 @@ namespace Galatea
 	}
 
 	//if length > 0 value must not be null
-	String::String(CStr value, UInt length) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr value, UInt length) : _vctr(Vector::CtorMode::Pod)
 	{
 		ASSERT_PARAMETER(length == 0 || value);
 		if(length)
 			_vctr.AddRange(value, value + length + 1);
 	}
 
-	String::String(CStr begin, CStr end) : _vctr(Vector::CtorModeEnum::Pod)
+	String::String(CStr begin, CStr end) : _vctr(Vector::CtorMode::Pod)
 	{
 		ASSERT_PARAMETER(begin);
 		ASSERT_PARAMETER(end);

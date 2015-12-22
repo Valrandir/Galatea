@@ -7,7 +7,7 @@
 		try { func; result = false; } \
 		catch(Exception const &) { Assert::Failing = false; result = true; }
 
-#ifdef CoreTargetLinux
+#ifdef GALATEA_BUILD_SYS_LINUX
 	#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 	#pragma GCC diagnostic ignored "-Wunused-variable"
 #endif

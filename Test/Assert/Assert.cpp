@@ -70,25 +70,23 @@ Bool ExceptionTest()
 	//InitFromLastErr
 	{
 		Exception ex(source_code, function, file, line);
-		UInt32 errCode = 5U;
+		UInt32 err_code = 5U;
 
-		SetErrCode(errCode);
-		String errText = GetErrText(GetErrCode());
-
+		SetErrCode(err_code);
 		ex.InitFromLastErr();
-
-		CHECK CheckException(ex, source_code, function, file, line, errCode, errText);
+		String errText = GetErrText(err_code);
+		CHECK CheckException(ex, source_code, function, file, line, err_code, errText);
 
 		//Copy Constructor
 		{
 			Exception ex2(ex);
-			CHECK CheckException(ex2, source_code, function, file, line, errCode, errText);
+			CHECK CheckException(ex2, source_code, function, file, line, err_code, errText);
 		}
 
 		//operator =
 		{
 			Exception ex2 = ex;
-			CHECK CheckException(ex2, source_code, function, file, line, errCode, errText);
+			CHECK CheckException(ex2, source_code, function, file, line, err_code, errText);
 		}
 	}
 

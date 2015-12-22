@@ -28,10 +28,10 @@ namespace IniFileTestNamespace
 
 		textFile = TextFile::Create(iniFileName);
 		textFile->Write(text);
-		DeletePtr(textFile);
+		GALATEA_DELETE_PTR(textFile);
 
 		IniFile* iniFile = IniFile::ReadIniFile(iniFileName);
-		DeletePtr(iniFile);
+		GALATEA_DELETE_PTR(iniFile);
 
 		File::Delete(iniFileName);
 

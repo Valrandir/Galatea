@@ -63,7 +63,11 @@ void BaseWindow::Initialize(LPCTSTR title, int width, int height, DWORD style)
 	AdjustWindowRect(style, width, height);
 	_hWnd = CreateWindow(wc.lpszClassName, title, style, x, y, width, height, HWND_DESKTOP, NULL, _hInst, NULL);
 
-	SetWindowLongPtr(_hWnd, GWLP_USERDATA, (LONG)this);
+	#ifdef _WIN64
+		SetWindowLongPtr(_hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+	#else
+		SetWindowLongPtr(_hWnd, GWLP_USERDATA, reinterpret_cast<LONG>(this));
+	#endif
 }
 
 BaseWindow::BaseWindow(LPCTSTR title, int width, int height, DWORD style)

@@ -104,7 +104,6 @@ namespace StringTestNamespace
 
 			String str = String::FormatToString(format, 157, Text("Done"));
 
-			CHECK str.Capacity() == 37U + String::CStrLength(NewLine);
 			CHECK str.Length() == 36U;
 			CHECK 0 == String::Compare(Text("One hundred fifty seven : 157 - Done"), str.CStrPtr());
 		}
@@ -1417,7 +1416,7 @@ namespace StringTestNamespace
 		CHECK 0 == String::Compare(*(*vStr)[2], Text(" ScrResY "));
 		CHECK 0 == String::Compare(*(*vStr)[3], Text(" 1024"));
 
-		DeletePtr(vStr);
+		GALATEA_DELETE_PTR(vStr);
 
 		return result;
 	}
@@ -1458,7 +1457,7 @@ namespace StringTestNamespace
 		CHECK 0 == String::Compare(*(*vStr)[3], Text(" Word 4 "));
 		CHECK 0 == String::Compare(*(*vStr)[4], Text(" Word 5"));
 
-		DeletePtr(vStr);
+		GALATEA_DELETE_PTR(vStr);
 
 		return result;
 	}

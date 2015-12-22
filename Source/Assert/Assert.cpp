@@ -2,11 +2,11 @@
 
 namespace Galatea
 {
-	CStr AssertTypeEnum_Default = Text("Default Assert Type");
-	CStr AssertTypeEnum_IndexOutOfRange = Text("Index Out Of Range");
-	CStr AssertTypeEnum_NullParameter = Text("Null Parameter");
-	CStr AssertTypeEnum_SystemCall = Text("System Call Failed");
-	CStr AssertTypeEnum_Undefined = Text("Undefined Assert Type");
+	CStr AssertType_Default = Text("Default Assert Type");
+	CStr AssertType_IndexOutOfRange = Text("Index Out Of Range");
+	CStr AssertType_NullParameter = Text("Null Parameter");
+	CStr AssertType_SystemCall = Text("System Call Failed");
+	CStr AssertType_Undefined = Text("Undefined Assert Type");
 
 	Assert::AssertProc Assert::_assertProc = 0;
 	CStr Assert::_logFileName = LOG_FILENAME;
@@ -32,17 +32,17 @@ namespace Galatea
 		_logFileName = logFileName;
 	}
 
-	CStr Assert::AssertTypeToCStr(AssertTypeEnum assertType)
+	CStr Assert::AssertTypeToCStr(AssertType assertType)
 	{
 		CStr msg;
 
 		switch(assertType)
 		{
-			case AssertTypeEnum::Default: msg = AssertTypeEnum_Default; break;
-			case AssertTypeEnum::IndexOutOfRange: msg = AssertTypeEnum_IndexOutOfRange; break;
-			case AssertTypeEnum::NullParameter: msg = AssertTypeEnum_NullParameter; break;
-			case AssertTypeEnum::SystemCall: msg = AssertTypeEnum_SystemCall; break;
-			default: msg = AssertTypeEnum_Undefined;
+			case AssertType::Default: msg = AssertType_Default; break;
+			case AssertType::IndexOutOfRange: msg = AssertType_IndexOutOfRange; break;
+			case AssertType::NullParameter: msg = AssertType_NullParameter; break;
+			case AssertType::SystemCall: msg = AssertType_SystemCall; break;
+			default: msg = AssertType_Undefined;
 		}
 
 		return msg;

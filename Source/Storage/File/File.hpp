@@ -17,7 +17,7 @@ namespace Galatea
 			File();
 
 			public:
-			enum DispositionEnum
+			enum Disposition
 			{
 				//Creates a new file, always.
 				CreateAlways,
@@ -31,14 +31,14 @@ namespace Galatea
 				TruncateExisting
 			};
 
-			enum AccessEnum
+			enum Access
 			{
 				AccessRead,
 				AccessWrite,
 				AccessReadWrite
 			};
 
-			enum FlagsEnum
+			enum Flags
 			{
 				ShareRead = 0x1,
 				ShareWrite = 0x2,
@@ -47,8 +47,8 @@ namespace Galatea
 			};
 
 			//Returns a File pointer which must be manually deleted after use.
-			//On failure, returns a NULL pointer and initialize corex if it is set.
-			static File* Open(CStr fileName, DispositionEnum behavior, AccessEnum access, UInt32 flags, Exception* corex = NULL);
+			//On failure, returns a NULL pointer and initialize out_ex if it is set.
+			static File* Open(CStr fileName, Disposition behavior, Access access, UInt32 flags, Exception* out_ex = nullptr);
 
 			static Bool Exists(CStr fileName);
 			static Bool Delete(CStr fileName);
@@ -60,8 +60,8 @@ namespace Galatea
 			virtual UInt64 GetSeekPos() const = 0;
 			virtual void Seek(UInt64 position) const = 0;
 			virtual void SeekToEnd() const = 0;
-			virtual Bool Read(VoidPtr buffer, UInt bufferSize, Exception* corex = NULL) const = 0;
-			virtual Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* corex = NULL) const = 0;
+			virtual Bool Read(VoidPtr buffer, UInt bufferSize, Exception* out_ex = nullptr) const = 0;
+			virtual Bool Write(VoidPtr const buffer, UInt bufferSize, Exception* out_ex = nullptr) const = 0;
 			virtual void Close() = 0;
 			virtual ~File();
 		};

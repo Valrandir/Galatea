@@ -1,3 +1,4 @@
+#include <stdio.h> //Needed for "Use Multi-Byte Character Set" in Windows
 #include <stdarg.h>
 #include <tchar.h>
 #include "../Assert/Assert.hpp"

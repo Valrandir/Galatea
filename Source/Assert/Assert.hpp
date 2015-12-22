@@ -2,13 +2,13 @@
 #include "../Types.hpp"
 #include "Exception.hpp"
 
-#define LOG_FILENAME Text("CoreLog.log")
-#define ASSERT_COREX(func, corex) if(!(func) && corex) (*corex = Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__)).InitFromLastErr()
+#define LOG_FILENAME Text("Galatea.log")
+#define ASSERT_EXCEPTION(func, ex) if(!(func) && ex) (*ex = Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__)).InitFromLastErr()
 
-#ifdef CoreDebug
+#ifdef GALATEA_BUILD_DEBUG
 	#define ASSERT(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__))
-	#define ASSERT_RANGE(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::IndexOutOfRange)))
-	#define ASSERT_PARAMETER(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertTypeEnum::NullParameter)))
+	#define ASSERT_RANGE(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertType::IndexOutOfRange)))
+	#define ASSERT_PARAMETER(func) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, Assert::AssertTypeToCStr(Assert::AssertType::NullParameter)))
 	#define ASSERT_SYSTEMCALL(func) if(!(func)) { Exception ex(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__); ex.InitFromLastErr(); Galatea::Assert::Abort(ex); }
 	#define ASSERT_MSG(func, msg) if(!(func)) Galatea::Assert::Abort(Exception(Text(#func), Text(__FUNCTION__), Text(__FILE__), __LINE__, msg))
 #else
@@ -27,7 +27,7 @@ namespace Galatea
 		//Return true to continue with Abort, false to cancel Abort.
 		typedef Bool (*AssertProc)(Exception const &);
 
-		enum AssertTypeEnum
+		enum AssertType
 		{
 			Default = 0,
 			IndexOutOfRange,
@@ -50,7 +50,7 @@ namespace Galatea
 		static void SetAssertProc(AssertProc assertProc);
 		static CStr GetLogFileName();
 		static void SetLogFileName(CStr logFileName);
-		static CStr AssertTypeToCStr(AssertTypeEnum assertType);
+		static CStr AssertTypeToCStr(AssertType assertType);
 		static void Abort(Exception const & ex);
 	};
 }
