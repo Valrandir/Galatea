@@ -1,7 +1,6 @@
 #pragma once
 #include "../Timing/Rate.hpp"
 #include "Image.hpp"
-#include "Renderer.hpp"
 
 namespace Galatea
 {
@@ -26,7 +25,7 @@ namespace Galatea
 			~Sprite();
 
 			void SetFlip(bool horizontal_flip, bool vertical_flip);
-			void Draw(const Point& position, const Renderer* renderer);
+			void Draw(const Point& position, const Image* image);
 
 			Point Size() const;
 			int FrameCount() const;

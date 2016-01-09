@@ -27,8 +27,6 @@ Bool TestMain()
 
 	Assert::SetAssertProc(AssertOverride);
 
-	//CHECK DisplayTest();
-
 	CHECK AssertTest();
 	CHECK TypesTest();
 	CHECK ErrTest();
@@ -41,6 +39,8 @@ Bool TestMain()
 	CHECK FileTest();
 	CHECK TextFileTest();
 	CHECK IniFileTest();
+
+	CHECK DisplayTest();
 
 	return result;
 }

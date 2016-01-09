@@ -2,8 +2,6 @@
 #include <stdint.h>
 #include "Color.hpp"
 #include "Image.hpp"
-#include "ImageLoader.hpp"
-#include "Renderer.hpp"
 #include "../Input/Input.hpp"
 
 namespace Galatea
@@ -12,13 +10,10 @@ namespace Galatea
 	{
 		using namespace Input;
 
-		class Window : public Renderer, public ImageLoader
+		#pragma warning(disable: 4250)
+		class Window : public virtual Image
 		{
 			public:
-			static Window* Create(const char* title, int width, int height);
-			Window() = default;
-			Window(const Window&) = delete;
-			Window& operator=(const Window&) = delete;
 			virtual ~Window();
 
 			virtual void BeginDraw(bool clear = true) = 0;

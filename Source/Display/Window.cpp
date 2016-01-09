@@ -5,11 +5,6 @@ namespace Galatea
 {
 	namespace Display
 	{
-		Window* Window::Create(const char* title, int width, int height)
-		{
-			return new WindowSDL(title, width, height);
-		}
-
 		Window::~Window(){}
 
 		Window::OnKeyProc& Window::OnKeyEvent(void* userdata)

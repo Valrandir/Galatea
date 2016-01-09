@@ -4,7 +4,8 @@ using namespace Galatea;
 Bool DisplayTest()
 {
 	const int width{320}, height{240};
-	auto wnd = Display::Window::Create("Test Window", width, height);
+	auto rnd = Display::Renderer::Create();
+	auto wnd = rnd->CreateWindow("Test Window", width, height);
 
 	if(!wnd)
 		return false;
@@ -18,6 +19,9 @@ Bool DisplayTest()
 		wnd->EndDraw();
 		Galatea::Timing::Sleep(1u);
 	}
+
+	delete wnd;
+	delete rnd;
 
 	return true;
 }

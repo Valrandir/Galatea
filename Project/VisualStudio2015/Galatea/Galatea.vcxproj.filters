@@ -103,9 +103,6 @@
     <ClInclude Include="..\..\..\Source\Display\Image.hpp">
       <Filter>Source\Display</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Display\ImageLoader.hpp">
-      <Filter>Source\Display</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Display\Renderer.hpp">
       <Filter>Source\Display</Filter>
     </ClInclude>
@@ -126,6 +123,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Assert\Win32\BaseWindow.hpp">
       <Filter>Source\Assert\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\SDL\RendererSDL.hpp">
+      <Filter>Source\Display\SDL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +234,12 @@
     <ClCompile Include="..\..\..\Source\Assert\Win32\BaseWindow.cpp">
       <Filter>Source\Assert\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Renderer.cpp">
+      <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\SDL\RendererSDL.cpp">
+      <Filter>Source\Display\SDL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -292,8 +298,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Source\DataStruct\Vector.cpp">
-      <Filter>Source\DataStruct</Filter>
-    </None>
+    <None Include="..\..\..\Source\DataStruct\Vector.tpp" />
   </ItemGroup>
 </Project>
