@@ -1,4 +1,3 @@
-#define __PLACEMENT_NEW_INLINE
 #define _HAS_EXCEPTIONS 0
 #include <vector>
 

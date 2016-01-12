@@ -29,7 +29,7 @@ namespace Galatea
 
 		void Sprite::Draw(const Point& position, const Image* image)
 		{
-			image->DrawImage(position, {{_frame_index * _size.x, 0}, {_size.x, _size.y}}, _image, Color(255, 255, 255), _horizontal_flip, _vertical_flip);
+			image->DrawImage(position, {_frame_index * _size.x, 0, _size.x, _size.y}, _image, Color(255, 255, 255), _horizontal_flip, _vertical_flip);
 
 			_frame_index += _rate.Update();
 			if(_frame_index >= _frame_count)
