@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\..\Test\DataStruct\StdVector.cpp" />
     <ClCompile Include="..\..\..\Test\DataStruct\Vector.cpp" />
     <ClCompile Include="..\..\..\Test\Display\Display.cpp" />
+    <ClCompile Include="..\..\..\Test\Display\SpawnPng.cpp" />
     <ClCompile Include="..\..\..\Test\GalateaTest.cpp" />
     <ClCompile Include="..\..\..\Test\Main.Win32.cpp" />
     <ClCompile Include="..\..\..\Test\Memory\Memory.cpp" />

@@ -40,6 +40,7 @@ Bool TestMain()
 	CHECK TextFileTest();
 	CHECK IniFileTest();
 
+	Assert::SetAssertProc(nullptr);
 	CHECK DisplayTest();
 
 	return result;

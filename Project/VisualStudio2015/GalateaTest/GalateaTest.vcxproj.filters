@@ -67,6 +67,9 @@
     <ClCompile Include="..\..\..\Test\Display\Display.cpp">
       <Filter>Display</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Test\Display\SpawnPng.cpp">
+      <Filter>Display</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Test\DataStruct\Counter.hpp">
