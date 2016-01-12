@@ -27,10 +27,8 @@
     <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Image.hpp" />
-    <ClInclude Include="..\..\..\Source\Display\Renderer.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\ImageSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\InputSDL.hpp" />
-    <ClInclude Include="..\..\..\Source\Display\SDL\RendererSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\WindowSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Sprite.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Window.hpp" />
@@ -73,11 +71,10 @@
     </None>
     <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
-    <ClCompile Include="..\..\..\Source\Display\Renderer.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
-    <ClCompile Include="..\..\..\Source\Display\SDL\RendererSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Sprite.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Window.cpp" />

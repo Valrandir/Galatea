@@ -16,6 +16,9 @@ namespace Galatea
 			public:
 			virtual ~Window();
 
+			virtual Image* CreateImage(int width, int height) const = 0;
+			virtual Image* CreateImage(const char* file) const = 0;
+
 			virtual void BeginDraw(bool clear = true) = 0;
 			virtual void EndDraw() = 0;
 			virtual bool Update() = 0;

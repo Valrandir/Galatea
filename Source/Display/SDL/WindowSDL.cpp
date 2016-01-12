@@ -1,3 +1,4 @@
+#include "../../Assert/Assert.hpp"
 #include "WindowSDL.hpp"
 #include "ImageSDL.hpp"
 #include "InputSDL.hpp"
@@ -6,12 +7,23 @@ namespace Galatea
 {
 	namespace Display
 	{
-		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Renderer* renderer, SDL_Window* window) :
+		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Window* window, SDL_Renderer* renderer) :
 			ImageSDL{width, height, renderer},
-			_renderer{renderer},
 			_window{window},
+			_renderer{renderer},
 			_is_destroyed{}
 		{
+		}
+
+		WindowSDL* WindowSDL::Create(const char* title, int width, int height)
+		{
+			SDL_Window* window;
+			ASSERT(window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL));
+
+			SDL_Renderer* renderer;
+			ASSERT(renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+
+			return new WindowSDL(title, width, height, window, renderer);
 		}
 
 		WindowSDL::~WindowSDL()
@@ -34,6 +46,16 @@ namespace Galatea
 			}
 
 			_is_destroyed = true;
+		}
+
+		Image* WindowSDL::CreateImage(int width, int height) const
+		{
+			return new ImageSDL(width, height, _renderer, true);
+		}
+
+		Image* WindowSDL::CreateImage(const char* file) const
+		{
+			return new ImageSDL(file, _renderer);
 		}
 
 		void WindowSDL::BeginDraw(bool clear)
@@ -66,7 +88,7 @@ namespace Galatea
 
 		void WindowSDL::Close()
 		{
-			_is_destroyed = true;
+			Destroy();
 		}
 	}
 }
