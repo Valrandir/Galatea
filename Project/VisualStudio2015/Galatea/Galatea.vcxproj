@@ -35,10 +35,12 @@
     <ClInclude Include="..\..\..\Source\Galatea.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\VectorAssert.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Center.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Geometry.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Motion.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Point.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Rectangle.hpp" />
+    <ClInclude Include="..\..\..\Source\Geometry\Size.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\Input\Input.hpp" />
     <ClInclude Include="..\..\..\Source\Input\Keys.hpp" />

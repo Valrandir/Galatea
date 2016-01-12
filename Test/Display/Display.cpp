@@ -69,11 +69,11 @@ Bool DisplayTest()
 
 Bubble::Bubble(Image* img, int width, int height) : img{img}
 {
-	container.position = {width / 4, height / 4};
-	container.size = {width / 2, height / 2};
+	container.SetPosition({width / 4, height / 4});
+	container.SetSize({width / 2, height / 2});
 
-	int x = Math::Random(container.position.x, container.position.x + container.size.x);
-	int y = Math::Random(container.position.y, container.position.y + container.size.y);
+	int x = Math::Random(container.x1, container.Width());
+	int y = Math::Random(container.y1, container.Height());
 	motion.SetPosition(Point{x, y}.ToVector());
 
 	img_offset.x = -img->Width() / 2;
@@ -91,10 +91,10 @@ void Bubble::Update()
 
 	Point p = motion.Position().ToPoint();
 
-	if(p.x < container.position.x && direction.x < 0 || p.x > container.size.x + container.position.x && direction.x > 0)
+	if(p.x < container.x1 && direction.x < 0 || p.x > container.Width() && direction.x > 0)
 		direction.x = -direction.x;
 
-	if(p.y < container.position.y && direction.y < 0 || p.y > container.size.y + container.position.y && direction.y > 0)
+	if(p.y < container.y1 && direction.y < 0 || p.y > container.Height() && direction.y > 0)
 		direction.y = -direction.y;
 }
 

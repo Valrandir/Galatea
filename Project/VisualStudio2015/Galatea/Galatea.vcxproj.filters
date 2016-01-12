@@ -121,6 +121,12 @@
     <ClInclude Include="..\..\..\Source\Assert\Win32\BaseWindow.hpp">
       <Filter>Source\Assert\Win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Size.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Geometry\Center.hpp">
+      <Filter>Source\Geometry</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
