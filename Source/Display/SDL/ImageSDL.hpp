@@ -16,7 +16,7 @@ namespace Galatea
 			bool _use_texture;
 
 			public:
-			ImageSDL(int width, int height, SDL_Renderer* renderer, bool use_texture = false);
+			ImageSDL(int width, int height, SDL_Renderer* renderer, bool use_texture = true);
 			ImageSDL(const char* file, SDL_Renderer* renderer);
 			~ImageSDL();
 

@@ -8,7 +8,7 @@ namespace Galatea
 	namespace Display
 	{
 		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Window* window, SDL_Renderer* renderer) :
-			ImageSDL{width, height, renderer},
+			ImageSDL{width, height, renderer, false},
 			_window{window},
 			_renderer{renderer},
 			_is_destroyed{}
@@ -50,12 +50,18 @@ namespace Galatea
 
 		Image* WindowSDL::CreateImage(int width, int height) const
 		{
-			return new ImageSDL(width, height, _renderer, true);
+			return new ImageSDL(width, height, _renderer);
 		}
 
 		Image* WindowSDL::CreateImage(const char* file) const
 		{
-			return new ImageSDL(file, _renderer);
+			auto src = new ImageSDL(file, _renderer);
+			auto img = new ImageSDL(src->Width(), src->Height(), _renderer); //Create with SDL_TEXTUREACCESS_TARGET to make it writable
+
+			img->DrawImage({}, src);
+			delete src;
+
+			return img;
 		}
 
 		void WindowSDL::BeginDraw(bool clear)
