@@ -13,12 +13,15 @@ namespace Galatea
 
 			Rectangle();
 			Rectangle(const Rectangle& src);
-			Rectangle& operator=(const Rectangle& src);
-			bool operator==(const Rectangle& src) const;
-
+			Rectangle(int x1, int y1, int x2, int y2);
 			Rectangle(const Point& xy1, const Point& xy2);
 			Rectangle(const Point& position, const Size& size);
 			Rectangle(const Center& center, const Size& size);
+
+			Rectangle& operator=(const Rectangle& src);
+			bool operator==(const Rectangle& src) const;
+			Rectangle operator+(const Point& src) const;
+			Rectangle operator-(const Point& src) const;
 
 			void SetPosition(const Point& position);
 			void SetCenter(const Point& center);
@@ -29,7 +32,10 @@ namespace Galatea
 
 			int Width() const;
 			int Height() const;
+
+			Point Position() const;
 			Point Center() const;
+			Point Size() const;
 		};
 	}
 }

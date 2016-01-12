@@ -51,7 +51,7 @@ namespace Galatea
 			if(_use_texture)
 				SDL_SetRenderTarget(_renderer, _texture);
 
-			SDL_Rect rect{rectangle.x1, rectangle.y1, rectangle.x2, rectangle.y2};
+			SDL_Rect rect{rectangle.x1, rectangle.y1, rectangle.Width(), rectangle.Height()};
 			SDL_RenderFillRect(_renderer, &rect);
 
 			if(_use_texture)
@@ -94,8 +94,8 @@ namespace Galatea
 			SDL_SetTextureAlphaMod(texture, color.alpha);
 			SDL_SetTextureColorMod(texture, color.red, color.green, color.blue);
 
-			SDL_Rect sdl_target{position.x, position.y, source.x2, source.y2};
-			SDL_Rect sdl_source{source.x1, source.y1, source.x2, source.y2};
+			SDL_Rect sdl_target{position.x, position.y, source.Width(), source.Height()};
+			SDL_Rect sdl_source{source.x1, source.y1, source.Width(), source.Height()};
 
 			SDL_RendererFlip flip = SDL_FLIP_NONE;
 			if(horizontal_flip) flip = SDL_RendererFlip(flip | SDL_FLIP_HORIZONTAL);

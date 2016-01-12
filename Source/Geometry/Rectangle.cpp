@@ -4,7 +4,7 @@ namespace Galatea
 {
 	namespace Geometry
 	{
-		Rectangle::Rectangle() {}
+		Rectangle::Rectangle() : x1{}, y1{}, x2{}, y2{} {}
 
 		Rectangle::Rectangle(const Rectangle& src)
 		{
@@ -12,6 +12,21 @@ namespace Galatea
 			y1 = src.y1;
 			x2 = src.x2;
 			y2 = src.y2;
+		}
+
+		Rectangle::Rectangle(int x1, int y1, int x2, int y2) : x1{x1}, y1{y1}, x2{x2}, y2{y2} {}
+
+		Rectangle::Rectangle(const Point& xh1, const Point& xy2) : x1{xh1.x}, y1{xh1.y}, x2{xy2.x}, y2{xy2.y} {}
+
+		Rectangle::Rectangle(const Point& position, const Geometry::Size& size) : x1{position.x}, y1{position.y}, x2{position.x + size.x}, y2{position.y + size.y} {}
+
+		Rectangle::Rectangle(const Geometry::Center& center, const Geometry::Size& size)
+		{
+			Point half = size / 2;
+			x1 = center.x - half.x;
+			y1 = center.y - half.y;
+			x2 = center.x + half.x;
+			y2 = center.y + half.y;
 		}
 
 		Rectangle& Rectangle::operator=(const Rectangle& src)
@@ -32,17 +47,14 @@ namespace Galatea
 				y2 == src.y2;
 		}
 
-		Rectangle::Rectangle(const Point& xh1, const Point& xy2) : x1{xh1.x}, y1{xh1.y}, x2{xy2.x}, y2{xy2.y} {}
-
-		Rectangle::Rectangle(const Point& position, const Size& size) : x1{position.x}, y1{position.y}, x2{position.x + size.x}, y2{position.y + size.y} {}
-
-		Rectangle::Rectangle(const Geometry::Center& center, const Size& size)
+		Rectangle Rectangle::operator+(const Point& src) const
 		{
-			Point half = size / 2;
-			x1 = center.x - half.x;
-			y1 = center.y - half.y;
-			x2 = center.x + half.x;
-			y2 = center.y + half.y;
+			return Rectangle{x1 + src.x, y1 + src.y, x2 + src.x, y2 + src.y};
+		}
+
+		Rectangle Rectangle::operator-(const Point& src) const
+		{
+			return Rectangle{x1 - src.x, y1 - src.y, x2 - src.x, y2 - src.y};
 		}
 
 		void Rectangle::SetPosition(const Point& position)
@@ -90,6 +102,8 @@ namespace Galatea
 
 		int Rectangle::Height() const { return y2 - y1; }
 
+		Point Rectangle::Position() const { return Point{x1, y1}; }
 		Point Rectangle::Center() const { return Point{x1 + Width() / 2, y1 + Height() / 2}; }
+		Point Rectangle::Size() const { return Point{x2, y2}; }
 	}
 }

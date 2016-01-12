@@ -5,6 +5,10 @@ namespace Galatea
 {
 	namespace Geometry
 	{
-		struct Center : public Point {};
+		struct Center : public Point
+		{
+			Center() : Point() {}
+			Center(int x, int y) : Point(x, y) {}
+		};
 	}
 }
