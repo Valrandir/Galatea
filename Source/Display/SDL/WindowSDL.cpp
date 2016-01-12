@@ -6,12 +6,33 @@ namespace Galatea
 {
 	namespace Display
 	{
-		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Renderer* renderer) : ImageSDL{width, height, renderer}, _renderer{renderer}, _is_destroyed{}
+		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Renderer* renderer, SDL_Window* window) :
+			ImageSDL{width, height, renderer},
+			_renderer{renderer},
+			_window{window},
+			_is_destroyed{}
 		{
 		}
 
 		WindowSDL::~WindowSDL()
 		{
+			Destroy();
+		}
+
+		void WindowSDL::Destroy()
+		{
+			if(_renderer)
+			{
+				SDL_DestroyRenderer(_renderer);
+				_renderer = nullptr;
+			}
+
+			if(_window)
+			{
+				SDL_DestroyWindow(_window);
+				_window = nullptr;
+			}
+
 			_is_destroyed = true;
 		}
 

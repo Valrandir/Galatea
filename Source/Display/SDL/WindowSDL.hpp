@@ -9,12 +9,14 @@ namespace Galatea
 	{
 		class WindowSDL : public Window, public ImageSDL
 		{
-			SDL_Renderer* _renderer{};
+			SDL_Renderer* _renderer;
+			SDL_Window* _window;
 			bool _is_destroyed;
 
 			public:
-			WindowSDL(const char* title, int width, int height, SDL_Renderer* renderer);
+			WindowSDL(const char* title, int width, int height, SDL_Renderer* renderer, SDL_Window* window);
 			~WindowSDL();
+			void Destroy();
 
 			void BeginDraw(bool clear = true) override;
 			void EndDraw() override;

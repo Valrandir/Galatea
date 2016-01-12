@@ -1,3 +1,4 @@
+#include "../../Assert/Assert.hpp"
 #include "ImageSDL.hpp"
 #include <SDL_image.h>
 
@@ -5,18 +6,19 @@ namespace Galatea
 {
 	namespace Display
 	{
-		ImageSDL::ImageSDL(int width, int height, SDL_Renderer* renderer) : _width{width}, _height{height}, _renderer{renderer}
+		ImageSDL::ImageSDL(int width, int height, SDL_Renderer* renderer, bool use_texture) : _width{width}, _height{height}, _renderer{renderer}, _use_texture{use_texture}
 		{
-			_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_TARGET, width, height);
+			ASSERT(_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height));
 		}
 
-		ImageSDL::ImageSDL(const char* file, SDL_Renderer* renderer) : _renderer{renderer}
+		ImageSDL::ImageSDL(const char* file, SDL_Renderer* renderer) : _renderer{renderer}, _use_texture{}
 		{
-			SDL_Surface* surface = IMG_Load(file);
+			SDL_Surface* surface;
+			ASSERT(surface = IMG_Load(file));
 
 			_width = surface->w;
 			_height = surface->h;
-			_texture = SDL_CreateTextureFromSurface(renderer, surface);
+			ASSERT(_texture = SDL_CreateTextureFromSurface(renderer, surface));
 
 			SDL_FreeSurface(surface);
 		}
@@ -43,10 +45,16 @@ namespace Galatea
 
 		void ImageSDL::DrawRect(const Rectangle& rectangle, Color color) const
 		{
+			if(_use_texture)
+				SDL_SetRenderTarget(_renderer, _texture);
+
 			SDL_SetRenderDrawColor(_renderer, color.red, color.green, color.blue, color.alpha);
 			SDL_SetRenderDrawBlendMode(_renderer, color.alpha == 0xff ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
 			SDL_Rect rect{rectangle.position.x, rectangle.position.y, rectangle.size.x, rectangle.size.y};
 			SDL_RenderFillRect(_renderer, &rect);
+
+			if(_use_texture)
+				SDL_SetRenderTarget(_renderer, nullptr);
 		}
 
 		void ImageSDL::DrawImage(const Point& position, const Image* image, Color color, bool horizontal_flip, bool vertical_flip) const

@@ -1,3 +1,4 @@
+#include "../../Assert/Assert.hpp"
 #include "RendererSDL.hpp"
 #include "WindowSDL.hpp"
 #include "ImageSDL.hpp"
@@ -8,25 +9,11 @@ namespace Galatea
 	{
 		RendererSDL::RendererSDL()
 		{
-			_window = SDL_CreateWindow("GalateaCoreWindowSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL);
-
-			if(_window == nullptr)
-				return;
-
-			_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if(_renderer == nullptr)
-			{
-				Destroy();
-				return;
-			}
+			ASSERT(_window = SDL_CreateWindow("GalateaCoreWindowSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 320, 240, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL));
+			ASSERT(_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
 		}
 
 		RendererSDL::~RendererSDL()
-		{
-			Destroy();
-		}
-
-		void RendererSDL::Destroy()
 		{
 			if(_renderer)
 			{
@@ -43,15 +30,24 @@ namespace Galatea
 
 		Window* RendererSDL::CreateWindow(const char* title, int width, int height) const
 		{
-			//Does not support multiple windows, this will only create another access point to the main window
-			auto window = new WindowSDL(title, width, height, _renderer);
-			SDL_ShowWindow(_window);
-			return window;
+			SDL_Window* window;
+			ASSERT(window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL));
+
+			SDL_Renderer* renderer;
+			ASSERT(renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
+
+			auto win = new WindowSDL(title, width, height, renderer, window);
+
+auto z = (RendererSDL*)this;
+z->_renderer = renderer;
+z->_window = window;
+
+			return win;
 		}
 
 		Image* RendererSDL::CreateImage(int width, int height) const
 		{
-			return new ImageSDL(width, height, _renderer);
+			return new ImageSDL(width, height, _renderer, true);
 		}
 
 		Image* RendererSDL::CreateImage(const char* file) const
