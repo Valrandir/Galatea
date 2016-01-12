@@ -5,18 +5,10 @@
 #include "../Memory/Memory.hpp"
 #include "VectorAssert.hpp"
 
-//Placement New
-#ifdef GALATEA_BUILD_SYS_WINDOWS
-	inline void* operator new(Galatea::UInt, void* address){return address;}
-	inline void operator delete(void*, void*){}
-#elif GALATEA_BUILD_SYS_LINUX
-	#ifdef GALATEA_BUILD_X64
-		inline void* operator new(long unsigned int, void* address){return address;}
-	#else
-		inline void* operator new(unsigned int, void* address){return address;}
-	#endif
-	inline void operator delete(void*, void*){}
-#endif
+//Added this instead of the manual placement new/delete definition, otherwise Vector and std::vector conflicted.
+//This is the better way anyways.
+//Also Vector is definetly not as good as std::vector, which should be used instead.
+#include <new>
 
 namespace Galatea
 {

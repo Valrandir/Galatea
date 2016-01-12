@@ -295,6 +295,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Source\DataStruct\Vector.tpp" />
+    <None Include="..\..\..\Source\DataStruct\Vector.tpp">
+      <Filter>Source\DataStruct</Filter>
+    </None>
   </ItemGroup>
 </Project>
