@@ -15,8 +15,11 @@ namespace Galatea
 
 		void Window::OnKey(KeyEvent ke)
 		{
-			if(_on_key.proc)
-				_on_key.proc(ke, _on_key.userdata);
+			if(ke.key == Keys::KeyEscape)
+				Close();
+			else
+				if(_on_key.proc)
+					_on_key.proc(ke, _on_key.userdata);
 		}
 	}
 }
