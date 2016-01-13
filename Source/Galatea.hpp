@@ -14,5 +14,6 @@
 #include "Storage/IniFile.hpp"
 #include "Geometry/Geometry.hpp"
 #include "Display/Display.hpp"
+#include "Platform/Platform.hpp"
 #include "Math/Math.hpp"
 #include "Input/Input.hpp"

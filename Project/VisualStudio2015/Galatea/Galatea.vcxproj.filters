@@ -127,6 +127,18 @@
     <ClInclude Include="..\..\..\Source\Geometry\Center.hpp">
       <Filter>Source\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Platform\Element.hpp">
+      <Filter>Source\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Platform\Platform.hpp">
+      <Filter>Source\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Platform\Zone.hpp">
+      <Filter>Source\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Platform\Camera.hpp">
+      <Filter>Source\Platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -237,6 +249,15 @@
     <ClCompile Include="..\..\..\Source\Display\Display.cpp">
       <Filter>Source\Display</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Platform\Element.cpp">
+      <Filter>Source\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Platform\Zone.cpp">
+      <Filter>Source\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Platform\Camera.cpp">
+      <Filter>Source\Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -292,6 +313,9 @@
     </Filter>
     <Filter Include="Source\Geometry">
       <UniqueIdentifier>{497b0b35-197f-4d7f-aebb-57e8e473a630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Platform">
+      <UniqueIdentifier>{2901e2c2-ca69-403c-bf59-a3d4c54cda3d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

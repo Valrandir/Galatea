@@ -46,6 +46,10 @@
     <ClInclude Include="..\..\..\Source\Input\Keys.hpp" />
     <ClInclude Include="..\..\..\Source\Math\Math.hpp" />
     <ClInclude Include="..\..\..\Source\Memory\Memory.hpp" />
+    <ClInclude Include="..\..\..\Source\Platform\Camera.hpp" />
+    <ClInclude Include="..\..\..\Source\Platform\Element.hpp" />
+    <ClInclude Include="..\..\..\Source\Platform\Platform.hpp" />
+    <ClInclude Include="..\..\..\Source\Platform\Zone.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File\File.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File\File.Win32.hpp" />
@@ -87,6 +91,9 @@
     <ClCompile Include="..\..\..\Source\Input\Keys.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Math\Math.cpp" />
     <ClCompile Include="..\..\..\Source\Memory\Memory.cpp" />
+    <ClCompile Include="..\..\..\Source\Platform\Camera.cpp" />
+    <ClCompile Include="..\..\..\Source\Platform\Element.cpp" />
+    <ClCompile Include="..\..\..\Source\Platform\Zone.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\IniFile\IniFile.cpp" />
