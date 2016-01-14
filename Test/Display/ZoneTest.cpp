@@ -64,10 +64,12 @@ void Init()
 		}
 	}
 
-	_camera = new Camera();
-	_camera->Rectangle::SetPosition(_zone->Center() - Point{_screen_width / 2, _screen_height / 2});
-	_camera->Rectangle::SetSize({_screen_width, _screen_height});
-	_camera->Motion::SetPosition(_camera->Rectangle::Position().ToVector());
+	_camera =
+		new Camera
+		(
+			(_zone->Center() - Point{_screen_width / 2, _screen_height / 2}).ToVector(),
+			{_screen_width, _screen_height}
+		);
 }
 
 bool Update()
@@ -84,7 +86,7 @@ bool Update()
 bool Render()
 {
 	_window->BeginDraw();
-	_zone->Render(_window, _camera);
+	_zone->Render(_window, &_camera->Area());
 	_window->EndDraw();
 
 	return _window->Update();
