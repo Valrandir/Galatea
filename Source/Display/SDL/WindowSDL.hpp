@@ -22,6 +22,7 @@ namespace Galatea
 
 			Image* CreateImage(int width, int height) const override;
 			Image* CreateImage(const char* file) const override;
+			Image* CreateImage(const void* memory, Int size) const override;
 
 			void BeginDraw(bool clear = true) override;
 			void EndDraw() override;

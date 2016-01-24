@@ -3,6 +3,7 @@ using namespace Galatea;
 
 extern Bool BubbleTest();
 extern Bool ZoneTest();
+extern Bool SpriteTest();
 
 Bool DisplayTest()
 {
@@ -10,6 +11,7 @@ Bool DisplayTest()
 
 	CHECK BubbleTest();
 	CHECK ZoneTest();
+	CHECK SpriteTest();
 
 	return true;
 }

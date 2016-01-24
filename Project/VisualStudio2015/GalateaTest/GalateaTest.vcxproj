@@ -172,7 +172,9 @@
     <ClCompile Include="..\..\..\Test\DataStruct\Vector.cpp" />
     <ClCompile Include="..\..\..\Test\Display\BubbleTest.cpp" />
     <ClCompile Include="..\..\..\Test\Display\Display.cpp" />
-    <ClCompile Include="..\..\..\Test\Display\SpawnPng.cpp" />
+    <ClCompile Include="..\..\..\Test\Display\PngBubble.cpp" />
+    <ClCompile Include="..\..\..\Test\Display\PngSprite.cpp" />
+    <ClCompile Include="..\..\..\Test\Display\SpriteTest.cpp" />
     <ClCompile Include="..\..\..\Test\Display\ZoneTest.cpp" />
     <ClCompile Include="..\..\..\Test\GalateaTest.cpp" />
     <ClCompile Include="..\..\..\Test\Main.Win32.cpp" />

@@ -19,13 +19,14 @@ namespace Galatea
 			bool _vertical_flip = false;
 
 			public:
-			Sprite(int frame_count, const Image* image, int updates_per_second);
+			Sprite(int frame_count, const Image* source, int updates_per_second);
 			Sprite(const Sprite&) = delete;
 			Sprite& operator=(const Sprite&) = delete;
 			~Sprite();
 
 			void SetFlip(bool horizontal_flip, bool vertical_flip);
-			void Draw(const Point& position, const Image* image);
+			void Update();
+			void Draw(const Point& position, const Image* target) const;
 
 			Point Size() const;
 			int FrameCount() const;

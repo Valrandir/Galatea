@@ -64,6 +64,17 @@ namespace Galatea
 			return img;
 		}
 
+		Image* WindowSDL::CreateImage(const void* memory, Int size) const
+		{
+			auto src = new ImageSDL(memory, size, _renderer);
+			auto img = new ImageSDL(src->Width(), src->Height(), _renderer); //Create with SDL_TEXTUREACCESS_TARGET to make it writable
+
+			img->DrawImage({}, src);
+			delete src;
+
+			return img;
+		}
+
 		void WindowSDL::BeginDraw(bool clear)
 		{
 			if(clear)

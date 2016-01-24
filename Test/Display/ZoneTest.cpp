@@ -5,26 +5,28 @@ using namespace Galatea;
 using namespace Display;
 using namespace Platform;
 
-extern String CreatePngTestFile();
-extern void DestroyPngTestFile();
+extern void GetPngBubbleData(const UInt8*& png_sample_data, Int& size);
 
-void Init();
-bool Update();
-bool Render();
-void Destroy();
-void OnKey(KeyEvent ke, void* user_data);
+namespace
+{
+	void Init();
+	bool Update();
+	bool Render();
+	void Destroy();
+	void OnKey(KeyEvent ke, void* user_data);
 
-const int _screen_width = 800;
-const int _screen_height = 600;
-const int _zone_width = 8192;
-const int _zone_height = 8192;
-const double _camera_impulse_force = 0.5;
+	const int _screen_width = 800;
+	const int _screen_height = 600;
+	const int _zone_width = 8192;
+	const int _zone_height = 8192;
+	const double _camera_impulse_force = 0.5;
 
-Window* _window;
-Image* _img_bubble;
-Geometry::Point _input_direction;
-Zone* _zone;
-Camera* _camera;
+	Window* _window;
+	Image* _img_bubble;
+	Geometry::Point _input_direction;
+	Zone* _zone;
+	Camera* _camera;
+}
 
 Bool ZoneTest()
 {
@@ -35,85 +37,89 @@ Bool ZoneTest()
 	return true;
 }
 
-void Init()
+namespace
 {
-	_window = CreateWindow("Zone Test", _screen_width, _screen_height);
-	_window->OnKeyEvent() = OnKey;
-
-	CreatePngTestFile();
-	_img_bubble = _window->CreateImage("png_test.png");
-	DestroyPngTestFile();
-
-	_zone = new Zone({Point{}, Size{_zone_width, _zone_height}});
-	_zone->AddOwnedElement(new Element{{Center{_zone_width / 2, _zone_height / 2}, Size{64, 64}}, Color::Red});
-
+	void Init()
 	{
-		const int block_size = 32;
-		auto max = ((_zone_width / block_size) * (_zone_height / block_size)) / 8;
-		int mx = _zone_width - block_size;
-		int my = _zone_height - block_size;
-		for(int i{}; i < max; ++i)
+		_window = CreateWindow("Zone Test", _screen_width, _screen_height);
+		_window->OnKeyEvent() = OnKey;
+
+		const UInt8* png_sample_data;
+		Int png_sample_size;
+		GetPngBubbleData(png_sample_data, png_sample_size);
+		_img_bubble = _window->CreateImage(png_sample_data, png_sample_size);
+
+		_zone = new Zone({Point{}, Size{_zone_width, _zone_height}});
+		_zone->AddOwnedElement(new Element{{Center{_zone_width / 2, _zone_height / 2}, Size{64, 64}}, Color::Red});
+
 		{
-			auto x = Math::Random(0, mx);
-			auto y = Math::Random(0, my);
-			auto r = (UInt8)Math::Random(0, 0xff);
-			auto g = (UInt8)Math::Random(0, 0xff);
-			auto b = (UInt8)Math::Random(0, 0xff);
-			auto a = (UInt8)Math::Random(0, 0xff);
-			_zone->AddOwnedElement(new Element{Point{x, y}, _img_bubble, Color{r, g, b, a}});
+			const int block_size = 32;
+			auto max = ((_zone_width / block_size) * (_zone_height / block_size)) / 8;
+			int mx = _zone_width - block_size;
+			int my = _zone_height - block_size;
+			for(int i{}; i < max; ++i)
+			{
+				auto x = Math::Random(0, mx);
+				auto y = Math::Random(0, my);
+				auto r = (UInt8)Math::Random(0, 0xff);
+				auto g = (UInt8)Math::Random(0, 0xff);
+				auto b = (UInt8)Math::Random(0, 0xff);
+				auto a = (UInt8)Math::Random(0, 0xff);
+				_zone->AddOwnedElement(new Element{Point{x, y}, _img_bubble, Color{r, g, b, a}});
+			}
 		}
+
+		_camera =
+			new Camera
+			(
+				(_zone->Center() - Point{_screen_width / 2, _screen_height / 2}).ToVector(),
+				{_screen_width, _screen_height}
+			);
 	}
 
-	_camera =
-		new Camera
-		(
-			(_zone->Center() - Point{_screen_width / 2, _screen_height / 2}).ToVector(),
-			{_screen_width, _screen_height}
-		);
-}
-
-bool Update()
-{
-	if(_input_direction.x || _input_direction.y)
-		_camera->Impulse(_input_direction.ToVector(), _camera_impulse_force);
-
-	_camera->Update();
-
-	_zone->Update();
-	return true;
-}
-
-bool Render()
-{
-	_window->BeginDraw();
-	_zone->Render(_window, &_camera->Area());
-	_window->EndDraw();
-
-	return _window->Update();
-}
-
-void Destroy()
-{
-	DeletePtr(_camera);
-	DeletePtr(_zone);
-	DeletePtr(_img_bubble);
-	DeletePtr(_window);
-}
-
-void OnKey(KeyEvent ke, void* user_data)
-{
-	if(ke.up_or_down == KeyDirection::Up)
+	bool Update()
 	{
-		_input_direction.x = 0;
-		_input_direction.y = 0;
-		return;
+		if(_input_direction.x || _input_direction.y)
+			_camera->Impulse(_input_direction.ToVector(), _camera_impulse_force);
+
+		_camera->Update();
+
+		_zone->Update();
+		return true;
 	}
 
-	switch(ke.key)
+	bool Render()
 	{
-		case Keys::KeyRight: _input_direction.x = 1; break;
-		case Keys::KeyDown: _input_direction.y = 1; break;
-		case Keys::KeyLeft: _input_direction.x = -1; break;
-		case Keys::KeyUp: _input_direction.y = -1; break;
+		_window->BeginDraw();
+		_zone->Render(_window, &_camera->Area());
+		_window->EndDraw();
+
+		return _window->Update();
+	}
+
+	void Destroy()
+	{
+		DeletePtr(_camera);
+		DeletePtr(_zone);
+		DeletePtr(_img_bubble);
+		DeletePtr(_window);
+	}
+
+	void OnKey(KeyEvent ke, void* user_data)
+	{
+		if(ke.up_or_down == KeyDirection::Up)
+		{
+			_input_direction.x = 0;
+			_input_direction.y = 0;
+			return;
+		}
+
+		switch(ke.key)
+		{
+			case Keys::KeyRight: _input_direction.x = 1; break;
+			case Keys::KeyDown: _input_direction.y = 1; break;
+			case Keys::KeyLeft: _input_direction.x = -1; break;
+			case Keys::KeyUp: _input_direction.y = -1; break;
+		}
 	}
 }

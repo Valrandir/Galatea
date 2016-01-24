@@ -18,6 +18,7 @@ namespace Galatea
 
 			virtual Image* CreateImage(int width, int height) const = 0;
 			virtual Image* CreateImage(const char* file) const = 0;
+			virtual Image* CreateImage(const void* memory, Int size) const = 0;
 
 			virtual void BeginDraw(bool clear = true) = 0;
 			virtual void EndDraw() = 0;

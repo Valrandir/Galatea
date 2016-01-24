@@ -1,9 +1,10 @@
 #include "../Galatea.hpp"
 using namespace Galatea;
 
-CStr file_name = Text(R"(png_test.png)");
+namespace
+{
 
-UInt8 png_data[] =
+const UInt8 png_data[] =
 {
 	0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
 	0x00, 0x00, 0x00, 0x20, 0x00, 0x00, 0x00, 0x20, 0x08, 0x06, 0x00, 0x00, 0x00, 0x73, 0x7a, 0x7a,
@@ -132,30 +133,20 @@ UInt8 png_data[] =
 	0xfb, 0x41, 0x7d, 0x72, 0x00, 0x00, 0x00, 0x00, 0x49, 0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-String CreatePngTestFile()
-{
-	Exception ex;
-	auto file = Storage::File::Open(file_name, Storage::File::Disposition::CreateAlways, Storage::File::Access::AccessWrite, 0, &ex);
-	file->Write(png_data, sizeof(png_data));
-	delete file;
+} //namespace
 
-	return file_name;
+void GetPngBubbleData(const UInt8*& png_sample_data, Int& size)
+{
+	png_sample_data = png_data;
+	size = sizeof(png_data);
 }
 
-void DestroyPngTestFile()
-{
-	Storage::File::Delete(file_name);
-}
-
-/*
 using namespace Galatea::Storage;
 
-void lol()
+void PngToCppHex(const wchar_t* source_png_file, const wchar_t* target_cpp_file)
 {
-	const wchar_t* path = Text(R"(D:\s.png)");
-
 	File* file;
-	ASSERT(file = File::Open(path, File::Disposition::OpenExisting, File::Access::AccessRead, 0));
+	ASSERT(file = File::Open(source_png_file, File::Disposition::OpenExisting, File::Access::AccessRead, 0));
 
 	UInt size = ToUInt(file->GetFileSize());
 	VoidPtr buffer = Memory::Alloc(size);
@@ -163,26 +154,33 @@ void lol()
 	delete file;
 
 	TextFile* out;
-	ASSERT_SYSTEMCALL(out = TextFile::Create(LR"(D:\lolol.txt)"));
+	ASSERT_SYSTEMCALL(out = TextFile::Create(target_cpp_file));
 
 	const UInt s_buffer_size = 10;
 	TChar s_buffer[s_buffer_size];
 	UInt8* it = reinterpret_cast<UInt8*>(buffer);
 	UInt8* end = it + size;
 
-	out->Write(Text("{"));
-	int l = 0;
+	out->WriteLine(L"const UInt8 png_data[] =");
+	out->WriteLine(L"{");
+	out->Write(L"\t");
+
+	int line_count = 0;
 	while(it < end)
 	{
-		String::FormatToBuffer(s_buffer, s_buffer_size, Text("0x%02x,"), *it);
+		String::FormatToBuffer(s_buffer, s_buffer_size, it < end - 1 ? L"0x%02x," : L"0x%02x", *it);
 		out->Write(s_buffer);
-		++l;
-		if(l % 16 == 0)
-			out->Write(Text("\r\n"));
 		++it;
+
+		if(++line_count % 16 == 0)
+		{
+			out->WriteLine(L"");
+			out->Write(L"\t");
+		}
 	}
-	out->Write(Text("}"));
+
+	out->WriteLine(L"");
+	out->WriteLine(Text("};"));
 
 	delete out;
 }
-*/

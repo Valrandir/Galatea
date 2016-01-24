@@ -13,14 +13,16 @@ namespace Galatea
 
 		ImageSDL::ImageSDL(const char* file, SDL_Renderer* renderer) : _renderer{renderer}, _use_texture{true}
 		{
-			SDL_Surface* surface;
-			ASSERT(surface = IMG_Load(file));
+			ASSERT(_texture = IMG_LoadTexture(renderer, file));
+			ASSERT(0 == SDL_QueryTexture(_texture, nullptr, nullptr, &_width, &_height));
+		}
 
-			_width = surface->w;
-			_height = surface->h;
-			ASSERT(_texture = SDL_CreateTextureFromSurface(renderer, surface));
-
-			SDL_FreeSurface(surface);
+		ImageSDL::ImageSDL(const void* memory, Int size, SDL_Renderer* renderer)
+		{
+			SDL_RWops* rwops;
+			ASSERT(rwops = SDL_RWFromConstMem(memory, ToInt32(size)));
+			ASSERT(_texture = IMG_LoadTexture_RW(renderer, rwops, 1));
+			ASSERT(0 == SDL_QueryTexture(_texture, nullptr, nullptr, &_width, &_height));
 		}
 
 		ImageSDL::~ImageSDL()
