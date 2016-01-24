@@ -55,6 +55,7 @@
     <ClInclude Include="..\..\..\Source\Storage\File\File.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\IniFile.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\IniFile\IniFile.hpp" />
+    <ClInclude Include="..\..\..\Source\Storage\Storage.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\TextFile\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\String\String.hpp" />
@@ -79,6 +80,7 @@
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\PngToCppHex.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp" />

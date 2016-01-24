@@ -139,6 +139,9 @@
     <ClInclude Include="..\..\..\Source\Platform\Camera.hpp">
       <Filter>Source\Platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\Storage.hpp">
+      <Filter>Source\Storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -257,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Platform\Camera.cpp">
       <Filter>Source\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\PngToCppHex.cpp">
+      <Filter>Source\Display</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
