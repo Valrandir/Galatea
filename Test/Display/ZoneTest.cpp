@@ -3,6 +3,8 @@
 
 using namespace Galatea;
 using namespace Display;
+using namespace Geometry;
+using namespace Input;
 using namespace Platform;
 
 extern void GetPngBubbleData(const UInt8*& png_sample_data, Int& size);
@@ -14,18 +16,23 @@ namespace
 	bool Render();
 	void Destroy();
 	void OnKey(KeyEvent ke, void* user_data);
+	void OnMouseMove(int x, int y, void* user_data);
 
 	const int _screen_width = 800;
 	const int _screen_height = 600;
 	const int _zone_width = 8192;
 	const int _zone_height = 8192;
+	const int _alignment_max_power = 10;
+	const int _alignment_sensibility = 50;
 	const double _camera_impulse_force = 0.5;
 
 	Window* _window;
 	Image* _img_bubble;
-	Geometry::Point _input_direction;
+	Point _input_direction;
+	Point dp;
 	Zone* _zone;
 	Camera* _camera;
+	Alignment _mouse_alignment{_alignment_max_power, _alignment_sensibility, {_screen_width / 2, _screen_height / 2}};
 }
 
 Bool ZoneTest()
@@ -43,6 +50,7 @@ namespace
 	{
 		_window = CreateWindow("Zone Test", _screen_width, _screen_height);
 		_window->OnKeyEvent() = OnKey;
+		_window->OnMouseMoveEvent() = OnMouseMove;
 
 		const UInt8* png_sample_data;
 		Int png_sample_size;
@@ -81,6 +89,13 @@ namespace
 	{
 		if(_input_direction.x || _input_direction.y)
 			_camera->Impulse(_input_direction.ToVector(), _camera_impulse_force);
+
+		auto power = _mouse_alignment.Power();
+		if(power.x || power.y)
+		{
+			auto vpower = power.ToVector();
+			_camera->Impulse(vpower, ((abs(vpower.x) + abs(vpower.y)) / 2) / 10);
+		}
 
 		_camera->Update();
 
@@ -121,5 +136,10 @@ namespace
 			case Keys::KeyLeft: _input_direction.x = -1; break;
 			case Keys::KeyUp: _input_direction.y = -1; break;
 		}
+	}
+
+	void OnMouseMove(int x, int y, void* user_data)
+	{
+		_mouse_alignment.Update({x, y});
 	}
 }

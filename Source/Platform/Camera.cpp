@@ -4,6 +4,8 @@ namespace Galatea
 {
 	namespace Platform
 	{
+		using namespace Geometry;
+
 		Camera::Camera()
 		{
 		}
@@ -39,6 +41,11 @@ namespace Galatea
 		{
 			motion.Update();
 			area.SetPosition(motion.Position().ToPoint());
+		}
+
+		double Camera::Friction() const
+		{
+			return motion.Friction();
 		}
 
 		const Rectangle& Camera::Area() const

@@ -6,24 +6,21 @@ namespace Galatea
 {
 	namespace Platform
 	{
-		using namespace Display;
-		using namespace Geometry;
-
 		class Element
 		{
-			Rectangle rect;
-			const Image* image;
-			Color color;
+			Geometry::Rectangle rect;
+			const Display::Image* image;
+			Display::Color color;
 
 			public:
-			Element(const Rectangle& rect, const Color& color);
-			Element(const Point& position, const Image* image, const Color& color);
+			Element(const Geometry::Rectangle& rect, const Display::Color& color);
+			Element(const Geometry::Point& position, const Display::Image* image, const Display::Color& color);
 
 			virtual ~Element();
 			virtual void Update();
-			virtual void Render(const Image* target, const Point& offset) const;
+			virtual void Render(const Display::Image* target, const Geometry::Point& offset) const;
 
-			const Rectangle& Area() const;
+			const Geometry::Rectangle& Area() const;
 		};
 	}
 }

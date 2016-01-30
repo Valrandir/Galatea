@@ -98,6 +98,28 @@ namespace Galatea
 					_is_destroyed = true;
 				else if(e.type == SDL_KEYDOWN || e.type == SDL_KEYUP)
 					OnKey(ToKeyEvent(e.type, e.key.keysym));
+				else if(e.type == SDL_MOUSEBUTTONUP)
+				{
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT: OnMouseUp(1); break;
+						case SDL_BUTTON_RIGHT: OnMouseUp(2); break;
+						case SDL_BUTTON_MIDDLE: OnMouseUp(3); break;
+					}
+				}
+				else if(e.type == SDL_MOUSEBUTTONDOWN)
+				{
+					switch(e.button.button)
+					{
+						case SDL_BUTTON_LEFT: OnMouseDown(1); break;
+						case SDL_BUTTON_RIGHT: OnMouseDown(2); break;
+						case SDL_BUTTON_MIDDLE: OnMouseDown(3); break;
+					}
+				}
+				else if(e.type == SDL_MOUSEMOTION)
+				{
+					OnMouseMove(e.motion.x, e.motion.y);
+				}
 			}
 
 			return !_is_destroyed;
@@ -106,6 +128,11 @@ namespace Galatea
 		void WindowSDL::Close()
 		{
 			Destroy();
+		}
+
+		void WindowSDL::MousePosition(int& x, int& y) const
+		{
+			SDL_GetMouseState(&x, &y);
 		}
 	}
 }

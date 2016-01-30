@@ -4,6 +4,8 @@ namespace Galatea
 {
 	namespace Display
 	{
+		using namespace Geometry;
+
 		Sprite::Sprite(int frame_count, const Image* source, int updates_per_second) :
 			_size{source->Width() / frame_count, source->Height()},
 			_rate(updates_per_second),

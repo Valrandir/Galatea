@@ -6,6 +6,8 @@ namespace Galatea
 {
 	namespace Display
 	{
+		using namespace Geometry;
+
 		ImageSDL::ImageSDL(int width, int height, SDL_Renderer* renderer, bool use_texture) : _width{width}, _height{height}, _renderer{renderer}, _use_texture{use_texture}
 		{
 			ASSERT(_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height));

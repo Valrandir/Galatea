@@ -142,6 +142,9 @@
     <ClInclude Include="..\..\..\Source\Storage\Storage.hpp">
       <Filter>Source\Storage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Input\Alignment.hpp">
+      <Filter>Source\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -263,6 +266,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Display\PngToCppHex.cpp">
       <Filter>Source\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Input\Alignment.cpp">
+      <Filter>Source\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

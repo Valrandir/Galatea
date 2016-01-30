@@ -5,24 +5,23 @@ namespace Galatea
 {
 	namespace Platform
 	{
-		using namespace Geometry;
-
 		class Camera
 		{
-			Rectangle area;
-			Motion motion;
+			Geometry::Rectangle area;
+			Geometry::Motion motion;
 
 			public:
 			Camera();
-			Camera(const Vector& position, const Point& size);
+			Camera(const Geometry::Vector& position, const Geometry::Point& size);
 			~Camera();
 
-			void SetPosition(const Vector& position);
-			void SetSize(const Point& size);
-			void Impulse(const Vector& direction, double force);
+			void SetPosition(const Geometry::Vector& position);
+			void SetSize(const Geometry::Point& size);
+			void Impulse(const Geometry::Vector& direction, double force);
 			void Update();
-
-			const Rectangle& Area() const;
+			
+			double Friction() const;
+			const Geometry::Rectangle& Area() const;
 		};
 	}
 }

@@ -4,6 +4,9 @@ namespace Galatea
 {
 	namespace Platform
 	{
+		using namespace Geometry;
+		using namespace Display;
+
 		Zone::Zone(const Rectangle& area) : Rectangle{area} {}
 
 		Zone::~Zone()

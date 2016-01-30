@@ -28,6 +28,7 @@ namespace Galatea
 			void EndDraw() override;
 			bool Update() override;
 			void Close() override;
+			void MousePosition(int& x, int& y) const override;
 		};
 	}
 }

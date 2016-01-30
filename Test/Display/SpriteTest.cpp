@@ -3,6 +3,7 @@
 
 using namespace Galatea;
 using namespace Display;
+using namespace Geometry;
 using namespace Platform;
 
 extern void GetPngSpriteData(const UInt8*& png_sample_data, Int& size);

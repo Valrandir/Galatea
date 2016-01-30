@@ -15,6 +15,7 @@ namespace Galatea
 
 			Point(const Point& src);
 			Point& operator=(const Point& src);
+			Point& operator=(int val);
 
 			Point operator-() const;
 			bool operator==(const Point& src) const;

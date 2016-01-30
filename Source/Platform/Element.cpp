@@ -4,6 +4,9 @@ namespace Galatea
 {
 	namespace Platform
 	{
+		using namespace Display;
+		using namespace Geometry;
+
 		Element::Element(const Rectangle& rect, const Color& color) : rect{rect}, image{}, color{color}
 		{
 		}
