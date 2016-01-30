@@ -43,6 +43,7 @@
     <ClInclude Include="..\..\..\Source\Geometry\Size.hpp" />
     <ClInclude Include="..\..\..\Source\Geometry\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\Input\Alignment.hpp" />
+    <ClInclude Include="..\..\..\Source\Input\Command.hpp" />
     <ClInclude Include="..\..\..\Source\Input\Input.hpp" />
     <ClInclude Include="..\..\..\Source\Input\Keys.hpp" />
     <ClInclude Include="..\..\..\Source\Math\Math.hpp" />
@@ -92,6 +93,7 @@
     <ClCompile Include="..\..\..\Source\Geometry\Rectangle.cpp" />
     <ClCompile Include="..\..\..\Source\Geometry\Vector.cpp" />
     <ClCompile Include="..\..\..\Source\Input\Alignment.cpp" />
+    <ClCompile Include="..\..\..\Source\Input\Command.cpp" />
     <ClCompile Include="..\..\..\Source\Input\Keys.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Math\Math.cpp" />
     <ClCompile Include="..\..\..\Source\Memory\Memory.cpp" />

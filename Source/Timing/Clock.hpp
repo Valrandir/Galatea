@@ -13,6 +13,7 @@ namespace Galatea
 			public:
 			Clock();
 			Int32 Tick();
+			void Reset();
 		};
 	}
 }

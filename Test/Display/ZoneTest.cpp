@@ -33,6 +33,7 @@ namespace
 	Zone* _zone;
 	Camera* _camera;
 	Alignment _mouse_alignment{_alignment_max_power, _alignment_sensibility, {_screen_width / 2, _screen_height / 2}};
+	Command _cmd_blink(4);
 }
 
 Bool ZoneTest()
@@ -106,6 +107,10 @@ namespace
 	bool Render()
 	{
 		_window->BeginDraw();
+
+		if(_cmd_blink.IsTriggered())
+			_window->DrawRect({Center{_screen_width / 2, _screen_height / 2}, Size{_screen_width / 2, _screen_height / 2}}, Color{0xff, 0xff, 0xff, 0x20});
+
 		_zone->Render(_window, &_camera->Area());
 		_window->EndDraw();
 
@@ -135,6 +140,7 @@ namespace
 			case Keys::KeyDown: _input_direction.y = 1; break;
 			case Keys::KeyLeft: _input_direction.x = -1; break;
 			case Keys::KeyUp: _input_direction.y = -1; break;
+			case Keys::KeySpace: _cmd_blink.Trigger(); break;
 		}
 	}
 

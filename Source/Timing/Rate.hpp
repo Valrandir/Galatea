@@ -17,6 +17,7 @@ namespace Galatea
 			public:
 			Rate(Int32 updates_per_second);
 			Int32 Update();
+			void Reset();
 		};
 	}
 }

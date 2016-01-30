@@ -145,6 +145,9 @@
     <ClInclude Include="..\..\..\Source\Input\Alignment.hpp">
       <Filter>Source\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Input\Command.hpp">
+      <Filter>Source\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -268,6 +271,9 @@
       <Filter>Source\Display</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Input\Alignment.cpp">
+      <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Input\Command.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
   </ItemGroup>

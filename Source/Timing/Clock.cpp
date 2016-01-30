@@ -17,5 +17,10 @@ namespace Galatea
 			_last_tick = tick;
 			return static_cast<Int32>(elapsed);
 		}
+
+		void Clock::Reset()
+		{
+			_last_tick = Timing::GetTickCount();
+		}
 	}
 }

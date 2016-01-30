@@ -1,5 +1,7 @@
 #pragma once
 #include "../Types.hpp"
+#include "Clock.hpp"
+#include "Rate.hpp"
 
 namespace Galatea
 {

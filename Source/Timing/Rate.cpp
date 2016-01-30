@@ -18,5 +18,11 @@ namespace Galatea
 			_accumulated_milliseconds = (update_count - rounded_update_count) / _update_per_milliseconds;
 			return rounded_update_count;
 		}
+
+		void Rate::Reset()
+		{
+			_clock.Reset();
+			_accumulated_milliseconds = 0;
+		}
 	}
 }
