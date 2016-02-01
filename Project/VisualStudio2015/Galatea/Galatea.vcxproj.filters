@@ -267,14 +267,14 @@
     <ClCompile Include="..\..\..\Source\Platform\Camera.cpp">
       <Filter>Source\Platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Display\PngToCppHex.cpp">
-      <Filter>Source\Display</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Input\Alignment.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Input\Command.cpp">
       <Filter>Source\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Storage\FileToCppHex.cpp">
+      <Filter>Source\Storage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -82,7 +82,6 @@
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
-    <ClCompile Include="..\..\..\Source\Display\PngToCppHex.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp" />
@@ -100,6 +99,7 @@
     <ClCompile Include="..\..\..\Source\Platform\Camera.cpp" />
     <ClCompile Include="..\..\..\Source\Platform\Element.cpp" />
     <ClCompile Include="..\..\..\Source\Platform\Zone.cpp" />
+    <ClCompile Include="..\..\..\Source\Storage\FileToCppHex.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\File\File.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Storage\IniFile\IniFile.cpp" />

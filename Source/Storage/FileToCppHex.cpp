@@ -3,7 +3,7 @@
 
 namespace Galatea
 {
-	namespace Display
+	namespace Storage
 	{
 		using namespace Galatea;
 		using namespace Storage;
