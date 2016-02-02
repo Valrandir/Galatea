@@ -148,6 +148,9 @@
     <ClInclude Include="..\..\..\Source\Input\Command.hpp">
       <Filter>Source\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Buffer.hpp">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -275,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Storage\FileToCppHex.cpp">
       <Filter>Source\Storage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Buffer.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

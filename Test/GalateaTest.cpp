@@ -11,6 +11,7 @@ extern Bool TimeTest();
 extern Bool VectorTest();
 extern Bool StdVectorTest();
 extern Bool StringTest();
+extern Bool BufferTest();
 extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
@@ -36,6 +37,7 @@ Bool TestMain()
 	CHECK TimeTest();
 	CHECK VectorTest();
 	CHECK StringTest();
+	CHECK BufferTest();
 	CHECK FileTest();
 	CHECK TextFileTest();
 	CHECK IniFileTest();
