@@ -69,6 +69,13 @@ namespace Galatea
  			return MoveFile(fileName, newName) != 0;
 		}
 
+		Bool File::Copy(CStr fileName, CStr newName, Bool overwrite)
+		{
+			ASSERT_PARAMETER(fileName);
+			ASSERT_PARAMETER(newName);
+ 			return CopyFile(fileName, newName, !overwrite) != 0;
+		}
+
 		UInt64 File::GetFileSize(CStr fileName)
 		{
 			ASSERT_PARAMETER(fileName);

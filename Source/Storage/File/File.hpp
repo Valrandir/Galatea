@@ -53,7 +53,7 @@ namespace Galatea
 			static Bool Exists(CStr fileName);
 			static Bool Delete(CStr fileName);
 			static Bool Move(CStr fileName, CStr newName);
-			static Bool Copy(CStr fileName, CStr newName);
+			static Bool Copy(CStr fileName, CStr newName, Bool overwrite = false);
 			static UInt64 GetFileSize(CStr fileName);
 
 			virtual UInt64 GetFileSize() const = 0;
