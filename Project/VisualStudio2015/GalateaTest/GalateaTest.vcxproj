@@ -167,6 +167,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Test\Assert\Assert.cpp" />
+    <ClCompile Include="..\..\..\Test\Audio\Audio.cpp" />
     <ClCompile Include="..\..\..\Test\Buffer.cpp" />
     <ClCompile Include="..\..\..\Test\DataStruct\Counter.cpp" />
     <ClCompile Include="..\..\..\Test\DataStruct\StdVector.cpp" />

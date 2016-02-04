@@ -25,6 +25,9 @@
     <Filter Include="Display">
       <UniqueIdentifier>{4db15d63-0a41-455d-8ceb-8afe5b6c929f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{7b082a30-988a-4a7f-8e0e-7e8810e47e13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Test\Assert\Assert.cpp">
@@ -83,6 +86,9 @@
       <Filter>Display</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Test\Buffer.cpp" />
+    <ClCompile Include="..\..\..\Test\Audio\Audio.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Test\DataStruct\Counter.hpp">

@@ -16,6 +16,7 @@ extern Bool FileTest();
 extern Bool TextFileTest();
 extern Bool IniFileTest();
 extern Bool DisplayTest();
+extern Bool AudioTest();
 
 Bool AssertOverride(Galatea::Exception const & ex)
 {
@@ -41,6 +42,7 @@ Bool TestMain()
 	CHECK FileTest();
 	CHECK TextFileTest();
 	CHECK IniFileTest();
+	CHECK AudioTest();
 
 	Assert::SetAssertProc(nullptr);
 	CHECK DisplayTest();

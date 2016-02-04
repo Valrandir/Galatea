@@ -151,6 +151,12 @@
     <ClInclude Include="..\..\..\Source\Buffer.hpp">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\Audio.hpp">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\Wave.hpp">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -282,6 +288,9 @@
     <ClCompile Include="..\..\..\Source\Buffer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Audio\Wave.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -340,6 +349,12 @@
     </Filter>
     <Filter Include="Source\Platform">
       <UniqueIdentifier>{2901e2c2-ca69-403c-bf59-a3d4c54cda3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Audio">
+      <UniqueIdentifier>{e543eb83-686f-4d81-8857-906c59126296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Audio\OpenAL">
+      <UniqueIdentifier>{653fefae-8132-4d9a-b7bf-5b66ac3e29b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
