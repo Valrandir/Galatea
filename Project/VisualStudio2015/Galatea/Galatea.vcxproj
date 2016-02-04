@@ -25,7 +25,9 @@
     <ClInclude Include="..\..\..\Source\Assert\Win32\AssertWnd.hpp" />
     <ClInclude Include="..\..\..\Source\Assert\Win32\BaseWindow.hpp" />
     <ClInclude Include="..\..\..\Source\Audio\Audio.hpp" />
-    <ClInclude Include="..\..\..\Source\Audio\Wave.hpp" />
+    <ClInclude Include="..\..\..\Source\Audio\AudioSystem.hpp" />
+    <ClInclude Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.hpp" />
+    <ClInclude Include="..\..\..\Source\Audio\WaveData.hpp" />
     <ClInclude Include="..\..\..\Source\Buffer.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
@@ -81,7 +83,9 @@
     <None Include="..\..\..\Source\DataStruct\Vector.tpp">
       <FileType>CppCode</FileType>
     </None>
-    <ClCompile Include="..\..\..\Source\Audio\Wave.cpp" />
+    <ClCompile Include="..\..\..\Source\Audio\AudioSystem.cpp" />
+    <ClCompile Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.cpp" />
+    <ClCompile Include="..\..\..\Source\Audio\WaveData.cpp" />
     <ClCompile Include="..\..\..\Source\Buffer.cpp" />
     <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
@@ -174,16 +178,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(ProjectDir)..\..\..\..\openal-soft\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(ProjectDir)..\..\..\..\openal-soft\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(ProjectDir)..\..\..\..\openal-soft\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\..\..\..\SDL2\include;$(ProjectDir)..\..\..\..\SDL2_image\include;$(ProjectDir)..\..\..\..\openal-soft\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

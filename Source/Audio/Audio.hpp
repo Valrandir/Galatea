@@ -1,2 +1,3 @@
 #pragma once
-#include "Wave.hpp"
+#include "WaveData.hpp"
+#include "AudioSystem.hpp"

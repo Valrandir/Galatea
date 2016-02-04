@@ -154,7 +154,13 @@
     <ClInclude Include="..\..\..\Source\Audio\Audio.hpp">
       <Filter>Source\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Audio\Wave.hpp">
+    <ClInclude Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.hpp">
+      <Filter>Source\Audio\OpenAL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\AudioSystem.hpp">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\WaveData.hpp">
       <Filter>Source\Audio</Filter>
     </ClInclude>
   </ItemGroup>
@@ -288,7 +294,13 @@
     <ClCompile Include="..\..\..\Source\Buffer.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Audio\Wave.cpp">
+    <ClCompile Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.cpp">
+      <Filter>Source\Audio\OpenAL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Audio\AudioSystem.cpp">
+      <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Audio\WaveData.cpp">
       <Filter>Source\Audio</Filter>
     </ClCompile>
   </ItemGroup>
@@ -354,7 +366,7 @@
       <UniqueIdentifier>{e543eb83-686f-4d81-8857-906c59126296}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Audio\OpenAL">
-      <UniqueIdentifier>{653fefae-8132-4d9a-b7bf-5b66ac3e29b3}</UniqueIdentifier>
+      <UniqueIdentifier>{f343bace-e219-4617-b112-5241ea03ad92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

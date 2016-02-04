@@ -6,10 +6,14 @@ Bool AudioTest()
 {
 	Bool result = true;
 
-	//auto filepath = LR"(D:\Dev\Flac\sample.wav)";
-	//auto waveData = WaveData::FromFile(filepath);
+	auto filepath = LR"(D:\Dev\Flac\sample.wav)";
+	auto waveData = WaveData::FromFile(filepath);
 
-	//delete waveData;
+	auto audio = AudioSystem::Create();
+	audio->PlayTest(*waveData);
+	delete audio;
+
+	delete waveData;
 
 	return result;
 }

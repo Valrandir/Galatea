@@ -1,4 +1,4 @@
-#include "Wave.hpp"
+#include "WaveData.hpp"
 #include "../Assert/Assert.hpp"
 #include "../Storage/File.hpp"
 using namespace Galatea::Storage;
@@ -31,7 +31,7 @@ namespace Galatea
 			WaveFormat format;
 		};
 
-		WaveData::WaveData(const VoidPtr buffer, Int32 buffer_size) : buffer_size{buffer_size}
+		WaveData::WaveData(const WaveFormat& format, const VoidPtr buffer, Int32 buffer_size) : format{format}, buffer_size{buffer_size}
 		{
 			this->buffer = Memory::Alloc(buffer_size);
 			Memory::Copy(buffer, this->buffer, buffer_size);
@@ -56,7 +56,7 @@ namespace Galatea
 		{
 			File* file;
 			ASSERT(file = File::Open(filename, File::Disposition::OpenExisting, File::Access::AccessRead, File::Flags::ShareRead));
-			
+
 			auto buffer_size = file->GetFileSize();
 			auto buffer = Memory::Alloc(buffer_size);
 
@@ -97,7 +97,7 @@ namespace Galatea
 			WaveData* waveData = nullptr;
 
 			if(ok)
-				waveData = new WaveData(data_chunk + sizeof(Chunk), data_chunk->chunk_size);
+				waveData = new WaveData(fmt_chunk->format, data_chunk + sizeof(Chunk), data_chunk->chunk_size);
 
 			Memory::Free(buffer);
 			return waveData;
