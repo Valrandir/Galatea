@@ -49,13 +49,18 @@ namespace Galatea
 
 		void ImageSDL::DrawRect(const Rectangle& rectangle, Color color) const
 		{
+			DrawRect(rectangle.x1, rectangle.y1, rectangle.Width(), rectangle.Height(), color);
+		}
+
+		void ImageSDL::DrawRect(int x, int y, int width, int height, Color color) const
+		{
 			SDL_SetRenderDrawColor(_renderer, color.red, color.green, color.blue, color.alpha);
 			SDL_SetRenderDrawBlendMode(_renderer, color.alpha == 0xff ? SDL_BLENDMODE_NONE : SDL_BLENDMODE_BLEND);
 
 			if(_use_texture)
 				SDL_SetRenderTarget(_renderer, _texture);
 
-			SDL_Rect rect{rectangle.x1, rectangle.y1, rectangle.Width(), rectangle.Height()};
+			SDL_Rect rect{x, y, width, height};
 			SDL_RenderFillRect(_renderer, &rect);
 
 			if(_use_texture)
