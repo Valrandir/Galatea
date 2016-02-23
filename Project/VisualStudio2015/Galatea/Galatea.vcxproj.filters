@@ -163,6 +163,9 @@
     <ClInclude Include="..\..\..\Source\Audio\WaveData.hpp">
       <Filter>Source\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Storage\FileToCppHex.hpp">
+      <Filter>Source\Storage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">

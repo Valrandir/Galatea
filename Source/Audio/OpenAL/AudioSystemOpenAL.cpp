@@ -42,7 +42,11 @@ namespace Galatea
 			auto& wf = wave.Format();
 			ALsizei size = wave.DataByteSize();
 			ALsizei freq = wf.samples_per_seconds;
-			ALenum format = AL_FORMAT_STEREO16;
+			ALenum format =
+				wf.channels == 1 ?
+					(wf.bits_per_sample == 8 ? AL_FORMAT_MONO8 : AL_FORMAT_MONO16) :
+					(wf.bits_per_sample == 8 ? AL_FORMAT_STEREO8 : AL_FORMAT_STEREO16);
+
 			ALvoid *data = wave.Data();
 			ALboolean loop = AL_FALSE;
 

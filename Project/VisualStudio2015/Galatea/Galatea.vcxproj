@@ -58,6 +58,7 @@
     <ClInclude Include="..\..\..\Source\Platform\Platform.hpp" />
     <ClInclude Include="..\..\..\Source\Platform\Zone.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File.hpp" />
+    <ClInclude Include="..\..\..\Source\Storage\FileToCppHex.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File\File.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\File\File.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\Storage\IniFile.hpp" />

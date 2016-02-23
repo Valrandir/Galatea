@@ -42,9 +42,9 @@ Bool TestMain()
 	CHECK FileTest();
 	CHECK TextFileTest();
 	CHECK IniFileTest();
-	CHECK AudioTest();
 
 	Assert::SetAssertProc(nullptr);
+	CHECK AudioTest();
 	CHECK DisplayTest();
 
 	return result;
