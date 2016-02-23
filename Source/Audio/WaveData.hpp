@@ -19,9 +19,9 @@ namespace Galatea
 		{
 			WaveFormat format;
 			VoidPtr buffer;
-			Int32 buffer_size;
+			UInt buffer_size;
 
-			WaveData(const WaveFormat& format, const VoidPtr buffer, Int32 buffer_size);
+			WaveData(const WaveFormat& format, const VoidPtr buffer, UInt buffer_size);
 
 			public:
 			WaveData(const WaveData&) = delete;
@@ -30,11 +30,11 @@ namespace Galatea
 			WaveData& operator=(WaveData&&);
 			~WaveData();
 
-			static WaveData* FromMemory(const VoidPtr buffer, Int32 buffer_size);
+			static WaveData* FromMemory(const VoidPtr buffer, UInt buffer_size);
 			static WaveData* FromFile(CStr filename);
 
 			inline const WaveFormat& Format() const { return format; }
-			inline const Int32 DataByteSize() const { return buffer_size; }
+			inline const UInt DataByteSize() const { return buffer_size; }
 			inline const VoidPtr Data() const { return buffer; }
 			inline VoidPtr Data() { return buffer; }
 

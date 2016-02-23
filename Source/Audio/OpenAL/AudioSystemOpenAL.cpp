@@ -40,7 +40,7 @@ namespace Galatea
 			alGenBuffers(1u, &buffer);
 
 			auto& wf = wave.Format();
-			ALsizei size = wave.DataByteSize();
+			ALsizei size = ToInt32(wave.DataByteSize());
 			ALsizei freq = wf.samples_per_seconds;
 			ALenum format =
 				wf.channels == 1 ?

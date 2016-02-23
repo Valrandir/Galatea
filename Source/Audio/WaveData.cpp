@@ -33,7 +33,7 @@ namespace Galatea
 			WaveFormat format;
 		};
 
-		WaveData::WaveData(const WaveFormat& format, const VoidPtr buffer, Int32 buffer_size) : format{format}, buffer_size{buffer_size}
+		WaveData::WaveData(const WaveFormat& format, const VoidPtr buffer, UInt buffer_size) : format{format}, buffer_size{buffer_size}
 		{
 			this->buffer = Memory::Alloc(buffer_size);
 			Memory::Copy(buffer, this->buffer, buffer_size);
@@ -54,7 +54,7 @@ namespace Galatea
 			Destroy();
 		}
 
-		WaveData* WaveData::FromMemory(const VoidPtr buffer, Int32 buffer_size)
+		WaveData* WaveData::FromMemory(const VoidPtr buffer, UInt buffer_size)
 		{
 			auto it = reinterpret_cast<UInt8*>(buffer);
 			auto end = it + buffer_size;
