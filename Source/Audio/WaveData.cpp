@@ -54,7 +54,7 @@ namespace Galatea
 			Destroy();
 		}
 
-		WaveData* WaveData::FromMemory(const VoidPtr buffer, UInt buffer_size)
+		WaveData* WaveData::Create(const VoidPtr buffer, UInt buffer_size)
 		{
 			auto it = reinterpret_cast<UInt8*>(buffer);
 			auto end = it + buffer_size;
@@ -98,7 +98,7 @@ namespace Galatea
 			return nullptr;
 		}
 
-		WaveData* WaveData::FromFile(CStr filename)
+		WaveData* WaveData::Create(CStr filename)
 		{
 			File* file;
 			ASSERT(file = File::Open(filename, File::Disposition::OpenExisting, File::Access::AccessRead, File::Flags::ShareRead));
@@ -109,7 +109,7 @@ namespace Galatea
 			ASSERT(file->Read(buffer, buffer_size));
 			delete file;
 
-			return FromMemory(buffer, buffer_size);
+			return Create(buffer, buffer_size);
 			Memory::Free(buffer);
 		}
 

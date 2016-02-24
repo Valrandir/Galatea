@@ -166,6 +166,12 @@
     <ClInclude Include="..\..\..\Source\Storage\FileToCppHex.hpp">
       <Filter>Source\Storage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\Sound.hpp">
+      <Filter>Source\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.hpp">
+      <Filter>Source\Audio\OpenAL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -305,6 +311,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Audio\WaveData.cpp">
       <Filter>Source\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.cpp">
+      <Filter>Source\Audio\OpenAL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

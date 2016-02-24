@@ -1,25 +1,79 @@
 #include "../Galatea.hpp"
 using namespace Galatea;
-using namespace Audio;
 
 void audio_data(void*& buffer, Int32& buffer_size);
+
+Bool PlaySingle()
+{
+	void* buffer;
+	Int32 buffer_size;
+	audio_data(buffer, buffer_size);
+
+	auto audio_sys = Audio::CreateAudioSystem();
+	auto sound = audio_sys->CreateSound(buffer, buffer_size);
+
+	audio_sys->PlaySound(sound);
+
+	while(sound->IsPlaying())
+		Timing::Sleep(10);
+
+	delete sound;
+	delete audio_sys;
+
+	return true;
+}
+
+Bool PlayMultiple()
+{
+	void* buffer;
+	Int32 buffer_size;
+	audio_data(buffer, buffer_size);
+
+	auto audio_sys = Audio::CreateAudioSystem();
+	Audio::WaveData* wave_data = Audio::WaveData::Create(buffer, buffer_size);
+
+	const Audio::Sound* sounds[] =
+	{
+		audio_sys->CreateSound(*wave_data),
+		audio_sys->CreateSound(*wave_data),
+		audio_sys->CreateSound(*wave_data)
+	};
+
+	for(auto& snd : sounds)
+	{
+		audio_sys->PlaySound(snd);
+		Timing::Sleep(256);
+	}
+
+	bool is_playing = true;
+
+	while(is_playing)
+	{
+		is_playing = false;
+
+		for(auto& snd : sounds)
+			if(snd->IsPlaying())
+			{
+				is_playing = true;
+				Timing::Sleep(25);
+				break;
+			}
+	}
+
+	for(auto& snd : sounds)
+		delete snd;
+
+	delete audio_sys;
+
+	return true;
+}
 
 Bool AudioTest()
 {
 	Bool result = true;
 
-	void* buffer;
-	Int32 buffer_size;
-	audio_data(buffer, buffer_size);
-
-	WaveData* waveData;
-	ASSERT(waveData = WaveData::FromMemory(buffer, buffer_size));
-
-	auto audio = AudioSystem::Create();
-	audio->PlayTest(*waveData);
-	delete audio;
-
-	delete waveData;
+	CHECK(PlaySingle());
+	CHECK(PlayMultiple());
 
 	return result;
 }

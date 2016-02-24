@@ -5,7 +5,7 @@ namespace Galatea
 {
 	namespace Audio
 	{
-		AudioSystem* AudioSystem::Create()
+		AudioSystem* CreateAudioSystem()
 		{
 			return new AudioSystemOpenAL();
 		}

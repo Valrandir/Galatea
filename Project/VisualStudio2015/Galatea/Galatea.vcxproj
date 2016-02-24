@@ -27,6 +27,8 @@
     <ClInclude Include="..\..\..\Source\Audio\Audio.hpp" />
     <ClInclude Include="..\..\..\Source\Audio\AudioSystem.hpp" />
     <ClInclude Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.hpp" />
+    <ClInclude Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.hpp" />
+    <ClInclude Include="..\..\..\Source\Audio\Sound.hpp" />
     <ClInclude Include="..\..\..\Source\Audio\WaveData.hpp" />
     <ClInclude Include="..\..\..\Source\Buffer.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
@@ -86,6 +88,7 @@
     </None>
     <ClCompile Include="..\..\..\Source\Audio\AudioSystem.cpp" />
     <ClCompile Include="..\..\..\Source\Audio\OpenAL\AudioSystemOpenAL.cpp" />
+    <ClCompile Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.cpp" />
     <ClCompile Include="..\..\..\Source\Audio\WaveData.cpp" />
     <ClCompile Include="..\..\..\Source\Buffer.cpp" />
     <ClCompile Include="..\..\..\Source\DataStruct\VectorAssert.cpp" />

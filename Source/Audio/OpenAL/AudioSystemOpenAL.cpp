@@ -1,10 +1,8 @@
 #include "AudioSystemOpenAL.hpp"
-#include "../../Timing/Timing.hpp"
+#include "../../Assert/Assert.hpp"
+#include "SoundOpenAL.hpp"
 
 #include <AL/al.h>
-#include <AL/alc.h>
-
-#define Assert(fn) if(!(fn)) throw;
 
 namespace Galatea
 {
@@ -12,70 +10,53 @@ namespace Galatea
 	{
 		AudioSystemOpenAL::AudioSystemOpenAL()
 		{
-
+			ASSERT(_device = alcOpenDevice(nullptr));
+			ASSERT(_context = alcCreateContext(_device, nullptr));
+			ASSERT(alcMakeContextCurrent(_context));
 		}
 
-		void AudioSystemOpenAL::PlayTest(const WaveData& wave)
+		AudioSystemOpenAL::~AudioSystemOpenAL()
 		{
-			//http://enigma-dev.org/forums/index.php?topic=730.0;wap2
-			//OpenAL Soft
-
-			ALCdevice *device;
-			ALCcontext *context;
-			ALenum err;
-
-			Assert(device = alcOpenDevice(nullptr));
-			Assert(context = alcCreateContext(device, nullptr));
-			Assert(alcMakeContextCurrent(context));
-
-			ALuint source;
-			alGenSources(1u, &source);
-			alSourcef(source, AL_PITCH, 1);
-			alSourcef(source, AL_GAIN, 1);
-			alSource3f(source, AL_POSITION, 0, 0, 0);
-			alSource3f(source, AL_VELOCITY, 0, 0, 0);
-			alSourcei(source, AL_LOOPING, AL_FALSE);
-
-			ALuint buffer;
-			alGenBuffers(1u, &buffer);
-
-			auto& wf = wave.Format();
-			ALsizei size = ToInt32(wave.DataByteSize());
-			ALsizei freq = wf.samples_per_seconds;
-			ALenum format =
-				wf.channels == 1 ?
-					(wf.bits_per_sample == 8 ? AL_FORMAT_MONO8 : AL_FORMAT_MONO16) :
-					(wf.bits_per_sample == 8 ? AL_FORMAT_STEREO8 : AL_FORMAT_STEREO16);
-
-			ALvoid *data = wave.Data();
-			ALboolean loop = AL_FALSE;
-
-			alcGetError(device);
-			alBufferData(buffer, format, data, size, freq);
-			err = alGetError();
-
-			alSourcei(source, AL_BUFFER, buffer);
-			err = alGetError();
-
-			alSourcePlay(source);
-			err = alGetError();
-
-			ALint source_state;
-			alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-			err = alGetError();
-			while(source_state == AL_PLAYING)
-			{
-				Timing::Sleep(25);
-				alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-				err = alGetError();
-			}
-
-			alDeleteSources(1, &source);
-			alDeleteBuffers(1, &buffer);
-			device = alcGetContextsDevice(context);
 			alcMakeContextCurrent(nullptr);
-			alcDestroyContext(context);
-			alcCloseDevice(device);
+			alcDestroyContext(_context);
+			alcCloseDevice(_device);
+		}
+
+		const Sound* AudioSystemOpenAL::CreateSound(const WaveData& wave_data)
+		{
+			alcGetError(_device);
+			return new SoundOpenAL(wave_data);
+		}
+
+		const Sound* AudioSystemOpenAL::CreateSound(const VoidPtr buffer, UInt buffer_size)
+		{
+			alcGetError(_device);
+			auto wave_data = WaveData::Create(buffer, buffer_size);
+			auto sound = new SoundOpenAL(*wave_data);
+			delete wave_data;
+			return sound;
+		}
+
+		const Sound* AudioSystemOpenAL::CreateSound(CStr filename)
+		{
+			alcGetError(_device);
+			auto wave_data = WaveData::Create(filename);
+			auto sound = new SoundOpenAL(*wave_data);
+			delete wave_data;
+			return sound;
+		}
+
+		void AudioSystemOpenAL::PlaySound(const Sound* sound)
+		{
+			auto sound_openal = dynamic_cast<const SoundOpenAL*>(sound);
+
+			alcGetError(_device);
+
+			alSourcei(sound_openal->Source(), AL_BUFFER, sound_openal->Buffer());
+			ASSERT(alGetError() == 0);
+
+			alSourcePlay(sound_openal->Source());
+			ASSERT(alGetError() == 0);
 		}
 	}
 }

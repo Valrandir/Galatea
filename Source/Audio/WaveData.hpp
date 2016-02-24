@@ -30,8 +30,8 @@ namespace Galatea
 			WaveData& operator=(WaveData&&);
 			~WaveData();
 
-			static WaveData* FromMemory(const VoidPtr buffer, UInt buffer_size);
-			static WaveData* FromFile(CStr filename);
+			static WaveData* Create(const VoidPtr buffer, UInt buffer_size);
+			static WaveData* Create(CStr filename);
 
 			inline const WaveFormat& Format() const { return format; }
 			inline const UInt DataByteSize() const { return buffer_size; }
