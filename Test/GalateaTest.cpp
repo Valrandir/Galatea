@@ -44,7 +44,7 @@ Bool TestMain()
 	CHECK IniFileTest();
 
 	Assert::SetAssertProc(nullptr);
-	CHECK AudioTest();
+	//CHECK AudioTest();
 	CHECK DisplayTest();
 
 	return result;
