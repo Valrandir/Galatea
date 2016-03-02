@@ -1,4 +1,5 @@
 #include "../../Assert/Assert.hpp"
+#include "../Display.hpp"
 #include "WindowSDL.hpp"
 #include "ImageSDL.hpp"
 #include "InputSDL.hpp"
@@ -15,10 +16,26 @@ namespace Galatea
 		{
 		}
 
-		WindowSDL* WindowSDL::Create(const char* title, int width, int height)
+		WindowSDL* WindowSDL::Create(const char* title, int width, int height, WindowStyle style)
 		{
 			SDL_Window* window;
-			ASSERT(window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL));
+			Uint32 flags = style & WindowStyle::Borderless ? SDL_WINDOW_BORDERLESS : 0;
+
+			if(!SDL_WasInit(SDL_INIT_VIDEO))
+				SDL_Init(SDL_INIT_VIDEO);
+
+			if(!width || !height)
+			{
+				SDL_DisplayMode sdm;
+				ASSERT(SDL_GetDesktopDisplayMode(0, &sdm) == 0);
+				width = sdm.w;
+				height = sdm.h;
+			}
+
+			ASSERT(window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags | SDL_WINDOW_OPENGL));
+			SDL_DisplayMode sdm;
+			auto z = SDL_GetDesktopDisplayMode(0, &sdm);
+			auto zz = SDL_GetError();
 
 			SDL_Renderer* renderer;
 			ASSERT(renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));

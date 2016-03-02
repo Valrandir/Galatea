@@ -16,7 +16,7 @@ namespace Galatea
 			WindowSDL(const char* title, int width, int height, SDL_Window* window, SDL_Renderer* renderer);
 
 			public:
-			static WindowSDL* Create(const char* title, int width, int height);
+			static WindowSDL* Create(const char* title, int width, int height, WindowStyle style);
 			~WindowSDL();
 			void Destroy();
 
