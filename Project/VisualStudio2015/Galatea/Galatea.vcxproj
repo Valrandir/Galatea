@@ -34,6 +34,12 @@
     <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Image.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\ImageGL.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\InputGL.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\glcorearb.h" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\glext.h" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\wglext.h" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\WindowGL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\ImageSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\InputSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\SDL\WindowSDL.hpp" />
@@ -95,6 +101,9 @@
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\InputGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\WindowGL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\WindowSDL.cpp" />
@@ -128,6 +137,7 @@
     <ClCompile Include="..\..\..\Source\Timing\Rate.cpp" />
     <ClCompile Include="..\..\..\Source\Timing\Timing.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Types.cpp" />
+    <None Include="..\..\..\Source\Display\OpenGL\opengl.org\README" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C90F3523-28C7-424E-BC99-9F4557BF2C8F}</ProjectGuid>

@@ -1,0 +1,11 @@
+Downloaded on 2016-03-01
+https://www.opengl.org/registry/
+
+<GL/glext.h> - OpenGL 1.2 and above compatibility profile and extension interfaces.
+https://www.opengl.org/registry/api/GL/glext.h
+
+<GL/glcorearb.h> - OpenGL core profile and ARB extension interfaces, as described in appendix G.2 of the OpenGL 4.3 Specification. Does not include interfaces found only in the compatibility profile.
+https://www.opengl.org/registry/api/GL/glcorearb.h
+
+<GL/wglext.h> - WGL extension interfaces.
+https://www.opengl.org/registry/api/GL/wglext.h

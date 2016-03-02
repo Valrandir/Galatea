@@ -172,6 +172,24 @@
     <ClInclude Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.hpp">
       <Filter>Source\Audio\OpenAL</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\glext.h">
+      <Filter>Source\Display\OpenGL\opengl.org</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\wglext.h">
+      <Filter>Source\Display\OpenGL\opengl.org</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\glcorearb.h">
+      <Filter>Source\Display\OpenGL\opengl.org</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\ImageGL.hpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\InputGL.hpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\WindowGL.hpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -315,6 +333,15 @@
     <ClCompile Include="..\..\..\Source\Audio\OpenAL\SoundOpenAL.cpp">
       <Filter>Source\Audio\OpenAL</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\InputGL.cpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\WindowGL.cpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -380,10 +407,19 @@
     <Filter Include="Source\Audio\OpenAL">
       <UniqueIdentifier>{f343bace-e219-4617-b112-5241ea03ad92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Display\OpenGL">
+      <UniqueIdentifier>{8361335d-c906-4b5c-9235-0ff154d70d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Display\OpenGL\opengl.org">
+      <UniqueIdentifier>{36cebc50-3bef-4b21-9c0f-fbd5bd942f13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Source\DataStruct\Vector.tpp">
       <Filter>Source\DataStruct</Filter>
+    </None>
+    <None Include="..\..\..\Source\Display\OpenGL\opengl.org\README">
+      <Filter>Source\Display\OpenGL\opengl.org</Filter>
     </None>
   </ItemGroup>
 </Project>
