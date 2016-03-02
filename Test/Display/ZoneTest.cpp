@@ -49,7 +49,7 @@ namespace
 {
 	void Init()
 	{
-		_window = CreateWindow("Zone Test", _screen_width, _screen_height);
+		_window = CreateWindow(Text("Zone Test"), _screen_width, _screen_height);
 		_window->OnKeyEvent() = OnKey;
 		_window->OnMouseMoveEvent() = OnMouseMove;
 

@@ -63,7 +63,7 @@ namespace
 Bool BubbleTest()
 {
 	const int width{320}, height{240};
-	auto wnd = CreateWindow("Bubble Test", width, height);
+	auto wnd = CreateWindow(Text("Bubble Test"), width, height);
 
 	if(!wnd)
 		return false;

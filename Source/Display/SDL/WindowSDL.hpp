@@ -1,5 +1,6 @@
 #pragma once
 #include "../Window.hpp"
+#include "../WindowStyle.hpp"
 #include "ImageSDL.hpp"
 #include <SDL.h>
 
@@ -13,10 +14,10 @@ namespace Galatea
 			SDL_Renderer* _renderer;
 			bool _is_destroyed;
 
-			WindowSDL(const char* title, int width, int height, SDL_Window* window, SDL_Renderer* renderer);
+			WindowSDL(CStr title, int width, int height, SDL_Window* window, SDL_Renderer* renderer);
 
 			public:
-			static WindowSDL* Create(const char* title, int width, int height, WindowStyle style);
+			static WindowSDL* Create(CStr title, int width, int height, WindowStyle style);
 			~WindowSDL();
 			void Destroy();
 

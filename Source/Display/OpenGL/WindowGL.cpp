@@ -8,6 +8,16 @@ namespace Galatea
 {
 	namespace Display
 	{
+		WindowGL::WindowGL(CStr title, int width, int height, WindowStyle style)
+		{
+
+		}
+
+		WindowGL* WindowGL::Create(CStr title, int width, int height, WindowStyle style)
+		{
+			return nullptr;
+		}
+
 		WindowGL::~WindowGL()
 		{
 		}

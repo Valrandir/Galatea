@@ -34,6 +34,7 @@
     <ClInclude Include="..\..\..\Source\Display\Color.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Image.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\GLExt.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\ImageGL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\InputGL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\opengl.org\glcorearb.h" />
@@ -45,6 +46,7 @@
     <ClInclude Include="..\..\..\Source\Display\SDL\WindowSDL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Sprite.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Window.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\WindowStyle.hpp" />
     <ClInclude Include="..\..\..\Source\Galatea.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\Vector.hpp" />
     <ClInclude Include="..\..\..\Source\DataStruct\VectorAssert.hpp" />
@@ -76,6 +78,8 @@
     <ClInclude Include="..\..\..\Source\Storage\TextFile\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\String\String.hpp" />
     <ClInclude Include="..\..\..\Source\System.hpp" />
+    <ClInclude Include="..\..\..\Source\Text\Convert.hpp" />
+    <ClInclude Include="..\..\..\Source\Text\Text.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\Timing\Clock.hpp" />
@@ -101,8 +105,10 @@
     <ClCompile Include="..\..\..\Source\Display\Color.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\GLExt.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\InputGL.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\Win32\GLExt.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\WindowGL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\ImageSDL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\SDL\InputSDL.cpp" />
@@ -132,6 +138,7 @@
     <ClCompile Include="..\..\..\Source\String\String.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\System.cpp" />
     <ClCompile Include="..\..\..\Source\System.Win32.cpp" />
+    <ClCompile Include="..\..\..\Source\Text\Win32\Convert.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Timing\Clock.cpp" />
     <ClCompile Include="..\..\..\Source\Timing\Rate.cpp" />

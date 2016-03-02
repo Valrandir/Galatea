@@ -18,7 +18,7 @@ namespace
 
 	bool Init()
 	{
-		_window = CreateWindow("Sprite Test", _screen_width, _screen_height);
+		_window = CreateWindow(Text("Sprite Test"), _screen_width, _screen_height);
 
 		const UInt8* png_sample_data;
 		Int png_sample_size;

@@ -9,6 +9,7 @@
 #include "Assert/Assert.hpp"
 #include "DataStruct/Vector.hpp"
 #include "String/String.hpp"
+#include "Text/Text.hpp"
 #include "Buffer.hpp"
 #include "Storage/Storage.hpp"
 #include "Geometry/Geometry.hpp"

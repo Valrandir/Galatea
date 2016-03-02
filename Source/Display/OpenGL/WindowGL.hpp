@@ -10,7 +10,10 @@ namespace Galatea
 		{
 			bool _is_destroyed;
 
+			WindowGL(CStr title, int width, int height, WindowStyle style);
+
 			public:
+			static WindowGL* Create(CStr title, int width, int height, WindowStyle style);
 			~WindowGL();
 
 			Image* CreateImage(int width, int height) const override;

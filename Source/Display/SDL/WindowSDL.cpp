@@ -1,4 +1,5 @@
 #include "../../Assert/Assert.hpp"
+#include "../../Text/Text.hpp"
 #include "../Display.hpp"
 #include "WindowSDL.hpp"
 #include "ImageSDL.hpp"
@@ -8,7 +9,7 @@ namespace Galatea
 {
 	namespace Display
 	{
-		WindowSDL::WindowSDL(const char* title, int width, int height, SDL_Window* window, SDL_Renderer* renderer) :
+		WindowSDL::WindowSDL(CStr title, int width, int height, SDL_Window* window, SDL_Renderer* renderer) :
 			ImageSDL{width, height, renderer, false},
 			_window{window},
 			_renderer{renderer},
@@ -16,7 +17,7 @@ namespace Galatea
 		{
 		}
 
-		WindowSDL* WindowSDL::Create(const char* title, int width, int height, WindowStyle style)
+		WindowSDL* WindowSDL::Create(CStr title, int width, int height, WindowStyle style)
 		{
 			SDL_Window* window;
 			Uint32 flags = style & WindowStyle::Borderless ? SDL_WINDOW_BORDERLESS : 0;
@@ -32,7 +33,10 @@ namespace Galatea
 				height = sdm.h;
 			}
 
-			ASSERT(window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags | SDL_WINDOW_OPENGL));
+			const char* char_title = Text::WideToAnsii(title);
+			ASSERT(window = SDL_CreateWindow(char_title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags | SDL_WINDOW_OPENGL));
+			delete char_title;
+
 			SDL_DisplayMode sdm;
 			auto z = SDL_GetDesktopDisplayMode(0, &sdm);
 			auto zz = SDL_GetError();
