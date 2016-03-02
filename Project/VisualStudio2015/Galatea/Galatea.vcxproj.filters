@@ -202,6 +202,9 @@
     <ClInclude Include="..\..\..\Source\Display\WindowStyle.hpp">
       <Filter>Source\Display</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\Common\Win32\WindowBase.hpp">
+      <Filter>Source\Display\Common\Win32</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -363,6 +366,9 @@
     <ClCompile Include="..\..\..\Source\Text\Win32\Convert.Win32.cpp">
       <Filter>Source\Text\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\Common\Win32\WindowBase.cpp">
+      <Filter>Source\Display\Common\Win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -442,6 +448,12 @@
     </Filter>
     <Filter Include="Source\Text\Win32">
       <UniqueIdentifier>{be916f7b-f884-4c1c-9cdf-95edb8abfdbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Display\Common">
+      <UniqueIdentifier>{0e42798e-9a4a-4926-ac02-d9faff9ea0b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Display\Common\Win32">
+      <UniqueIdentifier>{1b02b175-e5ce-44f8-b9f2-485366f6d1fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
