@@ -14,25 +14,28 @@ namespace Galatea
 				static LRESULT CALLBACK WndProcStatic(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 				protected:
-				HWND hWnd;
-				bool destroyed;
-				int width, height;
+				HWND _hwnd;
+				bool _destroyed;
+				int _width, _height;
 
 				virtual LRESULT WndProc(UINT msg, WPARAM wParam, LPARAM lParam);
 
 				public:
-				WindowBase(LPCTSTR caption, int width, int height);
+				WindowBase(LPCTSTR caption, int width, int height, DWORD style = 0);
 				virtual ~WindowBase();
 				WindowBase(const WindowBase&) = delete;
 				WindowBase& operator=(const WindowBase&) = delete;
 
 				virtual void SetCaption(LPCTSTR caption);
+				virtual void SetStyle(DWORD style);
+				virtual void Show();
+				virtual void Hide();
 				virtual bool Update();
 				virtual void Close();
 
-				inline HWND GetHandle() const { return hWnd; }
-				inline int GetWidth() const { return width; }
-				inline int GetHeight() const { return height; }
+				inline HWND GetHandle() const { return _hwnd; }
+				inline int GetWidth() const { return _width; }
+				inline int GetHeight() const { return _height; }
 			};
 		}
 	}

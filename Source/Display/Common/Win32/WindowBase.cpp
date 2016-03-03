@@ -42,10 +42,10 @@ namespace Galatea
 						return 0;
 				}
 
-				return DefWindowProc(hWnd, msg, wParam, lParam);
+				return DefWindowProc(_hwnd, msg, wParam, lParam);
 			}
 
-			WindowBase::WindowBase(LPCTSTR caption, int width, int height) : width{width}, height{height}, destroyed{}
+			WindowBase::WindowBase(LPCTSTR caption, int width, int height, DWORD style) : _width{width}, _height{height}, _destroyed{}
 			{
 				const LPCTSTR CLASS_NAME = TEXT("WindowBase");
 				HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -70,37 +70,52 @@ namespace Galatea
 				}
 
 				int x, y;
-				DWORD style = WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+				style = (style ? style : WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX) | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 				AdjustAndCenter(x, y, width, height, style);
-				hWnd = CreateWindowEx(0, CLASS_NAME, caption, style, x, y, width, height, HWND_DESKTOP, NULL, hInstance, NULL);
-				SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-				ShowWindow(hWnd, SW_SHOW);
+				_hwnd = CreateWindowEx(0, CLASS_NAME, caption, style, x, y, width, height, HWND_DESKTOP, NULL, hInstance, NULL);
+				SetWindowLongPtr(_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 			}
 
 			WindowBase::~WindowBase() {}
 
 			void WindowBase::SetCaption(LPCTSTR caption)
 			{
-				SetWindowText(hWnd, caption);
+				SetWindowText(_hwnd, caption);
+			}
+
+			void WindowBase::SetStyle(DWORD style)
+			{
+				style |= WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+				SetWindowLongPtr(_hwnd, GWL_STYLE, style);
+				int x, y, w = _width, h = _height;
+				AdjustAndCenter(x, y, w, h, style);
+				SetWindowPos(_hwnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
+			}
+
+			void WindowBase::Show()
+			{
+				ShowWindow(_hwnd, SW_SHOW);
+			}
+
+			void WindowBase::Hide()
+			{
+				ShowWindow(_hwnd, SW_HIDE);
 			}
 
 			bool WindowBase::Update()
 			{
 				MSG msg;
 
-				while(!destroyed && PeekMessage(&msg, hWnd, 0, 0, PM_REMOVE))
-				{
-					TranslateMessage(&msg);
+				while(!_destroyed && PeekMessage(&msg, _hwnd, 0, 0, PM_REMOVE))
 					DispatchMessage(&msg);
-				}
 
-				return !destroyed;
+				return !_destroyed;
 			}
 
 			void WindowBase::Close()
 			{
-				destroyed = true;
-				DestroyWindow(hWnd);
+				_destroyed = true;
+				DestroyWindow(_hwnd);
 				Update();
 			}
 		}

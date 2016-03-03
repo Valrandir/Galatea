@@ -1,14 +1,22 @@
 #pragma once
+#include "../Common/Win32/WindowBase.hpp"
 #include "../Window.hpp"
 #include "ImageGL.hpp"
+#include "GLExt.hpp"
 
 namespace Galatea
 {
 	namespace Display
 	{
-		class WindowGL : public Window, public ImageGL
+		class WindowGL : public Window, public ImageGL, private Common::WindowBase
 		{
 			bool _is_destroyed;
+			const GLExt* _glext;
+			HDC _hdc;
+			HGLRC _gl_context;
+
+			void UpdateStyle(WindowStyle style);
+			void InitOpenGL();
 
 			WindowGL(CStr title, int width, int height, WindowStyle style);
 

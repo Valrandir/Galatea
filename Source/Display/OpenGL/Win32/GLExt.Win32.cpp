@@ -1,22 +1,17 @@
 #include "../../../Assert/Assert.hpp"
 #include "../GLExt.hpp"
 
+#pragma comment(lib, "OpenGL32.lib")
+
 namespace Galatea
 {
 	namespace Display
 	{
-		//LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
-		//{
-		//	return DefWindowProc(hWnd, msg, wParam, lParam);
-		//}
-
 		const GLExt* GLExt::Create()
 		{
 			WNDCLASSEX wc{};
 			wc.cbSize = sizeof(wc);
 			wc.style = CS_OWNDC;
-
-			//wc.lpfnWndProc = WndProc;
 
 			wc.lpfnWndProc = [](HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) { return DefWindowProc(hWnd, msg, wParam, lParam); };
 
@@ -56,7 +51,9 @@ namespace Galatea
 			MSG msg;
 			while(PeekMessage(&msg, 0, 0, 0, PM_REMOVE));
 
-			return new GLExt();
+			UnregisterClass(wc.lpszClassName, wc.hInstance);
+
+			return glext;
 		}
 	}
 }
