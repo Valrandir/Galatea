@@ -9,7 +9,13 @@ namespace Galatea
 {
 	namespace Display
 	{
-		Window* CreateWindow(CStr title, int width, int height);
-		Window* CreateWindow(CStr title, int width, int height, WindowStyle style);
+		enum class RendererImpl
+		{
+			SDL,
+			OpenGL
+		};
+
+		Window* CreateWindow(RendererImpl renderer, CStr title, int width, int height, WindowStyle style);
+		Window* CreateWindow(RendererImpl renderer, CStr title, int width, int height);
 	}
 }

@@ -1,4 +1,3 @@
-#include "SDL\WindowSDL.hpp"
 #include "Window.hpp"
 
 namespace Galatea

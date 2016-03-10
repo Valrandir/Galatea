@@ -60,10 +60,10 @@ namespace
 	}
 }
 
-Bool BubbleTest()
+Bool BubbleTest(RendererImpl renderer)
 {
 	const int width{320}, height{240};
-	auto wnd = CreateWindow(Text("Bubble Test"), width, height);
+	auto wnd = CreateWindow(renderer, Text("Bubble Test"), width, height);
 
 	if(!wnd)
 		return false;

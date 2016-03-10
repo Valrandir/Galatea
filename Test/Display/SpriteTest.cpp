@@ -16,9 +16,9 @@ namespace
 	const int _screen_width = 0x100;
 	const int _screen_height = 0x100;
 
-	bool Init()
+	bool Init(RendererImpl renderer)
 	{
-		_window = CreateWindow(Text("Sprite Test"), _screen_width, _screen_height);
+		_window = CreateWindow(renderer, Text("Sprite Test"), _screen_width, _screen_height);
 
 		const UInt8* png_sample_data;
 		Int png_sample_size;
@@ -75,9 +75,9 @@ namespace
 	}
 }
 
-Bool SpriteTest()
+Bool SpriteTest(RendererImpl renderer)
 {
-	if(!Init())
+	if(!Init(renderer))
 		return false;
 
 	while(Update() && Render());

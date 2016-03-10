@@ -7,20 +7,21 @@ namespace Galatea
 {
 	namespace Display
 	{
-		#undef CreateWindow
-
-		Window* CreateWindow(CStr title, int width, int height)
+		Window* CreateWindow(RendererImpl renderer, CStr title, int width, int height, WindowStyle style)
 		{
-			WindowStyle style = WindowStyle::Caption | WindowStyle::SysMenu | WindowStyle::MinimizeBox | WindowStyle::MaximizeBox;
-			return WindowGL::Create(title, width, height, style);
-			//WindowStyle style = WindowStyle::Caption | WindowStyle::SysMenu | WindowStyle::MinimizeBox | WindowStyle::MaximizeBox;
-			//return WindowSDL::Create(title, width, height, style);
+			switch(renderer)
+			{
+				case RendererImpl::SDL: return WindowSDL::Create(title, width, height, style);
+				case RendererImpl::OpenGL: return WindowGL::Create(title, width, height, style);
+			}
+
+			return nullptr;
 		}
 
-		Window* CreateWindow(CStr title, int width, int height, WindowStyle style)
+		Window* CreateWindow(RendererImpl renderer, CStr title, int width, int height)
 		{
-			return WindowGL::Create(title, width, height, style);
-			//return WindowSDL::Create(title, width, height, style);
+			WindowStyle style = WindowStyle::Caption | WindowStyle::SysMenu | WindowStyle::MinimizeBox | WindowStyle::MaximizeBox;
+			return CreateWindow(renderer, title, width, height, style);
 		}
 	}
 }

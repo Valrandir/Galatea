@@ -1,14 +1,41 @@
 #include "../../../Assert/Assert.hpp"
-#include "../GLExt.hpp"
+#include "../WindowGL.hpp"
+#include "WindowWGL.hpp"
 
-#pragma comment(lib, "OpenGL32.lib")
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#include <gl/GL.h>
+#include "../opengl.org/wglext.h"
+#include "../OpenGL.hpp"
 
 namespace Galatea
 {
 	namespace Display
 	{
-		const GLExt* GLExt::Create()
+		extern PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
+		extern PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
+		void InitOpenGLExtensions();
+
+		namespace
 		{
+			inline void* LocalGetProcAddress(const char* fn_name)
+			{
+				return wglGetProcAddress(fn_name);
+			}
+		}
+
+		WindowGL* WindowGL::Create(CStr title, int width, int height, WindowStyle style)
+		{
+			InitOpenGLExtensions();
+			return new WindowWGL(title, width, height, style);
+		}
+
+		void InitOpenGLExtensions()
+		{
+			static bool is_initialized = false;
+			if(is_initialized)
+				return;
+
 			WNDCLASSEX wc{};
 			wc.cbSize = sizeof(wc);
 			wc.style = CS_OWNDC;
@@ -16,7 +43,7 @@ namespace Galatea
 			wc.lpfnWndProc = [](HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) { return DefWindowProc(hWnd, msg, wParam, lParam); };
 
 			wc.hInstance = GetModuleHandle(NULL);
-			wc.lpszClassName = TEXT("GLExtWin32");
+			wc.lpszClassName = TEXT("WindowGL.Win32");
 			ASSERT(RegisterClassEx(&wc));
 
 			HWND hwnd;
@@ -41,7 +68,14 @@ namespace Galatea
 			HGLRC wgl_context = wglCreateContext(hdc);
 			wglMakeCurrent(hdc, wgl_context);
 
-			GLExt* glext = new GLExt();
+			if(!wglChoosePixelFormatARB)
+			{
+				#define WGL_GETPROC(type, name) name = (type)(wglGetProcAddress(#name))
+				WGL_GETPROC(PFNWGLCHOOSEPIXELFORMATARBPROC, wglChoosePixelFormatARB);
+				WGL_GETPROC(PFNWGLCREATECONTEXTATTRIBSARBPROC, wglCreateContextAttribsARB);
+			}
+
+			OpenGL::InitializeExtensions(LocalGetProcAddress);
 
 			wglMakeCurrent(NULL, NULL);
 			wglDeleteContext(wgl_context);
@@ -52,8 +86,7 @@ namespace Galatea
 			while(PeekMessage(&msg, 0, 0, 0, PM_REMOVE));
 
 			UnregisterClass(wc.lpszClassName, wc.hInstance);
-
-			return glext;
+			is_initialized = true;
 		}
 	}
 }

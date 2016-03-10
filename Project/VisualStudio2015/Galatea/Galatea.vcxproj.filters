@@ -190,9 +190,6 @@
     <ClInclude Include="..\..\..\Source\Display\OpenGL\WindowGL.hpp">
       <Filter>Source\Display\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Display\OpenGL\GLExt.hpp">
-      <Filter>Source\Display\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Text\Text.hpp">
       <Filter>Source\Text</Filter>
     </ClInclude>
@@ -204,6 +201,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Source\Display\Common\Win32\WindowBase.hpp">
       <Filter>Source\Display\Common\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\Win32\WindowWGL.hpp">
+      <Filter>Source\Display\OpenGL\Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\OpenGL.hpp">
+      <Filter>Source\Display\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,17 +360,20 @@
     <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp">
       <Filter>Source\Display\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Display\OpenGL\GLExt.cpp">
-      <Filter>Source\Display\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\Source\Display\OpenGL\Win32\GLExt.Win32.cpp">
-      <Filter>Source\Display\OpenGL\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Text\Win32\Convert.Win32.cpp">
       <Filter>Source\Text\Win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Display\Common\Win32\WindowBase.cpp">
       <Filter>Source\Display\Common\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\Win32\WindowWGL.cpp">
+      <Filter>Source\Display\OpenGL\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\OpenGL.cpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\Win32\WindowGL.Win32.cpp">
+      <Filter>Source\Display\OpenGL\Win32</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

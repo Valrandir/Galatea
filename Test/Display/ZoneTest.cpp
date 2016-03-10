@@ -11,7 +11,7 @@ extern void GetPngBubbleData(const UInt8*& png_sample_data, Int& size);
 
 namespace
 {
-	void Init();
+	void Init(RendererImpl renderer);
 	bool Update();
 	bool Render();
 	void Destroy();
@@ -36,9 +36,9 @@ namespace
 	Command _cmd_blink(4);
 }
 
-Bool ZoneTest()
+Bool ZoneTest(RendererImpl renderer)
 {
-	Init();
+	Init(renderer);
 	while(Update() && Render());
 	Destroy();
 
@@ -47,9 +47,9 @@ Bool ZoneTest()
 
 namespace
 {
-	void Init()
+	void Init(RendererImpl renderer)
 	{
-		_window = CreateWindow(Text("Zone Test"), _screen_width, _screen_height);
+		_window = CreateWindow(renderer, Text("Zone Test"), _screen_width, _screen_height);
 		_window->OnKeyEvent() = OnKey;
 		_window->OnMouseMoveEvent() = OnMouseMove;
 
