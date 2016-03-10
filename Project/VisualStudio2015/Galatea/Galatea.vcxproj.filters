@@ -208,6 +208,9 @@
     <ClInclude Include="..\..\..\Source\Display\OpenGL\OpenGL.hpp">
       <Filter>Source\Display\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\Matrix4.hpp">
+      <Filter>Source\Display\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\Source\Assert\Assert.cpp">
@@ -374,6 +377,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Source\Display\OpenGL\Win32\WindowGL.Win32.cpp">
       <Filter>Source\Display\OpenGL\Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\Matrix4.cpp">
+      <Filter>Source\Display\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

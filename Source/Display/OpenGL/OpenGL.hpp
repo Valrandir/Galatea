@@ -11,31 +11,31 @@ namespace Galatea
 			void InitializeExtensions(GetProcFunc get_proc_func);
 
 			//Vertex Buffers
-			static PFNGLGENBUFFERSPROC glGenBuffers;
-			static PFNGLDELETEBUFFERSPROC glDeleteBuffers;
-			static PFNGLBINDBUFFERPROC glBindBuffer;
-			static PFNGLBUFFERDATAPROC glBufferData;
-			static PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
-			static PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
-			static PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray;
+			extern PFNGLGENBUFFERSPROC glGenBuffers;
+			extern PFNGLDELETEBUFFERSPROC glDeleteBuffers;
+			extern PFNGLBINDBUFFERPROC glBindBuffer;
+			extern PFNGLBUFFERDATAPROC glBufferData;
+			extern PFNGLVERTEXATTRIBPOINTERPROC glVertexAttribPointer;
+			extern PFNGLENABLEVERTEXATTRIBARRAYPROC glEnableVertexAttribArray;
+			extern PFNGLDISABLEVERTEXATTRIBARRAYPROC glDisableVertexAttribArray;
 
 			//Shaders
-			static PFNGLCREATESHADERPROC glCreateShader;
-			static PFNGLDELETESHADERPROC glDeleteShader;
-			static PFNGLSHADERSOURCEPROC glShaderSource;
-			static PFNGLCOMPILESHADERPROC glCompileShader;
-			static PFNGLGETSHADERIVPROC glGetShaderiv;
-			static PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
-			static PFNGLCREATEPROGRAMPROC glCreateProgram;
-			static PFNGLDELETEPROGRAMPROC glDeleteProgram;
-			static PFNGLATTACHSHADERPROC glAttachShader;
-			static PFNGLDETACHSHADERPROC glDetachShader;
-			static PFNGLLINKPROGRAMPROC glLinkProgram;
-			static PFNGLGETPROGRAMIVPROC glGetProgramiv;
-			static PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
-			static PFNGLUSEPROGRAMPROC glUseProgram;
-			static PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv;
-			static PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation;
+			extern PFNGLCREATESHADERPROC glCreateShader;
+			extern PFNGLDELETESHADERPROC glDeleteShader;
+			extern PFNGLSHADERSOURCEPROC glShaderSource;
+			extern PFNGLCOMPILESHADERPROC glCompileShader;
+			extern PFNGLGETSHADERIVPROC glGetShaderiv;
+			extern PFNGLGETSHADERINFOLOGPROC glGetShaderInfoLog;
+			extern PFNGLCREATEPROGRAMPROC glCreateProgram;
+			extern PFNGLDELETEPROGRAMPROC glDeleteProgram;
+			extern PFNGLATTACHSHADERPROC glAttachShader;
+			extern PFNGLDETACHSHADERPROC glDetachShader;
+			extern PFNGLLINKPROGRAMPROC glLinkProgram;
+			extern PFNGLGETPROGRAMIVPROC glGetProgramiv;
+			extern PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
+			extern PFNGLUSEPROGRAMPROC glUseProgram;
+			extern PFNGLUNIFORMMATRIX4FVPROC glUniformMatrix4fv;
+			extern PFNGLGETUNIFORMLOCATIONPROC glGetUniformLocation;
 		};
 	}
 }

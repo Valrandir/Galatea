@@ -71,6 +71,7 @@ namespace Galatea
 		{
 			UpdateStyle(style);
 			InitOpenGL();
+			Initialize();
 			Show();
 		}
 
@@ -99,23 +100,28 @@ namespace Galatea
 
 		void WindowWGL::BeginDraw(bool clear)
 		{
+			WindowGL::BeginDraw();
+
 			if(clear)
 				Clear();
-		}
+ 		}
 
 		void WindowWGL::EndDraw()
 		{
+			WindowGL::EndDraw();
+
 			glFlush();
 			SwapBuffers(_hdc);
 		}
 
 		bool WindowWGL::Update()
 		{
-			return WindowBase::Update();
+			return WindowGL::Update() && WindowBase::Update();
 		}
 
 		void WindowWGL::Close()
 		{
+			WindowGL::Close();
 			WindowBase::Close();
 		}
 

@@ -35,6 +35,7 @@
     <ClInclude Include="..\..\..\Source\Display\Common\Win32\WindowBase.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Display.hpp" />
     <ClInclude Include="..\..\..\Source\Display\Image.hpp" />
+    <ClInclude Include="..\..\..\Source\Display\OpenGL\Matrix4.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\OpenGL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\ImageGL.hpp" />
     <ClInclude Include="..\..\..\Source\Display\OpenGL\InputGL.hpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="..\..\..\Source\Display\Common\Win32\WindowBase.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Display.cpp" />
     <ClCompile Include="..\..\..\Source\Display\Image.cpp" />
+    <ClCompile Include="..\..\..\Source\Display\OpenGL\Matrix4.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\OpenGL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp" />
     <ClCompile Include="..\..\..\Source\Display\OpenGL\InputGL.cpp" />
