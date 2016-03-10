@@ -45,7 +45,7 @@ namespace Galatea
 				return DefWindowProc(_hwnd, msg, wParam, lParam);
 			}
 
-			WindowBase::WindowBase(LPCTSTR caption, int width, int height, DWORD style) : _width{width}, _height{height}, _destroyed{}
+			WindowBase::WindowBase(LPCTSTR title, int width, int height, DWORD style) : _width{width}, _height{height}, _destroyed{}
 			{
 				const LPCTSTR CLASS_NAME = TEXT("WindowBase");
 				HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -72,15 +72,15 @@ namespace Galatea
 				int x, y;
 				style = (style ? style : WS_SYSMENU | WS_CAPTION | WS_MINIMIZEBOX) | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 				AdjustAndCenter(x, y, width, height, style);
-				_hwnd = CreateWindowEx(0, CLASS_NAME, caption, style, x, y, width, height, HWND_DESKTOP, NULL, hInstance, NULL);
+				_hwnd = CreateWindowEx(0, CLASS_NAME, title, style, x, y, width, height, HWND_DESKTOP, NULL, hInstance, NULL);
 				SetWindowLongPtr(_hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 			}
 
 			WindowBase::~WindowBase() {}
 
-			void WindowBase::SetCaption(LPCTSTR caption)
+			void WindowBase::SetTitle(LPCTSTR title)
 			{
-				SetWindowText(_hwnd, caption);
+				SetWindowText(_hwnd, title);
 			}
 
 			void WindowBase::SetStyle(DWORD style)

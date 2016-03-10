@@ -21,12 +21,12 @@ namespace Galatea
 				virtual LRESULT WndProc(UINT msg, WPARAM wParam, LPARAM lParam);
 
 				public:
-				WindowBase(LPCTSTR caption, int width, int height, DWORD style = 0);
+				WindowBase(LPCTSTR title, int width, int height, DWORD style = 0);
 				virtual ~WindowBase();
 				WindowBase(const WindowBase&) = delete;
 				WindowBase& operator=(const WindowBase&) = delete;
 
-				virtual void SetCaption(LPCTSTR caption);
+				virtual void SetTitle(LPCTSTR title);
 				virtual void SetStyle(DWORD style);
 				virtual void Show();
 				virtual void Hide();
