@@ -190,12 +190,6 @@
     <ClInclude Include="..\..\..\Source\Display\OpenGL\WindowGL.hpp">
       <Filter>Source\Display\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Source\Text\Text.hpp">
-      <Filter>Source\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\Source\Text\Convert.hpp">
-      <Filter>Source\Text</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\Source\Display\WindowStyle.hpp">
       <Filter>Source\Display</Filter>
     </ClInclude>
@@ -363,9 +357,6 @@
     <ClCompile Include="..\..\..\Source\Display\OpenGL\ImageGL.cpp">
       <Filter>Source\Display\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Source\Text\Win32\Convert.Win32.cpp">
-      <Filter>Source\Text\Win32</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Source\Display\Common\Win32\WindowBase.cpp">
       <Filter>Source\Display\Common\Win32</Filter>
     </ClCompile>
@@ -454,12 +445,6 @@
     </Filter>
     <Filter Include="Source\Display\OpenGL\Win32">
       <UniqueIdentifier>{45402826-21b8-4bcd-b2df-4a9402d94ced}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Text">
-      <UniqueIdentifier>{e2b88e12-4394-48a9-a3d1-41222c452cb1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\Text\Win32">
-      <UniqueIdentifier>{be916f7b-f884-4c1c-9cdf-95edb8abfdbf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Display\Common">
       <UniqueIdentifier>{0e42798e-9a4a-4926-ac02-d9faff9ea0b9}</UniqueIdentifier>

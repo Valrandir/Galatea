@@ -81,8 +81,6 @@
     <ClInclude Include="..\..\..\Source\Storage\TextFile\TextFile.hpp" />
     <ClInclude Include="..\..\..\Source\String\String.hpp" />
     <ClInclude Include="..\..\..\Source\System.hpp" />
-    <ClInclude Include="..\..\..\Source\Text\Convert.hpp" />
-    <ClInclude Include="..\..\..\Source\Text\Text.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.hpp" />
     <ClInclude Include="..\..\..\Source\Threading\Thread.Win32.hpp" />
     <ClInclude Include="..\..\..\Source\Timing\Clock.hpp" />
@@ -144,7 +142,6 @@
     <ClCompile Include="..\..\..\Source\String\String.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\System.cpp" />
     <ClCompile Include="..\..\..\Source\System.Win32.cpp" />
-    <ClCompile Include="..\..\..\Source\Text\Win32\Convert.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Threading\Thread.Win32.cpp" />
     <ClCompile Include="..\..\..\Source\Timing\Clock.cpp" />
     <ClCompile Include="..\..\..\Source\Timing\Rate.cpp" />

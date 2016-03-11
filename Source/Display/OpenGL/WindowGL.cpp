@@ -1,3 +1,4 @@
+#include "../../Assert/Assert.hpp"
 #include "OpenGL.hpp"
 #include "WindowGL.hpp"
 #include "Matrix4.hpp"
@@ -10,7 +11,6 @@ namespace Galatea
 		namespace OpenGL
 		{
 			#include <gl/GL.h>
-			#include <stdlib.h>
 
 			GLuint _vertex_buffer;
 			GLuint _texture_data;
@@ -20,17 +20,16 @@ namespace Galatea
 				GLuint shader_id = glCreateShader(type);
 				glShaderSource(shader_id, 1, &shader_code, NULL);
 				glCompileShader(shader_id);
-
 				GLint info_log_length;
 				glGetShaderiv(shader_id, GL_INFO_LOG_LENGTH, &info_log_length);
 				if(info_log_length > 1)
 				{
 					GLsizei length;
-					GLchar* buffer = (GLchar*)malloc(info_log_length);
+					GLchar* buffer = new GLchar[info_log_length];
 					glGetShaderInfoLog(shader_id, info_log_length, &length, buffer);
-					MessageBoxA(0, buffer, "Shader info log", MB_OK | MB_ICONEXCLAMATION);
-					free(buffer);
-					exit(1);
+					String msg = String::ToCStr(buffer).get();
+					delete buffer;
+					ASSERT_MSG(info_log_length == 0, msg);
 				}
 
 				return shader_id;
@@ -58,11 +57,11 @@ namespace Galatea
 				if(info_log_length > 1)
 				{
 					GLsizei length;
-					GLchar* buffer = (GLchar*)malloc(info_log_length);
+					GLchar* buffer = new GLchar[info_log_length];
 					glGetProgramInfoLog(program_id, info_log_length, &length, buffer);
-					MessageBoxA(0, buffer, "Program info log", MB_OK | MB_ICONEXCLAMATION);
-					free(buffer);
-					exit(1);
+					String msg = String::ToCStr(buffer).get();
+					delete buffer;
+					ASSERT_MSG(info_log_length == 0, msg);
 				}
 
 				it = vec_shader_id;

@@ -4,6 +4,8 @@
 
 void FormatImpl(Galatea::TChar* buffer, Galatea::UInt buffer_size, Galatea::CStr format, va_list args);
 Galatea::UInt FormatImplGetRequiredSize(Galatea::CStr format, va_list args);
+int MultiByteToWideChar(const char* text, wchar_t* buffer, int byte_size);
+int WideCharToMultiByte(const wchar_t* text, char* buffer, int byte_size);
 
 namespace Galatea
 {
@@ -344,6 +346,58 @@ namespace Galatea
 	{
 		ASSERT_PARAMETER(text);
 		return IsDigit(text, CStrLength(text));
+	}
+
+	std::unique_ptr<const char> String::WideToByte(const wchar_t* text)
+	{
+		int byte_size = WideCharToMultiByte(text, nullptr, 0);
+		char* buffer = new char[byte_size];
+		WideCharToMultiByte(text, buffer, byte_size);
+		return std::unique_ptr<const char>(buffer);
+	}
+
+	std::unique_ptr<const char> String::WideToByte(const char* text)
+	{
+		const size_t byte_size = strlen(text) * sizeof(char);
+		char* buffer = new char[byte_size];
+		for(size_t i = 0; i < byte_size; ++i)
+			buffer[i] = text[i];
+		return std::unique_ptr<const char>(buffer);
+	}
+
+	std::unique_ptr<const wchar_t> String::ByteToWide(const char* text)
+	{
+		int byte_size = MultiByteToWideChar(text, nullptr, 0);
+		wchar_t* buffer = new wchar_t[byte_size];
+		MultiByteToWideChar(text, buffer, byte_size);
+		return std::unique_ptr<const wchar_t>(buffer);
+	}
+
+	std::unique_ptr<const wchar_t> String::ByteToWide(const wchar_t* text)
+	{
+		const size_t byte_size = wcslen(text) * sizeof(wchar_t);
+		wchar_t* buffer = new wchar_t[byte_size];
+		for(size_t i = 0; i < byte_size; ++i)
+			buffer[i] = text[i];
+		return std::unique_ptr<const wchar_t>(buffer);
+	}
+
+	std::unique_ptr<const TChar> String::ToCStr(const char* text)
+	{
+		#ifdef WIDE_CSTR
+			return std::unique_ptr<const TChar>(reinterpret_cast<const TChar*>(ByteToWide(text).release()));
+		#else
+			return std::unique_ptr<const TChar>(reinterpret_cast<const TChar*>(WideToByte(text).release()));
+		#endif
+	}
+
+	std::unique_ptr<const TChar> String::ToCStr(const wchar_t* text)
+	{
+		#ifdef WIDE_CSTR
+			return std::unique_ptr<const TChar>(reinterpret_cast<const TChar*>(ByteToWide(text).release()));
+		#else
+			return std::unique_ptr<const TChar>(reinterpret_cast<const TChar*>(WideToByte(text).release()));
+		#endif
 	}
 
 	/******************************************************************************/

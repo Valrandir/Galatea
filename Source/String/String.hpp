@@ -5,6 +5,7 @@
 #pragma once
 #include "../Types.hpp"
 #include "../DataStruct/Vector.hpp"
+#include <memory>
 
 namespace Galatea
 {
@@ -59,6 +60,14 @@ namespace Galatea
 		static const UInt NoMatch = (UInt)-1;
 		static const UInt Default = NoMatch;
 		static const UInt MaxSize = NoMatch - 1;
+
+		//Conversions
+		static std::unique_ptr<const char> WideToByte(const wchar_t* text);
+		static std::unique_ptr<const char> WideToByte(const char* text);
+		static std::unique_ptr<const wchar_t> ByteToWide(const char* text);
+		static std::unique_ptr<const wchar_t> ByteToWide(const wchar_t* text);
+		static std::unique_ptr<const TChar> ToCStr(const char* text);
+		static std::unique_ptr<const TChar> ToCStr(const wchar_t* text);
 
 		/* Constructors && Destructor */
 		String();

@@ -75,6 +75,7 @@ namespace Galatea
 		#define _Text(quote)L##quote
 		#define Text(quote)_Text(quote)
 		typedef wchar_t TChar;
+		#define WIDE_CSTR
 	#else
 		#define Text(quote)quote
 		typedef char TChar;

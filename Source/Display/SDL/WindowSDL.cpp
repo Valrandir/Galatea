@@ -1,5 +1,4 @@
 #include "../../Assert/Assert.hpp"
-#include "../../Text/Text.hpp"
 #include "../Display.hpp"
 #include "WindowSDL.hpp"
 #include "ImageSDL.hpp"
@@ -33,13 +32,8 @@ namespace Galatea
 				height = sdm.h;
 			}
 
-			const char* char_title = Text::WideToAnsii(title);
-			ASSERT(window = SDL_CreateWindow(char_title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags | SDL_WINDOW_OPENGL));
-			delete char_title;
-
-			SDL_DisplayMode sdm;
-			auto z = SDL_GetDesktopDisplayMode(0, &sdm);
-			auto zz = SDL_GetError();
+			auto char_title = String::WideToByte(title);
+			ASSERT(window = SDL_CreateWindow(char_title.get(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags | SDL_WINDOW_OPENGL));
 
 			SDL_Renderer* renderer;
 			ASSERT(renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC));
