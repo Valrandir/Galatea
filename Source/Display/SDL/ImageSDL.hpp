@@ -29,8 +29,8 @@ namespace Galatea
 			void DrawImage(const Geometry::Point& position, const Image* image, Color color = {0xff, 0xff, 0xff}, bool horizontal_flip = false, bool vertical_flip = false) const override;
 			void DrawImage(const Geometry::Point& position, Geometry::Rectangle source, const Image* image, Color color = {0xff, 0xff, 0xff}, bool horizontal_flip = false, bool vertical_flip = false) const override;
 
-			int Width() const override;
-			int Height() const override;
+			inline int Width() const override { return _width; }
+			inline int Height() const override { return _height; }
 		};
 	}
 }

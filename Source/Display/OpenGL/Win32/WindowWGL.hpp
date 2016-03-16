@@ -19,9 +19,7 @@ namespace Galatea
 			WindowWGL(CStr title, int width, int height, WindowStyle style);
 			~WindowWGL();
 
-			Image* CreateImage(int width, int height) const override;
-			Image* CreateImage(const char* file) const override;
-			Image* CreateImage(const void* memory, Int size) const override;
+			LRESULT WndProc(UINT msg, WPARAM wParam, LPARAM lParam) override;
 
 			void BeginDraw(bool clear = true) override;
 			void EndDraw() override;

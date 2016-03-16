@@ -116,7 +116,6 @@ namespace Galatea
 			{
 				_destroyed = true;
 				DestroyWindow(_hwnd);
-				Update();
 			}
 		}
 	}

@@ -19,7 +19,7 @@ namespace Galatea
 			ASSERT(0 == SDL_QueryTexture(_texture, nullptr, nullptr, &_width, &_height));
 		}
 
-		ImageSDL::ImageSDL(const void* memory, Int size, SDL_Renderer* renderer)
+		ImageSDL::ImageSDL(const void* memory, Int size, SDL_Renderer* renderer) : _renderer{renderer}, _use_texture{true}
 		{
 			SDL_RWops* rwops;
 			ASSERT(rwops = SDL_RWFromConstMem(memory, ToInt32(size)));
@@ -121,8 +121,5 @@ namespace Galatea
 			if(_use_texture)
 				SDL_SetRenderTarget(_renderer, nullptr);
 		}
-
-		int ImageSDL::Width() const { return _width; }
-		int ImageSDL::Height() const { return _height; }
 	}
 }

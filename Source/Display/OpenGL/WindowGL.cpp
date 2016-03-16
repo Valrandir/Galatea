@@ -2,7 +2,6 @@
 #include "OpenGL.hpp"
 #include "WindowGL.hpp"
 #include "Matrix4.hpp"
-float* get_texture_data(int* width, int* height);
 
 namespace Galatea
 {
@@ -11,9 +10,6 @@ namespace Galatea
 		namespace OpenGL
 		{
 			#include <gl/GL.h>
-
-			GLuint _vertex_buffer;
-			GLuint _texture_data;
 
 			GLuint create_shader(GLenum type, const char* shader_code)
 			{
@@ -107,7 +103,7 @@ namespace Galatea
 						"uniform sampler2D tex;"
 						"void main()"
 						"{"
-						"	out_color = texture(tex, tex_coord) * vec4(color, 1.0);"
+						"	out_color = /*texture(tex, tex_coord) * */vec4(color, 1.0);"
 						"}"
 						)
 				};
@@ -126,120 +122,14 @@ namespace Galatea
 			{
 				glDeleteProgram(program_id);
 			}
-
-			void scene_init()
-			{
-				glClearColor(.2f, .2f, .2f, 1.f);
-				//glEnable(GL_DEPTH_TEST);
-
-				const float texx = 1.f;
-				const float texy = 1.f;
-
-				const float rectangle[] =
-				{
-					//  x      y     z,    r,    g,    b    tx,   ty
-					-0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-					0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, texx, 0.0f,
-					0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, texx, texy,
-					-0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-					-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, texy,
-				};
-
-				glGenBuffers(1, &_vertex_buffer);
-				glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
-				glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
-
-				glGenTextures(1, &_texture_data);
-				glBindTexture(GL_TEXTURE_2D, _texture_data);
-
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-				int width, height;
-				float* float_data = get_texture_data(&width, &height);
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, float_data);
-
-				const GLsizei stride = sizeof(float) * 8;
-				glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, 0);
-				glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * 3));
-				glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * 6));
-				glEnableVertexAttribArray(0);
-				glEnableVertexAttribArray(1);
-				glEnableVertexAttribArray(2);
-			}
-
-			void scene_destroy()
-			{
-				glDisableVertexAttribArray(2);
-				glDisableVertexAttribArray(1);
-				glDisableVertexAttribArray(0);
-				glDeleteTextures(1, &_texture_data);
-				glDeleteBuffers(1, &_vertex_buffer);
-			}
-
-			void scene_render(GLuint program_id)
-			{
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-				GLint uniform = glGetUniformLocation(program_id, "mat_transformation");
-
-				static float degree = 0.f;
-				degree += 0.5f;
-
-				Matrix4 final;
-				Matrix4 view = mat4_make_identity();
-				view = mat4_mul(mat4_make_rotation_z(degree), view);
-				view = mat4_mul(mat4_make_scale(0.5f, 0.5f, 0.0f), view);
-
-				Matrix4 model;
-
-				model = mat4_make_scale(2.0f, 2.0f, 0.0f);
-				glUniformMatrix4fv(uniform, 1, GL_FALSE, model.v);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
-
-				model = mat4_make_identity();
-				model = mat4_mul(mat4_make_rotation_x(-degree), model);
-				model = mat4_mul(mat4_make_rotation_y(-degree), model);
-				model = mat4_mul(mat4_make_translation(-0.5f, 0.5f, 0.0f), model);
-				final = mat4_mul(view, model);
-				glUniformMatrix4fv(uniform, 1, GL_FALSE, final.v);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
-
-				model = mat4_make_identity();
-				model = mat4_mul(mat4_make_rotation_x(-degree), model);
-				model = mat4_mul(mat4_make_rotation_y(-degree + 180), model);
-				model = mat4_mul(mat4_make_translation(0.5f, 0.5f, 0.0f), model);
-				final = mat4_mul(view, model);
-				glUniformMatrix4fv(uniform, 1, GL_FALSE, final.v);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
-
-				model = mat4_make_identity();
-				model = mat4_mul(mat4_make_rotation_x(degree + 180), model);
-				model = mat4_mul(mat4_make_rotation_y(degree + 180), model);
-				model = mat4_mul(mat4_make_translation(0.5f, -0.5f, 0.0f), model);
-				final = mat4_mul(view, model);
-				glUniformMatrix4fv(uniform, 1, GL_FALSE, final.v);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
-
-				model = mat4_make_identity();
-				model = mat4_mul(mat4_make_rotation_x(degree + 180), model);
-				model = mat4_mul(mat4_make_rotation_y(degree), model);
-				model = mat4_mul(mat4_make_translation(-0.5f, -0.5f, 0.0f), model);
-				final = mat4_mul(view, model);
-				glUniformMatrix4fv(uniform, 1, GL_FALSE, final.v);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
-
-				Sleep(5);
-			}
 		}
 
-		WindowGL::WindowGL()
+		WindowGL::WindowGL(CStr title, int width, int height) : ImageGL(width, height, &_vec_drawitem)
 		{
 		}
 
 		WindowGL::~WindowGL()
 		{
-			OpenGL::scene_destroy();
 			OpenGL::shaders_destroy(_program_id);
 			_program_id = 0;
 		}
@@ -247,16 +137,90 @@ namespace Galatea
 		void WindowGL::Initialize()
 		{
 			_program_id = OpenGL::shaders_init();
-			OpenGL::scene_init();
+
+			glClearColor(.0f, .0f, .0f, 1.f);
+			OpenGL::glGenBuffers(1, &_vertex_buffer);
+		}
+
+		Image* WindowGL::CreateImage(int width, int height) const
+		{
+			return new ImageGL(width, height, nullptr);
+		}
+
+		Image* WindowGL::CreateImage(const char* file) const
+		{
+			int width{32}, height{32};
+			return new ImageGL(width, height, nullptr);
+		}
+
+		Image* WindowGL::CreateImage(const void* memory, Int size) const
+		{
+			int width{32}, height{32};
+			return new ImageGL(width, height, nullptr);
 		}
 
 		void WindowGL::BeginDraw(bool clear)
 		{
-			OpenGL::scene_render(_program_id);
 		}
 
 		void WindowGL::EndDraw()
 		{
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			GLint uniform = OpenGL::glGetUniformLocation(_program_id, "mat_transformation");
+			Matrix4 view = mat4_make_identity();
+			OpenGL::glUniformMatrix4fv(uniform, 1, GL_FALSE, view.v);
+
+			float rectangle[] =
+			{
+				//  x      y     z,    r,    g,    b    tx,   ty
+				-0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+				 0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+				 0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+				-0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+			};
+
+			OpenGL::glBindBuffer(GL_ARRAY_BUFFER, _vertex_buffer);
+			const GLsizei stride = sizeof(float) * 8;
+			OpenGL::glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, 0);
+			OpenGL::glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * 3));
+			OpenGL::glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(sizeof(float) * 6));
+
+			for(auto& di : _vec_drawitem)
+			{
+				double conv_x{2.0 / Width()}, conv_y{2.0 / Height()};
+				double x1 = di.rect.x1 * conv_x - 1.0;
+				double y1 = di.rect.y1 * conv_y - 1.0;
+				double x2 = di.rect.x2 * conv_x - 1.0;
+				double y2 = di.rect.y2 * conv_y - 1.0;
+
+				//x1 = -0.5; y1 =  0.5;
+				//x2 =  0.5; y2 = -0.5;
+				rectangle[0]  = x1; rectangle[1]  = -y1;
+				rectangle[8]  = x2; rectangle[9]  = -y1;
+				rectangle[16] = x2; rectangle[17] = -y2;
+				rectangle[24] = x1; rectangle[25] = -y1;
+				rectangle[32] = x1; rectangle[33] = -y2;
+
+				//for(int i = 0, j = 3; i < 5; ++i)
+				//{
+				//	rectangle[j] = di.color.red / 255.0;
+				//	rectangle[j + 1] = di.color.green / 255.0;
+				//	rectangle[j + 2] = di.color.blue / 255.0;
+				//	j += 8;
+				//}
+
+				OpenGL::glBufferData(GL_ARRAY_BUFFER, sizeof(rectangle), rectangle, GL_STATIC_DRAW);
+				OpenGL::glEnableVertexAttribArray(0);
+				OpenGL::glEnableVertexAttribArray(1);
+				OpenGL::glEnableVertexAttribArray(2);
+
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, 5);
+			}
+
+			_vec_drawitem.clear();
+			Sleep(5);
 		}
 
 		bool WindowGL::Update()
@@ -266,52 +230,11 @@ namespace Galatea
 
 		void WindowGL::Close()
 		{
+			OpenGL::glDisableVertexAttribArray(2);
+			OpenGL::glDisableVertexAttribArray(1);
+			OpenGL::glDisableVertexAttribArray(0);
 
+			OpenGL::glDeleteBuffers(1, &_vertex_buffer);
 		}
 	}
-}
-
-float* get_texture_data(int* width, int* height)
-{
-	*width = 32;
-	*height = 32;
-
-	//Grayscale Clouds Mosaic - 32x32 RGB
-	static float texture_data[] =
-	{
-		0.53f,0.53f,0.53f, 0.53f,0.53f,0.53f, 0.44f,0.44f,0.44f, 0.31f,0.31f,0.31f, 0.21f,0.21f,0.21f, 0.17f,0.17f,0.17f, 0.18f,0.18f,0.18f, 0.22f,0.22f,0.22f, 0.32f,0.32f,0.32f, 0.41f,0.41f,0.41f, 0.41f,0.41f,0.41f, 0.36f,0.36f,0.36f, 0.33f,0.33f,0.33f, 0.35f,0.35f,0.35f, 0.31f,0.31f,0.31f, 0.26f,0.26f,0.26f, 0.26f,0.26f,0.26f, 0.31f,0.31f,0.31f, 0.35f,0.35f,0.35f, 0.33f,0.33f,0.33f, 0.36f,0.36f,0.36f, 0.41f,0.41f,0.41f, 0.41f,0.41f,0.41f, 0.32f,0.32f,0.32f, 0.22f,0.22f,0.22f, 0.18f,0.18f,0.18f, 0.17f,0.17f,0.17f, 0.21f,0.21f,0.21f, 0.31f,0.31f,0.31f, 0.44f,0.44f,0.44f, 0.53f,0.53f,0.53f, 0.53f,0.53f,0.53f,
-		0.52f,0.52f,0.52f, 0.49f,0.49f,0.49f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.21f,0.21f,0.21f, 0.15f,0.15f,0.15f, 0.13f,0.13f,0.13f, 0.17f,0.17f,0.17f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.37f,0.37f,0.37f, 0.28f,0.28f,0.28f, 0.26f,0.26f,0.26f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.22f,0.22f,0.22f, 0.22f,0.22f,0.22f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.26f,0.26f,0.26f, 0.28f,0.28f,0.28f, 0.37f,0.37f,0.37f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.17f,0.17f,0.17f, 0.13f,0.13f,0.13f, 0.15f,0.15f,0.15f, 0.21f,0.21f,0.21f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.49f,0.49f,0.49f, 0.52f,0.52f,0.52f,
-		0.52f,0.52f,0.52f, 0.45f,0.45f,0.45f, 0.37f,0.37f,0.37f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.19f,0.19f,0.19f, 0.17f,0.17f,0.17f, 0.21f,0.21f,0.21f, 0.31f,0.31f,0.31f, 0.33f,0.33f,0.33f, 0.33f,0.33f,0.33f, 0.26f,0.26f,0.26f, 0.24f,0.24f,0.24f, 0.24f,0.24f,0.24f, 0.23f,0.23f,0.23f, 0.18f,0.18f,0.18f, 0.18f,0.18f,0.18f, 0.23f,0.23f,0.23f, 0.24f,0.24f,0.24f, 0.24f,0.24f,0.24f, 0.26f,0.26f,0.26f, 0.33f,0.33f,0.33f, 0.33f,0.33f,0.33f, 0.31f,0.31f,0.31f, 0.21f,0.21f,0.21f, 0.17f,0.17f,0.17f, 0.19f,0.19f,0.19f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.37f,0.37f,0.37f, 0.45f,0.45f,0.45f, 0.52f,0.52f,0.52f,
-		0.57f,0.57f,0.57f, 0.53f,0.53f,0.53f, 0.44f,0.44f,0.44f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.23f,0.23f,0.23f, 0.22f,0.22f,0.22f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.29f,0.29f,0.29f, 0.33f,0.33f,0.33f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.21f,0.21f,0.21f, 0.21f,0.21f,0.21f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.33f,0.33f,0.33f, 0.29f,0.29f,0.29f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.22f,0.22f,0.22f, 0.23f,0.23f,0.23f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.44f,0.44f,0.44f, 0.53f,0.53f,0.53f, 0.57f,0.57f,0.57f,
-		0.61f,0.61f,0.61f, 0.57f,0.57f,0.57f, 0.55f,0.55f,0.55f, 0.45f,0.45f,0.45f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.27f,0.27f,0.27f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.16f,0.16f,0.16f, 0.17f,0.17f,0.17f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.17f,0.17f,0.17f, 0.16f,0.16f,0.16f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.27f,0.27f,0.27f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.45f,0.45f,0.45f, 0.55f,0.55f,0.55f, 0.57f,0.57f,0.57f, 0.61f,0.61f,0.61f,
-		0.61f,0.61f,0.61f, 0.60f,0.60f,0.60f, 0.62f,0.62f,0.62f, 0.50f,0.50f,0.50f, 0.37f,0.37f,0.37f, 0.30f,0.30f,0.30f, 0.31f,0.31f,0.31f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.33f,0.33f,0.33f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.27f,0.27f,0.27f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.17f,0.17f,0.17f, 0.17f,0.17f,0.17f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.27f,0.27f,0.27f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.33f,0.33f,0.33f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.31f,0.31f,0.31f, 0.30f,0.30f,0.30f, 0.37f,0.37f,0.37f, 0.50f,0.50f,0.50f, 0.62f,0.62f,0.62f, 0.60f,0.60f,0.60f, 0.61f,0.61f,0.61f,
-		0.64f,0.64f,0.64f, 0.59f,0.59f,0.59f, 0.62f,0.62f,0.62f, 0.51f,0.51f,0.51f, 0.40f,0.40f,0.40f, 0.34f,0.34f,0.34f, 0.38f,0.38f,0.38f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.42f,0.42f,0.42f, 0.37f,0.37f,0.37f, 0.38f,0.38f,0.38f, 0.32f,0.32f,0.32f, 0.24f,0.24f,0.24f, 0.20f,0.20f,0.20f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.20f,0.20f,0.20f, 0.24f,0.24f,0.24f, 0.32f,0.32f,0.32f, 0.38f,0.38f,0.38f, 0.37f,0.37f,0.37f, 0.42f,0.42f,0.42f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.38f,0.38f,0.38f, 0.34f,0.34f,0.34f, 0.40f,0.40f,0.40f, 0.51f,0.51f,0.51f, 0.62f,0.62f,0.62f, 0.59f,0.59f,0.59f, 0.64f,0.64f,0.64f,
-		0.65f,0.65f,0.65f, 0.62f,0.62f,0.62f, 0.61f,0.61f,0.61f, 0.52f,0.52f,0.52f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.46f,0.46f,0.46f, 0.50f,0.50f,0.50f, 0.51f,0.51f,0.51f, 0.47f,0.47f,0.47f, 0.47f,0.47f,0.47f, 0.41f,0.41f,0.41f, 0.32f,0.32f,0.32f, 0.31f,0.31f,0.31f, 0.30f,0.30f,0.30f, 0.30f,0.30f,0.30f, 0.31f,0.31f,0.31f, 0.32f,0.32f,0.32f, 0.41f,0.41f,0.41f, 0.47f,0.47f,0.47f, 0.47f,0.47f,0.47f, 0.51f,0.51f,0.51f, 0.50f,0.50f,0.50f, 0.46f,0.46f,0.46f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.52f,0.52f,0.52f, 0.61f,0.61f,0.61f, 0.62f,0.62f,0.62f, 0.65f,0.65f,0.65f,
-		0.63f,0.63f,0.63f, 0.60f,0.60f,0.60f, 0.58f,0.58f,0.58f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.49f,0.49f,0.49f, 0.48f,0.48f,0.48f, 0.52f,0.52f,0.52f, 0.51f,0.51f,0.51f, 0.53f,0.53f,0.53f, 0.57f,0.57f,0.57f, 0.54f,0.54f,0.54f, 0.45f,0.45f,0.45f, 0.41f,0.41f,0.41f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.41f,0.41f,0.41f, 0.45f,0.45f,0.45f, 0.54f,0.54f,0.54f, 0.57f,0.57f,0.57f, 0.53f,0.53f,0.53f, 0.51f,0.51f,0.51f, 0.52f,0.52f,0.52f, 0.48f,0.48f,0.48f, 0.49f,0.49f,0.49f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.58f,0.58f,0.58f, 0.60f,0.60f,0.60f, 0.63f,0.63f,0.63f,
-		0.62f,0.62f,0.62f, 0.58f,0.58f,0.58f, 0.52f,0.52f,0.52f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.54f,0.54f,0.54f, 0.54f,0.54f,0.54f, 0.50f,0.50f,0.50f, 0.54f,0.54f,0.54f, 0.58f,0.58f,0.58f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.55f,0.55f,0.55f, 0.52f,0.52f,0.52f, 0.44f,0.44f,0.44f, 0.44f,0.44f,0.44f, 0.52f,0.52f,0.52f, 0.55f,0.55f,0.55f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.58f,0.58f,0.58f, 0.54f,0.54f,0.54f, 0.50f,0.50f,0.50f, 0.54f,0.54f,0.54f, 0.54f,0.54f,0.54f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.52f,0.52f,0.52f, 0.58f,0.58f,0.58f, 0.62f,0.62f,0.62f,
-		0.60f,0.60f,0.60f, 0.57f,0.57f,0.57f, 0.52f,0.52f,0.52f, 0.49f,0.49f,0.49f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.62f,0.62f,0.62f, 0.66f,0.66f,0.66f, 0.70f,0.70f,0.70f, 0.68f,0.68f,0.68f, 0.65f,0.65f,0.65f, 0.60f,0.60f,0.60f, 0.56f,0.56f,0.56f, 0.46f,0.46f,0.46f, 0.46f,0.46f,0.46f, 0.56f,0.56f,0.56f, 0.60f,0.60f,0.60f, 0.65f,0.65f,0.65f, 0.68f,0.68f,0.68f, 0.70f,0.70f,0.70f, 0.66f,0.66f,0.66f, 0.62f,0.62f,0.62f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.49f,0.49f,0.49f, 0.52f,0.52f,0.52f, 0.57f,0.57f,0.57f, 0.60f,0.60f,0.60f,
-		0.67f,0.67f,0.67f, 0.60f,0.60f,0.60f, 0.55f,0.55f,0.55f, 0.51f,0.51f,0.51f, 0.59f,0.59f,0.59f, 0.66f,0.66f,0.66f, 0.75f,0.75f,0.75f, 0.77f,0.77f,0.77f, 0.74f,0.74f,0.74f, 0.72f,0.72f,0.72f, 0.73f,0.73f,0.73f, 0.70f,0.70f,0.70f, 0.64f,0.64f,0.64f, 0.59f,0.59f,0.59f, 0.53f,0.53f,0.53f, 0.45f,0.45f,0.45f, 0.45f,0.45f,0.45f, 0.53f,0.53f,0.53f, 0.59f,0.59f,0.59f, 0.64f,0.64f,0.64f, 0.70f,0.70f,0.70f, 0.73f,0.73f,0.73f, 0.72f,0.72f,0.72f, 0.74f,0.74f,0.74f, 0.77f,0.77f,0.77f, 0.75f,0.75f,0.75f, 0.66f,0.66f,0.66f, 0.59f,0.59f,0.59f, 0.51f,0.51f,0.51f, 0.55f,0.55f,0.55f, 0.60f,0.60f,0.60f, 0.67f,0.67f,0.67f,
-		0.72f,0.72f,0.72f, 0.69f,0.69f,0.69f, 0.64f,0.64f,0.64f, 0.60f,0.60f,0.60f, 0.64f,0.64f,0.64f, 0.71f,0.71f,0.71f, 0.76f,0.76f,0.76f, 0.78f,0.78f,0.78f, 0.78f,0.78f,0.78f, 0.76f,0.76f,0.76f, 0.72f,0.72f,0.72f, 0.68f,0.68f,0.68f, 0.62f,0.62f,0.62f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.44f,0.44f,0.44f, 0.44f,0.44f,0.44f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.62f,0.62f,0.62f, 0.68f,0.68f,0.68f, 0.72f,0.72f,0.72f, 0.76f,0.76f,0.76f, 0.78f,0.78f,0.78f, 0.78f,0.78f,0.78f, 0.76f,0.76f,0.76f, 0.71f,0.71f,0.71f, 0.64f,0.64f,0.64f, 0.60f,0.60f,0.60f, 0.64f,0.64f,0.64f, 0.69f,0.69f,0.69f, 0.72f,0.72f,0.72f,
-		0.75f,0.75f,0.75f, 0.73f,0.73f,0.73f, 0.70f,0.70f,0.70f, 0.66f,0.66f,0.66f, 0.66f,0.66f,0.66f, 0.67f,0.67f,0.67f, 0.71f,0.71f,0.71f, 0.74f,0.74f,0.74f, 0.76f,0.76f,0.76f, 0.77f,0.77f,0.77f, 0.70f,0.70f,0.70f, 0.65f,0.65f,0.65f, 0.62f,0.62f,0.62f, 0.55f,0.55f,0.55f, 0.44f,0.44f,0.44f, 0.39f,0.39f,0.39f, 0.39f,0.39f,0.39f, 0.44f,0.44f,0.44f, 0.55f,0.55f,0.55f, 0.62f,0.62f,0.62f, 0.65f,0.65f,0.65f, 0.70f,0.70f,0.70f, 0.77f,0.77f,0.77f, 0.76f,0.76f,0.76f, 0.74f,0.74f,0.74f, 0.71f,0.71f,0.71f, 0.67f,0.67f,0.67f, 0.66f,0.66f,0.66f, 0.66f,0.66f,0.66f, 0.70f,0.70f,0.70f, 0.73f,0.73f,0.73f, 0.75f,0.75f,0.75f,
-		0.80f,0.80f,0.80f, 0.78f,0.78f,0.78f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.70f,0.70f,0.70f, 0.68f,0.68f,0.68f, 0.71f,0.71f,0.71f, 0.74f,0.74f,0.74f, 0.77f,0.77f,0.77f, 0.77f,0.77f,0.77f, 0.71f,0.71f,0.71f, 0.65f,0.65f,0.65f, 0.58f,0.58f,0.58f, 0.50f,0.50f,0.50f, 0.38f,0.38f,0.38f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.38f,0.38f,0.38f, 0.50f,0.50f,0.50f, 0.58f,0.58f,0.58f, 0.65f,0.65f,0.65f, 0.71f,0.71f,0.71f, 0.77f,0.77f,0.77f, 0.77f,0.77f,0.77f, 0.74f,0.74f,0.74f, 0.71f,0.71f,0.71f, 0.68f,0.68f,0.68f, 0.70f,0.70f,0.70f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.78f,0.78f,0.78f, 0.80f,0.80f,0.80f,
-		0.81f,0.81f,0.81f, 0.75f,0.75f,0.75f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.70f,0.70f,0.70f, 0.69f,0.69f,0.69f, 0.69f,0.69f,0.69f, 0.67f,0.67f,0.67f, 0.62f,0.62f,0.62f, 0.54f,0.54f,0.54f, 0.42f,0.42f,0.42f, 0.30f,0.30f,0.30f, 0.26f,0.26f,0.26f, 0.26f,0.26f,0.26f, 0.30f,0.30f,0.30f, 0.42f,0.42f,0.42f, 0.54f,0.54f,0.54f, 0.62f,0.62f,0.62f, 0.67f,0.67f,0.67f, 0.69f,0.69f,0.69f, 0.69f,0.69f,0.69f, 0.70f,0.70f,0.70f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.75f,0.75f,0.75f, 0.81f,0.81f,0.81f,
-		0.81f,0.81f,0.81f, 0.75f,0.75f,0.75f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.70f,0.70f,0.70f, 0.69f,0.69f,0.69f, 0.69f,0.69f,0.69f, 0.67f,0.67f,0.67f, 0.62f,0.62f,0.62f, 0.54f,0.54f,0.54f, 0.42f,0.42f,0.42f, 0.30f,0.30f,0.30f, 0.26f,0.26f,0.26f, 0.26f,0.26f,0.26f, 0.30f,0.30f,0.30f, 0.42f,0.42f,0.42f, 0.54f,0.54f,0.54f, 0.62f,0.62f,0.62f, 0.67f,0.67f,0.67f, 0.69f,0.69f,0.69f, 0.69f,0.69f,0.69f, 0.70f,0.70f,0.70f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.71f,0.71f,0.71f, 0.75f,0.75f,0.75f, 0.81f,0.81f,0.81f,
-		0.80f,0.80f,0.80f, 0.78f,0.78f,0.78f, 0.73f,0.73f,0.73f, 0.71f,0.71f,0.71f, 0.70f,0.70f,0.70f, 0.68f,0.68f,0.68f, 0.71f,0.71f,0.71f, 0.74f,0.74f,0.74f, 0.77f,0.77f,0.77f, 0.77f,0.77f,0.77f, 0.71f,0.71f,0.71f, 0.65f,0.65f,0.65f, 0.58f,0.58f,0.58f, 0.50f,0.50f,0.50f, 0.38f,0.38f,0.38f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.38f,0.38f,0.38f, 0.50f,0.50f,0.50f, 0.58f,0.58f,0.58f, 0.65f,0.65f,0.65f, 0.71f,0.71f,0.71f, 0.77f,0.77f,0.77f, 0.77f,0.77f,0.77f, 0.74f,0.74f,0.74f, 0.71f,0.71f,0.71f, 0.68f,0.68f,0.68f, 0.70f,0.70f,0.70f, 0.71f,0.71f,0.71f, 0.73f,0.73f,0.73f, 0.78f,0.78f,0.78f, 0.80f,0.80f,0.80f,
-		0.75f,0.75f,0.75f, 0.73f,0.73f,0.73f, 0.70f,0.70f,0.70f, 0.66f,0.66f,0.66f, 0.66f,0.66f,0.66f, 0.67f,0.67f,0.67f, 0.71f,0.71f,0.71f, 0.74f,0.74f,0.74f, 0.76f,0.76f,0.76f, 0.77f,0.77f,0.77f, 0.70f,0.70f,0.70f, 0.65f,0.65f,0.65f, 0.62f,0.62f,0.62f, 0.55f,0.55f,0.55f, 0.44f,0.44f,0.44f, 0.39f,0.39f,0.39f, 0.39f,0.39f,0.39f, 0.44f,0.44f,0.44f, 0.55f,0.55f,0.55f, 0.62f,0.62f,0.62f, 0.65f,0.65f,0.65f, 0.70f,0.70f,0.70f, 0.77f,0.77f,0.77f, 0.76f,0.76f,0.76f, 0.74f,0.74f,0.74f, 0.71f,0.71f,0.71f, 0.67f,0.67f,0.67f, 0.66f,0.66f,0.66f, 0.66f,0.66f,0.66f, 0.70f,0.70f,0.70f, 0.73f,0.73f,0.73f, 0.75f,0.75f,0.75f,
-		0.72f,0.72f,0.72f, 0.69f,0.69f,0.69f, 0.64f,0.64f,0.64f, 0.60f,0.60f,0.60f, 0.64f,0.64f,0.64f, 0.71f,0.71f,0.71f, 0.76f,0.76f,0.76f, 0.78f,0.78f,0.78f, 0.78f,0.78f,0.78f, 0.76f,0.76f,0.76f, 0.72f,0.72f,0.72f, 0.68f,0.68f,0.68f, 0.62f,0.62f,0.62f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.44f,0.44f,0.44f, 0.44f,0.44f,0.44f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.62f,0.62f,0.62f, 0.68f,0.68f,0.68f, 0.72f,0.72f,0.72f, 0.76f,0.76f,0.76f, 0.78f,0.78f,0.78f, 0.78f,0.78f,0.78f, 0.76f,0.76f,0.76f, 0.71f,0.71f,0.71f, 0.64f,0.64f,0.64f, 0.60f,0.60f,0.60f, 0.64f,0.64f,0.64f, 0.69f,0.69f,0.69f, 0.72f,0.72f,0.72f,
-		0.67f,0.67f,0.67f, 0.60f,0.60f,0.60f, 0.55f,0.55f,0.55f, 0.51f,0.51f,0.51f, 0.59f,0.59f,0.59f, 0.66f,0.66f,0.66f, 0.75f,0.75f,0.75f, 0.77f,0.77f,0.77f, 0.74f,0.74f,0.74f, 0.72f,0.72f,0.72f, 0.73f,0.73f,0.73f, 0.70f,0.70f,0.70f, 0.64f,0.64f,0.64f, 0.59f,0.59f,0.59f, 0.53f,0.53f,0.53f, 0.45f,0.45f,0.45f, 0.45f,0.45f,0.45f, 0.53f,0.53f,0.53f, 0.59f,0.59f,0.59f, 0.64f,0.64f,0.64f, 0.70f,0.70f,0.70f, 0.73f,0.73f,0.73f, 0.72f,0.72f,0.72f, 0.74f,0.74f,0.74f, 0.77f,0.77f,0.77f, 0.75f,0.75f,0.75f, 0.66f,0.66f,0.66f, 0.59f,0.59f,0.59f, 0.51f,0.51f,0.51f, 0.55f,0.55f,0.55f, 0.60f,0.60f,0.60f, 0.67f,0.67f,0.67f,
-		0.60f,0.60f,0.60f, 0.57f,0.57f,0.57f, 0.52f,0.52f,0.52f, 0.49f,0.49f,0.49f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.62f,0.62f,0.62f, 0.66f,0.66f,0.66f, 0.70f,0.70f,0.70f, 0.68f,0.68f,0.68f, 0.65f,0.65f,0.65f, 0.60f,0.60f,0.60f, 0.56f,0.56f,0.56f, 0.46f,0.46f,0.46f, 0.46f,0.46f,0.46f, 0.56f,0.56f,0.56f, 0.60f,0.60f,0.60f, 0.65f,0.65f,0.65f, 0.68f,0.68f,0.68f, 0.70f,0.70f,0.70f, 0.66f,0.66f,0.66f, 0.62f,0.62f,0.62f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.49f,0.49f,0.49f, 0.52f,0.52f,0.52f, 0.57f,0.57f,0.57f, 0.60f,0.60f,0.60f,
-		0.62f,0.62f,0.62f, 0.58f,0.58f,0.58f, 0.52f,0.52f,0.52f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.54f,0.54f,0.54f, 0.54f,0.54f,0.54f, 0.50f,0.50f,0.50f, 0.54f,0.54f,0.54f, 0.58f,0.58f,0.58f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.55f,0.55f,0.55f, 0.52f,0.52f,0.52f, 0.44f,0.44f,0.44f, 0.44f,0.44f,0.44f, 0.52f,0.52f,0.52f, 0.55f,0.55f,0.55f, 0.62f,0.62f,0.62f, 0.64f,0.64f,0.64f, 0.62f,0.62f,0.62f, 0.58f,0.58f,0.58f, 0.54f,0.54f,0.54f, 0.50f,0.50f,0.50f, 0.54f,0.54f,0.54f, 0.54f,0.54f,0.54f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.52f,0.52f,0.52f, 0.58f,0.58f,0.58f, 0.62f,0.62f,0.62f,
-		0.63f,0.63f,0.63f, 0.60f,0.60f,0.60f, 0.58f,0.58f,0.58f, 0.56f,0.56f,0.56f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.49f,0.49f,0.49f, 0.48f,0.48f,0.48f, 0.52f,0.52f,0.52f, 0.51f,0.51f,0.51f, 0.53f,0.53f,0.53f, 0.57f,0.57f,0.57f, 0.54f,0.54f,0.54f, 0.45f,0.45f,0.45f, 0.41f,0.41f,0.41f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.41f,0.41f,0.41f, 0.45f,0.45f,0.45f, 0.54f,0.54f,0.54f, 0.57f,0.57f,0.57f, 0.53f,0.53f,0.53f, 0.51f,0.51f,0.51f, 0.52f,0.52f,0.52f, 0.48f,0.48f,0.48f, 0.49f,0.49f,0.49f, 0.51f,0.51f,0.51f, 0.51f,0.51f,0.51f, 0.56f,0.56f,0.56f, 0.58f,0.58f,0.58f, 0.60f,0.60f,0.60f, 0.63f,0.63f,0.63f,
-		0.65f,0.65f,0.65f, 0.62f,0.62f,0.62f, 0.61f,0.61f,0.61f, 0.52f,0.52f,0.52f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.46f,0.46f,0.46f, 0.50f,0.50f,0.50f, 0.51f,0.51f,0.51f, 0.47f,0.47f,0.47f, 0.47f,0.47f,0.47f, 0.41f,0.41f,0.41f, 0.32f,0.32f,0.32f, 0.31f,0.31f,0.31f, 0.30f,0.30f,0.30f, 0.30f,0.30f,0.30f, 0.31f,0.31f,0.31f, 0.32f,0.32f,0.32f, 0.41f,0.41f,0.41f, 0.47f,0.47f,0.47f, 0.47f,0.47f,0.47f, 0.51f,0.51f,0.51f, 0.50f,0.50f,0.50f, 0.46f,0.46f,0.46f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.52f,0.52f,0.52f, 0.61f,0.61f,0.61f, 0.62f,0.62f,0.62f, 0.65f,0.65f,0.65f,
-		0.64f,0.64f,0.64f, 0.59f,0.59f,0.59f, 0.62f,0.62f,0.62f, 0.51f,0.51f,0.51f, 0.40f,0.40f,0.40f, 0.34f,0.34f,0.34f, 0.38f,0.38f,0.38f, 0.44f,0.44f,0.44f, 0.45f,0.45f,0.45f, 0.42f,0.42f,0.42f, 0.37f,0.37f,0.37f, 0.38f,0.38f,0.38f, 0.32f,0.32f,0.32f, 0.24f,0.24f,0.24f, 0.20f,0.20f,0.20f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.20f,0.20f,0.20f, 0.24f,0.24f,0.24f, 0.32f,0.32f,0.32f, 0.38f,0.38f,0.38f, 0.37f,0.37f,0.37f, 0.42f,0.42f,0.42f, 0.45f,0.45f,0.45f, 0.44f,0.44f,0.44f, 0.38f,0.38f,0.38f, 0.34f,0.34f,0.34f, 0.40f,0.40f,0.40f, 0.51f,0.51f,0.51f, 0.62f,0.62f,0.62f, 0.59f,0.59f,0.59f, 0.64f,0.64f,0.64f,
-		0.61f,0.61f,0.61f, 0.60f,0.60f,0.60f, 0.62f,0.62f,0.62f, 0.50f,0.50f,0.50f, 0.37f,0.37f,0.37f, 0.30f,0.30f,0.30f, 0.31f,0.31f,0.31f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.33f,0.33f,0.33f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.27f,0.27f,0.27f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.17f,0.17f,0.17f, 0.17f,0.17f,0.17f, 0.19f,0.19f,0.19f, 0.19f,0.19f,0.19f, 0.27f,0.27f,0.27f, 0.32f,0.32f,0.32f, 0.32f,0.32f,0.32f, 0.33f,0.33f,0.33f, 0.35f,0.35f,0.35f, 0.35f,0.35f,0.35f, 0.31f,0.31f,0.31f, 0.30f,0.30f,0.30f, 0.37f,0.37f,0.37f, 0.50f,0.50f,0.50f, 0.62f,0.62f,0.62f, 0.60f,0.60f,0.60f, 0.61f,0.61f,0.61f,
-		0.61f,0.61f,0.61f, 0.57f,0.57f,0.57f, 0.55f,0.55f,0.55f, 0.45f,0.45f,0.45f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.27f,0.27f,0.27f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.16f,0.16f,0.16f, 0.17f,0.17f,0.17f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.17f,0.17f,0.17f, 0.16f,0.16f,0.16f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.27f,0.27f,0.27f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.45f,0.45f,0.45f, 0.55f,0.55f,0.55f, 0.57f,0.57f,0.57f, 0.61f,0.61f,0.61f,
-		0.57f,0.57f,0.57f, 0.53f,0.53f,0.53f, 0.44f,0.44f,0.44f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.23f,0.23f,0.23f, 0.22f,0.22f,0.22f, 0.24f,0.24f,0.24f, 0.25f,0.25f,0.25f, 0.29f,0.29f,0.29f, 0.33f,0.33f,0.33f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.21f,0.21f,0.21f, 0.21f,0.21f,0.21f, 0.20f,0.20f,0.20f, 0.20f,0.20f,0.20f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.33f,0.33f,0.33f, 0.29f,0.29f,0.29f, 0.25f,0.25f,0.25f, 0.24f,0.24f,0.24f, 0.22f,0.22f,0.22f, 0.23f,0.23f,0.23f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.44f,0.44f,0.44f, 0.53f,0.53f,0.53f, 0.57f,0.57f,0.57f,
-		0.52f,0.52f,0.52f, 0.45f,0.45f,0.45f, 0.37f,0.37f,0.37f, 0.31f,0.31f,0.31f, 0.25f,0.25f,0.25f, 0.19f,0.19f,0.19f, 0.17f,0.17f,0.17f, 0.21f,0.21f,0.21f, 0.31f,0.31f,0.31f, 0.33f,0.33f,0.33f, 0.33f,0.33f,0.33f, 0.26f,0.26f,0.26f, 0.24f,0.24f,0.24f, 0.24f,0.24f,0.24f, 0.23f,0.23f,0.23f, 0.18f,0.18f,0.18f, 0.18f,0.18f,0.18f, 0.23f,0.23f,0.23f, 0.24f,0.24f,0.24f, 0.24f,0.24f,0.24f, 0.26f,0.26f,0.26f, 0.33f,0.33f,0.33f, 0.33f,0.33f,0.33f, 0.31f,0.31f,0.31f, 0.21f,0.21f,0.21f, 0.17f,0.17f,0.17f, 0.19f,0.19f,0.19f, 0.25f,0.25f,0.25f, 0.31f,0.31f,0.31f, 0.37f,0.37f,0.37f, 0.45f,0.45f,0.45f, 0.52f,0.52f,0.52f,
-		0.52f,0.52f,0.52f, 0.49f,0.49f,0.49f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.21f,0.21f,0.21f, 0.15f,0.15f,0.15f, 0.13f,0.13f,0.13f, 0.17f,0.17f,0.17f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.37f,0.37f,0.37f, 0.28f,0.28f,0.28f, 0.26f,0.26f,0.26f, 0.28f,0.28f,0.28f, 0.25f,0.25f,0.25f, 0.22f,0.22f,0.22f, 0.22f,0.22f,0.22f, 0.25f,0.25f,0.25f, 0.28f,0.28f,0.28f, 0.26f,0.26f,0.26f, 0.28f,0.28f,0.28f, 0.37f,0.37f,0.37f, 0.38f,0.38f,0.38f, 0.29f,0.29f,0.29f, 0.17f,0.17f,0.17f, 0.13f,0.13f,0.13f, 0.15f,0.15f,0.15f, 0.21f,0.21f,0.21f, 0.29f,0.29f,0.29f, 0.38f,0.38f,0.38f, 0.49f,0.49f,0.49f, 0.52f,0.52f,0.52f,
-		0.53f,0.53f,0.53f, 0.53f,0.53f,0.53f, 0.44f,0.44f,0.44f, 0.31f,0.31f,0.31f, 0.21f,0.21f,0.21f, 0.17f,0.17f,0.17f, 0.18f,0.18f,0.18f, 0.22f,0.22f,0.22f, 0.32f,0.32f,0.32f, 0.41f,0.41f,0.41f, 0.41f,0.41f,0.41f, 0.36f,0.36f,0.36f, 0.33f,0.33f,0.33f, 0.35f,0.35f,0.35f, 0.31f,0.31f,0.31f, 0.26f,0.26f,0.26f, 0.26f,0.26f,0.26f, 0.31f,0.31f,0.31f, 0.35f,0.35f,0.35f, 0.33f,0.33f,0.33f, 0.36f,0.36f,0.36f, 0.41f,0.41f,0.41f, 0.41f,0.41f,0.41f, 0.32f,0.32f,0.32f, 0.22f,0.22f,0.22f, 0.18f,0.18f,0.18f, 0.17f,0.17f,0.17f, 0.21f,0.21f,0.21f, 0.31f,0.31f,0.31f, 0.44f,0.44f,0.44f, 0.53f,0.53f,0.53f, 0.53f,0.53f,0.53f,
-	};
-
-	return texture_data;
 }

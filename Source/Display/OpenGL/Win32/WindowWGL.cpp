@@ -67,7 +67,7 @@ namespace Galatea
 			SetWindowTextA(_hwnd, (char*)glGetString(GL_VERSION));
 		}
 
-		WindowWGL::WindowWGL(CStr title, int width, int height, WindowStyle style) : WindowBase{title, width, height}
+		WindowWGL::WindowWGL(CStr title, int width, int height, WindowStyle style) : WindowGL{title, width, height}, WindowBase{title, width, height}
 		{
 			UpdateStyle(style);
 			InitOpenGL();
@@ -83,19 +83,20 @@ namespace Galatea
 			DestroyWindow(_hwnd);
 		}
 
-		Image* WindowWGL::CreateImage(int width, int height) const
+		LRESULT WindowWGL::WndProc(UINT msg, WPARAM wParam, LPARAM lParam)
 		{
-			return new ImageGL();
-		}
+			switch(msg)
+			{
+				case WM_LBUTTONDOWN: OnMouseDown(1); break;
+				case WM_RBUTTONDOWN: OnMouseDown(2); break;
+				case WM_MBUTTONDOWN: OnMouseDown(3); break;
+				case WM_LBUTTONUP: OnMouseUp(1); break;
+				case WM_RBUTTONUP: OnMouseUp(2); break;
+				case WM_MBUTTONUP: OnMouseUp(3); break;
+				case WM_MOUSEMOVE: OnMouseMove(LOWORD(lParam), HIWORD(lParam)); break;
+			}
 
-		Image* WindowWGL::CreateImage(const char* file) const
-		{
-			return new ImageGL();
-		}
-
-		Image* WindowWGL::CreateImage(const void* memory, Int size) const
-		{
-			return new ImageGL();
+			return WindowBase::WndProc(msg, wParam, lParam);
 		}
 
 		void WindowWGL::BeginDraw(bool clear)
@@ -127,7 +128,10 @@ namespace Galatea
 
 		void WindowWGL::MousePosition(int& x, int& y) const
 		{
-			x = 0, y = 0;
+			POINT point;
+			GetCursorPos(&point);
+			x = point.x;
+			y = point.y;
 		}
 	}
 }

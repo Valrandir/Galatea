@@ -10,14 +10,23 @@ namespace Galatea
 	{
 		class WindowGL : public Window, public ImageGL
 		{
+			VectorDrawItem _vec_drawitem;
+
 			unsigned int _program_id;
+			unsigned int _vertex_buffer;
+
+			protected:
+			WindowGL(CStr title, int width, int height);
 
 			public:
 			static WindowGL* Create(CStr title, int width, int height, WindowStyle style);
-			WindowGL();
 			virtual ~WindowGL();
 
 			void Initialize();
+
+			Image* CreateImage(int width, int height) const override;
+			Image* CreateImage(const char* file) const override;
+			Image* CreateImage(const void* memory, Int size) const override;
 
 			void BeginDraw(bool clear = true) override;
 			void EndDraw() override;
